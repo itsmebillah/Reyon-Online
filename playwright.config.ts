@@ -1,11 +1,11 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const testPort = process.env.REYON_TEST_PORT;
-if (!testPort)
-  throw new Error(
-    "REYON_TEST_PORT must be assigned by the isolated E2E launcher.",
-  );
-const testOrigin = `http://127.0.0.1:${testPort}`;
+const externalOrigin = process.env.REYON_E2E_BASE_URL;
+if (!testPort && !externalOrigin)
+  throw new Error("Use the isolated launcher or provide REYON_E2E_BASE_URL.");
+const testOrigin = externalOrigin ?? `http://127.0.0.1:${testPort}`;
+const bypassSecret = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -17,6 +17,12 @@ export default defineConfig({
   use: {
     baseURL: testOrigin,
     channel: "msedge",
+    extraHTTPHeaders: bypassSecret
+      ? {
+          "x-vercel-protection-bypass": bypassSecret,
+          "x-vercel-set-bypass-cookie": "true",
+        }
+      : undefined,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },
