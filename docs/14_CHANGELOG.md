@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added and deployed an empty reporting schema for stable metric identities, immutable definition versions, versioned source bindings, append-only review evidence, and append-only projection-run lineage, with RLS and deny-by-default client access.
+  - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02; metric semantics still require accountable domain-owner approval
+  - Impact: linked Supabase schema and migration history; no metric, formula, dimension, value, target, threshold, report, dashboard, artifact, schedule, export, forecast, or business data inserted
+  - Related: [Reporting and Analytics Contract Architecture](23_REPORTING_ANALYTICS_CONTRACT_ARCHITECTURE.md), [Database Architecture](08_DATABASE_ARCHITECTURE.md)
+
 - Added and deployed an empty privacy-minimizing CRM schema for pseudonymous customer identities, opaque external references, append-only order associations, and append-only identity events, with organization-safe references, RLS, and deny-by-default client access.
   - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02; personal-data behavior still requires Privacy and Security approval
   - Impact: linked Supabase schema and migration history; no PII, profile, contact, credential, authentication, consent, preference, segment, loyalty, service, marketing behavior, or customer records inserted

@@ -46,6 +46,8 @@ The `accounting` schema owns organization-scoped account identities and append-o
 
 The `crm` schema owns pseudonymous, organization-scoped customer identities plus append-only external-reference, customer-order association, and identity-event evidence. It stores no personal profile, contact, credential, consent, preference, segment, loyalty, or service data. Authentication and any future privacy-controlled profile store remain separate responsibilities.
 
+The `reporting` schema owns stable metric identities, immutable semantic versions, source-contract bindings, review evidence, and projection-run lineage. It stores no metric values or copied operational data and does not make operational tables public APIs. No metric becomes authoritative without approved semantics, ownership, source contracts, access, and review evidence.
+
 ### TODO — Architecture
 
 - Create bounded-context and data-ownership maps after business discovery.
@@ -125,3 +127,4 @@ Add context and entity-relationship diagrams, data dictionary, classification ca
 - [Purchase System](06_PURCHASE_SYSTEM.md)
 - [Accounting Rules](07_ACCOUNTING_RULES.md)
 - [Customer and CRM Identity Architecture](22_CUSTOMER_CRM_IDENTITY_ARCHITECTURE.md)
+- [Reporting and Analytics Contract Architecture](23_REPORTING_ANALYTICS_CONTRACT_ARCHITECTURE.md)

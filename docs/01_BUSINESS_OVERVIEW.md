@@ -96,6 +96,8 @@ The private operating-topology foundation can record organizations, locations, c
 
 Metric names alone are insufficient: each metric requires a definition, grain, time basis, source, owner, and treatment of corrections.
 
+Sprint 11 provides a private, empty reporting-contract foundation for preserving these semantics as immutable versions with source bindings, review evidence, and projection lineage. It approves no metric, calculation, target, threshold, report, dashboard, or business value.
+
 ### TODO — Product Owner
 
 - Prioritize operational, commercial, customer, inventory, and financial measures.

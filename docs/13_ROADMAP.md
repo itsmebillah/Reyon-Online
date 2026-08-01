@@ -41,22 +41,23 @@ The Product Owner approved sequential roadmap execution on 2026-08-02. Technical
 
 ## Committed Delivery Sequence
 
-| Sprint | Outcome                                      | Status                  | Dependency                                   |
-| ------ | -------------------------------------------- | ----------------------- | -------------------------------------------- |
-| 0      | Environment and ownership foundation         | Released                | Existing infrastructure                      |
-| 0.5    | AI-ready SEO and content architecture        | Released (architecture) | Documentation foundation                     |
-| 1      | Premium customer experience foundation       | Released                | Sprint 0                                     |
-| 2      | Governed product catalog foundation          | Released (foundation)   | Sprint 1                                     |
-| 3      | Organization, location, and channel topology | Released (foundation)   | Sprint 2                                     |
-| 4      | Inventory ledger foundation                  | Released (foundation)   | Sprint 3                                     |
-| 5      | Order lifecycle foundation                   | Released (foundation)   | Sprint 4                                     |
-| 6      | Fulfillment and delivery foundation          | Released (foundation)   | Sprint 5                                     |
-| 7      | Payment evidence foundation                  | Released (foundation)   | Sprint 5                                     |
-| 8      | Supplier and purchase foundation             | Released (foundation)   | Catalog, topology, and inventory             |
-| 9      | Accounting evidence foundation               | Released (foundation)   | Operational evidence and finance boundaries  |
-| 10     | Customer and CRM identity foundation         | Released (foundation)   | Organization, channels, and order boundaries |
-| 11     | Reporting and analytics contract foundation  | Next                    | Governed operational source evidence         |
-| 12+    | Automation and AI foundations                | Sequenced candidates    | Approved rules, metrics, and controls        |
+| Sprint | Outcome                                      | Status                  | Dependency                                                |
+| ------ | -------------------------------------------- | ----------------------- | --------------------------------------------------------- |
+| 0      | Environment and ownership foundation         | Released                | Existing infrastructure                                   |
+| 0.5    | AI-ready SEO and content architecture        | Released (architecture) | Documentation foundation                                  |
+| 1      | Premium customer experience foundation       | Released                | Sprint 0                                                  |
+| 2      | Governed product catalog foundation          | Released (foundation)   | Sprint 1                                                  |
+| 3      | Organization, location, and channel topology | Released (foundation)   | Sprint 2                                                  |
+| 4      | Inventory ledger foundation                  | Released (foundation)   | Sprint 3                                                  |
+| 5      | Order lifecycle foundation                   | Released (foundation)   | Sprint 4                                                  |
+| 6      | Fulfillment and delivery foundation          | Released (foundation)   | Sprint 5                                                  |
+| 7      | Payment evidence foundation                  | Released (foundation)   | Sprint 5                                                  |
+| 8      | Supplier and purchase foundation             | Released (foundation)   | Catalog, topology, and inventory                          |
+| 9      | Accounting evidence foundation               | Released (foundation)   | Operational evidence and finance boundaries               |
+| 10     | Customer and CRM identity foundation         | Released (foundation)   | Organization, channels, and order boundaries              |
+| 11     | Reporting and analytics contract foundation  | Released (foundation)   | Governed operational source evidence                      |
+| 12     | Automation control-plane foundation          | Next                    | Approved rules, metrics, and audit boundaries             |
+| 13+    | AI capability foundations                    | Sequenced candidates    | Approved use cases, data, evaluation, and human oversight |
 
 Sprint 2 now includes a policy-neutral catalog contract, replaceable data adapter, customer discovery, product lookup, and an empty deny-by-default Supabase catalog schema. Persistent administration, runtime data access, and publication workflows remain gated by catalog-owner and access rules.
 
@@ -75,6 +76,8 @@ Sprint 8 establishes empty organization-scoped supplier identities, purchase-ord
 Sprint 9 establishes empty organization-scoped account identities and append-only source-linked journal evidence. The chart of accounts, classifications, sign convention, balanced-posting transaction, event mappings, fiscal periods, recognition, valuation, tax, dimensions, close, reporting, approvals, and all financial records remain gated by qualified Finance approval.
 
 Sprint 10 establishes empty pseudonymous customer identities, opaque external identity references, and append-only order-association and identity-event evidence. Personal profiles, contacts, credentials, authentication, consent, preferences, segmentation, loyalty, service workflows, marketing, analytics, merge/split behavior, and all customer records remain gated by approved business, privacy, and security rules.
+
+Sprint 11 establishes empty stable metric identities, immutable semantic versions, versioned source-contract bindings, append-only review evidence, and append-only projection-run lineage. Metric definitions, formulas, dimensions, values, targets, thresholds, reports, dashboards, schedules, artifacts, exports, forecasts, and all business data remain gated by approved owners, semantics, privacy, security, and financial controls.
 
 ## Entry and Exit Criteria
 
