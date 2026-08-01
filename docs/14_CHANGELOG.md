@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added least-privilege GitHub Actions checks for locked dependency installation, formatting, linting, strict TypeScript, production builds, and the complete responsive browser matrix.
+  - Approval/owner: engineering foundation under the approved autonomous roadmap
+  - Impact: automated repository validation and release evidence only; no business behavior or production data introduced
+  - Related: [Delivery Assurance](26_DELIVERY_ASSURANCE.md), [Roadmap](13_ROADMAP.md), [Coding Standards](11_CODING_STANDARDS.md)
+
 - Added the Sprint 14 Product Catalog Administration decision and data-intake packet, translating all unresolved catalog rules into a non-technical Product Owner workflow.
   - Approval/owner: engineering discovery preparation; Product Owner answers remain pending
   - Impact: documentation only; no product data, business rule, role, lifecycle, validation, pricing, media, admin interface, or runtime behavior added

@@ -29,6 +29,8 @@ The audit was performed on 2026-08-01 in the local Windows workspace `D:\Files\P
 
 Version values are point-in-time evidence and should be rechecked by automated tooling once the project stack is approved.
 
+This report records the original Sprint 0 point-in-time evidence. Subsequent implementation and release evidence is governed by [Delivery Assurance](26_DELIVERY_ASSURANCE.md); where current repository or provider state differs, current verified state is authoritative.
+
 ## Executive Summary
 
 | Area                     | Status                                | Result                                                                                                       |

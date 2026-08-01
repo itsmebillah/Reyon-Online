@@ -43,6 +43,7 @@ This repository contains the documentation foundation and the Sprint 1 customer 
 | Reporting       | [Reporting and Analytics Contract Architecture](docs/23_REPORTING_ANALYTICS_CONTRACT_ARCHITECTURE.md) | Defines versioned metric semantics, source bindings, review evidence, and projection lineage.         |
 | Automation      | [Automation Control-Plane Architecture](docs/24_AUTOMATION_CONTROL_PLANE_ARCHITECTURE.md)             | Defines versioned automation contracts, human controls, and execution evidence boundaries.            |
 | Sprint 14       | [Product Catalog Administration Decision Packet](docs/25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md)          | Collects Product Owner data, rules, roles, lifecycle, and acceptance decisions for implementation.    |
+| Delivery        | [Delivery Assurance](docs/26_DELIVERY_ASSURANCE.md)                                                   | Defines automated quality checks, deployment evidence, live verification, and blocker isolation.      |
 
 ## Product Scope
 
@@ -60,7 +61,7 @@ The target system is a modular retail operating system. Each module must be capa
 
 1. Install Node.js 24 and run `npm install`.
 2. Run `npm run dev` for local development.
-3. Run `npm run format`, `npm run lint`, `npm run typecheck`, and `npm run build` before committing.
+3. Run `npm run format` and `npm run quality` before committing.
 4. Run `npm run test:e2e` for isolated Microsoft Edge coverage on an OS-assigned local port.
 5. Read the project vision and relevant business documents before implementing domain behavior.
 

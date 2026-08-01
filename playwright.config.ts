@@ -6,6 +6,7 @@ if (!testPort && !externalOrigin)
   throw new Error("Use the isolated launcher or provide REYON_E2E_BASE_URL.");
 const testOrigin = externalOrigin ?? `http://127.0.0.1:${testPort}`;
 const bypassSecret = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
+const browserChannel = process.env.REYON_E2E_BROWSER_CHANNEL ?? "msedge";
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -16,7 +17,7 @@ export default defineConfig({
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
     baseURL: testOrigin,
-    channel: "msedge",
+    channel: browserChannel === "bundled" ? undefined : browserChannel,
     extraHTTPHeaders: bypassSecret
       ? {
           "x-vercel-protection-bypass": bypassSecret,

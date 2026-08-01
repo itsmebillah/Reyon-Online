@@ -38,7 +38,9 @@ Code should be readable, cohesive, consistently formatted, statically checked wh
 
 ### TODO — Engineering
 
-- Select language-specific formatters, linters, analyzers, naming rules, and complexity thresholds after stack approval.
+- Define approved complexity thresholds and exception evidence as modules grow.
+
+The approved TypeScript baseline uses Prettier, ESLint with zero warnings, strict TypeScript checking, and a production Next.js build. `npm run quality` executes these non-mutating repository gates in the same order locally and in CI.
 
 ## Security and Privacy
 
@@ -76,8 +78,10 @@ A future change is done only when acceptance evidence exists; authorization, err
 
 ### TODO — Engineering
 
-- Define branching, commit, review, CI, release, versioning, dependency, secrets, vulnerability, and incident standards.
+- Define branching, review, release versioning, dependency, vulnerability, and incident standards that require repository-owner or security approval.
 - Add stack-specific supplements and exception/waiver governance.
+
+The initial CI and release-evidence controls are defined in [Delivery Assurance](26_DELIVERY_ASSURANCE.md). A feature-level blocker must be isolated from unrelated roadmap work and does not imply that the entire project is blocked.
 
 ## Future Expansion
 
@@ -89,3 +93,4 @@ Add language guides, API/event standards, testing strategy, secure-development s
 - [Database Architecture](08_DATABASE_ARCHITECTURE.md)
 - [Folder Structure](12_FOLDER_STRUCTURE.md)
 - [Business Rules](02_BUSINESS_RULES.md)
+- [Delivery Assurance](26_DELIVERY_ASSURANCE.md)

@@ -58,7 +58,8 @@ The Product Owner approved sequential roadmap execution on 2026-08-02. Technical
 | 11     | Reporting and analytics contract foundation   | Released (foundation)   | Governed operational source evidence                         |
 | 12     | Automation control-plane foundation           | Released (foundation)   | Approved rules, metrics, and audit boundaries                |
 | 13     | AI governance and content-artifact foundation | Released (foundation)   | Sprint 0.5 architecture, human review, and source boundaries |
-| 14+    | Approved operational vertical slices          | Awaiting business rules | Product Owner rules and domain acceptance evidence           |
+| 14     | Product Catalog Administration                | Active                  | Approved Product Owner catalog rules                         |
+| 14A    | Delivery assurance foundation                 | Released                | Policy-neutral engineering quality and release evidence      |
 
 Sprint 2 now includes a policy-neutral catalog contract, replaceable data adapter, customer discovery, product lookup, and an empty deny-by-default Supabase catalog schema. Persistent administration, runtime data access, and publication workflows remain gated by catalog-owner and access rules.
 
@@ -87,6 +88,8 @@ Sprint 13 establishes empty source-snapshot references, scoped content artifacts
 All policy-neutral technical foundations currently derivable from approved documentation are now released. Sprint 14 requires Product Owner and domain-owner business rules, representative scenarios, role/permission decisions, and measurable acceptance criteria before an operational vertical slice can be selected or implemented without inventing business logic.
 
 The first proposed operational vertical slice is Product Catalog Administration because governed product facts enable ecommerce, inventory, purchasing, content, reporting, and future channels. Its scope and decision requirements are consolidated in the [Sprint 14 Product Catalog Administration Decision Packet](25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md). This is discovery readiness, not approval of the proposed behavior.
+
+Sprint 14A establishes independent delivery assurance with automated GitHub quality gates, cross-platform isolated browser testing, and a documented live-verification contract. Feature-specific dependencies are isolated so unrelated technical foundations can continue.
 
 ## Entry and Exit Criteria
 
