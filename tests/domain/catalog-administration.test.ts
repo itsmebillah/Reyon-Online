@@ -91,7 +91,7 @@ test("barcode remains optional", () => {
   assert.deepEqual(validateCatalogProduct(product), []);
 });
 
-test("reports all publication prerequisites without preventing drafts", () => {
+test("enforces universal product requirements in every lifecycle state", () => {
   const incomplete = {
     ...validPublishedProduct(),
     brandId: undefined,
@@ -101,14 +101,20 @@ test("reports all publication prerequisites without preventing drafts", () => {
   };
   const codes = validateCatalogProduct(incomplete).map(({ code }) => code);
   assert.deepEqual(codes, [
-    "publication-brand-required",
-    "publication-primary-category-required",
-    "publication-image-required",
+    "product-brand-required",
+    "product-primary-category-required",
+    "product-image-required",
     "publication-variant-required",
   ]);
   assert.deepEqual(
-    validateCatalogProduct({ ...incomplete, status: "draft" }),
-    [],
+    validateCatalogProduct({ ...incomplete, status: "draft" }).map(
+      ({ code }) => code,
+    ),
+    [
+      "product-brand-required",
+      "product-primary-category-required",
+      "product-image-required",
+    ],
   );
 });
 

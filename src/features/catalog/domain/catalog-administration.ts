@@ -171,28 +171,29 @@ export const validateCatalogProduct = (
     }
   }
 
+  if (!product.brandId) {
+    issues.push({
+      code: "product-brand-required",
+      path: "brandId",
+      message: "Every product requires exactly one product brand.",
+    });
+  }
+  if (!product.primaryCategoryId) {
+    issues.push({
+      code: "product-primary-category-required",
+      path: "primaryCategoryId",
+      message: "Every product requires one primary category.",
+    });
+  }
+  if (product.images.length === 0) {
+    issues.push({
+      code: "product-image-required",
+      path: "images",
+      message: "Every product requires at least one product image.",
+    });
+  }
+
   if (product.status === "published") {
-    if (!product.brandId) {
-      issues.push({
-        code: "publication-brand-required",
-        path: "brandId",
-        message: "Publication requires exactly one product brand.",
-      });
-    }
-    if (!product.primaryCategoryId) {
-      issues.push({
-        code: "publication-primary-category-required",
-        path: "primaryCategoryId",
-        message: "Publication requires one primary category.",
-      });
-    }
-    if (product.images.length === 0) {
-      issues.push({
-        code: "publication-image-required",
-        path: "images",
-        message: "Publication requires at least one product image.",
-      });
-    }
     if (product.variants.length === 0) {
       issues.push({
         code: "publication-variant-required",

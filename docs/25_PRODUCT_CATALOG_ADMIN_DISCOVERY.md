@@ -77,12 +77,12 @@ The SKU source is recorded as system-generated or administrator-provided so late
 
 ## Images
 
-| Rule ID       | Approved rule                                                                 |
-| ------------- | ----------------------------------------------------------------------------- |
-| CAT-MEDIA-001 | Every product requires at least one image before publication.                 |
-| CAT-MEDIA-002 | Two images are recommended but the recommendation does not block publication. |
-| CAT-MEDIA-003 | The first ordered image is the primary display image.                         |
-| CAT-MEDIA-004 | The model must support larger future galleries without redesign.              |
+| Rule ID       | Approved rule                                                        |
+| ------------- | -------------------------------------------------------------------- |
+| CAT-MEDIA-001 | Every product requires at least one image.                           |
+| CAT-MEDIA-002 | Two images are recommended, but the recommendation is not a minimum. |
+| CAT-MEDIA-003 | The first ordered image is the primary display image.                |
+| CAT-MEDIA-004 | The model must support larger future galleries without redesign.     |
 
 Storage provider, licensing evidence, file types, dimensions, file-size limits, malware scanning, retention, and ALT-text approval remain separate media/security decisions. Persistence stores ordered references and does not weaken those future controls.
 
@@ -121,12 +121,12 @@ The approved ordered vocabulary is:
 Draft → Review → Approved → Published → Hidden → Archived
 ```
 
-| Rule ID           | Approved rule                                                                                                      |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------ |
-| CAT-LIFECYCLE-001 | Every product has one of the approved lifecycle statuses.                                                          |
-| CAT-LIFECYCLE-002 | Only Published products are visible to customers.                                                                  |
-| CAT-LIFECYCLE-003 | Status history must remain attributable and append-only.                                                           |
-| CAT-LIFECYCLE-004 | Publication requires at least one image, one primary category, one brand, and at least one valid sellable variant. |
+| Rule ID           | Approved rule                                                                                               |
+| ----------------- | ----------------------------------------------------------------------------------------------------------- |
+| CAT-LIFECYCLE-001 | Every product has one of the approved lifecycle statuses.                                                   |
+| CAT-LIFECYCLE-002 | Only Published products are visible to customers.                                                           |
+| CAT-LIFECYCLE-003 | Status history must remain attributable and append-only.                                                    |
+| CAT-LIFECYCLE-004 | Publication requires at least one valid sellable variant in addition to the universal product requirements. |
 
 The arrows establish the approved forward workflow. Actor permissions, segregation of review and approval, correction/republication, reactivation, and exception transitions remain unapproved. Until those decisions exist, only trusted server-side infrastructure may hold persistence privileges and no public administration command is enabled.
 
@@ -137,7 +137,7 @@ The arrows establish the approved forward workflow. Actor permissions, segregati
 - Variant price types remain distinct and retain explicit currency.
 - The primary category is explicit and unique per product.
 - Image order is explicit; the lowest ordered image is the primary projection.
-- Publication eligibility is validated from authoritative catalog facts rather than UI state.
+- Product completeness and publication eligibility are validated from authoritative catalog facts rather than UI state.
 - Customer queries must filter to Published products when persistent runtime catalog access is introduced.
 - Product facts must not be overwritten by AI-generated content.
 - Append-only migrations extend the existing private, deny-by-default Supabase schema.
@@ -155,14 +155,14 @@ These unresolved items block only their dependent subfeatures:
 ### Operational Data Entry — Feature Blocked
 
 - Approved initial brands and representative product/variant records.
-- Required draft fields beyond the approved publication requirements.
+- Required draft fields beyond the approved universal brand, primary-category, and image requirements.
 - Product and variant naming convention, maximum text lengths, and category-specific specifications.
 - Generated SKU presentation format; UUID-backed generation remains the neutral technical fallback.
 - Initial operating currency and who may approve price corrections.
 
 ### Duplicate and Correction Workflow — Feature Blocked
 
-- Duplicate matching beyond exact unique Product Code, SKU, or non-null barcode.
+- Duplicate matching beyond exact unique SKU or non-null barcode.
 - Merge/split behavior, mistaken-publication recovery, reactivation, and permanent-deletion policy.
 - Concurrent-edit conflict resolution and historical retention terms.
 
@@ -182,7 +182,7 @@ The approved foundation must prove that:
 4. all six approved variant types are representable;
 5. stock identity references the variant rather than the parent product;
 6. all four approved price types are representable with exact currency values;
-7. a product cannot qualify for publication without its required brand, primary category, image, and variant facts;
+7. every product requires its brand, primary category, and image facts, while publication additionally requires a sellable variant;
 8. only Published is customer-visible;
 9. lifecycle evidence is append-only; and
 10. future subcategories, larger galleries, distributor facts, filtering by origin, and tax integration do not require changing stable product identity.

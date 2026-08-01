@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Aligned the Sprint 14 foundation exactly with the repeated Product Owner approval: brand, primary category, and one image are universal product requirements, while Product Code remains optional without an invented uniqueness policy.
+  - Approval/owner: Product Owner catalog decisions dated 2026-08-02
+  - Impact: typed validation, domain tests, and additive migration history; no business or customer data changed
+  - Related: [Product Catalog Administration Decisions](25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md), migration `20260802151000_catalog_rule_alignment.sql`
+
 - Recorded the approved Sprint 14 Product Catalog Administration rules and implemented their private persistence and typed domain-validation foundation.
   - Approval/owner: Product Owner catalog decisions dated 2026-08-02
   - Impact: linked Supabase catalog schema, six approved category reference rows, lifecycle/identity/variant/media/provenance/price contracts, domain tests, and CI; no brand, product, variant, price, supplier, inventory, user, or customer record inserted
