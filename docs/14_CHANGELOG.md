@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added and deployed an empty content-governance schema for source snapshots, scoped artifacts, immutable typed versions, lineage, validation findings, mandatory human review evidence, and publication-attempt provenance, with RLS and deny-by-default client access.
+  - Approval/owner: Product Owner Sprint 0.5 architecture and roadmap-execution directive; content and publication behavior still require accountable business and control approval
+  - Impact: linked Supabase schema and migration history; no content type, product fact, policy, prompt, provider, model, generated content, validator, decision, renderer, channel, credential, publication, or content record inserted
+  - Related: [AI SEO and Product Content Architecture](16_AI_SEO_CONTENT_ARCHITECTURE.md), [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
+
 - Added and deployed an empty automation control-plane schema for versioned contract references, human review/control evidence, idempotent execution identities, and append-only execution/attempt history, with RLS and deny-by-default client access.
   - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02; executable behavior still requires approved domain rules and control policy
   - Impact: linked Supabase schema and migration history; no executable rule, trigger, condition, schedule, payload, credential, worker, retry, notification, side effect, enabled workflow, execution, or business data inserted

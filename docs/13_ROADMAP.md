@@ -57,8 +57,8 @@ The Product Owner approved sequential roadmap execution on 2026-08-02. Technical
 | 10     | Customer and CRM identity foundation          | Released (foundation)   | Organization, channels, and order boundaries                 |
 | 11     | Reporting and analytics contract foundation   | Released (foundation)   | Governed operational source evidence                         |
 | 12     | Automation control-plane foundation           | Released (foundation)   | Approved rules, metrics, and audit boundaries                |
-| 13     | AI governance and content-artifact foundation | Next                    | Sprint 0.5 architecture, human review, and source boundaries |
-| 14+    | Approved operational vertical slices          | Sequenced candidates    | Product Owner rules and domain acceptance evidence           |
+| 13     | AI governance and content-artifact foundation | Released (foundation)   | Sprint 0.5 architecture, human review, and source boundaries |
+| 14+    | Approved operational vertical slices          | Awaiting business rules | Product Owner rules and domain acceptance evidence           |
 
 Sprint 2 now includes a policy-neutral catalog contract, replaceable data adapter, customer discovery, product lookup, and an empty deny-by-default Supabase catalog schema. Persistent administration, runtime data access, and publication workflows remain gated by catalog-owner and access rules.
 
@@ -81,6 +81,10 @@ Sprint 10 establishes empty pseudonymous customer identities, opaque external id
 Sprint 11 establishes empty stable metric identities, immutable semantic versions, versioned source-contract bindings, append-only review evidence, and append-only projection-run lineage. Metric definitions, formulas, dimensions, values, targets, thresholds, reports, dashboards, schedules, artifacts, exports, forecasts, and all business data remain gated by approved owners, semantics, privacy, security, and financial controls.
 
 Sprint 12 establishes empty stable automation identities, immutable contract-reference versions, append-only review/control evidence, idempotent execution identities, and append-only execution/step-attempt history. Executable rules, triggers, conditions, schedules, payloads, credentials, workers, retries, side effects, enabled workflows, and all automation records remain gated by approved use cases, contracts, permissions, controls, and operational ownership.
+
+Sprint 13 establishes empty source-snapshot references, scoped content artifacts, immutable schema-versioned payloads, source and derivation lineage, validation findings, human review decisions, and publication-attempt evidence. Content types, product facts, policies, prompts, providers, models, generated content, validators, reviewer permissions, renderers, channels, credentials, automatic approval, publication behavior, and all content records remain gated by approved business, SEO, legal, privacy, security, and operating rules.
+
+All policy-neutral technical foundations currently derivable from approved documentation are now released. Sprint 14 requires Product Owner and domain-owner business rules, representative scenarios, role/permission decisions, and measurable acceptance criteria before an operational vertical slice can be selected or implemented without inventing business logic.
 
 ## Entry and Exit Criteria
 

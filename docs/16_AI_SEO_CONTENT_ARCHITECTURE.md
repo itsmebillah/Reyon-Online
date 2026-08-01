@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the architecture for an AI-ready product content system in REYON Business OS. It establishes responsibility boundaries, content lifecycle, human-review controls, quality contracts, and channel extensibility without implementing AI, choosing a provider, creating prompts, generating product content, or defining a physical database schema.
+This document defines the architecture for an AI-ready product content system in REYON Business OS. It establishes responsibility boundaries, content lifecycle, human-review controls, quality contracts, and channel extensibility without implementing AI, choosing a provider, creating prompts, or generating product content. Sprint 13 adds only the private persistence boundary described below.
 
 ## Table of Contents
 
@@ -11,6 +11,7 @@ This document defines the architecture for an AI-ready product content system in
 - [Domain boundaries](#domain-boundaries)
 - [Source product data](#source-product-data)
 - [Content artifact model](#content-artifact-model)
+- [Implemented persistence foundation](#implemented-persistence-foundation)
 - [Content type catalog](#content-type-catalog)
 - [Generation request model](#generation-request-model)
 - [Human review and publication lifecycle](#human-review-and-publication-lifecycle)
@@ -108,6 +109,22 @@ A content artifact represents one typed piece of content for a subject, locale, 
 | Publication    | Approved target, rendered payload version, publication time, and external reference        |
 
 Structured content such as FAQ, features, schema input, or breadcrumbs must retain typed items and relationships rather than be stored only as presentation-ready HTML.
+
+## Implemented Persistence Foundation
+
+Migration `20260802140000_content_governance_foundation.sql` creates an empty private `content` schema for source-snapshot references, scoped artifact identities, immutable typed payload versions, source and parent-version lineage, validation findings, human review decisions, and publication-attempt evidence.
+
+| Record                   | Implemented responsibility                                                                                                        | Explicit exclusion                                                                                           |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Source snapshot          | Immutable subject/version reference with checksum, actor, time, and idempotency                                                   | Stores no raw source payload and approves no product or business fact                                        |
+| Artifact                 | Stable subject, content type, locale, market, and channel scope                                                                   | Seeds no content type, locale, market, channel, or lifecycle state                                           |
+| Artifact version         | Immutable schema-versioned JSON payload, checksum, derivation kind, supersession, and optional generation-configuration reference | Implements no prompt, provider, model, generation, editing UI, or automatic approval                         |
+| Version source / lineage | Many-to-many source snapshots and parent-version derivations                                                                      | Infers no factual authority or regeneration behavior                                                         |
+| Validation finding       | Versioned validator reference, code, severity, time, and opaque evidence reference                                                | Seeds no validator, threshold, duplicate rule, policy, or automatic rewrite                                  |
+| Review event             | Exact-version, attributable, append-only human decision evidence                                                                  | Defines no decision vocabulary, reviewer permission, segregation rule, or automatic publication effect       |
+| Publication attempt      | Exact-version target and renderer provenance with attributable outcome evidence                                                   | Implements no renderer, channel adapter, approval bypass, credential, publication request, or external write |
+
+Row-level security is enabled for every table. Anonymous and authenticated roles receive no policies or privileges, the schema is not exposed through the configured Data API, and no content or configuration records are inserted. A future server-side publication transaction must prove an approved review decision for the exact immutable version and revalidate applicable policy before any adapter may publish; this foundation alone cannot publish.
 
 ## Content Type Catalog
 

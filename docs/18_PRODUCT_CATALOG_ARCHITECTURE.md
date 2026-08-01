@@ -69,6 +69,7 @@ Migration history is append-only and shared between the repository and linked pr
 - Money includes an explicit currency; pricing rules are not inferred.
 - Availability text in the current adapter is presentation data, not inventory authority.
 - Product facts and approved content must not be overwritten by future AI suggestions.
+- Sprint 13 content artifacts reference catalog subject/version evidence without copying ownership of product facts; catalog corrections never silently regenerate, approve, or publish content.
 - Slugs are lookup keys, not permanent entity identifiers.
 
 ## Pending Business Decisions

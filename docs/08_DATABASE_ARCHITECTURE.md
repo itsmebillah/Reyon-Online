@@ -50,6 +50,8 @@ The `reporting` schema owns stable metric identities, immutable semantic version
 
 The `automation` schema owns stable automation identities, immutable contract-reference versions, append-only human review/control evidence, idempotent execution identities, and append-only execution/attempt history. It contains no executable logic, payload, credential, schedule, retry policy, domain side effect, or enabled workflow.
 
+The `content` schema owns source-snapshot references, scoped artifact identities, immutable typed payload versions, source and derivation lineage, validation findings, human review evidence, and publication-attempt provenance. It does not own product facts, business policy, AI providers, prompts, generation, credentials, renderers, channel adapters, or publication authority.
+
 ### TODO — Architecture
 
 - Create bounded-context and data-ownership maps after business discovery.
