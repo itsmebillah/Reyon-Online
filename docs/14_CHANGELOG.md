@@ -40,7 +40,19 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
-No unreleased changes are recorded.
+### Added
+
+- Added the Sprint 0 environment audit, repository ignore policy, public environment-variable contract, and Supabase local configuration.
+  - Approval/owner: Sprint 0 environment and project-ownership mandate
+  - Impact: development environment and documentation only; no application, database, or deployment behavior
+  - Related: [Sprint 0 Environment Audit](15_ENVIRONMENT_AUDIT.md)
+
+### Changed
+
+- Connected the verified GitHub origin, aligned the local branch with `main`, and linked the existing Supabase and Vercel projects.
+  - Approval/owner: Sprint 0 environment and project-ownership mandate
+  - Impact: repository and local provider metadata; no remote data mutation or deployment
+  - Related: [Sprint 0 Environment Audit](15_ENVIRONMENT_AUDIT.md)
 
 ## Documentation Foundation
 

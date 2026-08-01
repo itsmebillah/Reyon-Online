@@ -33,6 +33,7 @@ This repository currently contains the documentation foundation. Product policy 
 | Repository | [Folder Structure](docs/12_FOLDER_STRUCTURE.md) | Defines the intended scalable repository organization. |
 | Delivery | [Roadmap](docs/13_ROADMAP.md) | Provides a dependency-aware planning framework. |
 | History | [Changelog](docs/14_CHANGELOG.md) | Records meaningful documentation and product changes. |
+| Environment | [Sprint 0 Environment Audit](docs/15_ENVIRONMENT_AUDIT.md) | Records verified tool, repository, and service readiness. |
 
 ## Product Scope
 

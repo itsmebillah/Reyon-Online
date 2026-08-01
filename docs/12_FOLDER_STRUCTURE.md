@@ -21,7 +21,11 @@ This document defines the intended repository organization for a scalable modula
 
 ```text
 /
+├── .env.example
+├── .gitignore
 ├── README.md
+├── supabase/
+│   └── config.toml
 └── docs/
     ├── 00_PROJECT_VISION.md
     ├── 01_BUSINESS_OVERVIEW.md
@@ -37,7 +41,8 @@ This document defines the intended repository organization for a scalable modula
     ├── 11_CODING_STANDARDS.md
     ├── 12_FOLDER_STRUCTURE.md
     ├── 13_ROADMAP.md
-    └── 14_CHANGELOG.md
+    ├── 14_CHANGELOG.md
+    └── 15_ENVIRONMENT_AUDIT.md
 ```
 
 ## Organization Principles
