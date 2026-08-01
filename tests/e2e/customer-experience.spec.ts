@@ -100,6 +100,27 @@ test("navigation and search remain usable", async ({ page }) => {
   expect(failures).toEqual([]);
 });
 
+test("homepage communicates the approved K-Beauty positioning", async ({
+  page,
+}) => {
+  const failures = monitor(page);
+  await page.goto("/");
+  await expect(
+    page
+      .locator("#main")
+      .getByText(
+        "REYON — Your trusted destination for authentic Korean beauty and personal care products.",
+      ),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "100% authentic products" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "K-Beauty specialization" }),
+  ).toBeVisible();
+  expect(failures).toEqual([]);
+});
+
 test("inner pages provide consistent back navigation", async ({ page }) => {
   const failures = monitor(page);
   await page.goto("/");

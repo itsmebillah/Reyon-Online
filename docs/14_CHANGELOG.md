@@ -74,6 +74,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Changed
 
+- Established authentic Korean beauty as REYON's primary retail specialization and adopted the canonical positioning line “REYON — Your trusted destination for authentic Korean beauty and personal care products.”
+  - Approval/owner: Product Owner business-positioning directive dated 2026-08-01
+  - Impact: homepage, About, Shop, metadata, footer, documentation, authenticity messaging, and future international-brand architecture
+  - Related: [Business Overview](01_BUSINESS_OVERVIEW.md), [Brand and Business Configuration](17_BRAND_BUSINESS_CONFIGURATION.md)
+
 - Established the Product Owner-approved REYON business configuration, including multi-brand retailer positioning, category vocabulary, customer channels, production origin, premium visual direction, English content baseline, and footer requirements; removed sample implications that REYON was a product manufacturer.
   - Approval/owner: Product Owner business-context directive dated 2026-08-01
   - Impact: customer-facing identity, contact links, categories, metadata, documentation, and future configuration governance

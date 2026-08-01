@@ -18,16 +18,13 @@ export default function Home() {
         />
         <Container>
           <div className="hero-copy">
-            <p className="eyebrow">The REYON edit</p>
+            <p className="eyebrow">Authentic Korean beauty</p>
             <h1>
               Beauty,
               <br />
-              <em>considered.</em>
+              <em>carefully chosen.</em>
             </h1>
-            <p>
-              Premium beauty and personal care from multiple brands, selected to
-              make every choice feel clear and considered.
-            </p>
+            <p>{businessConfig.positioning}</p>
             <div className="button-row">
               <LinkButton href="/shop">Explore the collection</LinkButton>
               <LinkButton href="/about" variant="secondary">
@@ -80,25 +77,26 @@ export default function Home() {
       </section>
       <section className="promise">
         <Container>
-          <p className="eyebrow">Our promise</p>
+          <p className="eyebrow">The REYON standard</p>
           <blockquote>
-            “Beauty should feel clear, personal and quietly exceptional.”
+            “Authenticity, quality and transparency in every carefully selected
+            collection.”
           </blockquote>
           <div className="promise-grid">
             <div>
               <span>01</span>
-              <h3>Considered selection</h3>
-              <p>A calm, edited experience—not endless choice.</p>
+              <h3>100% authentic products</h3>
+              <p>Genuine beauty products selected from trusted brands.</p>
             </div>
             <div>
               <span>02</span>
-              <h3>Clarity first</h3>
-              <p>Information that helps you decide with confidence.</p>
+              <h3>K-Beauty specialization</h3>
+              <p>Korean skincare, haircare, makeup and beauty at our core.</p>
             </div>
             <div>
               <span>03</span>
-              <h3>Care in every detail</h3>
-              <p>From discovery to delivery, every moment matters.</p>
+              <h3>Customer trust</h3>
+              <p>Clear information and a premium shopping experience.</p>
             </div>
           </div>
         </Container>
@@ -114,9 +112,9 @@ export default function Home() {
                 More intention.
               </h2>
               <p>
-                REYON is being built as a trusted home for beauty and care—where
-                technology disappears into an experience that feels simple, warm
-                and human.
+                REYON curates authentic Korean beauty from trusted brands
+                through an experience designed to feel clean, transparent and
+                human.
               </p>
               <LinkButton href="/about">Discover REYON</LinkButton>
             </div>
@@ -139,11 +137,11 @@ export default function Home() {
             {[
               [
                 "Multi-brand selection",
-                "Beauty and care across six essential categories.",
+                "Korean beauty across six essential care categories.",
               ],
               [
                 "Clear information",
-                "Straightforward presentation designed to support confident choices.",
+                "Genuine products presented clearly to support confident choices.",
               ],
               [
                 "Human support",

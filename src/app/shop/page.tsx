@@ -4,16 +4,17 @@ import { Container, SectionHeading } from "@/components/ui";
 import { categories, products } from "@/data/catalog";
 export const metadata: Metadata = {
   title: "Shop",
-  description: "Explore REYON's multi-brand Beauty & Care selection.",
+  description:
+    "Explore authentic Korean beauty and personal care products from trusted brands at REYON.",
   alternates: { canonical: "/shop" },
 };
 export default function ShopPage() {
   return (
     <Container className="page">
       <SectionHeading
-        eyebrow="The collection"
-        title="Shop all beauty"
-        body="A multi-brand beauty and personal care selection, presented with clarity."
+        eyebrow="Authentic K-Beauty"
+        title="Shop Korean beauty"
+        body="Genuine skincare, haircare, makeup and personal care from trusted brands, carefully selected by REYON."
       />
       <div className="shop-toolbar">
         <p>{products.length} products</p>

@@ -20,16 +20,17 @@ This document frames REYON's operating context and the business capabilities the
 
 ## Business Identity
 
-| Attribute         | Current statement                |
-| ----------------- | -------------------------------- |
-| Project           | REYON Business OS                |
-| Store brand       | REYON                            |
-| Working business  | Reyon Online                     |
-| Business category | Beauty & Care                    |
-| Business model    | Multi-brand online retailer      |
-| Product type      | Retail Business Operating System |
+| Attribute         | Current statement                  |
+| ----------------- | ---------------------------------- |
+| Project           | REYON Business OS                  |
+| Store brand       | REYON                              |
+| Working business  | Reyon Online                       |
+| Business category | Beauty & Care                      |
+| Business model    | Multi-brand online retailer        |
+| Primary focus     | Authentic Korean beauty (K-Beauty) |
+| Product type      | Retail Business Operating System   |
 
-REYON is the retailer brand, not the brand or manufacturer of products sold by the store. Legal identity, corporate structure, markets, and detailed commercial policies remain unconfirmed.
+REYON is the trusted retailer and curator, not the brand or manufacturer of products sold by the store. Its primary specialization is authentic Korean skincare, haircare, makeup, beauty, and personal care. The platform must also support carefully selected international beauty brands in the future. Legal identity, corporate structure, markets, and detailed commercial policies remain unconfirmed.
 
 ## Approved Customer Configuration
 

@@ -27,18 +27,25 @@ The Product Owner supplied this baseline on 2026-08-01. Product data, page conte
 
 ## Business Identity
 
-| Attribute             | Approved value              |
-| --------------------- | --------------------------- |
-| Store brand           | REYON                       |
-| Working business name | Reyon Online                |
-| Industry              | Beauty & Care               |
-| Business model        | Multi-brand online retailer |
+| Attribute              | Approved value                     |
+| ---------------------- | ---------------------------------- |
+| Store brand            | REYON                              |
+| Working business name  | Reyon Online                       |
+| Industry               | Beauty & Care                      |
+| Business model         | Multi-brand online retailer        |
+| Primary specialization | Authentic Korean beauty (K-Beauty) |
+
+The canonical public positioning line is: **“REYON — Your trusted destination for authentic Korean beauty and personal care products.”**
 
 REYON identifies the retailer and customer experience. It must not be presented as the manufacturer or product brand for third-party products. Product-brand attribution must come from approved catalog data.
 
 ## Retail Model
 
-REYON sells products made by other brands. Architecture and content must keep retailer identity separate from manufacturer, supplier, distributor, marketplace seller, and product-brand identity. Demonstration catalog records must be clearly identified and must never imply that REYON manufactures the displayed products.
+REYON sells products made by other brands. It is a trusted retailer and curator, never a product manufacturer. Authentic Korean beauty is the primary specialization; the architecture must also support carefully selected international beauty brands without redesign. Architecture and content must keep retailer identity separate from manufacturer, supplier, distributor, marketplace seller, and product-brand identity. Demonstration catalog records must be clearly identified and must never imply that REYON manufactures the displayed products.
+
+### Authenticity Positioning
+
+Customer-facing experiences must consistently communicate 100% Authentic Products, Trusted Brands, Genuine Products, Carefully Selected Collections, Customer Trust, and a Premium Shopping Experience. Claims must remain factual, restrained, and transparent. Exaggerated marketing language and unsupported product-specific claims are prohibited.
 
 ### TODO — Product Owner
 
@@ -83,7 +90,7 @@ The approved production origin is <https://reyon-online.vercel.app>. Canonical U
 
 ## Brand Presentation
 
-The approved direction is premium, minimal, elegant, and modern, with a luxury beauty-retail character. Primary colors are black, white, and rose gold. Interfaces must avoid loud colors and low-trust, visually cluttered, or generic discount-marketplace styling.
+The approved direction is premium, minimal, elegant, modern, and trustworthy, with the character of a premium Korean beauty retailer. Primary colors are black, white, and rose gold. Interfaces must avoid loud colors and low-trust, visually cluttered, or generic discount-cosmetics marketplace styling. Product Owner references include Olive Young, Soko Glam, premium YesStyle experiences, and Sephora's clean UX; these are directional references, not assets or layouts to copy.
 
 Visual restraint must not reduce usability. Color contrast, keyboard focus, readable typography, clear status feedback, and accessible interaction targets remain acceptance criteria.
 
@@ -107,7 +114,7 @@ Product claims, descriptions, ingredients, warnings, benefits, usage instruction
 
 ## Required Customer Experience
 
-The homepage must communicate within its initial viewport that REYON is a trustworthy, premium, multi-brand beauty and personal-care retailer. The footer must include About, Contact, Privacy Policy, Terms, Return Policy, Shipping Policy, approved social links, copyright information, and newsletter access. Return and shipping pages remain explicitly pending until their policies are approved.
+The homepage must communicate within its initial viewport that REYON is a trustworthy, premium, multi-brand retailer specializing in authentic Korean beauty and personal care. The footer must include About, Contact, Privacy Policy, Terms, Return Policy, Shipping Policy, approved social links, copyright information, and newsletter access. Return and shipping pages remain explicitly pending until their policies are approved.
 
 The Product Owner experience must minimize cognitive load, repetitive entry, avoidable mistakes, and daily operational effort. Safe automation is preferred, but consequential or AI-generated output requires clear review and control.
 

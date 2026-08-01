@@ -7,13 +7,14 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(businessConfig.productionUrl),
-  title: { default: "REYON — Beauty, considered", template: "%s | REYON" },
-  description:
-    "REYON is a premium multi-brand Beauty & Care retailer built around trust, clarity and thoughtful selection.",
+  title: {
+    default: "REYON — Authentic Korean Beauty & Personal Care",
+    template: "%s | REYON",
+  },
+  description: businessConfig.positioning,
   openGraph: {
-    title: "REYON — Beauty, considered",
-    description:
-      "Premium multi-brand beauty and personal care, selected with care.",
+    title: "REYON — Authentic Korean Beauty & Personal Care",
+    description: businessConfig.positioning,
     type: "website",
     siteName: "REYON",
   },

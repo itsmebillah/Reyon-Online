@@ -21,10 +21,7 @@ export function Footer() {
                 height={144}
               />
             </Link>
-            <p>
-              Premium beauty and personal care from multiple brands, selected
-              with trust, clarity and attention to quality.
-            </p>
+            <p>{businessConfig.positioning}</p>
           </div>
           <div>
             <h2>Explore</h2>

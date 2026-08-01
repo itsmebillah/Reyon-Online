@@ -1,6 +1,6 @@
 # REYON Business OS
 
-REYON Business OS is the planned operating platform for REYON's Beauty & Care retail business. It is broader than an ecommerce site: the platform is intended to unify ecommerce, administration, point of sale, customer relationships, inventory, purchasing, accounting, reporting, analytics, automation, and AI-enabled capabilities.
+REYON Business OS is the planned operating platform for REYON, a premium multi-brand beauty and personal care retailer specializing in authentic Korean beauty products. REYON is the retailer and curator, not a product manufacturer. The platform is broader than an ecommerce site: it is intended to unify ecommerce, administration, point of sale, customer relationships, inventory, purchasing, accounting, reporting, analytics, automation, and AI-enabled capabilities.
 
 This repository contains the documentation foundation and the Sprint 1 customer experience module. The frontend is a production-quality, responsive experience foundation; commerce, authentication, persistence, and other business behavior remain intentionally inactive until their rules are approved.
 
