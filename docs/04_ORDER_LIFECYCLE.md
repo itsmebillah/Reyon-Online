@@ -47,6 +47,8 @@ Order source and transition idempotency keys prevent duplicate commands from sil
 
 Every table has row-level security enabled. Anonymous and authenticated roles have no privileges or policies, the schema is not exposed through the configured Data API, and no order data has been inserted.
 
+Sprint 10 adds append-only customer-order association evidence in the separate private `crm` schema. Orders continue to contain no customer PII and do not infer customer ownership or role. Association vocabulary, cardinality, guest behavior, and customer-facing effects remain pending approved customer and privacy rules.
+
 ## Lifecycle Definition
 
 The approved lifecycle must be represented as a transition catalog rather than inferred from a suggested sequence.
@@ -114,3 +116,4 @@ Add approved state diagrams, transition tables, event definitions, sequence diag
 - [Operating Topology Architecture](19_OPERATING_TOPOLOGY_ARCHITECTURE.md)
 - [Fulfillment and Delivery Architecture](20_FULFILLMENT_DELIVERY_ARCHITECTURE.md)
 - [Payment Evidence Architecture](21_PAYMENT_EVIDENCE_ARCHITECTURE.md)
+- [Customer and CRM Identity Architecture](22_CUSTOMER_CRM_IDENTITY_ARCHITECTURE.md)

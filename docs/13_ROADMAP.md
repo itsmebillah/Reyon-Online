@@ -54,8 +54,9 @@ The Product Owner approved sequential roadmap execution on 2026-08-02. Technical
 | 7      | Payment evidence foundation                  | Released (foundation)   | Sprint 5                                     |
 | 8      | Supplier and purchase foundation             | Released (foundation)   | Catalog, topology, and inventory             |
 | 9      | Accounting evidence foundation               | Released (foundation)   | Operational evidence and finance boundaries  |
-| 10     | Customer and CRM identity foundation         | Next                    | Organization, channels, and order boundaries |
-| 11+    | Reports, analytics, automation, and AI       | Sequenced candidates    | Approved rules and preceding foundations     |
+| 10     | Customer and CRM identity foundation         | Released (foundation)   | Organization, channels, and order boundaries |
+| 11     | Reporting and analytics contract foundation  | Next                    | Governed operational source evidence         |
+| 12+    | Automation and AI foundations                | Sequenced candidates    | Approved rules, metrics, and controls        |
 
 Sprint 2 now includes a policy-neutral catalog contract, replaceable data adapter, customer discovery, product lookup, and an empty deny-by-default Supabase catalog schema. Persistent administration, runtime data access, and publication workflows remain gated by catalog-owner and access rules.
 
@@ -72,6 +73,8 @@ Sprint 7 establishes empty append-only payment records, order allocations, lifec
 Sprint 8 establishes empty organization-scoped supplier identities, purchase-order identities, commercial line snapshots, and append-only lifecycle evidence. Supplier contacts, terms, tax, payment details, approval rules, receiving, discrepancies, invoice matching, landed cost, settlement, and accounting treatment remain gated by approved policy.
 
 Sprint 9 establishes empty organization-scoped account identities and append-only source-linked journal evidence. The chart of accounts, classifications, sign convention, balanced-posting transaction, event mappings, fiscal periods, recognition, valuation, tax, dimensions, close, reporting, approvals, and all financial records remain gated by qualified Finance approval.
+
+Sprint 10 establishes empty pseudonymous customer identities, opaque external identity references, and append-only order-association and identity-event evidence. Personal profiles, contacts, credentials, authentication, consent, preferences, segmentation, loyalty, service workflows, marketing, analytics, merge/split behavior, and all customer records remain gated by approved business, privacy, and security rules.
 
 ## Entry and Exit Criteria
 

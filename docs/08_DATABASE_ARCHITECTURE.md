@@ -44,6 +44,8 @@ The `purchasing` schema owns organization-scoped supplier identity, purchase-ord
 
 The `accounting` schema owns organization-scoped account identities and append-only, source-linked journal evidence. It does not define the chart, sign convention, posting mappings, periods, recognition, valuation, tax, close, or reporting policy. Operational evidence has no financial effect until a future Finance-approved atomic posting contract validates and writes a balanced journal.
 
+The `crm` schema owns pseudonymous, organization-scoped customer identities plus append-only external-reference, customer-order association, and identity-event evidence. It stores no personal profile, contact, credential, consent, preference, segment, loyalty, or service data. Authentication and any future privacy-controlled profile store remain separate responsibilities.
+
 ### TODO — Architecture
 
 - Create bounded-context and data-ownership maps after business discovery.
@@ -122,3 +124,4 @@ Add context and entity-relationship diagrams, data dictionary, classification ca
 - [Payment Evidence Architecture](21_PAYMENT_EVIDENCE_ARCHITECTURE.md)
 - [Purchase System](06_PURCHASE_SYSTEM.md)
 - [Accounting Rules](07_ACCOUNTING_RULES.md)
+- [Customer and CRM Identity Architecture](22_CUSTOMER_CRM_IDENTITY_ARCHITECTURE.md)

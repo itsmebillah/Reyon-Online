@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added and deployed an empty privacy-minimizing CRM schema for pseudonymous customer identities, opaque external references, append-only order associations, and append-only identity events, with organization-safe references, RLS, and deny-by-default client access.
+  - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02; personal-data behavior still requires Privacy and Security approval
+  - Impact: linked Supabase schema and migration history; no PII, profile, contact, credential, authentication, consent, preference, segment, loyalty, service, marketing behavior, or customer records inserted
+  - Related: [Customer and CRM Identity Architecture](22_CUSTOMER_CRM_IDENTITY_ARCHITECTURE.md), [Order Lifecycle](04_ORDER_LIFECYCLE.md)
+
 - Added and deployed an empty accounting schema for organization-scoped account identities and append-only source-linked journal evidence, with ownership-safe references, RLS, and deny-by-default client access.
   - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02; financial behavior still requires qualified Finance approval
   - Impact: linked Supabase schema and migration history; no chart, account record, journal, posting mapping, balance convention, period, recognition, valuation, tax, close, report, or financial behavior inserted
