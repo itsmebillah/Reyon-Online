@@ -8,6 +8,7 @@ This document structures the procurement and supplier-management domain for futu
 
 - [Scope and objectives](#scope-and-objectives)
 - [Supplier foundation](#supplier-foundation)
+- [Implemented persistence foundation](#implemented-persistence-foundation)
 - [Purchase lifecycle](#purchase-lifecycle)
 - [Demand and replenishment](#demand-and-replenishment)
 - [Receiving and discrepancies](#receiving-and-discrepancies)
@@ -30,6 +31,21 @@ Supplier data may include identity, contacts, commercial terms, tax details, pay
 
 - Define supplier onboarding, verification, modification, suspension, and offboarding.
 - Identify ownership and evidence requirements for supplier master data.
+
+## Implemented Persistence Foundation
+
+Sprint 8 establishes an empty, private `purchasing` schema that preserves only stable supplier identity, purchase-order identity, line-level quantity and unit-cost snapshots, and append-only lifecycle-transition evidence. Row-level security is enabled, browser-facing roles receive no policies or privileges, and no production or demonstration records are inserted.
+
+| Record                 | Owned facts                                                                                               | Explicit exclusions                                                                                          |
+| ---------------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `suppliers`            | Organization-scoped code and display/legal identity; optional external-source identity                    | Contacts, terms, tax, payment details, compliance, assortment, lead times, and status                        |
+| `purchase_orders`      | Organization, supplier, optional destination, currency, source identity, idempotency, and occurrence time | Numbering policy, approvals, delivery promises, tax, landed cost, invoice, payment, and accounting treatment |
+| `purchase_order_lines` | Stable catalog reference when available plus SKU/name/variant snapshots, exact quantity, and unit cost    | Receiving, accepted quantity, valuation, tax allocation, discount allocation, and substitutions              |
+| `purchase_transitions` | Ordered, attributable, append-only state-change evidence                                                  | State vocabulary, allowed transitions, approval authority, cancellation, amendment, and downstream effects   |
+
+Supplier and destination foreign keys enforce organization ownership. Purchase transitions cannot be updated or deleted; corrections require new attributable evidence. Purchase headers and lines remain mutable only at the storage layer for a future controlled service, but no client or user can access them until role and workflow policy is approved.
+
+Inventory remains the authority for physical receipt movements. Purchasing must not infer stock from ordered quantities, and no receiving integration will be implemented until inspection, discrepancy, and inventory-posting rules are approved. Finance remains the authority for tax, liability, valuation, payment, and accounting interpretation.
 
 ## Purchase Lifecycle
 

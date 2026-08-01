@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added and deployed an empty supplier and purchase-order schema for organization-scoped supplier identities, purchase commitments, cost/quantity line snapshots, and append-only lifecycle evidence, with ownership-safe references, RLS, and deny-by-default client access.
+  - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02
+  - Impact: linked Supabase schema and migration history; no supplier contacts, commercial terms, purchase states, approvals, receipts, tax, landed cost, invoice, payment, accounting behavior, or records inserted
+  - Related: [Purchase System](06_PURCHASE_SYSTEM.md), [Accounting Rules](07_ACCOUNTING_RULES.md)
+
 - Added and deployed an empty payment-evidence schema for provider-neutral monetary records, order allocations, append-only events, and opaque provider references, with RLS and deny-by-default client access.
   - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02
   - Impact: linked Supabase schema and migration history; no payment method, provider, state, sensitive instrument, settlement, refund, fee, fraud, accounting behavior, or payment records inserted

@@ -40,6 +40,8 @@ The `fulfillment` schema owns order-linked fulfillment work, partial line assign
 
 The `payments` schema owns append-only provider-neutral monetary evidence, order allocations, payment events, and opaque provider references. It stores no payment instruments or credentials and does not determine order state, settlement, customer balance, or accounting treatment.
 
+The `purchasing` schema owns organization-scoped supplier identity, purchase-order identity, commercial line snapshots, and append-only lifecycle-transition evidence. It does not own receiving, inventory movement, supplier invoices, tax, landed cost, payment, or accounting treatment. Composite foreign keys prevent purchase orders from referencing suppliers or destinations owned by another organization.
+
 ### TODO — Architecture
 
 - Create bounded-context and data-ownership maps after business discovery.
@@ -116,3 +118,4 @@ Add context and entity-relationship diagrams, data dictionary, classification ca
 - [Order Lifecycle](04_ORDER_LIFECYCLE.md)
 - [Fulfillment and Delivery Architecture](20_FULFILLMENT_DELIVERY_ARCHITECTURE.md)
 - [Payment Evidence Architecture](21_PAYMENT_EVIDENCE_ARCHITECTURE.md)
+- [Purchase System](06_PURCHASE_SYSTEM.md)

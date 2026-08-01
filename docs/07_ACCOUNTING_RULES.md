@@ -63,6 +63,8 @@ Jurisdictions, registrations, tax calculations, invoice requirements, functional
 
 The private payment-evidence foundation records exact monetary facts and explicit order allocations without assigning debit, credit, revenue, receivable, cash, fee, tax, or settlement treatment. Finance-approved mappings must consume payment evidence through controlled contracts and must never rewrite it.
 
+The private purchase foundation records ordered quantities and unit-cost snapshots without creating supplier liabilities, inventory value, tax, landed cost, accruals, payments, or ledger postings. Those snapshots are operational source evidence only; finance-approved mappings, invoice evidence, receiving evidence, and reconciliation rules are required before any accounting effect exists.
+
 ## Reconciliation and Close
 
 Each financial balance should reconcile to controlled source records. Close procedures must define cutoff, dependencies, responsible roles, review evidence, adjustments, locking, and reopening authority.

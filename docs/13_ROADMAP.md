@@ -41,19 +41,20 @@ The Product Owner approved sequential roadmap execution on 2026-08-02. Technical
 
 ## Committed Delivery Sequence
 
-| Sprint | Outcome                                      | Status                  | Dependency                               |
-| ------ | -------------------------------------------- | ----------------------- | ---------------------------------------- |
-| 0      | Environment and ownership foundation         | Released                | Existing infrastructure                  |
-| 0.5    | AI-ready SEO and content architecture        | Released (architecture) | Documentation foundation                 |
-| 1      | Premium customer experience foundation       | Released                | Sprint 0                                 |
-| 2      | Governed product catalog foundation          | Released (foundation)   | Sprint 1                                 |
-| 3      | Organization, location, and channel topology | Released (foundation)   | Sprint 2                                 |
-| 4      | Inventory ledger foundation                  | Released (foundation)   | Sprint 3                                 |
-| 5      | Order lifecycle foundation                   | Released (foundation)   | Sprint 4                                 |
-| 6      | Fulfillment and delivery foundation          | Released (foundation)   | Sprint 5                                 |
-| 7      | Payment evidence foundation                  | Released (foundation)   | Sprint 5                                 |
-| 8      | Supplier and purchase foundation             | Next                    | Catalog, topology, and inventory         |
-| 9+     | Accounts, reports, automation, and AI        | Sequenced candidates    | Approved rules and preceding foundations |
+| Sprint | Outcome                                      | Status                  | Dependency                                  |
+| ------ | -------------------------------------------- | ----------------------- | ------------------------------------------- |
+| 0      | Environment and ownership foundation         | Released                | Existing infrastructure                     |
+| 0.5    | AI-ready SEO and content architecture        | Released (architecture) | Documentation foundation                    |
+| 1      | Premium customer experience foundation       | Released                | Sprint 0                                    |
+| 2      | Governed product catalog foundation          | Released (foundation)   | Sprint 1                                    |
+| 3      | Organization, location, and channel topology | Released (foundation)   | Sprint 2                                    |
+| 4      | Inventory ledger foundation                  | Released (foundation)   | Sprint 3                                    |
+| 5      | Order lifecycle foundation                   | Released (foundation)   | Sprint 4                                    |
+| 6      | Fulfillment and delivery foundation          | Released (foundation)   | Sprint 5                                    |
+| 7      | Payment evidence foundation                  | Released (foundation)   | Sprint 5                                    |
+| 8      | Supplier and purchase foundation             | Released (foundation)   | Catalog, topology, and inventory            |
+| 9      | Accounting evidence and ledger foundation    | Next                    | Operational evidence and finance boundaries |
+| 10+    | Reports, CRM, automation, and AI             | Sequenced candidates    | Approved rules and preceding foundations    |
 
 Sprint 2 now includes a policy-neutral catalog contract, replaceable data adapter, customer discovery, product lookup, and an empty deny-by-default Supabase catalog schema. Persistent administration, runtime data access, and publication workflows remain gated by catalog-owner and access rules.
 
@@ -66,6 +67,8 @@ Sprint 5 establishes empty order identities, commercial line snapshots, and appe
 Sprint 6 establishes empty fulfillment identities, partial order-line assignments, append-only transition evidence, and opaque delivery references. Fulfillment states, addresses, carriers, shipping methods, fees, promises, routing, inventory effects, and customer communication remain gated by approved policy.
 
 Sprint 7 establishes empty append-only payment records, order allocations, lifecycle events, and opaque provider references. Payment methods, providers, states, capture, refunds, settlement, fees, fraud, reconciliation, sensitive instruments, and accounting treatment remain gated by approved policy.
+
+Sprint 8 establishes empty organization-scoped supplier identities, purchase-order identities, commercial line snapshots, and append-only lifecycle evidence. Supplier contacts, terms, tax, payment details, approval rules, receiving, discrepancies, invoice matching, landed cost, settlement, and accounting treatment remain gated by approved policy.
 
 ## Entry and Exit Criteria
 
