@@ -112,3 +112,4 @@ Add approved state diagrams, transition tables, event definitions, sequence diag
 - [Database Architecture](08_DATABASE_ARCHITECTURE.md)
 - [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
 - [Operating Topology Architecture](19_OPERATING_TOPOLOGY_ARCHITECTURE.md)
+- [Fulfillment and Delivery Architecture](20_FULFILLMENT_DELIVERY_ARCHITECTURE.md)

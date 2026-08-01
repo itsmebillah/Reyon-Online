@@ -36,6 +36,8 @@ The `inventory` schema owns stock-item and lot identities plus append-only movem
 
 The `sales` schema owns order identity, commercial line snapshots, and append-only lifecycle-transition evidence. Payment, fulfillment, inventory, returns, customer identity, tax, and accounting remain separate responsibilities connected only through future approved contracts.
 
+The `fulfillment` schema owns order-linked fulfillment work, partial line assignments, append-only lifecycle evidence, and opaque external delivery references. It deliberately excludes customer address data, inventory movement, payment, accounting, and carrier behavior.
+
 ### TODO — Architecture
 
 - Create bounded-context and data-ownership maps after business discovery.
@@ -110,3 +112,4 @@ Add context and entity-relationship diagrams, data dictionary, classification ca
 - [Operating Topology Architecture](19_OPERATING_TOPOLOGY_ARCHITECTURE.md)
 - [Inventory System](05_INVENTORY_SYSTEM.md)
 - [Order Lifecycle](04_ORDER_LIFECYCLE.md)
+- [Fulfillment and Delivery Architecture](20_FULFILLMENT_DELIVERY_ARCHITECTURE.md)

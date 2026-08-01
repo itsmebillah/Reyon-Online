@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added and deployed an empty fulfillment schema for order-linked work, partial order-line assignments, append-only lifecycle evidence, and opaque external delivery references, with RLS and deny-by-default client access.
+  - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02
+  - Impact: linked Supabase schema and migration history; no fulfillment states, address data, carrier, shipping method, fee, routing, tracking workflow, or fulfillment records inserted
+  - Related: [Fulfillment and Delivery Architecture](20_FULFILLMENT_DELIVERY_ARCHITECTURE.md), [Order Lifecycle](04_ORDER_LIFECYCLE.md)
+
 - Added and deployed an empty order lifecycle schema for organization/channel-owned orders, commercial line snapshots, and append-only transition evidence, with idempotency, RLS, and deny-by-default client access.
   - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02
   - Impact: linked Supabase schema and migration history; no order states, transitions, customer data, payment, fulfillment, tax, return, or order records inserted

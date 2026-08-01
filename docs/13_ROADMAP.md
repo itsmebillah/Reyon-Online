@@ -50,8 +50,9 @@ The Product Owner approved sequential roadmap execution on 2026-08-02. Technical
 | 3      | Organization, location, and channel topology | Released (foundation)   | Sprint 2                                 |
 | 4      | Inventory ledger foundation                  | Released (foundation)   | Sprint 3                                 |
 | 5      | Order lifecycle foundation                   | Released (foundation)   | Sprint 4                                 |
-| 6      | Fulfillment and delivery foundation          | Next                    | Sprint 5 and approved fulfillment rules  |
-| 7+     | Accounts, reports, automation, and AI        | Sequenced candidates    | Approved rules and preceding foundations |
+| 6      | Fulfillment and delivery foundation          | Released (foundation)   | Sprint 5                                 |
+| 7      | Payment evidence foundation                  | Next                    | Sprint 5 and approved payment rules      |
+| 8+     | Accounts, reports, automation, and AI        | Sequenced candidates    | Approved rules and preceding foundations |
 
 Sprint 2 now includes a policy-neutral catalog contract, replaceable data adapter, customer discovery, product lookup, and an empty deny-by-default Supabase catalog schema. Persistent administration, runtime data access, and publication workflows remain gated by catalog-owner and access rules.
 
@@ -60,6 +61,8 @@ Sprint 3 establishes empty, deny-by-default organization, location, and channel 
 Sprint 4 establishes empty stock-item and lot identities plus an append-only signed movement ledger. Movement vocabularies, stock calculations, reservations, counting, valuation, and user workflows remain gated by approved inventory policy.
 
 Sprint 5 establishes empty order identities, commercial line snapshots, and append-only transition evidence. State vocabularies, allowed transitions, customer data, payments, fulfillment, tax, returns, and executable workflows remain gated by approved policy.
+
+Sprint 6 establishes empty fulfillment identities, partial order-line assignments, append-only transition evidence, and opaque delivery references. Fulfillment states, addresses, carriers, shipping methods, fees, promises, routing, inventory effects, and customer communication remain gated by approved policy.
 
 ## Entry and Exit Criteria
 
