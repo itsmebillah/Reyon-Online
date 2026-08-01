@@ -28,16 +28,16 @@ Potential scope includes sales, discounts, tax, tender, refunds, customer balanc
 
 ## Financial Event Specification
 
-| Field | Required definition |
-|---|---|
-| Event | Approved business occurrence |
-| Recognition point | Conditions and business date |
-| Source | Authoritative record and identifier |
-| Accounts / dimensions | Approved classification |
-| Amount basis | Currency, tax, rounding, and valuation inputs |
-| Entry pattern | Debit/credit treatment approved by Finance |
-| Reversal / correction | Controlled remediation |
-| Reconciliation | Evidence tying source to ledger |
+| Field                 | Required definition                           |
+| --------------------- | --------------------------------------------- |
+| Event                 | Approved business occurrence                  |
+| Recognition point     | Conditions and business date                  |
+| Source                | Authoritative record and identifier           |
+| Accounts / dimensions | Approved classification                       |
+| Amount basis          | Currency, tax, rounding, and valuation inputs |
+| Entry pattern         | Debit/credit treatment approved by Finance    |
+| Reversal / correction | Controlled remediation                        |
+| Reconciliation        | Evidence tying source to ledger               |
 
 ### TODO — Finance Owner
 

@@ -15,6 +15,7 @@ This document establishes experience-design standards for a coherent, accessible
 - [Accessibility and localization](#accessibility-and-localization)
 - [Responsive and device strategy](#responsive-and-device-strategy)
 - [Trust, safety, and privacy](#trust-safety-and-privacy)
+- [AI content review experience](#ai-content-review-experience)
 - [Quality and governance](#quality-and-governance)
 - [Future expansion](#future-expansion)
 - [Related documents](#related-documents)
@@ -75,6 +76,17 @@ Responsive behavior should follow task context, not generic breakpoints alone. P
 
 Interfaces must not reveal unauthorized data through navigation, exports, errors, or cached state. AI output must be labeled with source, confidence or limitation where relevant, and a human decision point appropriate to risk.
 
+## AI Content Review Experience
+
+AI-generated product content must appear as a suggestion, visually and semantically distinct from approved and published content. The review experience must support approve, reject, edit, regenerate, and save actions without allowing generated output to publish automatically.
+
+Reviewers should be able to inspect source facts, changed or stale inputs, previous versions, validation findings, duplicate/canonical conflicts, channel/locale scope, and publication impact before deciding. Editing and regeneration must preserve the original suggestion and show version lineage. Concurrent-change warnings must prevent approval of an unintended older revision.
+
+### TODO — Product Owner / UX Owner
+
+- Define review-queue ownership, bulk-action policy, approval reasons, required previews, and accessibility expectations.
+- Define which quality findings block approval and which may be acknowledged with a reason.
+
 ## Quality and Governance
 
 New patterns require design-system review. Acceptance should include accessibility, content, responsive behavior, permission states, loading/empty/error/success states, and representative data extremes.
@@ -94,3 +106,4 @@ Add design tokens, component specifications, content guide, accessibility checkl
 - [Business Overview](01_BUSINESS_OVERVIEW.md)
 - [Tech Stack](10_TECH_STACK.md)
 - [Coding Standards](11_CODING_STANDARDS.md)
+- [AI SEO and Product Content Architecture](16_AI_SEO_CONTENT_ARCHITECTURE.md)

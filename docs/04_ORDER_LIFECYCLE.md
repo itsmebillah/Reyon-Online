@@ -36,16 +36,16 @@ Candidate information areas include parties, channel, location, lines, quantitie
 
 The approved lifecycle must be represented as a transition catalog rather than inferred from a suggested sequence.
 
-| Required field | Meaning |
-|---|---|
-| State / transition ID | Stable business identifier |
-| Entry criteria | Facts required before entry |
-| Permitted actor | Role and scope allowed to act |
-| Action | Business event causing transition |
-| Side effects | Inventory, payment, fulfillment, accounting, notification, and reporting impacts |
-| Exit criteria | Evidence of completion |
-| Reversal / recovery | Approved correction path |
-| Audit evidence | Actor, time, reason, references, and rule version |
+| Required field        | Meaning                                                                          |
+| --------------------- | -------------------------------------------------------------------------------- |
+| State / transition ID | Stable business identifier                                                       |
+| Entry criteria        | Facts required before entry                                                      |
+| Permitted actor       | Role and scope allowed to act                                                    |
+| Action                | Business event causing transition                                                |
+| Side effects          | Inventory, payment, fulfillment, accounting, notification, and reporting impacts |
+| Exit criteria         | Evidence of completion                                                           |
+| Reversal / recovery   | Approved correction path                                                         |
+| Audit evidence        | Actor, time, reason, references, and rule version                                |
 
 ### TODO — Product Owner and Domain Owners
 

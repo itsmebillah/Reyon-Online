@@ -24,6 +24,22 @@ This document defines the intended repository organization for a scalable modula
 ├── .env.example
 ├── .gitignore
 ├── README.md
+├── package.json
+├── package-lock.json
+├── next.config.ts
+├── tsconfig.json
+├── eslint.config.mjs
+├── playwright.config.ts
+├── public/
+│   └── images/          # Original, project-owned optimized source imagery
+├── scripts/
+│   └── run-e2e.mjs      # OS-assigned isolated browser-test launcher
+├── src/
+│   ├── app/             # Customer routes, metadata, robots, sitemap, and global styles
+│   ├── components/      # Reusable shell, design-system, product, and interaction components
+│   └── data/            # Typed presentation fixtures pending approved backend contracts
+├── tests/
+│   └── e2e/             # Edge route, interaction, responsive, console, and network checks
 ├── supabase/
 │   └── config.toml
 └── docs/
@@ -42,7 +58,8 @@ This document defines the intended repository organization for a scalable modula
     ├── 12_FOLDER_STRUCTURE.md
     ├── 13_ROADMAP.md
     ├── 14_CHANGELOG.md
-    └── 15_ENVIRONMENT_AUDIT.md
+    ├── 15_ENVIRONMENT_AUDIT.md
+    └── 16_AI_SEO_CONTENT_ARCHITECTURE.md
 ```
 
 ## Organization Principles

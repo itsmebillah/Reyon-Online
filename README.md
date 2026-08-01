@@ -2,7 +2,7 @@
 
 REYON Business OS is the planned operating platform for REYON's Beauty & Care retail business. It is broader than an ecommerce site: the platform is intended to unify ecommerce, administration, point of sale, customer relationships, inventory, purchasing, accounting, reporting, analytics, automation, and AI-enabled capabilities.
 
-This repository currently contains the documentation foundation. Product policy and implementation decisions remain intentionally uncommitted until approved by the appropriate owner.
+This repository contains the documentation foundation and the Sprint 1 customer experience module. The frontend is a production-quality, responsive experience foundation; commerce, authentication, persistence, and other business behavior remain intentionally inactive until their rules are approved.
 
 ## Table of Contents
 
@@ -16,24 +16,25 @@ This repository currently contains the documentation foundation. Product policy 
 
 ## Documentation Map
 
-| Area | Document | Purpose |
-|---|---|---|
-| Direction | [Project Vision](docs/00_PROJECT_VISION.md) | Defines intent, outcomes, boundaries, and principles. |
-| Business | [Business Overview](docs/01_BUSINESS_OVERVIEW.md) | Captures operating context and business capabilities. |
-| Policy | [Business Rules](docs/02_BUSINESS_RULES.md) | Provides the controlled register for approved business rules. |
-| Access | [User Roles](docs/03_USER_ROLES.md) | Defines the framework for personas, roles, and permissions. |
-| Commerce | [Order Lifecycle](docs/04_ORDER_LIFECYCLE.md) | Specifies the future order state model and controls. |
-| Operations | [Inventory System](docs/05_INVENTORY_SYSTEM.md) | Defines inventory concepts, movements, and control points. |
-| Operations | [Purchase System](docs/06_PURCHASE_SYSTEM.md) | Defines procurement boundaries and lifecycle structure. |
-| Finance | [Accounting Rules](docs/07_ACCOUNTING_RULES.md) | Provides the governance framework for financial treatment. |
-| Data | [Database Architecture](docs/08_DATABASE_ARCHITECTURE.md) | Establishes data architecture principles and decision gates. |
-| Experience | [UI Guidelines](docs/09_UI_GUIDELINES.md) | Establishes cross-module interface standards. |
-| Engineering | [Tech Stack](docs/10_TECH_STACK.md) | Records technology-selection criteria and pending decisions. |
-| Engineering | [Coding Standards](docs/11_CODING_STANDARDS.md) | Defines quality, security, review, and delivery expectations. |
-| Repository | [Folder Structure](docs/12_FOLDER_STRUCTURE.md) | Defines the intended scalable repository organization. |
-| Delivery | [Roadmap](docs/13_ROADMAP.md) | Provides a dependency-aware planning framework. |
-| History | [Changelog](docs/14_CHANGELOG.md) | Records meaningful documentation and product changes. |
-| Environment | [Sprint 0 Environment Audit](docs/15_ENVIRONMENT_AUDIT.md) | Records verified tool, repository, and service readiness. |
+| Area            | Document                                                                          | Purpose                                                                                    |
+| --------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Direction       | [Project Vision](docs/00_PROJECT_VISION.md)                                       | Defines intent, outcomes, boundaries, and principles.                                      |
+| Business        | [Business Overview](docs/01_BUSINESS_OVERVIEW.md)                                 | Captures operating context and business capabilities.                                      |
+| Policy          | [Business Rules](docs/02_BUSINESS_RULES.md)                                       | Provides the controlled register for approved business rules.                              |
+| Access          | [User Roles](docs/03_USER_ROLES.md)                                               | Defines the framework for personas, roles, and permissions.                                |
+| Commerce        | [Order Lifecycle](docs/04_ORDER_LIFECYCLE.md)                                     | Specifies the future order state model and controls.                                       |
+| Operations      | [Inventory System](docs/05_INVENTORY_SYSTEM.md)                                   | Defines inventory concepts, movements, and control points.                                 |
+| Operations      | [Purchase System](docs/06_PURCHASE_SYSTEM.md)                                     | Defines procurement boundaries and lifecycle structure.                                    |
+| Finance         | [Accounting Rules](docs/07_ACCOUNTING_RULES.md)                                   | Provides the governance framework for financial treatment.                                 |
+| Data            | [Database Architecture](docs/08_DATABASE_ARCHITECTURE.md)                         | Establishes data architecture principles and decision gates.                               |
+| Experience      | [UI Guidelines](docs/09_UI_GUIDELINES.md)                                         | Establishes cross-module interface standards.                                              |
+| Engineering     | [Tech Stack](docs/10_TECH_STACK.md)                                               | Records technology-selection criteria and pending decisions.                               |
+| Engineering     | [Coding Standards](docs/11_CODING_STANDARDS.md)                                   | Defines quality, security, review, and delivery expectations.                              |
+| Repository      | [Folder Structure](docs/12_FOLDER_STRUCTURE.md)                                   | Defines the intended scalable repository organization.                                     |
+| Delivery        | [Roadmap](docs/13_ROADMAP.md)                                                     | Provides a dependency-aware planning framework.                                            |
+| History         | [Changelog](docs/14_CHANGELOG.md)                                                 | Records meaningful documentation and product changes.                                      |
+| Environment     | [Sprint 0 Environment Audit](docs/15_ENVIRONMENT_AUDIT.md)                        | Records verified tool, repository, and service readiness.                                  |
+| Content and SEO | [AI SEO and Product Content Architecture](docs/16_AI_SEO_CONTENT_ARCHITECTURE.md) | Defines AI-ready content boundaries, human review, SEO quality, and channel extensibility. |
 
 ## Product Scope
 
@@ -49,11 +50,11 @@ The target system is a modular retail operating system. Each module must be capa
 
 ## Getting Started
 
-1. Read the project vision and business overview.
-2. Resolve business-rule and role questions before designing workflows.
-3. Use the lifecycle documents to define module behavior.
-4. Record architecture and technology decisions before application scaffolding.
-5. Add roadmap entries only when outcomes, dependencies, and acceptance evidence are understood.
+1. Install Node.js 24 and run `npm install`.
+2. Run `npm run dev` for local development.
+3. Run `npm run format`, `npm run lint`, `npm run typecheck`, and `npm run build` before committing.
+4. Run `npm run test:e2e` for isolated Microsoft Edge coverage on an OS-assigned local port.
+5. Read the project vision and relevant business documents before implementing domain behavior.
 
 ## Governance
 

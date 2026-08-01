@@ -1,0 +1,20 @@
+import type { MetadataRoute } from "next";
+import { products } from "@/data/catalog";
+export default function sitemap(): MetadataRoute.Sitemap {
+  const base = "https://reyon-online.vercel.app";
+  const routes = ["", "/shop", "/categories", "/about", "/contact"];
+  return [
+    ...routes.map((route) => ({
+      url: `${base}${route}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: route === "" ? 1 : 0.7,
+    })),
+    ...products.map((p) => ({
+      url: `${base}/products/${p.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    })),
+  ];
+}

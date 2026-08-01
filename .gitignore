@@ -4,6 +4,10 @@ node_modules/
 dist/
 build/
 coverage/
+.tmp-*/
+playwright-report/
+test-results/
+*.tsbuildinfo
 
 # Local environment and secrets
 .env

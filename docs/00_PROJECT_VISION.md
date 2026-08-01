@@ -53,12 +53,12 @@ The vision includes Ecommerce, Admin, POS, CRM, Inventory, Purchase, Accounts, R
 
 ## Capability Horizon
 
-| Horizon | Intent | Approval needed |
-|---|---|---|
-| Foundation | Confirm domains, policies, ownership, architecture, and controls. | Product and architecture sign-off |
-| Core operations | Establish the minimum connected retail workflows. | Prioritized scope and acceptance criteria |
-| Intelligence | Add reporting, analytics, and governed automation. | Data-quality and control readiness |
-| Optimization | Apply AI to approved, measurable use cases. | Risk, privacy, and human-oversight approval |
+| Horizon         | Intent                                                            | Approval needed                             |
+| --------------- | ----------------------------------------------------------------- | ------------------------------------------- |
+| Foundation      | Confirm domains, policies, ownership, architecture, and controls. | Product and architecture sign-off           |
+| Core operations | Establish the minimum connected retail workflows.                 | Prioritized scope and acceptance criteria   |
+| Intelligence    | Add reporting, analytics, and governed automation.                | Data-quality and control readiness          |
+| Optimization    | Apply AI to approved, measurable use cases.                       | Risk, privacy, and human-oversight approval |
 
 The roadmap owns actual phasing; this table is directional only.
 

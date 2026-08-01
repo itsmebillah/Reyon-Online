@@ -42,6 +42,16 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added the Sprint 1 premium customer experience foundation using Next.js App Router, strict TypeScript, reusable design-system and commerce presentation components, original REYON imagery, responsive customer routes, metadata/robots/sitemap support, and isolated Playwright browser acceptance tests.
+  - Approval/owner: Sprint 1 Premium Customer Experience Foundation mandate
+  - Impact: customer-facing presentation and development pipeline; no backend, commerce transaction, authentication, database, or AI behavior
+  - Related: [Tech Stack](10_TECH_STACK.md), [UI Guidelines](09_UI_GUIDELINES.md)
+
+- Added the Sprint 0.5 AI SEO and Product Content Architecture covering separated data responsibilities, content artifacts, generation contracts, mandatory human review, provenance, SEO quality, localization, structured data, and channel adapters.
+  - Approval/owner: pending Product Owner review
+  - Impact: documentation and architecture only; no AI, application, database, content, or deployment behavior
+  - Related: [AI SEO and Product Content Architecture](16_AI_SEO_CONTENT_ARCHITECTURE.md)
+
 - Added the Sprint 0 environment audit, repository ignore policy, public environment-variable contract, and Supabase local configuration.
   - Approval/owner: Sprint 0 environment and project-ownership mandate
   - Impact: development environment and documentation only; no application, database, or deployment behavior

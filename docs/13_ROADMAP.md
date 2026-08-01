@@ -29,13 +29,13 @@ This document provides a controlled, outcome-oriented planning structure for REY
 
 ## Planning Horizons
 
-| Horizon | Planning intent | Commitment level |
-|---|---|---|
-| Vision | Preserve long-term capability direction | Not a delivery commitment |
-| Discovery | Resolve outcomes, policy, users, process, data, and constraints | Time-boxed learning only after approval |
-| Candidate | Shape options, dependencies, risk, and acceptance evidence | Prioritization pending |
-| Committed | Deliver an approved outcome with owner, capacity, and acceptance criteria | Explicit Product Owner commitment |
-| Released | Operate, measure, support, and improve | Evidence-based review |
+| Horizon   | Planning intent                                                           | Commitment level                        |
+| --------- | ------------------------------------------------------------------------- | --------------------------------------- |
+| Vision    | Preserve long-term capability direction                                   | Not a delivery commitment               |
+| Discovery | Resolve outcomes, policy, users, process, data, and constraints           | Time-boxed learning only after approval |
+| Candidate | Shape options, dependencies, risk, and acceptance evidence                | Prioritization pending                  |
+| Committed | Deliver an approved outcome with owner, capacity, and acceptance criteria | Explicit Product Owner commitment       |
+| Released  | Operate, measure, support, and improve                                    | Evidence-based review                   |
 
 No item is currently marked committed.
 
@@ -46,6 +46,8 @@ A candidate should identify outcome, owner, users, business rules, process, data
 ## Foundation Work
 
 Potential foundation outcomes include product charter, stakeholder map, business glossary, rule register, role and permission model, current/target process maps, system/data inventory, architecture decisions, security/privacy assessment, design foundation, engineering workflow, and operating model.
+
+The AI-ready product content foundation is a candidate outcome consisting of product/content ownership boundaries, content-type catalog, human-review lifecycle, SEO quality rules, URL/canonical policy, localization strategy, and channel contract design. This is architecture readiness only and does not authorize AI integration or content publication.
 
 These are candidates; scope and priority require approval.
 
@@ -89,3 +91,4 @@ Add approved initiative records, dependency visualization, milestones, release p
 - [Business Overview](01_BUSINESS_OVERVIEW.md)
 - [Tech Stack](10_TECH_STACK.md)
 - [Changelog](14_CHANGELOG.md)
+- [AI SEO and Product Content Architecture](16_AI_SEO_CONTENT_ARCHITECTURE.md)

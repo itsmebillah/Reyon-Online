@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document governs technology evaluation and records stack decisions once evidence and constraints are approved. No framework, language, cloud, database, or vendor is selected by this documentation foundation.
+This document governs technology evaluation and records approved stack decisions. Sprint 1 establishes the customer experience baseline; later business modules still require evidence-based architecture decisions.
 
 ## Table of Contents
 
@@ -30,6 +30,23 @@ This document governs technology evaluation and records stack decisions once evi
 ## Architecture Posture
 
 The system is expected to be modular, but modularity does not require distributed services. Deployment boundaries should follow scale, team ownership, reliability, security, and change-isolation evidence. Premature distribution can increase transaction, observability, and operating risk.
+
+### Approved Sprint 1 Baseline
+
+| Responsibility       | Selection                                | Rationale                                                                                                 |
+| -------------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Runtime              | Node.js 24.x                             | Matches the verified local and Vercel runtime; pinned to the supported major                              |
+| Language             | TypeScript 5.9, strict mode              | Strong contracts and scalable refactoring                                                                 |
+| Web framework        | Next.js 16 App Router                    | Server-first rendering, route-level metadata, image optimization, static generation, and Vercel alignment |
+| UI runtime           | React 19                                 | Supported Next.js rendering and component model                                                           |
+| Package manager      | npm 11 with lockfile                     | Available, auditable, deterministic baseline without an additional tool dependency                        |
+| Icons                | Lucide React                             | Accessible, consistent, tree-shakeable interface icons                                                    |
+| Quality              | ESLint 9 and Prettier 3                  | Automated correctness and formatting gates                                                                |
+| Browser testing      | Playwright with installed Microsoft Edge | Real browser, responsive, console, network, image, and interaction verification                           |
+| Deployment           | Vercel                                   | Existing linked project and native Next.js delivery                                                       |
+| Future data platform | Supabase                                 | Existing linked project; no application schema or runtime integration approved yet                        |
+
+Transitive `postcss` and `sharp` versions are explicitly overridden to patched compatible releases while upstream Next.js dependency ranges lag the current advisories. Overrides must be reviewed during every framework upgrade.
 
 ## Decision Categories
 

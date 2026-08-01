@@ -24,19 +24,19 @@ Rules should describe business intent independently of user-interface or storage
 
 ## Rule Record Format
 
-| Field | Required meaning |
-|---|---|
-| Rule ID | Stable domain-prefixed identifier |
-| Title | Concise business meaning |
-| Statement | Unambiguous approved behavior |
-| Rationale | Business or control need |
-| Scope | Channels, locations, entities, products, or users affected |
-| Inputs and outcome | Required facts and resulting decision/action |
-| Exceptions | Approved deviations and authority |
-| Owner / approver | Accountable roles |
-| Effective / review dates | Validity and review window |
-| Status / version | Draft, approved, superseded, or retired |
-| Traceability | Processes, requirements, tests, reports, and records affected |
+| Field                    | Required meaning                                              |
+| ------------------------ | ------------------------------------------------------------- |
+| Rule ID                  | Stable domain-prefixed identifier                             |
+| Title                    | Concise business meaning                                      |
+| Statement                | Unambiguous approved behavior                                 |
+| Rationale                | Business or control need                                      |
+| Scope                    | Channels, locations, entities, products, or users affected    |
+| Inputs and outcome       | Required facts and resulting decision/action                  |
+| Exceptions               | Approved deviations and authority                             |
+| Owner / approver         | Accountable roles                                             |
+| Effective / review dates | Validity and review window                                    |
+| Status / version         | Draft, approved, superseded, or retired                       |
+| Traceability             | Processes, requirements, tests, reports, and records affected |
 
 ## Rule Domains
 

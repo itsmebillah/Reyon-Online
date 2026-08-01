@@ -19,12 +19,12 @@ This document frames REYON's operating context and the business capabilities the
 
 ## Business Identity
 
-| Attribute | Current statement |
-|---|---|
-| Project | REYON Business OS |
-| Working brand | REYON |
-| Business category | Beauty & Care |
-| Product type | Retail Business Operating System |
+| Attribute         | Current statement                |
+| ----------------- | -------------------------------- |
+| Project           | REYON Business OS                |
+| Working brand     | REYON                            |
+| Business category | Beauty & Care                    |
+| Product type      | Retail Business Operating System |
 
 Legal identity, corporate structure, markets, and commercial model remain unconfirmed.
 
@@ -40,19 +40,19 @@ The platform is expected to connect demand, fulfillment, customer service, stock
 
 ## Capability Map
 
-| Domain | Intended responsibility | Status |
-|---|---|---|
-| Ecommerce | Customer-facing digital commerce | Vision only |
-| Admin | Governed operational administration | Vision only |
-| POS | Assisted or in-person selling | Vision only |
-| CRM | Customer identity, engagement, and service context | Vision only |
-| Inventory | Stock state, movement, availability, and control | Vision only |
-| Purchase | Supplier and replenishment workflows | Vision only |
-| Accounts | Financial classification, posting, reconciliation, and close | Vision only |
-| Reports | Controlled operational and statutory views | Vision only |
-| Analytics | Exploratory and decision-support insight | Vision only |
-| Automation | Approved rules-based orchestration | Vision only |
-| AI | Governed assistive or predictive capabilities | Vision only |
+| Domain     | Intended responsibility                                      | Status      |
+| ---------- | ------------------------------------------------------------ | ----------- |
+| Ecommerce  | Customer-facing digital commerce                             | Vision only |
+| Admin      | Governed operational administration                          | Vision only |
+| POS        | Assisted or in-person selling                                | Vision only |
+| CRM        | Customer identity, engagement, and service context           | Vision only |
+| Inventory  | Stock state, movement, availability, and control             | Vision only |
+| Purchase   | Supplier and replenishment workflows                         | Vision only |
+| Accounts   | Financial classification, posting, reconciliation, and close | Vision only |
+| Reports    | Controlled operational and statutory views                   | Vision only |
+| Analytics  | Exploratory and decision-support insight                     | Vision only |
+| Automation | Approved rules-based orchestration                           | Vision only |
+| AI         | Governed assistive or predictive capabilities                | Vision only |
 
 ## Core Business Concepts
 

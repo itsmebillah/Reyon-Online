@@ -36,17 +36,17 @@ Potential categories include workforce users, customers, suppliers, delivery or 
 
 ## Role Definition Template
 
-| Field | Description |
-|---|---|
-| Role ID and name | Stable identifier and business-readable label |
-| Purpose | Responsibility the role enables |
-| Eligible actors | Who may receive it |
-| Capabilities | View, create, change, approve, reverse, export, or administer |
-| Scope | Entity, location, channel, team, or record restrictions |
-| Sensitive data | Permitted classifications and masking needs |
-| Conflicts | Incompatible roles or permissions |
-| Approval | Granting authority and evidence |
-| Review | Owner, frequency, and expiry behavior |
+| Field            | Description                                                   |
+| ---------------- | ------------------------------------------------------------- |
+| Role ID and name | Stable identifier and business-readable label                 |
+| Purpose          | Responsibility the role enables                               |
+| Eligible actors  | Who may receive it                                            |
+| Capabilities     | View, create, change, approve, reverse, export, or administer |
+| Scope            | Entity, location, channel, team, or record restrictions       |
+| Sensitive data   | Permitted classifications and masking needs                   |
+| Conflicts        | Incompatible roles or permissions                             |
+| Approval         | Granting authority and evidence                               |
+| Review           | Owner, frequency, and expiry behavior                         |
 
 ## Permission Model
 

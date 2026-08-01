@@ -14,6 +14,7 @@ This document establishes data-architecture principles, ownership questions, and
 - [History and audit](#history-and-audit)
 - [Security and privacy](#security-and-privacy)
 - [Integration and analytics](#integration-and-analytics)
+- [Content and SEO data boundaries](#content-and-seo-data-boundaries)
 - [Reliability and operations](#reliability-and-operations)
 - [Decision gates](#decision-gates)
 - [Future expansion](#future-expansion)
@@ -34,7 +35,7 @@ Each business fact requires one authoritative owner, a defined lifecycle, and su
 
 ## Conceptual Data Domains
 
-Candidate domains are identity/access, organization/location/channel, catalog, customer/CRM, order, payment, fulfillment, inventory, supplier/purchase, accounting, reporting/analytics, automation, and audit. These boundaries are hypotheses.
+Candidate domains are identity/access, organization/location/channel, catalog, product content/SEO, customer/CRM, order, payment, fulfillment, inventory, supplier/purchase, accounting, reporting/analytics, automation, and audit. These boundaries are hypotheses.
 
 ## Identity and Keys
 
@@ -61,6 +62,14 @@ Data must be classified before access, encryption, masking, residency, retention
 
 Operational schemas should not become undocumented public APIs. Integration contracts require versioning and ownership. Analytics must preserve metric definitions, lineage, latency, correction behavior, and access controls.
 
+## Content and SEO Data Boundaries
+
+Product facts, business policy, marketing context, SEO configuration, AI-generated suggestions, approved content artifacts, and publication records are separate conceptual responsibilities. Generated text must not overwrite product master data or become publishable without a recorded human approval.
+
+The future logical model must support typed and locale-aware content artifacts, immutable source snapshots, versions and supersession, generation lineage, validation evidence, review decisions, canonical/URL history, channel projections, and publication reconciliation. Physical tables and storage boundaries remain pending architecture decisions.
+
+Structured data should be rendered from authoritative facts and approved artifacts. AI output must not become an opaque source of JSON-LD truth.
+
 ## Reliability and Operations
 
 The database decision must address availability, backup, restore validation, recovery objectives, capacity, observability, migrations, archival, and incident response. Requirements precede vendor selection.
@@ -74,6 +83,7 @@ The database decision must address availability, backup, restore validation, rec
 - Select storage technologies through architecture decision records.
 - Define schema migration, compatibility, seed/reference data, backup, and restore standards.
 - Produce conceptual, logical, and physical models in that order as appropriate.
+- Define the content artifact, source snapshot, review, approval, URL registry, publication, and channel-projection models described in the AI SEO architecture.
 
 ## Future Expansion
 
@@ -85,3 +95,4 @@ Add context and entity-relationship diagrams, data dictionary, classification ca
 - [Tech Stack](10_TECH_STACK.md)
 - [Coding Standards](11_CODING_STANDARDS.md)
 - [Folder Structure](12_FOLDER_STRUCTURE.md)
+- [AI SEO and Product Content Architecture](16_AI_SEO_CONTENT_ARCHITECTURE.md)
