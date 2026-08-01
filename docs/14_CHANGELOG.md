@@ -74,6 +74,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Changed
 
+- Refined the mobile header into a balanced three-column navigation row and replaced the floating circular seal with the compact horizontal REYON / Beauty & Care wordmark lockup; desktop and footer logo treatments remain unchanged.
+  - Approval/owner: Product Owner mobile-header review dated 2026-08-01
+  - Impact: mobile header brand balance, responsive logo behavior, and browser acceptance coverage; navigation features unchanged
+  - Related: [UI Guidelines](09_UI_GUIDELINES.md), [Brand and Business Configuration](17_BRAND_BUSINESS_CONFIGURATION.md)
+
 - Refined the positioning hierarchy so REYON is first presented as a Premium Beauty & Personal Care Retailer and second as specializing in Authentic Korean Beauty; removed messaging that could imply an exclusively Korean-beauty assortment.
   - Approval/owner: Product Owner positioning-refinement directive dated 2026-08-01
   - Impact: homepage information hierarchy, About, Shop, metadata, footer, tests, and authoritative business documentation; visual design unchanged

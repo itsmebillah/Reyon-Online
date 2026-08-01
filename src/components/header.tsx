@@ -49,10 +49,19 @@ export function Header() {
           aria-label="REYON home"
         >
           <Image
+            className="header-logo header-logo--seal"
             src="/images/reyon-logo-primary.png"
             alt="REYON Beauty & Care"
             width={72}
             height={72}
+            priority
+          />
+          <Image
+            className="header-logo header-logo--wordmark"
+            src="/images/reyon-wordmark-horizontal.webp"
+            alt="REYON Beauty & Care"
+            width={640}
+            height={246}
             priority
           />
         </Link>

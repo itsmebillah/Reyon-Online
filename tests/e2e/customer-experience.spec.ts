@@ -42,34 +42,40 @@ function monitor(page: Page) {
   return failures;
 }
 
-test("every route renders without runtime or asset failures", async ({
-  page,
-}) => {
+for (const route of routes) {
+  test(`route ${route} renders without runtime or asset failures`, async ({
+    page,
+  }) => {
+    const failures = monitor(page);
+    const response = await page.goto(route, { waitUntil: "load" });
+    expect(response?.status(), route).toBe(200);
+    expect(failures).toEqual([]);
+  });
+}
+
+test("homepage images load successfully", async ({ page }) => {
   const failures = monitor(page);
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "load" });
   await expect(page).toHaveTitle(/REYON/);
-  for (const route of routes) {
-    const response = await page.goto(route, { waitUntil: "networkidle" });
-    expect(response?.status(), route).toBe(
-      route.includes("does-not-exist") ? 404 : 200,
-    );
-  }
-  await page.goto("/", { waitUntil: "networkidle" });
-  for (const image of await page.locator("img").all())
+  for (const image of await page.locator("img:visible").all())
     await image.scrollIntoViewIfNeeded();
-  await page.waitForLoadState("networkidle");
-  const brokenImages = await page
-    .locator("img")
-    .evaluateAll((images) =>
-      images
-        .filter(
-          (image) =>
-            !(image as HTMLImageElement).complete ||
-            (image as HTMLImageElement).naturalWidth === 0,
-        )
-        .map((image) => (image as HTMLImageElement).currentSrc),
-    );
-  expect(brokenImages).toEqual([]);
+  await expect
+    .poll(
+      () =>
+        page.locator("img").evaluateAll((images) =>
+          images
+            .filter((image) => {
+              if (getComputedStyle(image).display === "none") return false;
+              return (
+                !(image as HTMLImageElement).complete ||
+                (image as HTMLImageElement).naturalWidth === 0
+              );
+            })
+            .map((image) => (image as HTMLImageElement).currentSrc),
+        ),
+      { timeout: 10_000 },
+    )
+    .toEqual([]);
   expect(failures).toEqual([]);
 });
 
@@ -118,6 +124,24 @@ test("homepage communicates the approved brand positioning hierarchy", async ({
   await expect(
     page.getByRole("heading", { name: "Authentic K-Beauty expertise" }),
   ).toBeVisible();
+  expect(failures).toEqual([]);
+});
+
+test("header uses the appropriate responsive logo lockup", async ({ page }) => {
+  const failures = monitor(page);
+  await page.goto("/");
+  const isMobile = (page.viewportSize()?.width ?? 0) <= 680;
+  const wordmark = page.locator(".header-logo--wordmark");
+  const seal = page.locator(".header-logo--seal");
+
+  if (isMobile) {
+    await expect(wordmark).toBeVisible();
+    await expect(seal).toBeHidden();
+  } else {
+    await expect(seal).toBeVisible();
+    await expect(wordmark).toBeHidden();
+  }
+
   expect(failures).toEqual([]);
 });
 
