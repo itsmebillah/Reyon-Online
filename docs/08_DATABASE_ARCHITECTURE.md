@@ -34,6 +34,8 @@ The `organization` schema owns stable organization, location, channel, and locat
 
 The `inventory` schema owns stock-item and lot identities plus append-only movement headers and signed quantity lines. It references catalog variants and operating locations but does not duplicate their master data. Availability, reservations, valuation, and accounting remain separate governed responsibilities.
 
+The `sales` schema owns order identity, commercial line snapshots, and append-only lifecycle-transition evidence. Payment, fulfillment, inventory, returns, customer identity, tax, and accounting remain separate responsibilities connected only through future approved contracts.
+
 ### TODO — Architecture
 
 - Create bounded-context and data-ownership maps after business discovery.
@@ -107,3 +109,4 @@ Add context and entity-relationship diagrams, data dictionary, classification ca
 - [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
 - [Operating Topology Architecture](19_OPERATING_TOPOLOGY_ARCHITECTURE.md)
 - [Inventory System](05_INVENTORY_SYSTEM.md)
+- [Order Lifecycle](04_ORDER_LIFECYCLE.md)

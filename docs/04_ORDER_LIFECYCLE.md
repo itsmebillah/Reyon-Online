@@ -8,6 +8,7 @@ This document provides the structure for defining orders consistently across cha
 
 - [Scope and principles](#scope-and-principles)
 - [Order aggregate](#order-aggregate)
+- [Implemented persistence foundation](#implemented-persistence-foundation)
 - [Lifecycle definition](#lifecycle-definition)
 - [State dimensions](#state-dimensions)
 - [Transition controls](#transition-controls)
@@ -31,6 +32,20 @@ Candidate information areas include parties, channel, location, lines, quantitie
 - Define what constitutes an order in every intended channel.
 - Define order identity, ownership, editable fields, and required evidence.
 - Confirm quotation, reservation, subscription, preorder, exchange, and other order-like concepts in scope.
+
+## Implemented Persistence Foundation
+
+Migration `20260802060000_order_lifecycle_foundation.sql` creates an empty private `sales` schema with three rule-neutral records:
+
+| Record           | Responsibility                                                                          | Explicit boundary                                                           |
+| ---------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Order            | Stable organization/channel ownership, currency, source, time, and idempotency identity | Contains no customer PII, payment, fulfillment, tax, or current-state field |
+| Order line       | Quantity and unit-price snapshot with optional catalog-variant reference                | Defines no discount, tax, bundle, return, or accounting treatment           |
+| Order transition | Ordered, attributable, append-only lifecycle evidence                                   | Defines no state vocabulary, allowed path, permission, or side effect       |
+
+Order source and transition idempotency keys prevent duplicate commands from silently creating duplicate business records. Transition evidence cannot be updated or deleted; corrections require new attributable evidence. A current state must eventually be derived through an approved transition contract rather than maintained as an ambiguous writable status.
+
+Every table has row-level security enabled. Anonymous and authenticated roles have no privileges or policies, the schema is not exposed through the configured Data API, and no order data has been inserted.
 
 ## Lifecycle Definition
 
@@ -95,3 +110,5 @@ Add approved state diagrams, transition tables, event definitions, sequence diag
 - [Inventory System](05_INVENTORY_SYSTEM.md)
 - [Accounting Rules](07_ACCOUNTING_RULES.md)
 - [Database Architecture](08_DATABASE_ARCHITECTURE.md)
+- [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
+- [Operating Topology Architecture](19_OPERATING_TOPOLOGY_ARCHITECTURE.md)

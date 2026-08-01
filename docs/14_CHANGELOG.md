@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added and deployed an empty order lifecycle schema for organization/channel-owned orders, commercial line snapshots, and append-only transition evidence, with idempotency, RLS, and deny-by-default client access.
+  - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02
+  - Impact: linked Supabase schema and migration history; no order states, transitions, customer data, payment, fulfillment, tax, return, or order records inserted
+  - Related: [Order Lifecycle](04_ORDER_LIFECYCLE.md), [Database Architecture](08_DATABASE_ARCHITECTURE.md)
+
 - Added and deployed an empty inventory ledger schema for stock items, optional lots, attributable movement headers, and signed location-level quantity lines, with append-only history, idempotency, RLS, and deny-by-default client access.
   - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02
   - Impact: linked Supabase schema and migration history; no stock, movement vocabulary, balance formula, reservation, valuation, or inventory data inserted
