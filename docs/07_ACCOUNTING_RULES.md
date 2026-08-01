@@ -9,6 +9,7 @@ This document provides the governance structure for financial definitions, event
 - [Authority and principles](#authority-and-principles)
 - [Accounting scope](#accounting-scope)
 - [Financial event specification](#financial-event-specification)
+- [Implemented persistence foundation](#implemented-persistence-foundation)
 - [Ledger and dimensions](#ledger-and-dimensions)
 - [Recognition and valuation](#recognition-and-valuation)
 - [Tax, currency, and payments](#tax-currency-and-payments)
@@ -43,6 +44,20 @@ Potential scope includes sales, discounts, tax, tender, refunds, customer balanc
 
 - Define event-to-entry rules and provide worked, approved examples.
 - Identify which events are commitments, operational facts, subledger records, or general-ledger postings.
+
+## Implemented Persistence Foundation
+
+Sprint 9 establishes an empty private `accounting` schema for organization-scoped account identities and append-only, source-linked journal evidence. It does not establish a chart of accounts, approve any event-to-entry mapping, or authorize any operational module to create financial entries. Row-level security is enabled, browser-facing roles receive no policies or privileges, and no financial records are inserted.
+
+| Record            | Owned structure                                                                                                         | Explicit exclusions                                                                                                |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `ledger_accounts` | Organization-scoped account identity, optional hierarchy, and optional external-source identity                         | Account codes/records, classifications, normal balance, effective dates, currencies, consolidation, and governance |
+| `journal_entries` | Organization, currency, source identity, idempotency, occurrence/recording time, actor, and optional reversal reference | Posting status, numbering, period assignment, approval, recognition, tax, valuation, and source mappings           |
+| `journal_lines`   | Account-linked exact signed amount and line order within the same organization                                          | Sign convention, debit/credit presentation, dimensions, allocation, rounding, balancing workflow, and reports      |
+
+Journal entries and lines cannot be updated or deleted; corrections require new attributable entries. Account identities may be maintained only through a future controlled service. The schema structurally prevents cross-organization account, journal, hierarchy, and reversal references.
+
+Balance enforcement is intentionally not exposed as an ad hoc table-write rule because journal headers and lines are stored separately. A future Finance-approved posting transaction must validate completeness, balanced amounts, authorized accounts, currency, period, mappings, and permissions atomically before it may write journal evidence. Until that contract exists, only the service role has storage access and no application workflow may post.
 
 ## Ledger and Dimensions
 

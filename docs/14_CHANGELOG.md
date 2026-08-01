@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added and deployed an empty accounting schema for organization-scoped account identities and append-only source-linked journal evidence, with ownership-safe references, RLS, and deny-by-default client access.
+  - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02; financial behavior still requires qualified Finance approval
+  - Impact: linked Supabase schema and migration history; no chart, account record, journal, posting mapping, balance convention, period, recognition, valuation, tax, close, report, or financial behavior inserted
+  - Related: [Accounting Rules](07_ACCOUNTING_RULES.md), [Database Architecture](08_DATABASE_ARCHITECTURE.md)
+
 - Added and deployed an empty supplier and purchase-order schema for organization-scoped supplier identities, purchase commitments, cost/quantity line snapshots, and append-only lifecycle evidence, with ownership-safe references, RLS, and deny-by-default client access.
   - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02
   - Impact: linked Supabase schema and migration history; no supplier contacts, commercial terms, purchase states, approvals, receipts, tax, landed cost, invoice, payment, accounting behavior, or records inserted

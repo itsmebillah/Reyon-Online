@@ -42,6 +42,8 @@ The `payments` schema owns append-only provider-neutral monetary evidence, order
 
 The `purchasing` schema owns organization-scoped supplier identity, purchase-order identity, commercial line snapshots, and append-only lifecycle-transition evidence. It does not own receiving, inventory movement, supplier invoices, tax, landed cost, payment, or accounting treatment. Composite foreign keys prevent purchase orders from referencing suppliers or destinations owned by another organization.
 
+The `accounting` schema owns organization-scoped account identities and append-only, source-linked journal evidence. It does not define the chart, sign convention, posting mappings, periods, recognition, valuation, tax, close, or reporting policy. Operational evidence has no financial effect until a future Finance-approved atomic posting contract validates and writes a balanced journal.
+
 ### TODO — Architecture
 
 - Create bounded-context and data-ownership maps after business discovery.
@@ -119,3 +121,4 @@ Add context and entity-relationship diagrams, data dictionary, classification ca
 - [Fulfillment and Delivery Architecture](20_FULFILLMENT_DELIVERY_ARCHITECTURE.md)
 - [Payment Evidence Architecture](21_PAYMENT_EVIDENCE_ARCHITECTURE.md)
 - [Purchase System](06_PURCHASE_SYSTEM.md)
+- [Accounting Rules](07_ACCOUNTING_RULES.md)
