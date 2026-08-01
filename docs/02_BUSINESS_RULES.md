@@ -78,9 +78,12 @@ Every implemented rule should map to acceptance examples covering normal, bounda
 
 When rules are approved, add a versioned rule catalog or link to a dedicated controlled source. Consider decision tables and machine-readable policy only after human-readable policy is stable.
 
+Sprint 12 provides an empty automation control plane that can reference future immutable rule contracts but cannot execute them. Draft TODOs, examples, unreviewed versions, or absent approval evidence must never become activation authority.
+
 ## Related Documents
 
 - [Order Lifecycle](04_ORDER_LIFECYCLE.md)
 - [Inventory System](05_INVENTORY_SYSTEM.md)
 - [Purchase System](06_PURCHASE_SYSTEM.md)
 - [Accounting Rules](07_ACCOUNTING_RULES.md)
+- [Automation Control-Plane Architecture](24_AUTOMATION_CONTROL_PLANE_ARCHITECTURE.md)

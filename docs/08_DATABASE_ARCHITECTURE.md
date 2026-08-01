@@ -48,6 +48,8 @@ The `crm` schema owns pseudonymous, organization-scoped customer identities plus
 
 The `reporting` schema owns stable metric identities, immutable semantic versions, source-contract bindings, review evidence, and projection-run lineage. It stores no metric values or copied operational data and does not make operational tables public APIs. No metric becomes authoritative without approved semantics, ownership, source contracts, access, and review evidence.
 
+The `automation` schema owns stable automation identities, immutable contract-reference versions, append-only human review/control evidence, idempotent execution identities, and append-only execution/attempt history. It contains no executable logic, payload, credential, schedule, retry policy, domain side effect, or enabled workflow.
+
 ### TODO — Architecture
 
 - Create bounded-context and data-ownership maps after business discovery.
@@ -128,3 +130,4 @@ Add context and entity-relationship diagrams, data dictionary, classification ca
 - [Accounting Rules](07_ACCOUNTING_RULES.md)
 - [Customer and CRM Identity Architecture](22_CUSTOMER_CRM_IDENTITY_ARCHITECTURE.md)
 - [Reporting and Analytics Contract Architecture](23_REPORTING_ANALYTICS_CONTRACT_ARCHITECTURE.md)
+- [Automation Control-Plane Architecture](24_AUTOMATION_CONTROL_PLANE_ARCHITECTURE.md)

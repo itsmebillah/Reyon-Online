@@ -41,23 +41,24 @@ The Product Owner approved sequential roadmap execution on 2026-08-02. Technical
 
 ## Committed Delivery Sequence
 
-| Sprint | Outcome                                      | Status                  | Dependency                                                |
-| ------ | -------------------------------------------- | ----------------------- | --------------------------------------------------------- |
-| 0      | Environment and ownership foundation         | Released                | Existing infrastructure                                   |
-| 0.5    | AI-ready SEO and content architecture        | Released (architecture) | Documentation foundation                                  |
-| 1      | Premium customer experience foundation       | Released                | Sprint 0                                                  |
-| 2      | Governed product catalog foundation          | Released (foundation)   | Sprint 1                                                  |
-| 3      | Organization, location, and channel topology | Released (foundation)   | Sprint 2                                                  |
-| 4      | Inventory ledger foundation                  | Released (foundation)   | Sprint 3                                                  |
-| 5      | Order lifecycle foundation                   | Released (foundation)   | Sprint 4                                                  |
-| 6      | Fulfillment and delivery foundation          | Released (foundation)   | Sprint 5                                                  |
-| 7      | Payment evidence foundation                  | Released (foundation)   | Sprint 5                                                  |
-| 8      | Supplier and purchase foundation             | Released (foundation)   | Catalog, topology, and inventory                          |
-| 9      | Accounting evidence foundation               | Released (foundation)   | Operational evidence and finance boundaries               |
-| 10     | Customer and CRM identity foundation         | Released (foundation)   | Organization, channels, and order boundaries              |
-| 11     | Reporting and analytics contract foundation  | Released (foundation)   | Governed operational source evidence                      |
-| 12     | Automation control-plane foundation          | Next                    | Approved rules, metrics, and audit boundaries             |
-| 13+    | AI capability foundations                    | Sequenced candidates    | Approved use cases, data, evaluation, and human oversight |
+| Sprint | Outcome                                       | Status                  | Dependency                                                   |
+| ------ | --------------------------------------------- | ----------------------- | ------------------------------------------------------------ |
+| 0      | Environment and ownership foundation          | Released                | Existing infrastructure                                      |
+| 0.5    | AI-ready SEO and content architecture         | Released (architecture) | Documentation foundation                                     |
+| 1      | Premium customer experience foundation        | Released                | Sprint 0                                                     |
+| 2      | Governed product catalog foundation           | Released (foundation)   | Sprint 1                                                     |
+| 3      | Organization, location, and channel topology  | Released (foundation)   | Sprint 2                                                     |
+| 4      | Inventory ledger foundation                   | Released (foundation)   | Sprint 3                                                     |
+| 5      | Order lifecycle foundation                    | Released (foundation)   | Sprint 4                                                     |
+| 6      | Fulfillment and delivery foundation           | Released (foundation)   | Sprint 5                                                     |
+| 7      | Payment evidence foundation                   | Released (foundation)   | Sprint 5                                                     |
+| 8      | Supplier and purchase foundation              | Released (foundation)   | Catalog, topology, and inventory                             |
+| 9      | Accounting evidence foundation                | Released (foundation)   | Operational evidence and finance boundaries                  |
+| 10     | Customer and CRM identity foundation          | Released (foundation)   | Organization, channels, and order boundaries                 |
+| 11     | Reporting and analytics contract foundation   | Released (foundation)   | Governed operational source evidence                         |
+| 12     | Automation control-plane foundation           | Released (foundation)   | Approved rules, metrics, and audit boundaries                |
+| 13     | AI governance and content-artifact foundation | Next                    | Sprint 0.5 architecture, human review, and source boundaries |
+| 14+    | Approved operational vertical slices          | Sequenced candidates    | Product Owner rules and domain acceptance evidence           |
 
 Sprint 2 now includes a policy-neutral catalog contract, replaceable data adapter, customer discovery, product lookup, and an empty deny-by-default Supabase catalog schema. Persistent administration, runtime data access, and publication workflows remain gated by catalog-owner and access rules.
 
@@ -78,6 +79,8 @@ Sprint 9 establishes empty organization-scoped account identities and append-onl
 Sprint 10 establishes empty pseudonymous customer identities, opaque external identity references, and append-only order-association and identity-event evidence. Personal profiles, contacts, credentials, authentication, consent, preferences, segmentation, loyalty, service workflows, marketing, analytics, merge/split behavior, and all customer records remain gated by approved business, privacy, and security rules.
 
 Sprint 11 establishes empty stable metric identities, immutable semantic versions, versioned source-contract bindings, append-only review evidence, and append-only projection-run lineage. Metric definitions, formulas, dimensions, values, targets, thresholds, reports, dashboards, schedules, artifacts, exports, forecasts, and all business data remain gated by approved owners, semantics, privacy, security, and financial controls.
+
+Sprint 12 establishes empty stable automation identities, immutable contract-reference versions, append-only review/control evidence, idempotent execution identities, and append-only execution/step-attempt history. Executable rules, triggers, conditions, schedules, payloads, credentials, workers, retries, side effects, enabled workflows, and all automation records remain gated by approved use cases, contracts, permissions, controls, and operational ownership.
 
 ## Entry and Exit Criteria
 

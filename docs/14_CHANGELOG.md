@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added and deployed an empty automation control-plane schema for versioned contract references, human review/control evidence, idempotent execution identities, and append-only execution/attempt history, with RLS and deny-by-default client access.
+  - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02; executable behavior still requires approved domain rules and control policy
+  - Impact: linked Supabase schema and migration history; no executable rule, trigger, condition, schedule, payload, credential, worker, retry, notification, side effect, enabled workflow, execution, or business data inserted
+  - Related: [Automation Control-Plane Architecture](24_AUTOMATION_CONTROL_PLANE_ARCHITECTURE.md), [Business Rules](02_BUSINESS_RULES.md)
+
 - Added and deployed an empty reporting schema for stable metric identities, immutable definition versions, versioned source bindings, append-only review evidence, and append-only projection-run lineage, with RLS and deny-by-default client access.
   - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02; metric semantics still require accountable domain-owner approval
   - Impact: linked Supabase schema and migration history; no metric, formula, dimension, value, target, threshold, report, dashboard, artifact, schedule, export, forecast, or business data inserted
