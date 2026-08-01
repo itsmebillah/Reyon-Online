@@ -51,8 +51,9 @@ The Product Owner approved sequential roadmap execution on 2026-08-02. Technical
 | 4      | Inventory ledger foundation                  | Released (foundation)   | Sprint 3                                 |
 | 5      | Order lifecycle foundation                   | Released (foundation)   | Sprint 4                                 |
 | 6      | Fulfillment and delivery foundation          | Released (foundation)   | Sprint 5                                 |
-| 7      | Payment evidence foundation                  | Next                    | Sprint 5 and approved payment rules      |
-| 8+     | Accounts, reports, automation, and AI        | Sequenced candidates    | Approved rules and preceding foundations |
+| 7      | Payment evidence foundation                  | Released (foundation)   | Sprint 5                                 |
+| 8      | Supplier and purchase foundation             | Next                    | Catalog, topology, and inventory         |
+| 9+     | Accounts, reports, automation, and AI        | Sequenced candidates    | Approved rules and preceding foundations |
 
 Sprint 2 now includes a policy-neutral catalog contract, replaceable data adapter, customer discovery, product lookup, and an empty deny-by-default Supabase catalog schema. Persistent administration, runtime data access, and publication workflows remain gated by catalog-owner and access rules.
 
@@ -63,6 +64,8 @@ Sprint 4 establishes empty stock-item and lot identities plus an append-only sig
 Sprint 5 establishes empty order identities, commercial line snapshots, and append-only transition evidence. State vocabularies, allowed transitions, customer data, payments, fulfillment, tax, returns, and executable workflows remain gated by approved policy.
 
 Sprint 6 establishes empty fulfillment identities, partial order-line assignments, append-only transition evidence, and opaque delivery references. Fulfillment states, addresses, carriers, shipping methods, fees, promises, routing, inventory effects, and customer communication remain gated by approved policy.
+
+Sprint 7 establishes empty append-only payment records, order allocations, lifecycle events, and opaque provider references. Payment methods, providers, states, capture, refunds, settlement, fees, fraud, reconciliation, sensitive instruments, and accounting treatment remain gated by approved policy.
 
 ## Entry and Exit Criteria
 

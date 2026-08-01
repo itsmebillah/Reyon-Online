@@ -16,28 +16,29 @@ This repository contains the documentation foundation and the Sprint 1 customer 
 
 ## Documentation Map
 
-| Area            | Document                                                                              | Purpose                                                                                        |
-| --------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| Direction       | [Project Vision](docs/00_PROJECT_VISION.md)                                           | Defines intent, outcomes, boundaries, and principles.                                          |
-| Business        | [Business Overview](docs/01_BUSINESS_OVERVIEW.md)                                     | Captures operating context and business capabilities.                                          |
-| Policy          | [Business Rules](docs/02_BUSINESS_RULES.md)                                           | Provides the controlled register for approved business rules.                                  |
-| Access          | [User Roles](docs/03_USER_ROLES.md)                                                   | Defines the framework for personas, roles, and permissions.                                    |
-| Commerce        | [Order Lifecycle](docs/04_ORDER_LIFECYCLE.md)                                         | Specifies the future order state model and controls.                                           |
-| Operations      | [Inventory System](docs/05_INVENTORY_SYSTEM.md)                                       | Defines inventory concepts, movements, and control points.                                     |
-| Operations      | [Purchase System](docs/06_PURCHASE_SYSTEM.md)                                         | Defines procurement boundaries and lifecycle structure.                                        |
-| Finance         | [Accounting Rules](docs/07_ACCOUNTING_RULES.md)                                       | Provides the governance framework for financial treatment.                                     |
-| Data            | [Database Architecture](docs/08_DATABASE_ARCHITECTURE.md)                             | Establishes data architecture principles and decision gates.                                   |
-| Experience      | [UI Guidelines](docs/09_UI_GUIDELINES.md)                                             | Establishes cross-module interface standards.                                                  |
-| Engineering     | [Tech Stack](docs/10_TECH_STACK.md)                                                   | Records technology-selection criteria and pending decisions.                                   |
-| Engineering     | [Coding Standards](docs/11_CODING_STANDARDS.md)                                       | Defines quality, security, review, and delivery expectations.                                  |
-| Repository      | [Folder Structure](docs/12_FOLDER_STRUCTURE.md)                                       | Defines the intended scalable repository organization.                                         |
-| Delivery        | [Roadmap](docs/13_ROADMAP.md)                                                         | Provides a dependency-aware planning framework.                                                |
-| History         | [Changelog](docs/14_CHANGELOG.md)                                                     | Records meaningful documentation and product changes.                                          |
-| Environment     | [Sprint 0 Environment Audit](docs/15_ENVIRONMENT_AUDIT.md)                            | Records verified tool, repository, and service readiness.                                      |
-| Content and SEO | [AI SEO and Product Content Architecture](docs/16_AI_SEO_CONTENT_ARCHITECTURE.md)     | Defines AI-ready content boundaries, human review, SEO quality, and channel extensibility.     |
-| Catalog         | [Product Catalog Architecture](docs/18_PRODUCT_CATALOG_ARCHITECTURE.md)               | Defines the product read model, repository boundary, controls, and expansion path.             |
-| Operating model | [Operating Topology Architecture](docs/19_OPERATING_TOPOLOGY_ARCHITECTURE.md)         | Defines organization, location, and channel identity boundaries required by operations.        |
-| Fulfillment     | [Fulfillment and Delivery Architecture](docs/20_FULFILLMENT_DELIVERY_ARCHITECTURE.md) | Defines order fulfillment, partial-line assignment, delivery evidence, and privacy boundaries. |
+| Area            | Document                                                                              | Purpose                                                                                               |
+| --------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Direction       | [Project Vision](docs/00_PROJECT_VISION.md)                                           | Defines intent, outcomes, boundaries, and principles.                                                 |
+| Business        | [Business Overview](docs/01_BUSINESS_OVERVIEW.md)                                     | Captures operating context and business capabilities.                                                 |
+| Policy          | [Business Rules](docs/02_BUSINESS_RULES.md)                                           | Provides the controlled register for approved business rules.                                         |
+| Access          | [User Roles](docs/03_USER_ROLES.md)                                                   | Defines the framework for personas, roles, and permissions.                                           |
+| Commerce        | [Order Lifecycle](docs/04_ORDER_LIFECYCLE.md)                                         | Specifies the future order state model and controls.                                                  |
+| Operations      | [Inventory System](docs/05_INVENTORY_SYSTEM.md)                                       | Defines inventory concepts, movements, and control points.                                            |
+| Operations      | [Purchase System](docs/06_PURCHASE_SYSTEM.md)                                         | Defines procurement boundaries and lifecycle structure.                                               |
+| Finance         | [Accounting Rules](docs/07_ACCOUNTING_RULES.md)                                       | Provides the governance framework for financial treatment.                                            |
+| Data            | [Database Architecture](docs/08_DATABASE_ARCHITECTURE.md)                             | Establishes data architecture principles and decision gates.                                          |
+| Experience      | [UI Guidelines](docs/09_UI_GUIDELINES.md)                                             | Establishes cross-module interface standards.                                                         |
+| Engineering     | [Tech Stack](docs/10_TECH_STACK.md)                                                   | Records technology-selection criteria and pending decisions.                                          |
+| Engineering     | [Coding Standards](docs/11_CODING_STANDARDS.md)                                       | Defines quality, security, review, and delivery expectations.                                         |
+| Repository      | [Folder Structure](docs/12_FOLDER_STRUCTURE.md)                                       | Defines the intended scalable repository organization.                                                |
+| Delivery        | [Roadmap](docs/13_ROADMAP.md)                                                         | Provides a dependency-aware planning framework.                                                       |
+| History         | [Changelog](docs/14_CHANGELOG.md)                                                     | Records meaningful documentation and product changes.                                                 |
+| Environment     | [Sprint 0 Environment Audit](docs/15_ENVIRONMENT_AUDIT.md)                            | Records verified tool, repository, and service readiness.                                             |
+| Content and SEO | [AI SEO and Product Content Architecture](docs/16_AI_SEO_CONTENT_ARCHITECTURE.md)     | Defines AI-ready content boundaries, human review, SEO quality, and channel extensibility.            |
+| Catalog         | [Product Catalog Architecture](docs/18_PRODUCT_CATALOG_ARCHITECTURE.md)               | Defines the product read model, repository boundary, controls, and expansion path.                    |
+| Operating model | [Operating Topology Architecture](docs/19_OPERATING_TOPOLOGY_ARCHITECTURE.md)         | Defines organization, location, and channel identity boundaries required by operations.               |
+| Fulfillment     | [Fulfillment and Delivery Architecture](docs/20_FULFILLMENT_DELIVERY_ARCHITECTURE.md) | Defines order fulfillment, partial-line assignment, delivery evidence, and privacy boundaries.        |
+| Payments        | [Payment Evidence Architecture](docs/21_PAYMENT_EVIDENCE_ARCHITECTURE.md)             | Defines provider-neutral monetary evidence, order allocations, events, and sensitive-data boundaries. |
 
 ## Product Scope
 

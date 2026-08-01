@@ -66,7 +66,7 @@ This document defines the repository organization for a scalable modular system 
 
 The implemented catalog lives under `src/features/catalog`, with domain contracts separated from data adapters. Database changes live under `supabase/migrations` and are append-only. Future features should follow this dependency direction instead of importing another feature's private implementation.
 
-Architecture documents now include numbered domain foundations through `20_FULFILLMENT_DELIVERY_ARCHITECTURE.md`. New numbered documents must be added to the README documentation map and related-document links.
+Architecture documents now include numbered domain foundations through `21_PAYMENT_EVIDENCE_ARCHITECTURE.md`. New numbered documents must be added to the README documentation map and related-document links.
 
 - Organize around owned capabilities and deployable products, not arbitrary technical layers alone.
 - Keep public contracts explicit and internal implementation private.

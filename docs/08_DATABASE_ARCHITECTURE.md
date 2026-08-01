@@ -38,6 +38,8 @@ The `sales` schema owns order identity, commercial line snapshots, and append-on
 
 The `fulfillment` schema owns order-linked fulfillment work, partial line assignments, append-only lifecycle evidence, and opaque external delivery references. It deliberately excludes customer address data, inventory movement, payment, accounting, and carrier behavior.
 
+The `payments` schema owns append-only provider-neutral monetary evidence, order allocations, payment events, and opaque provider references. It stores no payment instruments or credentials and does not determine order state, settlement, customer balance, or accounting treatment.
+
 ### TODO — Architecture
 
 - Create bounded-context and data-ownership maps after business discovery.
@@ -113,3 +115,4 @@ Add context and entity-relationship diagrams, data dictionary, classification ca
 - [Inventory System](05_INVENTORY_SYSTEM.md)
 - [Order Lifecycle](04_ORDER_LIFECYCLE.md)
 - [Fulfillment and Delivery Architecture](20_FULFILLMENT_DELIVERY_ARCHITECTURE.md)
+- [Payment Evidence Architecture](21_PAYMENT_EVIDENCE_ARCHITECTURE.md)

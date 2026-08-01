@@ -61,6 +61,8 @@ No revenue recognition, inventory valuation, cost allocation, discount allocatio
 
 Jurisdictions, registrations, tax calculations, invoice requirements, functional/presentation currencies, exchange-rate sources, tender types, settlement, fees, and chargebacks require confirmation.
 
+The private payment-evidence foundation records exact monetary facts and explicit order allocations without assigning debit, credit, revenue, receivable, cash, fee, tax, or settlement treatment. Finance-approved mappings must consume payment evidence through controlled contracts and must never rewrite it.
+
 ## Reconciliation and Close
 
 Each financial balance should reconcile to controlled source records. Close procedures must define cutoff, dependencies, responsible roles, review evidence, adjustments, locking, and reopening authority.
@@ -88,3 +90,4 @@ Add an approved accounting policy register, chart of accounts, posting matrix, c
 - [Order Lifecycle](04_ORDER_LIFECYCLE.md)
 - [Inventory System](05_INVENTORY_SYSTEM.md)
 - [Purchase System](06_PURCHASE_SYSTEM.md)
+- [Payment Evidence Architecture](21_PAYMENT_EVIDENCE_ARCHITECTURE.md)
