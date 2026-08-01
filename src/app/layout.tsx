@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BackNavigation } from "@/components/back-navigation";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { businessConfig } from "@/config/business";
@@ -30,6 +31,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <Header />
+        <BackNavigation />
         <main id="main">{children}</main>
         <Footer />
       </body>

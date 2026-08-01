@@ -100,6 +100,18 @@ test("navigation and search remain usable", async ({ page }) => {
   expect(failures).toEqual([]);
 });
 
+test("inner pages provide consistent back navigation", async ({ page }) => {
+  const failures = monitor(page);
+  await page.goto("/");
+  await page.goto("/shop");
+  const backButton = page.getByRole("button", { name: "Go back" });
+  await expect(backButton).toBeVisible();
+  await backButton.click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.getByRole("button", { name: "Go back" })).toHaveCount(0);
+  expect(failures).toEqual([]);
+});
+
 test("product actions provide clear feedback", async ({ page }) => {
   const failures = monitor(page);
   await page.goto("/shop");

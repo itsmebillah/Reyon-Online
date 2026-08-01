@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added a reusable, accessible back-navigation control to every customer-facing page except the homepage, with browser-history behavior and a homepage fallback for direct-entry visits.
+  - Approval/owner: Product Owner navigation directive dated 2026-08-01
+  - Impact: global customer navigation and browser acceptance coverage
+  - Related: [UI Guidelines](09_UI_GUIDELINES.md)
+
 - Added an original REYON homepage hero photograph based on the Product Owner's approved composition reference: warm neutral studio lighting, left-side copy space, and a trademark-free multi-category beauty assortment on the right.
   - Approval/owner: Product Owner homepage-template directive dated 2026-08-01
   - Impact: homepage visual presentation and responsive hero cropping; no product or authenticity claims

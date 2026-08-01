@@ -181,6 +181,37 @@ img {
   background: none;
   font-weight: 600;
 }
+.back-navigation {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+.back-navigation .container {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+.back-navigation button {
+  border: 0;
+  background: transparent;
+  color: var(--black);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.back-navigation button:hover,
+.back-navigation button:focus-visible {
+  color: var(--rose);
+}
+.back-navigation svg {
+  width: 18px;
+  height: 18px;
+}
 .hero {
   height: min(78vh, 760px);
   min-height: 600px;
