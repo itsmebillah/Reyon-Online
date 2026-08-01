@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProductCard } from "@/components/product-card";
 import { Container, LinkButton, SectionHeading } from "@/components/ui";
+import { businessConfig } from "@/config/business";
 import { categories, products } from "@/data/catalog";
 
 export default function Home() {
@@ -24,7 +25,8 @@ export default function Home() {
               <em>considered.</em>
             </h1>
             <p>
-              Thoughtful essentials for rituals that feel entirely your own.
+              Premium beauty and personal care from multiple brands, selected to
+              make every choice feel clear and considered.
             </p>
             <div className="button-row">
               <LinkButton href="/shop">Explore the collection</LinkButton>
@@ -130,20 +132,28 @@ export default function Home() {
       <section className="reviews section--cream">
         <Container>
           <SectionHeading
-            eyebrow="Notes from our community"
-            title="Care, felt personally"
+            eyebrow="Built around trust"
+            title="A clearer way to shop beauty"
           />
           <div className="review-grid">
             {[
-              "The experience feels calm and considered from the first moment.",
-              "Finally, a beauty store that makes choosing feel simple.",
-              "Every detail feels thoughtful—exactly what I was looking for.",
-            ].map((quote, index) => (
-              <figure key={quote}>
-                <div aria-label="5 out of 5 stars">★★★★★</div>
-                <blockquote>“{quote}”</blockquote>
-                <figcaption>Early community member {index + 1}</figcaption>
-              </figure>
+              [
+                "Multi-brand selection",
+                "Beauty and care across six essential categories.",
+              ],
+              [
+                "Clear information",
+                "Straightforward presentation designed to support confident choices.",
+              ],
+              [
+                "Human support",
+                "Direct access to REYON through its approved customer channels.",
+              ],
+            ].map(([title, body]) => (
+              <article key={title}>
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </article>
             ))}
           </div>
         </Container>
@@ -151,13 +161,15 @@ export default function Home() {
       <section className="instagram">
         <Container>
           <p className="eyebrow">Follow the ritual</p>
-          <h2>@reyonbeauty</h2>
+          <h2>
+            <a href={businessConfig.contact.instagramUrl}>@reyononline.bd</a>
+          </h2>
           <div className="instagram-grid">
             {[1, 2, 3, 4].map((item) => (
               <div key={item}>
                 <Image
                   src="/images/product-serum.png"
-                  alt="REYON beauty editorial placeholder"
+                  alt="Minimal beauty editorial study"
                   fill
                   sizes="25vw"
                 />

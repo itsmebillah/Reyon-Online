@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { businessConfig } from "@/config/business";
 import { Container } from "./ui";
 
 export function Footer() {
@@ -11,8 +12,8 @@ export function Footer() {
               REYON<span>BEAUTY &amp; CARE</span>
             </Link>
             <p>
-              Thoughtful beauty, selected with care. A modern destination built
-              around trust, clarity and considered rituals.
+              Premium beauty and personal care from multiple brands, selected
+              with trust, clarity and attention to quality.
             </p>
           </div>
           <div>
@@ -26,6 +27,14 @@ export function Footer() {
             <Link href="/contact">Contact</Link>
             <Link href="/shipping">Delivery</Link>
             <Link href="/returns">Returns</Link>
+            <Link href="/privacy">Privacy policy</Link>
+            <Link href="/terms">Terms</Link>
+          </div>
+          <div>
+            <h2>Connect</h2>
+            <a href={businessConfig.contact.facebookUrl}>Facebook</a>
+            <a href={businessConfig.contact.instagramUrl}>Instagram</a>
+            <a href={businessConfig.contact.whatsappUrl}>WhatsApp</a>
           </div>
           <div>
             <h2>Stay close</h2>
@@ -47,10 +56,7 @@ export function Footer() {
         <div className="footer-bottom">
           <span>© 2026 REYON</span>
           <span>Dhaka, Bangladesh</span>
-          <div>
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
-          </div>
+          <span>Reyon Online</span>
         </div>
       </Container>
     </footer>

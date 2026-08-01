@@ -44,7 +44,7 @@ Navigation and terminology should reflect approved business domains and user res
 
 ## Design System
 
-The future design system should govern tokens, typography, color, spacing, layout, elevation, iconography, motion, components, content patterns, and versioning. Brand assets and visual direction are pending.
+The design system should govern tokens, typography, color, spacing, layout, elevation, iconography, motion, components, content patterns, and versioning. The approved direction is premium, minimal, elegant, and modern, using black, white, and rose gold with a luxury beauty-retail character. Loud colors and generic low-trust ecommerce styling are prohibited. Exact tokens and brand assets remain pending.
 
 ### TODO — Product Owner / Brand Owner
 
@@ -107,3 +107,4 @@ Add design tokens, component specifications, content guide, accessibility checkl
 - [Tech Stack](10_TECH_STACK.md)
 - [Coding Standards](11_CODING_STANDARDS.md)
 - [AI SEO and Product Content Architecture](16_AI_SEO_CONTENT_ARCHITECTURE.md)
+- [Brand and Business Configuration](17_BRAND_BUSINESS_CONFIGURATION.md)

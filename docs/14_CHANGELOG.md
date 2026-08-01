@@ -59,6 +59,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Changed
 
+- Established the Product Owner-approved REYON business configuration, including multi-brand retailer positioning, category vocabulary, customer channels, production origin, premium visual direction, English content baseline, and footer requirements; removed sample implications that REYON was a product manufacturer.
+  - Approval/owner: Product Owner business-context directive dated 2026-08-01
+  - Impact: customer-facing identity, contact links, categories, metadata, documentation, and future configuration governance
+  - Related: [Brand and Business Configuration](17_BRAND_BUSINESS_CONFIGURATION.md), [Business Overview](01_BUSINESS_OVERVIEW.md), [UI Guidelines](09_UI_GUIDELINES.md)
+
 - Connected the verified GitHub origin, aligned the local branch with `main`, and linked the existing Supabase and Vercel projects.
   - Approval/owner: Sprint 0 environment and project-ownership mandate
   - Impact: repository and local provider metadata; no remote data mutation or deployment

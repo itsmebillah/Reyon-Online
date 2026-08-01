@@ -1,3 +1,5 @@
+import { businessConfig } from "@/config/business";
+
 export type Product = {
   slug: string;
   brand: string;
@@ -11,12 +13,14 @@ export type Product = {
   description: string;
 };
 
+// Demonstration records only. Replace them with Product Owner-approved
+// third-party brand assortment when the product catalog is connected.
 export const products: Product[] = [
   {
     slug: "renewal-serum",
-    brand: "REYON LAB",
+    brand: "Demonstration Brand",
     name: "Renewal Barrier Serum",
-    category: "Skincare",
+    category: "Skin Care",
     size: "30 ml",
     price: 2850,
     compareAt: 3200,
@@ -27,9 +31,9 @@ export const products: Product[] = [
   },
   {
     slug: "velvet-cleanser",
-    brand: "REYON RITUAL",
+    brand: "Demonstration Brand",
     name: "Velvet Cream Cleanser",
-    category: "Cleansers",
+    category: "Skin Care",
     size: "120 ml",
     price: 1950,
     badge: "New",
@@ -39,9 +43,9 @@ export const products: Product[] = [
   },
   {
     slug: "luminous-essence",
-    brand: "REYON LAB",
+    brand: "Demonstration Brand",
     name: "Luminous Hydration Essence",
-    category: "Skincare",
+    category: "Skin Care",
     size: "100 ml",
     price: 2400,
     stock: "Low stock",
@@ -50,9 +54,9 @@ export const products: Product[] = [
   },
   {
     slug: "restorative-cream",
-    brand: "REYON RITUAL",
+    brand: "Demonstration Brand",
     name: "Restorative Night Cream",
-    category: "Moisturisers",
+    category: "Skin Care",
     size: "50 ml",
     price: 3100,
     compareAt: 3450,
@@ -63,12 +67,7 @@ export const products: Product[] = [
   },
 ];
 
-export const categories = [
-  "Skincare",
-  "Cleansers",
-  "Moisturisers",
-  "Fragrance",
-];
+export const categories = businessConfig.categories;
 
 export const formatPrice = (price: number) =>
-  `৳${price.toLocaleString("en-BD")}`;
+  `৳${price.toLocaleString(businessConfig.locale)}`;

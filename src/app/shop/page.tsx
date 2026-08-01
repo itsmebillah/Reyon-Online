@@ -4,7 +4,7 @@ import { Container, SectionHeading } from "@/components/ui";
 import { categories, products } from "@/data/catalog";
 export const metadata: Metadata = {
   title: "Shop",
-  description: "Explore the considered REYON Beauty & Care collection.",
+  description: "Explore REYON's multi-brand Beauty & Care selection.",
   alternates: { canonical: "/shop" },
 };
 export default function ShopPage() {
@@ -13,7 +13,7 @@ export default function ShopPage() {
       <SectionHeading
         eyebrow="The collection"
         title="Shop all beauty"
-        body="Considered essentials, presented with clarity."
+        body="A multi-brand beauty and personal care selection, presented with clarity."
       />
       <div className="shop-toolbar">
         <p>{products.length} products</p>

@@ -8,8 +8,8 @@ export default function AboutPage() {
           <p className="eyebrow">Our story</p>
           <h1>A more thoughtful way to discover beauty.</h1>
           <p className="lead">
-            REYON is a Beauty &amp; Care destination being built around clarity,
-            trust and personal ritual.
+            REYON is a premium multi-brand Beauty &amp; Care retailer being
+            built around clarity, trust and personal ritual.
           </p>
           <p>
             We believe premium is not excess. It is the feeling that every

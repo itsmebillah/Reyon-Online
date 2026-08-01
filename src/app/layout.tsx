@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { businessConfig } from "@/config/business";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://reyon-online.vercel.app"),
+  metadataBase: new URL(businessConfig.productionUrl),
   title: { default: "REYON — Beauty, considered", template: "%s | REYON" },
   description:
-    "A premium Beauty & Care destination built around trust, clarity and thoughtful rituals.",
+    "REYON is a premium multi-brand Beauty & Care retailer built around trust, clarity and thoughtful selection.",
   openGraph: {
     title: "REYON — Beauty, considered",
-    description: "Thoughtful beauty, selected with care.",
+    description:
+      "Premium multi-brand beauty and personal care, selected with care.",
     type: "website",
     siteName: "REYON",
   },

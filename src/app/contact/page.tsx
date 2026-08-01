@@ -1,6 +1,7 @@
 "use client";
 import { FormEvent, useState } from "react";
 import { Container, Button } from "@/components/ui";
+import { businessConfig } from "@/config/business";
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
   const submit = (e: FormEvent) => {
@@ -17,11 +18,17 @@ export default function ContactPage() {
           delivery will be connected when approved.
         </p>
         <address>
-          Dhaka, Bangladesh
+          <a href={`mailto:${businessConfig.contact.email}`}>
+            {businessConfig.contact.email}
+          </a>
           <br />
-          care@reyon.example
+          <a href={businessConfig.contact.whatsappUrl}>
+            WhatsApp: {businessConfig.contact.whatsappDisplay}
+          </a>
           <br />
-          Saturday–Thursday, 10:00–18:00
+          <a href={businessConfig.contact.facebookUrl}>Facebook</a>
+          {" · "}
+          <a href={businessConfig.contact.instagramUrl}>Instagram</a>
         </address>
       </div>
       {sent ? (

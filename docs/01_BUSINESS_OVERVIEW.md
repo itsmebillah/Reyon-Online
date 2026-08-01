@@ -7,6 +7,7 @@ This document frames REYON's operating context and the business capabilities the
 ## Table of Contents
 
 - [Business identity](#business-identity)
+- [Approved customer configuration](#approved-customer-configuration)
 - [Operating model](#operating-model)
 - [Capability map](#capability-map)
 - [Core business concepts](#core-business-concepts)
@@ -22,11 +23,17 @@ This document frames REYON's operating context and the business capabilities the
 | Attribute         | Current statement                |
 | ----------------- | -------------------------------- |
 | Project           | REYON Business OS                |
-| Working brand     | REYON                            |
+| Store brand       | REYON                            |
+| Working business  | Reyon Online                     |
 | Business category | Beauty & Care                    |
+| Business model    | Multi-brand online retailer      |
 | Product type      | Retail Business Operating System |
 
-Legal identity, corporate structure, markets, and commercial model remain unconfirmed.
+REYON is the retailer brand, not the brand or manufacturer of products sold by the store. Legal identity, corporate structure, markets, and detailed commercial policies remain unconfirmed.
+
+## Approved Customer Configuration
+
+The current top-level categories are Skin Care, Hair Care, Makeup, Perfume, Baby Care, and Personal Care. Approved public contact channels, production origin, visual direction, content language, and change-control requirements are maintained in the [Brand and Business Configuration](17_BRAND_BUSINESS_CONFIGURATION.md).
 
 ## Operating Model
 
@@ -104,3 +111,4 @@ Add approved process maps, capability maturity, organization maps, value streams
 - [Business Rules](02_BUSINESS_RULES.md)
 - [User Roles](03_USER_ROLES.md)
 - [Roadmap](13_ROADMAP.md)
+- [Brand and Business Configuration](17_BRAND_BUSINESS_CONFIGURATION.md)
