@@ -42,6 +42,7 @@ This repository contains the documentation foundation and the Sprint 1 customer 
 | Customer / CRM  | [Customer and CRM Identity Architecture](docs/22_CUSTOMER_CRM_IDENTITY_ARCHITECTURE.md)               | Defines pseudonymous customer identity, order associations, and privacy boundaries.                   |
 | Reporting       | [Reporting and Analytics Contract Architecture](docs/23_REPORTING_ANALYTICS_CONTRACT_ARCHITECTURE.md) | Defines versioned metric semantics, source bindings, review evidence, and projection lineage.         |
 | Automation      | [Automation Control-Plane Architecture](docs/24_AUTOMATION_CONTROL_PLANE_ARCHITECTURE.md)             | Defines versioned automation contracts, human controls, and execution evidence boundaries.            |
+| Sprint 14       | [Product Catalog Administration Decision Packet](docs/25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md)          | Collects Product Owner data, rules, roles, lifecycle, and acceptance decisions for implementation.    |
 
 ## Product Scope
 

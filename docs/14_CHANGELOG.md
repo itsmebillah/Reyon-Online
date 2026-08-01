@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added the Sprint 14 Product Catalog Administration decision and data-intake packet, translating all unresolved catalog rules into a non-technical Product Owner workflow.
+  - Approval/owner: engineering discovery preparation; Product Owner answers remain pending
+  - Impact: documentation only; no product data, business rule, role, lifecycle, validation, pricing, media, admin interface, or runtime behavior added
+  - Related: [Sprint 14 Product Catalog Administration Decision Packet](25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md), [Roadmap](13_ROADMAP.md)
+
 - Added and deployed an empty content-governance schema for source snapshots, scoped artifacts, immutable typed versions, lineage, validation findings, mandatory human review evidence, and publication-attempt provenance, with RLS and deny-by-default client access.
   - Approval/owner: Product Owner Sprint 0.5 architecture and roadmap-execution directive; content and publication behavior still require accountable business and control approval
   - Impact: linked Supabase schema and migration history; no content type, product fact, policy, prompt, provider, model, generated content, validator, decision, renderer, channel, credential, publication, or content record inserted

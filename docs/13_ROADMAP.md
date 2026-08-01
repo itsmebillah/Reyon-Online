@@ -86,6 +86,8 @@ Sprint 13 establishes empty source-snapshot references, scoped content artifacts
 
 All policy-neutral technical foundations currently derivable from approved documentation are now released. Sprint 14 requires Product Owner and domain-owner business rules, representative scenarios, role/permission decisions, and measurable acceptance criteria before an operational vertical slice can be selected or implemented without inventing business logic.
 
+The first proposed operational vertical slice is Product Catalog Administration because governed product facts enable ecommerce, inventory, purchasing, content, reporting, and future channels. Its scope and decision requirements are consolidated in the [Sprint 14 Product Catalog Administration Decision Packet](25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md). This is discovery readiness, not approval of the proposed behavior.
+
 ## Entry and Exit Criteria
 
 A candidate should identify outcome, owner, users, business rules, process, data, controls, dependencies, risks, non-functional needs, migration, operational owner, and measurable acceptance. Exit requires verified acceptance, documentation, training/support readiness, monitoring, and post-release ownership.

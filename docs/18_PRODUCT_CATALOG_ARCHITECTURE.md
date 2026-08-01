@@ -74,6 +74,8 @@ Migration history is append-only and shared between the repository and linked pr
 
 ## Pending Business Decisions
 
+The Product Owner can supply the pending decisions through the [Sprint 14 Product Catalog Administration Decision Packet](25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md), which consolidates data intake, field, lifecycle, permission, pricing, media, duplicate, usability, and acceptance requirements in business-readable form.
+
 ### TODO — Product Owner / Catalog Owner
 
 - Approve the initial brands, products, variants, media, claims, and category assignments.
@@ -98,3 +100,4 @@ Add a server-only Supabase repository adapter, administration workflows, localiz
 - [Roadmap](13_ROADMAP.md)
 - [AI SEO and Product Content Architecture](16_AI_SEO_CONTENT_ARCHITECTURE.md)
 - [Brand and Business Configuration](17_BRAND_BUSINESS_CONFIGURATION.md)
+- [Sprint 14 Product Catalog Administration Decision Packet](25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md)
