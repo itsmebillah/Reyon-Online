@@ -10,8 +10,8 @@ export default function Home() {
     <>
       <section className="hero">
         <Image
-          src="/images/hero-beauty.png"
-          alt="A refined arrangement of unbranded beauty vessels on warm stone"
+          src="/images/hero-beauty-v2.png"
+          alt="An unbranded premium beauty assortment arranged on warm travertine"
           fill
           priority
           sizes="100vw"

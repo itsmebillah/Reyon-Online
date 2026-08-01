@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added an original REYON homepage hero photograph based on the Product Owner's approved composition reference: warm neutral studio lighting, left-side copy space, and a trademark-free multi-category beauty assortment on the right.
+  - Approval/owner: Product Owner homepage-template directive dated 2026-08-01
+  - Impact: homepage visual presentation and responsive hero cropping; no product or authenticity claims
+  - Related: [UI Guidelines](09_UI_GUIDELINES.md), [Brand and Business Configuration](17_BRAND_BUSINESS_CONFIGURATION.md)
+
 - Added the Product Owner-supplied circular REYON Beauty & Care logo as the primary website brand mark and applied it consistently to the header and footer.
   - Approval/owner: Product Owner logo directive dated 2026-08-01
   - Impact: public brand presentation and logo-governance documentation
