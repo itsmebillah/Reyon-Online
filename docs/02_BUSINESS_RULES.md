@@ -9,6 +9,7 @@ This document is the controlled structure for recording approved business rules.
 - [Rule governance](#rule-governance)
 - [Rule record format](#rule-record-format)
 - [Rule domains](#rule-domains)
+- [Approved catalog rules](#approved-catalog-rules)
 - [Conflict and precedence](#conflict-and-precedence)
 - [Exceptions](#exceptions)
 - [Testing and traceability](#testing-and-traceability)
@@ -41,6 +42,12 @@ Rules should describe business intent independently of user-interface or storage
 ## Rule Domains
 
 The rule register must eventually cover product and catalog, pricing and promotions, customer and consent, sales and orders, payments, fulfillment, returns and refunds, inventory, purchasing and suppliers, taxation and accounting, access and approval, reporting, automation, and AI governance.
+
+## Approved Catalog Rules
+
+The Product Owner approved the Sprint 14 catalog rules on 2026-08-02. The stable rule statements and acceptance implications are maintained in [Product Catalog Administration — Sprint 14 Decisions](25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md). They govern immutable internal product identity, optional Product Code, hybrid unique SKU, optional barcode, variant types, image minimum and order, product lifecycle and customer visibility, third-party brand ownership, primary category, authenticity/origin facts, variant-level stock identity, four price types, and the absence of separate tax calculation.
+
+These rules are approved version 1 for Product Catalog Administration. Authentication, action permissions, generated SKU presentation, currency, exception transitions, duplicate resolution, media-file controls, and initial product records remain feature-specific pending decisions and are not implied by this approval.
 
 ### TODO — Product Owner and Domain Owners
 

@@ -28,7 +28,7 @@ Data must be trustworthy, explainable, secure, evolvable, and recoverable. Archi
 
 Each business fact requires one authoritative owner, a defined lifecycle, and supported read models for consumers. Shared database access must not substitute for an explicit contract between domains.
 
-The `catalog` schema owns product, brand, category, variant, product-media, category-assignment, and channel-offer records. Inventory remains authoritative for stock, accounting remains authoritative for financial postings, and approved content artifacts remain separate from product master facts.
+The `catalog` schema owns product, brand, category, variant, product-media, category-assignment, lifecycle evidence, provenance references, and variant price facts. Inventory remains authoritative for variant-level stock, purchasing for supplier commercial terms, accounting for financial postings, and approved content artifacts for publishable prose and channel content.
 
 The `organization` schema owns stable organization, location, channel, and location-channel reference identities. It does not own inventory quantities, fulfillment decisions, order state, tax treatment, or financial postings.
 

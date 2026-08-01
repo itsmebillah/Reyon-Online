@@ -19,7 +19,7 @@ This document defines the implementation boundary for REYON's reusable product c
 
 ## Scope
 
-Sprint 2 establishes a typed catalog read model, stable repository contract, isolated data adapter, customer filtering and sorting, and reusable product lookup. It does not establish product approval, publishing, pricing policy, stock truth, promotions, supplier ownership, or AI behavior.
+Sprint 2 established the typed customer read model and private catalog persistence foundation. Sprint 14 extends that design with the approved product identity, variant, pricing, authenticity, origin, image, category, lifecycle, and visibility rules. Inventory remains stock authority; Purchasing remains supplier-terms authority; Accounting remains financial-posting authority; content governance remains publication-artifact authority.
 
 ## Architecture
 
@@ -32,35 +32,43 @@ Dependency direction is `customer experience -> catalog contract <- catalog adap
 - **Brand:** third-party product-brand identity, separate from REYON's retailer identity.
 - **Category:** governed discovery classification with a stable identifier, slug, label, and display order.
 - **Product:** stable catalog identity and customer-facing name.
-- **Variant:** sellable presentation identity and SKU; variant policy remains pending.
+- **Variant:** sellable presentation identity with one approved variant type, unique SKU, optional barcode, price facts, and inventory stock identity.
 - **Offer:** channel-facing money and availability projection, not accounting or inventory truth.
 - **Content and media:** approved customer-facing summary and asset references, separate from AI suggestions.
 
 ## Logical Data Model
 
-| Record           | Responsibility                                    | Key relationships                                            |
-| ---------------- | ------------------------------------------------- | ------------------------------------------------------------ |
-| Brand            | Third-party product-brand identity                | Owns products                                                |
-| Category         | Hierarchical discovery classification             | Relates to products through explicit assignments             |
-| Product          | Stable catalog identity                           | Belongs to a brand and owns variants and media               |
-| Variant          | Sellable presentation identity                    | Belongs to a product and owns channel offers                 |
-| Product category | Product-to-category assignment                    | Can identify one primary category per product                |
-| Product media    | Governed storage reference and accessibility text | Belongs to a product; can identify one primary asset         |
-| Offer            | Channel-scoped monetary presentation              | Belongs to a variant; does not own stock or accounting truth |
+| Record             | Responsibility                                                                     | Key relationships                                             |
+| ------------------ | ---------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Brand              | Third-party product-brand identity                                                 | Owns products                                                 |
+| Category           | Hierarchical discovery classification                                              | Relates to products through explicit assignments              |
+| Product            | Stable catalog identity                                                            | Belongs to a brand and owns variants and media                |
+| Variant            | Sellable presentation identity                                                     | Belongs to a product and owns channel offers                  |
+| Product category   | Product-to-category assignment                                                     | Can identify one primary category per product                 |
+| Product media      | Governed storage reference and accessibility text                                  | Belongs to a product; can identify one primary asset          |
+| Offer              | Channel-scoped monetary presentation                                               | Belongs to a variant; does not own stock or accounting truth  |
+| Product lifecycle  | Current approved status and append-only transition evidence                        | Controls customer visibility without granting actor authority |
+| Authenticity facts | Evidence-ready authenticity, import, supplier, distributor, and country references | Does not convert unsupported claims into approved content     |
 
 Stable UUIDs are distinct from mutable slugs, SKUs, and display labels. Money uses exact numeric storage with an explicit ISO currency code. Foreign keys restrict implicit deletion so future workflows must make destructive consequences explicit.
+
+An optional Product Code is distinct from the immutable UUID; the UUID is the business reference when the code is absent. Every product has exactly one brand and primary category. Approved lifecycle vocabulary is Draft, Review, Approved, Published, Hidden, and Archived; only Published is eligible for customer projections. Publication eligibility also requires at least one ordered image and at least one valid variant.
 
 ## Current Implementation
 
 The feature is owned under `src/features/catalog`. Domain types contain no framework or persistence dependency. `CatalogRepository` defines supported reads. The in-memory adapter provides deterministic development data and query behavior. Shop filters use shareable URL parameters and remain usable without client-side JavaScript.
 
-Migration `20260802030000_catalog_foundation.sql` establishes the private `catalog` schema in the linked Supabase project. It creates seven empty tables, supporting constraints and indexes, update timestamps, and the service-role boundary. No demonstration or production assortment was inserted.
+Migration `20260802030000_catalog_foundation.sql` establishes the private `catalog` schema in the linked Supabase project. Migration `20260802150000_catalog_administration_rules.sql` adds the approved Product Code fallback, lifecycle vocabulary and transition command, country reference, variant types and SKU provenance, ordered-media controls, authenticity/sourcing facts, four variant price types, immutable identity guards, append-only status evidence, business-reference and primary-image projections, and the six approved category records.
+
+The typed administration contract lives in `src/features/catalog/domain/catalog-administration.ts`. It validates exact money and country references, SKU/barcode collisions within an aggregate, publication prerequisites, lifecycle transitions, customer visibility, business-reference fallback, and primary-image ordering without depending on React or Supabase. Focused domain tests execute locally and in CI.
+
+No brand, product, variant, price, supplier, provenance, status-event, inventory, user, or customer record was inserted. The only reference rows are the six Product Owner-approved top-level categories.
 
 ## Persistence and Security
 
 The `catalog` schema is not exposed through the configured Data API schemas. Anonymous and authenticated roles have no schema or table privileges. Row-level security is enabled on every table, with no access policies until roles and workflows are approved. The service role is reserved for trusted server-side adapters and must never be shipped to a browser.
 
-Migration history is append-only and shared between the repository and linked project. The migration was dry-run before application, then verified through remote migration history, database lint, and table inspection.
+Migration history is append-only and shared between the repository and linked project. Catalog migrations were dry-run before application, then verified through remote migration history, database lint, and table inspection. New administration records remain private and deny-by-default; no anonymous or authenticated policy was added.
 
 ## Controls and Boundaries
 
@@ -72,25 +80,26 @@ Migration history is append-only and shared between the repository and linked pr
 - Sprint 13 content artifacts reference catalog subject/version evidence without copying ownership of product facts; catalog corrections never silently regenerate, approve, or publish content.
 - Slugs are lookup keys, not permanent entity identifiers.
 
+## Approved Sprint 14 Decisions
+
+The Product Owner supplied the core catalog decisions in [Product Catalog Administration — Sprint 14 Decisions](25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md). Additive schema and contract changes may implement those rules without redesigning the established boundaries.
+
 ## Pending Business Decisions
 
-The Product Owner can supply the pending decisions through the [Sprint 14 Product Catalog Administration Decision Packet](25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md), which consolidates data intake, field, lifecycle, permission, pricing, media, duplicate, usability, and acceptance requirements in business-readable form.
+### TODO — Product Owner / Catalog Owner / Security
 
-### TODO — Product Owner / Catalog Owner
-
-- Approve the initial brands, products, variants, media, claims, and category assignments.
-- Define product and variant naming, SKU/barcode, lifecycle, approval, and publication policies.
-- Define pricing ownership, tax display, promotions, compare-at pricing, and channel variation.
-- Define category hierarchy, filters, collections, brand visibility, and merchandising order.
+- Approve initial brands and product records, operating currency, actor permissions, review segregation, exception transitions, naming, duplicate/correction behavior, and detailed media controls.
+- Approve authentication and production administration access before any user-facing write workflow is enabled.
+- Define secondary categories, merchandising collections, promotions, scheduled pricing, and channel variation separately.
 
 ### TODO — Architecture
 
-- Define authorization policies, audit, and publication contracts after the pending roles and workflows are approved.
-- Define import, validation, duplicate detection, media storage, and search-index strategy.
+- Define authorization policies after actor responsibilities are approved.
+- Define import, fuzzy duplicate detection, media storage, and search-index strategy after their dependent requirements are approved.
 
 ## Future Expansion
 
-Add a server-only Supabase repository adapter, administration workflows, localized content projections, faceted search, product relationships, inventory availability projections, audit history, and catalog feeds after their rules are approved. Adapters for Google Merchant Center, Meta, TikTok, Pinterest, and marketplaces must consume versioned channel projections.
+After the feature-specific access and operational decisions are approved, add an authenticated server-only repository adapter, administration workflows, media storage, conflict-safe correction, localized content projections, faceted search, product relationships, inventory availability projections, audit browsing, and catalog feeds. Adapters for Google Merchant Center, Meta, TikTok, Pinterest, and marketplaces must consume versioned channel projections.
 
 ## Related Documents
 

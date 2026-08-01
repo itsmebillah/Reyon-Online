@@ -1,261 +1,205 @@
-# Product Catalog Administration — Sprint 14 Decision Packet
+# Product Catalog Administration — Sprint 14 Decisions
 
 ## Purpose
 
-This document is the Product Owner decision and data-intake packet for the first operational REYON Business OS vertical slice: Product Catalog Administration. It converts unresolved catalog policy into plain-language decisions that a non-technical business owner can complete without designing software. It records no business rule until the Product Owner supplies and approves an answer.
+This document records the Product Owner-approved business rules for Product Catalog Administration and identifies the smaller capabilities that still require separate decisions. It is the implementation authority for Sprint 14 together with the existing catalog architecture. Decisions were approved on 2026-08-02 and replace earlier unanswered items in the discovery packet.
 
 ## Table of Contents
 
-- [Proposed business outcome](#proposed-business-outcome)
-- [Known approved context](#known-approved-context)
-- [Proposed slice boundary](#proposed-slice-boundary)
-- [Product data intake](#product-data-intake)
-- [Field and validation decisions](#field-and-validation-decisions)
-- [Category and brand decisions](#category-and-brand-decisions)
-- [SKU barcode and variant decisions](#sku-barcode-and-variant-decisions)
-- [Pricing decisions](#pricing-decisions)
-- [Lifecycle and publication decisions](#lifecycle-and-publication-decisions)
-- [Roles and permissions](#roles-and-permissions)
-- [Duplicate and correction decisions](#duplicate-and-correction-decisions)
-- [Media decisions](#media-decisions)
-- [Usability and accessibility acceptance](#usability-and-accessibility-acceptance)
-- [Representative scenarios](#representative-scenarios)
-- [Explicit non-decisions](#explicit-non-decisions)
-- [Readiness checklist](#readiness-checklist)
+- [Business outcome](#business-outcome)
+- [Approved scope](#approved-scope)
+- [Product identity](#product-identity)
+- [Brands and categories](#brands-and-categories)
+- [Variants SKU and barcode](#variants-sku-and-barcode)
+- [Images](#images)
+- [Authenticity and origin](#authenticity-and-origin)
+- [Pricing tax and stock](#pricing-tax-and-stock)
+- [Lifecycle and customer visibility](#lifecycle-and-customer-visibility)
+- [Implementation controls](#implementation-controls)
+- [Feature-specific pending decisions](#feature-specific-pending-decisions)
+- [Acceptance scenarios](#acceptance-scenarios)
 - [Future expansion](#future-expansion)
 - [Related documents](#related-documents)
 
-## Proposed Business Outcome
+## Business Outcome
 
-Enable the Product Owner to create, review, correct, and deliberately publish trustworthy product records through a low-cognitive-load administration interface. The slice should replace repetitive technical data handling with guided forms, clear previews, safe defaults, validation, and recoverable workflows while preserving catalog ownership boundaries.
+Enable trustworthy administration of multi-brand beauty and personal-care products while keeping product facts, inventory, purchasing, content, and channel publication independently governed. The interface should ultimately minimize repetitive work and mistakes for a non-technical Product Owner, but no unauthenticated administration capability may be exposed while access rules remain undecided.
 
-This outcome is proposed because governed product facts are prerequisites for ecommerce, inventory, purchasing, content generation, search, reporting, and external channel feeds. It does not authorize implementation until the decisions in this packet are approved.
+## Approved Scope
 
-## Known Approved Context
+Sprint 14 may implement the approved catalog facts, constraints, lifecycle vocabulary, validation, private persistence, and administration-ready contracts. Customer visibility must follow the approved publication rule. Inventory continues to own stock movements and quantities; catalog records only establish the variant identity to which stock belongs.
 
-- REYON is a premium multi-brand beauty and personal care retailer, not a manufacturer.
-- Authentic Korean beauty is a strong specialization, not the entire identity.
-- Current top-level categories are Skin Care, Hair Care, Makeup, Perfume, Baby Care, and Personal Care.
-- The Product Owner's primary product-entry inputs are brand, product name, category, variant, size, price, images, and basic specifications.
-- Generated or edited AI suggestions must never publish automatically.
-- The interface must minimize cognitive load, clicks, repetition, and preventable errors for a non-technical owner.
-- Product facts, inventory, purchasing, marketing, SEO, AI suggestions, and publication evidence remain separate responsibilities.
+The following remain outside this approval: tax calculation, promotions, automated repricing, AI generation, automatic publication, marketplace publication, destructive deletion, supplier commercial terms, and accounting treatment.
 
-## Proposed Slice Boundary
+## Product Identity
 
-### Proposed In Scope — Requires Approval
+| Rule ID         | Approved rule                                                                          |
+| --------------- | -------------------------------------------------------------------------------------- |
+| CAT-PRODUCT-001 | Every product has an immutable, system-generated internal Product ID.                  |
+| CAT-PRODUCT-002 | An administrator may optionally enter a custom Product Code.                           |
+| CAT-PRODUCT-003 | When no custom Product Code exists, the internal Product ID is the business reference. |
+| CAT-PRODUCT-004 | A custom Product Code must not replace or mutate the internal Product ID.              |
 
-- Admin-only product list, search, filters, and product-detail workspace.
-- Guided creation and editing of approved product, variant, category-assignment, media, and channel-offer fields.
-- Draft preservation, validation feedback, preview, review, and explicit publication request according to the approved lifecycle.
-- Duplicate signals, concurrent-change protection, attributable history, and clear correction paths.
-- Empty, loading, error, permission-denied, validation, success, and recovery states.
-- Keyboard-operable, responsive administration experience suitable for desktop and tablet; mobile use requirements remain a decision below.
+The internal UUID is authoritative identity. A business-reference projection returns the normalized custom code when present and otherwise the immutable UUID. Custom-code format and uniqueness are technical data-integrity concerns; correction authority remains part of access governance.
 
-### Proposed Out of Scope — Requires Approval
+## Brands and Categories
 
-- Inventory quantities, purchase orders, supplier terms, customer data, checkout, payment, fulfillment, tax calculation, accounting postings, promotions, marketplace publication, AI generation, bulk import, and destructive deletion.
-- Any public customer-facing catalog switch until publication, pricing, availability, and approved-content contracts are defined and tested.
+| Rule ID          | Approved rule                                                                                        |
+| ---------------- | ---------------------------------------------------------------------------------------------------- |
+| CAT-BRAND-001    | Every product belongs to exactly one third-party product brand.                                      |
+| CAT-BRAND-002    | REYON is the retailer and must never be represented as the manufacturer.                             |
+| CAT-CATEGORY-001 | Every product has exactly one primary category.                                                      |
+| CAT-CATEGORY-002 | Approved initial categories are Skin Care, Hair Care, Makeup, Perfume, Baby Care, and Personal Care. |
+| CAT-CATEGORY-003 | The category model must support future subcategories without redesign.                               |
 
-### TODO — Product Owner
+Additional secondary discovery classifications are not approved. The existing hierarchical category identity and explicit primary assignment remain compatible with future subcategories.
 
-- Approve or amend the proposed in-scope and out-of-scope boundaries.
-- State the single business problem that would make this slice valuable on its first day of use.
+## Variants SKU and Barcode
 
-## Product Data Intake
+Every sellable product variant has its own immutable internal Variant ID and supports the following approved variant types:
 
-Provide approved initial records in a spreadsheet or table using the fields below. One row should represent one sellable variant unless the Product Owner approves a different grain.
+- Size
+- Volume
+- Color
+- Shade
+- Weight
+- Pack Size
 
-| Field                | Owner input                         | Decision needed                                                              |
-| -------------------- | ----------------------------------- | ---------------------------------------------------------------------------- |
-| Product brand        | Approved third-party brand name     | Confirm approved spelling and whether an unknown brand may be created inline |
-| Product name         | Customer-recognizable product name  | Confirm naming convention and required language                              |
-| Category             | One or more approved categories     | Confirm whether exactly one primary category is required                     |
-| Variant label        | Variant/size presentation           | Confirm when a product needs separate variants                               |
-| Size and unit        | Numeric or labeled package size     | Confirm allowed units and display format                                     |
-| SKU                  | Internal sellable identifier        | Confirm assignment owner and format                                          |
-| Barcode              | Manufacturer barcode when available | Confirm optionality and accepted formats                                     |
-| Price                | Channel price                       | Confirm currency, tax display, zero-price rule, and effective timing         |
-| Compare-at price     | Optional reference price            | Confirm meaning and permitted use                                            |
-| Images               | Approved product images             | Confirm source ownership, minimum set, ordering, and quality rules           |
-| Basic specifications | Approved factual attributes         | Confirm required attributes by category                                      |
-| Claims and warnings  | Approved evidence-backed statements | Confirm source evidence and who may approve them                             |
+| Rule ID         | Approved rule                                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------------------------- |
+| CAT-VARIANT-001 | SKU, price, stock association, and optional barcode belong to the sellable variant rather than the product. |
+| CAT-SKU-001     | Every sellable variant has a globally unique SKU.                                                           |
+| CAT-SKU-002     | The system may generate the SKU and an administrator may override it.                                       |
+| CAT-BARCODE-001 | A manufacturer barcode is optional and should be recorded when available.                                   |
+| CAT-BARCODE-002 | Absence of a barcode must not prevent purchasing, stocking, or selling.                                     |
 
-### TODO — Product Owner
+The SKU source is recorded as system-generated or administrator-provided so later corrections remain attributable. No branded SKU pattern is approved; generated values therefore use stable system identity rather than an invented merchandising convention.
 
-- Supply at least five representative products covering simple, multi-variant, missing-barcode, multiple-image, and category-edge cases.
-- Clearly label all supplied data as approved production data or non-production test data.
+## Images
 
-## Field and Validation Decisions
+| Rule ID       | Approved rule                                                                 |
+| ------------- | ----------------------------------------------------------------------------- |
+| CAT-MEDIA-001 | Every product requires at least one image before publication.                 |
+| CAT-MEDIA-002 | Two images are recommended but the recommendation does not block publication. |
+| CAT-MEDIA-003 | The first ordered image is the primary display image.                         |
+| CAT-MEDIA-004 | The model must support larger future galleries without redesign.              |
 
-For each field, approve whether it is required, optional, system-generated, conditionally required, read-only, or prohibited. Also approve maximum lengths, character rules, uniqueness, normalization, error messages, and whether a warning blocks saving or only publication.
+Storage provider, licensing evidence, file types, dimensions, file-size limits, malware scanning, retention, and ALT-text approval remain separate media/security decisions. Persistence stores ordered references and does not weaken those future controls.
 
-### TODO — Product Owner / Catalog Owner
+## Authenticity and Origin
 
-- Define required fields for saving a draft.
-- Define additional requirements for review and publication.
-- Define which specifications vary by category.
-- Confirm whether slugs are generated automatically and whether the owner may edit them.
-- Define handling for incomplete products and unavailable facts.
+The catalog supports explicit fields for:
 
-## Category and Brand Decisions
+- authentic-product status;
+- imported-product status;
+- supplier reference/information;
+- future official-distributor information; and
+- country of origin.
 
-The approved top-level category list does not yet define hierarchy, subcategories, ordering, filters, or product-assignment policy.
+Country of origin is stored as a filterable country reference rather than free-form presentation copy. Examples supplied by the Product Owner—South Korea, Japan, France, Germany, USA, and Bangladesh—illustrate valid countries but do not restrict the future country list.
 
-### TODO — Product Owner
+Authenticity fields are facts requiring evidence and attributable administration; this approval does not authorize unsupported customer claims. Supplier commercial terms remain owned by Purchasing.
 
-- Approve the category tree, display order, and whether products may belong to multiple categories.
-- Define primary-category behavior and category-change effects.
-- Approve brand creation, spelling changes, merging, suspension, and visibility rules.
-- Confirm that REYON must never be offered as a product brand unless the business later becomes a manufacturer and explicitly changes this rule.
+## Pricing Tax and Stock
 
-## SKU Barcode and Variant Decisions
+Each variant supports:
 
-### TODO — Product Owner / Operations Owner
+- Purchase Price
+- Selling Price
+- Compare-at Price (MRP)
+- optional Discount Price
 
-- State whether SKUs are entered, generated, imported, or assigned through another process.
-- Approve SKU format, uniqueness scope, immutability, and correction behavior.
-- Identify supported barcode standards and whether barcodes are optional.
-- Define product versus variant boundaries for size, shade, scent, formulation, bundle, and packaging differences.
-- Define whether a variant may be retired while the parent product remains active.
+Money uses exact decimal values and explicit ISO currency. Negative monetary values are invalid. Compare-at and discount display semantics beyond their named purpose are not inferred. Tax is not calculated separately in the current system; the architecture must allow a future tax module without changing product identity or historical price evidence.
 
-## Pricing Decisions
+Inventory is tracked per variant, never at the parent-product level. The inventory ledger remains authoritative for quantity. Catalog pricing must not be treated as an accounting posting or inventory valuation rule.
 
-The database supports exact monetary values and explicit currency but does not approve pricing policy.
+## Lifecycle and Customer Visibility
 
-### TODO — Product Owner / Finance Owner
+The approved ordered vocabulary is:
 
-- Confirm the initial selling currency and whether prices include any tax.
-- Identify who may enter, review, approve, schedule, and correct prices.
-- Define whether zero, missing, negative, or future-dated prices are allowed.
-- Define compare-at price meaning, evidence, display conditions, and expiry.
-- Define channel-specific price variation and effective-time behavior.
-- Confirm that promotions and automated repricing remain out of this slice unless separately approved.
+```text
+Draft → Review → Approved → Published → Hidden → Archived
+```
 
-## Lifecycle and Publication Decisions
+| Rule ID           | Approved rule                                                                                                      |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------ |
+| CAT-LIFECYCLE-001 | Every product has one of the approved lifecycle statuses.                                                          |
+| CAT-LIFECYCLE-002 | Only Published products are visible to customers.                                                                  |
+| CAT-LIFECYCLE-003 | Status history must remain attributable and append-only.                                                           |
+| CAT-LIFECYCLE-004 | Publication requires at least one image, one primary category, one brand, and at least one valid sellable variant. |
 
-No product lifecycle, state vocabulary, or transition policy is currently approved.
+The arrows establish the approved forward workflow. Actor permissions, segregation of review and approval, correction/republication, reactivation, and exception transitions remain unapproved. Until those decisions exist, only trusted server-side infrastructure may hold persistence privileges and no public administration command is enabled.
 
-### TODO — Product Owner / Catalog Owner
+## Implementation Controls
 
-- Name the required product states in business language.
-- For every transition, define entry criteria, permitted actor, required evidence, resulting visibility, notification, and recovery path.
-- Define whether review and approval may be performed by the same person.
-- Define how published products are corrected without losing history.
-- Define suspension, archival, reactivation, and permanent-deletion policy.
-- Define what "published" means for the website and future channels.
+- Product and Variant IDs are generated by the system and never updated.
+- Product Code, SKU, and barcode are separate identifiers.
+- Variant price types remain distinct and retain explicit currency.
+- The primary category is explicit and unique per product.
+- Image order is explicit; the lowest ordered image is the primary projection.
+- Publication eligibility is validated from authoritative catalog facts rather than UI state.
+- Customer queries must filter to Published products when persistent runtime catalog access is introduced.
+- Product facts must not be overwritten by AI-generated content.
+- Append-only migrations extend the existing private, deny-by-default Supabase schema.
 
-## Roles and Permissions
+## Feature-Specific Pending Decisions
 
-Use responsibilities rather than technical role names.
+These unresolved items block only their dependent subfeatures:
 
-| Responsibility               | Person or business role        | Allowed actions | Scope | Approval required |
-| ---------------------------- | ------------------------------ | --------------- | ----- | ----------------- |
-| Create product drafts        | TODO — Product Owner           | TODO            | TODO  | TODO              |
-| Edit product facts           | TODO — Product Owner           | TODO            | TODO  | TODO              |
-| Review accuracy              | TODO — Product Owner           | TODO            | TODO  | TODO              |
-| Approve publication          | TODO — Product Owner           | TODO            | TODO  | TODO              |
-| Change prices                | TODO — Product Owner / Finance | TODO            | TODO  | TODO              |
-| Manage categories and brands | TODO — Product Owner           | TODO            | TODO  | TODO              |
-| View history and exports     | TODO — Product Owner           | TODO            | TODO  | TODO              |
+### Administration Access — Feature Blocked
 
-### TODO — Security / Product Owner
+- Authentication provider, account recovery, session requirements, and privileged-support policy.
+- Responsibilities allowed to create, edit, review, approve, publish, hide, archive, manage price, manage brand/category, or view history.
+- Whether review and approval require different people.
 
-- Approve authentication, session, account recovery, access-review, and privileged-support requirements before an admin user can access production data.
+### Operational Data Entry — Feature Blocked
 
-## Duplicate and Correction Decisions
+- Approved initial brands and representative product/variant records.
+- Required draft fields beyond the approved publication requirements.
+- Product and variant naming convention, maximum text lengths, and category-specific specifications.
+- Generated SKU presentation format; UUID-backed generation remains the neutral technical fallback.
+- Initial operating currency and who may approve price corrections.
 
-### TODO — Product Owner
+### Duplicate and Correction Workflow — Feature Blocked
 
-- Define what makes two products or variants duplicates: brand/name, SKU, barcode, attributes, or another combination.
-- Define whether duplicates block draft save, review, or publication.
-- Define merge, split, correction, and mistaken-publication behavior.
-- Define which historical facts must remain visible and for how long.
-- Define who resolves ambiguous duplicates and what evidence is required.
+- Duplicate matching beyond exact unique Product Code, SKU, or non-null barcode.
+- Merge/split behavior, mistaken-publication recovery, reactivation, and permanent-deletion policy.
+- Concurrent-edit conflict resolution and historical retention terms.
 
-## Media Decisions
+### Media Upload — Feature Blocked
 
-### TODO — Product Owner / Brand Owner
+- File formats, dimensions, size limits, licensing evidence, storage retention, scanning, and moderation.
+- ALT-text ownership and approval.
+- Complete mobile administration and formal accessibility target.
 
-- Approve image ownership and licensing evidence requirements.
-- Define permitted formats, size/resolution limits, aspect ratios, background expectations, and maximum image count.
-- Define primary-image selection, ordering, replacement, and archival behavior.
-- Define required image ALT-text review and whether AI may later suggest it.
-- Confirm storage, retention, malware scanning, moderation, and sensitive-metadata requirements with Security.
+## Acceptance Scenarios
 
-## Usability and Accessibility Acceptance
+The approved foundation must prove that:
 
-The proposed interface should optimize the owner's daily workflow rather than expose database structure.
+1. a product receives an immutable internal ID and can omit its custom Product Code;
+2. a custom Product Code does not replace internal identity;
+3. every variant has a unique SKU and can omit a barcode;
+4. all six approved variant types are representable;
+5. stock identity references the variant rather than the parent product;
+6. all four approved price types are representable with exact currency values;
+7. a product cannot qualify for publication without its required brand, primary category, image, and variant facts;
+8. only Published is customer-visible;
+9. lifecycle evidence is append-only; and
+10. future subcategories, larger galleries, distributor facts, filtering by origin, and tax integration do not require changing stable product identity.
 
-### Proposed Acceptance Principles — Requires Approval
-
-- One guided workspace should handle the common create-and-review flow without forcing navigation between unrelated screens.
-- Previously entered values must survive validation errors and recoverable failures.
-- The interface should explain business consequences before high-impact actions.
-- Repeated attributes should support safe reuse without silently copying outdated facts.
-- Validation should use plain language and focus the first problem requiring attention.
-- Keyboard access, visible focus, semantic labels, sufficient contrast, zoom, and responsive layouts are release requirements.
-
-### TODO — Product Owner / UX Owner
-
-- Approve primary devices and whether complete mobile administration is required.
-- Identify the acceptable number of steps or time for creating a representative product.
-- Confirm accessibility target and any users needing assistive technology.
-- Approve usability testing with representative product records before release.
-
-## Representative Scenarios
-
-For each scenario, provide actual example data and the expected business outcome.
-
-1. Create and publish a simple single-variant product.
-2. Save an incomplete draft and finish it later.
-3. Create a product with multiple sizes or shades.
-4. Detect and resolve a duplicate SKU or barcode.
-5. Correct a mistake after publication.
-6. Replace and reorder product images.
-7. Change a price with the approved effective timing.
-8. Suspend or archive a product without deleting history.
-9. Attempt an unauthorized or unapproved action.
-10. Recover from a failed save, stale concurrent edit, or unavailable dependency.
-
-### TODO — Product Owner
-
-- Supply expected results for all applicable scenarios and mark any scenario that is intentionally out of scope.
-- Add edge cases that occur in REYON's real daily product-entry process.
-
-## Explicit Non-Decisions
-
-This packet does not approve example states, permissions, required fields, generated SKUs, tax handling, duplicate thresholds, publication behavior, product data, or UI workflow. Proposed scope and acceptance principles remain proposals until the Product Owner records approval.
-
-## Readiness Checklist
-
-Sprint 14 implementation may begin only when all applicable items have accountable approval:
-
-- [ ] Slice scope and first-day business outcome
-- [ ] Representative approved/test product dataset
-- [ ] Field requirements and validation behavior
-- [ ] Brand and category rules
-- [ ] Product, variant, SKU, and barcode rules
-- [ ] Pricing and currency rules
-- [ ] Lifecycle and publication rules
-- [ ] Role and permission matrix
-- [ ] Duplicate, correction, archival, and deletion rules
-- [ ] Media and storage requirements
-- [ ] Security, privacy, accessibility, and device requirements
-- [ ] Representative scenarios with expected results
-- [ ] Measurable acceptance criteria and operational owner
+Real workflow acceptance will be added when approved actors, example products, media rules, and exception paths are supplied.
 
 ## Future Expansion
 
-After the first slice is proven, extend the same governed product workspace to bulk import/export, inventory setup, supplier assortment, localized approved content, AI suggestion review, scheduled publication, product relationships, promotions, marketplace feeds, quality dashboards, and automation. Each expansion retains explicit ownership, versioning, human control, and channel separation.
+After dependent decisions are approved, add authenticated administration, guided forms, approved media upload, conflict-safe editing, duplicate resolution, audit browsing, bulk import/export, inventory projections, localized content, AI suggestion review, scheduled publication, product relationships, promotions, marketplace feeds, and operational quality dashboards.
 
 ## Related Documents
 
-- [Business Overview](01_BUSINESS_OVERVIEW.md)
 - [Business Rules](02_BUSINESS_RULES.md)
 - [User Roles](03_USER_ROLES.md)
-- [UI Guidelines](09_UI_GUIDELINES.md)
+- [Inventory System](05_INVENTORY_SYSTEM.md)
+- [Database Architecture](08_DATABASE_ARCHITECTURE.md)
 - [Roadmap](13_ROADMAP.md)
 - [AI SEO and Product Content Architecture](16_AI_SEO_CONTENT_ARCHITECTURE.md)
 - [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
-- [Customer and CRM Identity Architecture](22_CUSTOMER_CRM_IDENTITY_ARCHITECTURE.md)
+- [Delivery Assurance](26_DELIVERY_ASSURANCE.md)

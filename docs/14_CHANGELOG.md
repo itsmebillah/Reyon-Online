@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Recorded the approved Sprint 14 Product Catalog Administration rules and implemented their private persistence and typed domain-validation foundation.
+  - Approval/owner: Product Owner catalog decisions dated 2026-08-02
+  - Impact: linked Supabase catalog schema, six approved category reference rows, lifecycle/identity/variant/media/provenance/price contracts, domain tests, and CI; no brand, product, variant, price, supplier, inventory, user, or customer record inserted
+  - Related: [Product Catalog Administration Decisions](25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md), [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md), migration `20260802150000_catalog_administration_rules.sql`
+
 - Added least-privilege GitHub Actions checks for locked dependency installation, formatting, linting, strict TypeScript, production builds, and the complete responsive browser matrix.
   - Approval/owner: engineering foundation under the approved autonomous roadmap
   - Impact: automated repository validation and release evidence only; no business behavior or production data introduced

@@ -7,6 +7,25 @@ export type {
   CatalogQuery,
   CatalogSort,
 } from "./domain/catalog";
+export {
+  canTransitionCatalogStatus,
+  catalogStatuses,
+  catalogVariantTypes,
+  getPrimaryImage,
+  getProductBusinessReference,
+  isCustomerVisibleCatalogStatus,
+  validateCatalogProduct,
+} from "./domain/catalog-administration";
+export type {
+  CatalogAdminProduct,
+  CatalogAdminVariant,
+  CatalogPrice,
+  CatalogPriceType,
+  CatalogSkuSource,
+  CatalogStatus,
+  CatalogValidationIssue,
+  CatalogVariantType,
+} from "./domain/catalog-administration";
 export { catalogRepository };
 
 export const formatMoney = (money: Money) =>

@@ -21,7 +21,7 @@ This document defines the future inventory domain's conceptual boundaries and co
 
 ## Objectives and Scope
 
-The inventory domain should provide explainable stock positions, controlled movements, availability inputs, and reconciliation evidence across approved products and locations. Scope must be confirmed for physical stock, samples, testers, bundles, packaging, damaged goods, consignment, and non-stock items.
+The inventory domain should provide explainable stock positions, controlled movements, availability inputs, and reconciliation evidence across approved products and locations. Product Owner decision CAT-VARIANT-001 establishes that sellable stock is tracked per product variant, not at parent-product level. Scope must still be confirmed for physical stock, samples, testers, bundles, packaging, damaged goods, consignment, and non-stock items.
 
 ## Inventory Concepts
 
@@ -38,7 +38,7 @@ Migration `20260802050000_inventory_ledger_foundation.sql` establishes an empty 
 
 | Record        | Responsibility                                                                                    | Explicit boundary                                                         |
 | ------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| Stock item    | Inventory identity optionally linked to one catalog variant                                       | Does not define whether every variant is stocked                          |
+| Stock item    | Inventory identity linked to one sellable catalog variant when stocked                            | Does not define whether every catalog variant is currently stocked        |
 | Lot           | Optional lot/batch identity and date facts                                                        | Does not require lot tracking or define expiry policy                     |
 | Movement      | Attributable event header, source, actor reference, occurrence time, and optional correction link | Movement-type and reason vocabularies remain unapproved                   |
 | Movement line | Signed quantity delta by stock item and location                                                  | Does not calculate availability, value, reservations, or financial impact |
