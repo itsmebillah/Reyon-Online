@@ -8,12 +8,12 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(businessConfig.productionUrl),
   title: {
-    default: "REYON — Authentic Korean Beauty & Personal Care",
+    default: "REYON — Premium Beauty & Personal Care",
     template: "%s | REYON",
   },
   description: businessConfig.positioning,
   openGraph: {
-    title: "REYON — Authentic Korean Beauty & Personal Care",
+    title: "REYON — Premium Beauty & Personal Care",
     description: businessConfig.positioning,
     type: "website",
     siteName: "REYON",

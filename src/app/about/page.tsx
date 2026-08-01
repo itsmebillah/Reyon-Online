@@ -6,16 +6,16 @@ export default function AboutPage() {
       <div className="story">
         <div>
           <p className="eyebrow">Our story</p>
-          <h1>A trusted destination for authentic Korean beauty.</h1>
+          <h1>A trusted destination for premium beauty and personal care.</h1>
           <p className="lead">
-            REYON is a premium multi-brand retailer specializing in genuine
-            Korean skincare, haircare, makeup and personal care.
+            REYON is a premium multi-brand beauty and personal care retailer,
+            with authentic Korean beauty as one of our strongest specialties.
           </p>
           <p>
             We carefully select products from trusted beauty brands and present
-            them with clarity, quality and transparency. Korean beauty is our
-            primary focus, with carefully selected international brands planned
-            for the future.
+            them with clarity, quality and transparency. Our platform supports a
+            broad premium assortment while allowing our Korean beauty expertise
+            to remain distinctive.
           </p>
           <LinkButton href="/shop">Explore REYON</LinkButton>
         </div>

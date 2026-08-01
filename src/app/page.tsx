@@ -18,7 +18,7 @@ export default function Home() {
         />
         <Container>
           <div className="hero-copy">
-            <p className="eyebrow">Authentic Korean beauty</p>
+            <p className="eyebrow">Premium beauty &amp; personal care</p>
             <h1>
               Beauty,
               <br />
@@ -90,8 +90,8 @@ export default function Home() {
             </div>
             <div>
               <span>02</span>
-              <h3>K-Beauty specialization</h3>
-              <p>Korean skincare, haircare, makeup and beauty at our core.</p>
+              <h3>Authentic K-Beauty expertise</h3>
+              <p>A strong specialization within our wider beauty selection.</p>
             </div>
             <div>
               <span>03</span>
@@ -112,9 +112,9 @@ export default function Home() {
                 More intention.
               </h2>
               <p>
-                REYON curates authentic Korean beauty from trusted brands
-                through an experience designed to feel clean, transparent and
-                human.
+                REYON curates premium beauty and personal care from trusted
+                brands, with authentic Korean beauty as one of our strongest
+                specialties.
               </p>
               <LinkButton href="/about">Discover REYON</LinkButton>
             </div>
@@ -137,7 +137,7 @@ export default function Home() {
             {[
               [
                 "Multi-brand selection",
-                "Korean beauty across six essential care categories.",
+                "Premium beauty and personal care across six essential categories.",
               ],
               [
                 "Clear information",

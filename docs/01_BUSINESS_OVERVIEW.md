@@ -20,17 +20,18 @@ This document frames REYON's operating context and the business capabilities the
 
 ## Business Identity
 
-| Attribute         | Current statement                  |
-| ----------------- | ---------------------------------- |
-| Project           | REYON Business OS                  |
-| Store brand       | REYON                              |
-| Working business  | Reyon Online                       |
-| Business category | Beauty & Care                      |
-| Business model    | Multi-brand online retailer        |
-| Primary focus     | Authentic Korean beauty (K-Beauty) |
-| Product type      | Retail Business Operating System   |
+| Attribute         | Current statement                       |
+| ----------------- | --------------------------------------- |
+| Project           | REYON Business OS                       |
+| Store brand       | REYON                                   |
+| Working business  | Reyon Online                            |
+| Business category | Beauty & Care                           |
+| Business model    | Multi-brand online retailer             |
+| Primary identity  | Premium Beauty & Personal Care Retailer |
+| Specialization    | Authentic Korean beauty (K-Beauty)      |
+| Product type      | Retail Business Operating System        |
 
-REYON is the trusted retailer and curator, not the brand or manufacturer of products sold by the store. Its primary specialization is authentic Korean skincare, haircare, makeup, beauty, and personal care. The platform must also support carefully selected international beauty brands in the future. Legal identity, corporate structure, markets, and detailed commercial policies remain unconfirmed.
+REYON is the trusted retailer and curator, not the brand or manufacturer of products sold by the store. Its primary identity is a premium multi-brand beauty and personal care retailer. Authentic Korean skincare, haircare, makeup, and beauty are among its strongest specialties, not its entire identity. The platform must support a broad premium assortment and carefully selected international beauty brands without redesign. Legal identity, corporate structure, markets, and detailed commercial policies remain unconfirmed.
 
 ## Approved Customer Configuration
 

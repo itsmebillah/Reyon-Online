@@ -100,7 +100,7 @@ test("navigation and search remain usable", async ({ page }) => {
   expect(failures).toEqual([]);
 });
 
-test("homepage communicates the approved K-Beauty positioning", async ({
+test("homepage communicates the approved brand positioning hierarchy", async ({
   page,
 }) => {
   const failures = monitor(page);
@@ -109,14 +109,14 @@ test("homepage communicates the approved K-Beauty positioning", async ({
     page
       .locator("#main")
       .getByText(
-        "REYON — Your trusted destination for authentic Korean beauty and personal care products.",
+        "REYON is a premium multi-brand beauty and personal care retailer, specializing in authentic Korean beauty.",
       ),
   ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "100% authentic products" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "K-Beauty specialization" }),
+    page.getByRole("heading", { name: "Authentic K-Beauty expertise" }),
   ).toBeVisible();
   expect(failures).toEqual([]);
 });

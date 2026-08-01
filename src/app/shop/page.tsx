@@ -5,16 +5,16 @@ import { categories, products } from "@/data/catalog";
 export const metadata: Metadata = {
   title: "Shop",
   description:
-    "Explore authentic Korean beauty and personal care products from trusted brands at REYON.",
+    "Explore premium multi-brand beauty and personal care at REYON, including our authentic Korean beauty specialization.",
   alternates: { canonical: "/shop" },
 };
 export default function ShopPage() {
   return (
     <Container className="page">
       <SectionHeading
-        eyebrow="Authentic K-Beauty"
-        title="Shop Korean beauty"
-        body="Genuine skincare, haircare, makeup and personal care from trusted brands, carefully selected by REYON."
+        eyebrow="Carefully selected collections"
+        title="Shop beauty & personal care"
+        body="Premium products from trusted brands across beauty and personal care, including a strong authentic K-Beauty specialization."
       />
       <div className="shop-toolbar">
         <p>{products.length} products</p>

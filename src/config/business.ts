@@ -3,9 +3,10 @@ export const businessConfig = {
   businessName: "Reyon Online",
   industry: "Beauty & Care",
   businessModel: "Multi-brand online retailer",
-  specialization: "Authentic Korean beauty (K-Beauty)",
+  primaryPositioning: "Premium Beauty & Personal Care Retailer",
+  specialization: "Specializing in Authentic Korean Beauty",
   positioning:
-    "REYON — Your trusted destination for authentic Korean beauty and personal care products.",
+    "REYON is a premium multi-brand beauty and personal care retailer, specializing in authentic Korean beauty.",
   locale: "en-BD",
   productionUrl: "https://reyon-online.vercel.app",
   contact: {
