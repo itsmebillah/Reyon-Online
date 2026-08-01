@@ -41,15 +41,19 @@ The Product Owner approved sequential roadmap execution on 2026-08-02. Technical
 
 ## Committed Delivery Sequence
 
-| Sprint | Outcome                                                            | Status                  | Dependency                               |
-| ------ | ------------------------------------------------------------------ | ----------------------- | ---------------------------------------- |
-| 0      | Environment and ownership foundation                               | Released                | Existing infrastructure                  |
-| 0.5    | AI-ready SEO and content architecture                              | Released (architecture) | Documentation foundation                 |
-| 1      | Premium customer experience foundation                             | Released                | Sprint 0                                 |
-| 2      | Governed product catalog foundation                                | In progress             | Sprint 1                                 |
-| 3+     | Inventory, orders, delivery, accounts, reports, automation, and AI | Sequenced candidates    | Approved rules and preceding foundations |
+| Sprint | Outcome                                                 | Status                  | Dependency                               |
+| ------ | ------------------------------------------------------- | ----------------------- | ---------------------------------------- |
+| 0      | Environment and ownership foundation                    | Released                | Existing infrastructure                  |
+| 0.5    | AI-ready SEO and content architecture                   | Released (architecture) | Documentation foundation                 |
+| 1      | Premium customer experience foundation                  | Released                | Sprint 0                                 |
+| 2      | Governed product catalog foundation                     | Released (foundation)   | Sprint 1                                 |
+| 3      | Organization, location, and channel topology            | Released (foundation)   | Sprint 2                                 |
+| 4      | Inventory control foundation                            | Next                    | Sprint 3 and approved inventory rules    |
+| 5+     | Orders, delivery, accounts, reports, automation, and AI | Sequenced candidates    | Approved rules and preceding foundations |
 
 Sprint 2 now includes a policy-neutral catalog contract, replaceable data adapter, customer discovery, product lookup, and an empty deny-by-default Supabase catalog schema. Persistent administration, runtime data access, and publication workflows remain gated by catalog-owner and access rules.
+
+Sprint 3 establishes empty, deny-by-default organization, location, and channel identities before inventory is allowed to reference operational ownership. Actual topology records and workflows remain gated by Product Owner facts and role policy.
 
 ## Entry and Exit Criteria
 

@@ -30,6 +30,8 @@ Each business fact requires one authoritative owner, a defined lifecycle, and su
 
 The `catalog` schema owns product, brand, category, variant, product-media, category-assignment, and channel-offer records. Inventory remains authoritative for stock, accounting remains authoritative for financial postings, and approved content artifacts remain separate from product master facts.
 
+The `organization` schema owns stable organization, location, channel, and location-channel reference identities. It does not own inventory quantities, fulfillment decisions, order state, tax treatment, or financial postings.
+
 ### TODO — Architecture
 
 - Create bounded-context and data-ownership maps after business discovery.
@@ -76,7 +78,7 @@ Structured data should be rendered from authoritative facts and approved artifac
 
 The database decision must address availability, backup, restore validation, recovery objectives, capacity, observability, migrations, archival, and incident response. Requirements precede vendor selection.
 
-Catalog schema changes use append-only SQL migrations under `supabase/migrations`. Remote migration history must match the repository. Every migration requires a dry run, database lint, and post-application inspection. Destructive migrations require explicit Product Owner approval and a recovery plan.
+Database schema changes use append-only SQL migrations under `supabase/migrations`. Remote migration history must match the repository. Every migration requires a dry run, database lint, and post-application inspection. Destructive migrations require explicit Product Owner approval and a recovery plan.
 
 ## Decision Gates
 
@@ -100,3 +102,5 @@ Add context and entity-relationship diagrams, data dictionary, classification ca
 - [Coding Standards](11_CODING_STANDARDS.md)
 - [Folder Structure](12_FOLDER_STRUCTURE.md)
 - [AI SEO and Product Content Architecture](16_AI_SEO_CONTENT_ARCHITECTURE.md)
+- [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
+- [Operating Topology Architecture](19_OPERATING_TOPOLOGY_ARCHITECTURE.md)

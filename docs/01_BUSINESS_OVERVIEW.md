@@ -85,6 +85,8 @@ Stakeholder categories may include ownership, management, sales, ecommerce, ware
 
 No channel topology or location hierarchy is approved.
 
+The private operating-topology foundation can record organizations, locations, channels, and structural location-channel associations once approved. It contains no business records and defines no fulfillment, inventory-sharing, tax, or accounting behavior.
+
 ### TODO — Product Owner
 
 - Confirm physical and digital channels, stores, warehouses, offices, and service areas.
@@ -114,3 +116,4 @@ Add approved process maps, capability maturity, organization maps, value streams
 - [User Roles](03_USER_ROLES.md)
 - [Roadmap](13_ROADMAP.md)
 - [Brand and Business Configuration](17_BRAND_BUSINESS_CONFIGURATION.md)
+- [Operating Topology Architecture](19_OPERATING_TOPOLOGY_ARCHITECTURE.md)

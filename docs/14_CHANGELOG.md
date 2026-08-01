@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added and deployed an empty operating-topology schema for organization, location, channel, and structural location-channel identities, with restrictive ownership, RLS, and deny-by-default client access.
+  - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02
+  - Impact: linked Supabase schema and migration history; no organization, location, channel, fulfillment, or inventory data inserted
+  - Related: [Operating Topology Architecture](19_OPERATING_TOPOLOGY_ARCHITECTURE.md), [Database Architecture](08_DATABASE_ARCHITECTURE.md)
+
 - Added and deployed the first Supabase migration: an empty private catalog schema for brands, categories, products, variants, category assignments, media, and channel offers, with exact money fields, restrictive relationships, RLS, and deny-by-default client access.
   - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02
   - Impact: linked Supabase schema and migration history; no customer/admin access and no product data inserted
