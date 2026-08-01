@@ -49,7 +49,7 @@ The Product Owner approved sequential roadmap execution on 2026-08-02. Technical
 | 2      | Governed product catalog foundation                                | In progress             | Sprint 1                                 |
 | 3+     | Inventory, orders, delivery, accounts, reports, automation, and AI | Sequenced candidates    | Approved rules and preceding foundations |
 
-Sprint 2 begins with a policy-neutral catalog contract, replaceable data adapter, customer discovery, and product lookup. Persistent administration and publication workflows remain gated by catalog-owner rules.
+Sprint 2 now includes a policy-neutral catalog contract, replaceable data adapter, customer discovery, product lookup, and an empty deny-by-default Supabase catalog schema. Persistent administration, runtime data access, and publication workflows remain gated by catalog-owner and access rules.
 
 ## Entry and Exit Criteria
 

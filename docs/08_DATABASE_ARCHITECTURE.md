@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document establishes data-architecture principles, ownership questions, and decision records required before schema design. It intentionally avoids selecting a database or inventing a physical model.
+This document establishes data-architecture principles, ownership questions, and controlled physical decisions. Supabase PostgreSQL is approved for Sprint 2's private catalog foundation; later domains still require their own evidence and boundaries.
 
 ## Table of Contents
 
@@ -27,6 +27,8 @@ Data must be trustworthy, explainable, secure, evolvable, and recoverable. Archi
 ## Domain Ownership
 
 Each business fact requires one authoritative owner, a defined lifecycle, and supported read models for consumers. Shared database access must not substitute for an explicit contract between domains.
+
+The `catalog` schema owns product, brand, category, variant, product-media, category-assignment, and channel-offer records. Inventory remains authoritative for stock, accounting remains authoritative for financial postings, and approved content artifacts remain separate from product master facts.
 
 ### TODO — Architecture
 
@@ -73,6 +75,8 @@ Structured data should be rendered from authoritative facts and approved artifac
 ## Reliability and Operations
 
 The database decision must address availability, backup, restore validation, recovery objectives, capacity, observability, migrations, archival, and incident response. Requirements precede vendor selection.
+
+Catalog schema changes use append-only SQL migrations under `supabase/migrations`. Remote migration history must match the repository. Every migration requires a dry run, database lint, and post-application inspection. Destructive migrations require explicit Product Owner approval and a recovery plan.
 
 ## Decision Gates
 

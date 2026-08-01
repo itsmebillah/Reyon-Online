@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the intended repository organization for a scalable modular system while preserving flexibility until architecture and technology choices are approved. The current repository contains documentation only.
+This document defines the repository organization for a scalable modular system while preserving flexibility as later modules are approved. The repository now includes documentation, the customer application, a feature-owned catalog boundary, tests, and Supabase migrations.
 
 ## Table of Contents
 
@@ -63,6 +63,8 @@ This document defines the intended repository organization for a scalable modula
 ```
 
 ## Organization Principles
+
+The implemented catalog lives under `src/features/catalog`, with domain contracts separated from data adapters. Database changes live under `supabase/migrations` and are append-only. Future features should follow this dependency direction instead of importing another feature's private implementation.
 
 - Organize around owned capabilities and deployable products, not arbitrary technical layers alone.
 - Keep public contracts explicit and internal implementation private.

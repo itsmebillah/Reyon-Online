@@ -9,7 +9,9 @@ This document defines the implementation boundary for REYON's reusable product c
 - [Scope](#scope)
 - [Architecture](#architecture)
 - [Core concepts](#core-concepts)
+- [Logical data model](#logical-data-model)
 - [Current implementation](#current-implementation)
+- [Persistence and security](#persistence-and-security)
 - [Controls and boundaries](#controls-and-boundaries)
 - [Pending business decisions](#pending-business-decisions)
 - [Future expansion](#future-expansion)
@@ -34,9 +36,31 @@ Dependency direction is `customer experience -> catalog contract <- catalog adap
 - **Offer:** channel-facing money and availability projection, not accounting or inventory truth.
 - **Content and media:** approved customer-facing summary and asset references, separate from AI suggestions.
 
+## Logical Data Model
+
+| Record           | Responsibility                                    | Key relationships                                            |
+| ---------------- | ------------------------------------------------- | ------------------------------------------------------------ |
+| Brand            | Third-party product-brand identity                | Owns products                                                |
+| Category         | Hierarchical discovery classification             | Relates to products through explicit assignments             |
+| Product          | Stable catalog identity                           | Belongs to a brand and owns variants and media               |
+| Variant          | Sellable presentation identity                    | Belongs to a product and owns channel offers                 |
+| Product category | Product-to-category assignment                    | Can identify one primary category per product                |
+| Product media    | Governed storage reference and accessibility text | Belongs to a product; can identify one primary asset         |
+| Offer            | Channel-scoped monetary presentation              | Belongs to a variant; does not own stock or accounting truth |
+
+Stable UUIDs are distinct from mutable slugs, SKUs, and display labels. Money uses exact numeric storage with an explicit ISO currency code. Foreign keys restrict implicit deletion so future workflows must make destructive consequences explicit.
+
 ## Current Implementation
 
 The feature is owned under `src/features/catalog`. Domain types contain no framework or persistence dependency. `CatalogRepository` defines supported reads. The in-memory adapter provides deterministic development data and query behavior. Shop filters use shareable URL parameters and remain usable without client-side JavaScript.
+
+Migration `20260802030000_catalog_foundation.sql` establishes the private `catalog` schema in the linked Supabase project. It creates seven empty tables, supporting constraints and indexes, update timestamps, and the service-role boundary. No demonstration or production assortment was inserted.
+
+## Persistence and Security
+
+The `catalog` schema is not exposed through the configured Data API schemas. Anonymous and authenticated roles have no schema or table privileges. Row-level security is enabled on every table, with no access policies until roles and workflows are approved. The service role is reserved for trusted server-side adapters and must never be shipped to a browser.
+
+Migration history is append-only and shared between the repository and linked project. The migration was dry-run before application, then verified through remote migration history, database lint, and table inspection.
 
 ## Controls and Boundaries
 
@@ -58,12 +82,12 @@ The feature is owned under `src/features/catalog`. Domain types contain no frame
 
 ### TODO — Architecture
 
-- Define the persistent logical model, migration, authorization, audit, and publication contracts after the pending policies are approved.
+- Define authorization policies, audit, and publication contracts after the pending roles and workflows are approved.
 - Define import, validation, duplicate detection, media storage, and search-index strategy.
 
 ## Future Expansion
 
-Add governed Supabase persistence, administration workflows, localized content projections, faceted search, product relationships, channel-specific offers, inventory availability projections, audit history, and catalog feeds. Adapters for Google Merchant Center, Meta, TikTok, Pinterest, and marketplaces must consume versioned channel projections.
+Add a server-only Supabase repository adapter, administration workflows, localized content projections, faceted search, product relationships, inventory availability projections, audit history, and catalog feeds after their rules are approved. Adapters for Google Merchant Center, Meta, TikTok, Pinterest, and marketplaces must consume versioned channel projections.
 
 ## Related Documents
 

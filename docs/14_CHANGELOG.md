@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added and deployed the first Supabase migration: an empty private catalog schema for brands, categories, products, variants, category assignments, media, and channel offers, with exact money fields, restrictive relationships, RLS, and deny-by-default client access.
+  - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02
+  - Impact: linked Supabase schema and migration history; no customer/admin access and no product data inserted
+  - Related: [Database Architecture](08_DATABASE_ARCHITECTURE.md), [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
+
 - Added Sprint 2's product catalog foundation with explicit domain types, a storage-independent repository contract, isolated demonstration data, and URL-addressable category and sorting behavior.
   - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02
   - Impact: catalog architecture and customer discovery; no persistent product, pricing, inventory, publishing, or AI behavior
