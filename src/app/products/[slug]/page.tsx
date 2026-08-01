@@ -2,9 +2,9 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ProductActions } from "@/components/store-actions";
 import { Container } from "@/components/ui";
-import { formatPrice, products } from "@/data/catalog";
+import { catalogRepository, formatMoney } from "@/features/catalog";
 export function generateStaticParams() {
-  return products.map(({ slug }) => ({ slug }));
+  return catalogRepository.listProducts().map(({ slug }) => ({ slug }));
 }
 export async function generateMetadata({
   params,
@@ -12,11 +12,11 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const p = products.find((x) => x.slug === slug);
+  const p = catalogRepository.getProductBySlug(slug);
   return p
     ? {
         title: p.name,
-        description: p.description,
+        description: p.content.summary,
         alternates: { canonical: `/products/${slug}` },
       }
     : {};
@@ -27,29 +27,31 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const p = products.find((x) => x.slug === slug);
+  const p = catalogRepository.getProductBySlug(slug);
   if (!p) notFound();
   return (
     <Container className="product-page">
       <div className="product-gallery">
         <Image
-          src="/images/product-serum.png"
-          alt={`Unbranded serum representing ${p.name}`}
+          src={p.media.src}
+          alt={p.media.alt}
           fill
           priority
           sizes="(max-width: 800px) 100vw, 55vw"
         />
       </div>
       <div className="product-detail">
-        <p className="eyebrow">{p.brand}</p>
+        <p className="eyebrow">{p.brand.name}</p>
         <h1>{p.name}</h1>
         <p className="price price--large">
-          {formatPrice(p.price)}{" "}
-          {p.compareAt && <del>{formatPrice(p.compareAt)}</del>}
+          {formatMoney(p.offer.price)}{" "}
+          {p.offer.compareAtPrice && (
+            <del>{formatMoney(p.offer.compareAtPrice)}</del>
+          )}
         </p>
-        <p className="lead">{p.description}</p>
+        <p className="lead">{p.content.summary}</p>
         <p className="muted">
-          {p.size} · {p.stock}
+          {p.variant.label} · {p.offer.availabilityLabel}
         </p>
         <ProductActions product={p} />
         <div className="accordions">

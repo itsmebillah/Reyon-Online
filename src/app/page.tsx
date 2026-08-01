@@ -3,9 +3,11 @@ import Link from "next/link";
 import { ProductCard } from "@/components/product-card";
 import { Container, LinkButton, SectionHeading } from "@/components/ui";
 import { businessConfig } from "@/config/business";
-import { categories, products } from "@/data/catalog";
+import { catalogRepository } from "@/features/catalog";
 
 export default function Home() {
+  const categories = catalogRepository.listCategories();
+  const products = catalogRepository.listProducts();
   return (
     <>
       <section className="hero">
@@ -45,11 +47,11 @@ export default function Home() {
             {categories.map((category, index) => (
               <Link
                 className={`category-card category-card--${index + 1}`}
-                href={`/shop?category=${encodeURIComponent(category)}`}
-                key={category}
+                href={`/shop?category=${category.slug}`}
+                key={category.id}
               >
                 <span>0{index + 1}</span>
-                <h3>{category}</h3>
+                <h3>{category.name}</h3>
                 <p>Discover the edit →</p>
               </Link>
             ))}

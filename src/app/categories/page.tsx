@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Container, SectionHeading } from "@/components/ui";
-import { categories } from "@/data/catalog";
+import { catalogRepository } from "@/features/catalog";
 export default function CategoriesPage() {
+  const categories = catalogRepository.listCategories();
   return (
     <Container className="page">
       <SectionHeading
@@ -10,10 +11,10 @@ export default function CategoriesPage() {
         body="Begin with the ritual that matters to you."
       />
       <div className="category-list">
-        {categories.map((c, i) => (
-          <Link href={`/shop?category=${c}`} key={c}>
+        {categories.map((category, i) => (
+          <Link href={`/shop?category=${category.slug}`} key={category.id}>
             <span>0{i + 1}</span>
-            <h2>{c}</h2>
+            <h2>{category.name}</h2>
             <p>Explore collection →</p>
           </Link>
         ))}

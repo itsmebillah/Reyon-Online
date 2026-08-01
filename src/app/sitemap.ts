@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
-import { products } from "@/data/catalog";
+import { catalogRepository } from "@/features/catalog";
 export default function sitemap(): MetadataRoute.Sitemap {
+  const products = catalogRepository.listProducts();
   const base = "https://reyon-online.vercel.app";
   const routes = ["", "/shop", "/categories", "/about", "/contact"];
   return [

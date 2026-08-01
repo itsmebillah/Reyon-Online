@@ -1,19 +1,13 @@
 import { ProductCard } from "@/components/product-card";
 import { Container, EmptyState, LinkButton } from "@/components/ui";
-import { products } from "@/data/catalog";
+import { catalogRepository } from "@/features/catalog";
 export default async function SearchPage({
   searchParams,
 }: {
   searchParams: Promise<{ q?: string }>;
 }) {
   const q = (await searchParams).q?.trim() ?? "";
-  const matches = q
-    ? products.filter((p) =>
-        `${p.brand} ${p.name} ${p.category}`
-          .toLowerCase()
-          .includes(q.toLowerCase()),
-      )
-    : [];
+  const matches = q ? catalogRepository.listProducts({ search: q }) : [];
   return (
     <Container className="page">
       <p className="eyebrow">Search REYON</p>

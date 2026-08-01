@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added Sprint 2's product catalog foundation with explicit domain types, a storage-independent repository contract, isolated demonstration data, and URL-addressable category and sorting behavior.
+  - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02
+  - Impact: catalog architecture and customer discovery; no persistent product, pricing, inventory, publishing, or AI behavior
+  - Related: [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md), [Roadmap](13_ROADMAP.md)
+
 - Added a reusable, accessible back-navigation control to every customer-facing page except the homepage, with browser-history behavior and a homepage fallback for direct-entry visits.
   - Approval/owner: Product Owner navigation directive dated 2026-08-01
   - Impact: global customer navigation and browser acceptance coverage

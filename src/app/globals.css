@@ -657,7 +657,7 @@ img {
   margin-bottom: 40px;
   padding: 15px 0;
 }
-.shop-toolbar > div {
+.shop-toolbar > form {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -1005,7 +1005,7 @@ details p {
     align-items: flex-start;
     gap: 10px;
   }
-  .shop-toolbar > div {
+  .shop-toolbar > form {
     display: grid;
   }
   .page > .section-heading h2,

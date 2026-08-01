@@ -35,6 +35,7 @@ This repository contains the documentation foundation and the Sprint 1 customer 
 | History         | [Changelog](docs/14_CHANGELOG.md)                                                 | Records meaningful documentation and product changes.                                      |
 | Environment     | [Sprint 0 Environment Audit](docs/15_ENVIRONMENT_AUDIT.md)                        | Records verified tool, repository, and service readiness.                                  |
 | Content and SEO | [AI SEO and Product Content Architecture](docs/16_AI_SEO_CONTENT_ARCHITECTURE.md) | Defines AI-ready content boundaries, human review, SEO quality, and channel extensibility. |
+| Catalog         | [Product Catalog Architecture](docs/18_PRODUCT_CATALOG_ARCHITECTURE.md)           | Defines the product read model, repository boundary, controls, and expansion path.         |
 
 ## Product Scope
 

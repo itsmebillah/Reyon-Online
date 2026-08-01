@@ -176,6 +176,21 @@ test("product actions provide clear feedback", async ({ page }) => {
   expect(failures).toEqual([]);
 });
 
+test("catalog filters are URL-addressable and preserve deterministic sorting", async ({
+  page,
+}) => {
+  const failures = monitor(page);
+  await page.goto("/shop");
+  await page.getByLabel("Category").selectOption("skin-care");
+  await page.getByLabel("Sort").selectOption("price-asc");
+  await page.getByRole("button", { name: "Apply" }).click();
+  await expect(page).toHaveURL(/category=skin-care.*sort=price-asc/);
+  await expect(page.locator(".product-card h3").first()).toContainText(
+    "Velvet Cream Cleanser",
+  );
+  expect(failures).toEqual([]);
+});
+
 test("contact form is keyboard-operable and honest about backend state", async ({
   page,
 }) => {

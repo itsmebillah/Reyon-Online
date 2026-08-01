@@ -2,14 +2,14 @@
 
 import { Heart, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
-import type { Product } from "@/data/catalog";
+import type { CatalogProduct } from "@/features/catalog";
 import { Button } from "./ui";
 
 export function ProductActions({
   product,
   compact = false,
 }: {
-  product: Product;
+  product: CatalogProduct;
   compact?: boolean;
 }) {
   const [saved, setSaved] = useState(false);
@@ -75,11 +75,11 @@ export function ProductActions({
             >
               <X />
             </button>
-            <p className="eyebrow">{product.brand}</p>
+            <p className="eyebrow">{product.brand.name}</p>
             <h2 id="quick-title">{product.name}</h2>
-            <p>{product.description}</p>
+            <p>{product.content.summary}</p>
             <p className="muted">
-              {product.size} · {product.stock}
+              {product.variant.label} · {product.offer.availabilityLabel}
             </p>
             <Button
               onClick={() => {

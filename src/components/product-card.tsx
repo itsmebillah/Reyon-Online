@@ -1,14 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Product } from "@/data/catalog";
-import { formatPrice } from "@/data/catalog";
+import type { CatalogProduct } from "@/features/catalog";
+import { formatMoney } from "@/features/catalog";
 import { ProductActions } from "./store-actions";
 
 export function ProductCard({
   product,
   priority = false,
 }: {
-  product: Product;
+  product: CatalogProduct;
   priority?: boolean;
 }) {
   return (
@@ -19,29 +19,33 @@ export function ProductCard({
           aria-label={`View ${product.name}`}
         >
           <Image
-            src="/images/product-serum.png"
-            alt={`Unbranded serum representing ${product.name}`}
+            src={product.media.src}
+            alt={product.media.alt}
             fill
             sizes="(max-width: 600px) 50vw, (max-width: 1000px) 33vw, 25vw"
             priority={priority}
           />
         </Link>
         <div className="badge-stack">
-          {product.badge && (
-            <span className="badge badge--dark">{product.badge}</span>
+          {product.merchandising.badge && (
+            <span className="badge badge--dark">
+              {product.merchandising.badge}
+            </span>
           )}
-          <span className="badge">{product.stock}</span>
+          <span className="badge">{product.offer.availabilityLabel}</span>
         </div>
       </div>
       <div className="product-card__content">
-        <p className="product-brand">{product.brand}</p>
+        <p className="product-brand">{product.brand.name}</p>
         <h3>
           <Link href={`/products/${product.slug}`}>{product.name}</Link>
         </h3>
-        <p className="product-meta">{product.size}</p>
+        <p className="product-meta">{product.variant.label}</p>
         <p className="price">
-          {formatPrice(product.price)}{" "}
-          {product.compareAt && <del>{formatPrice(product.compareAt)}</del>}
+          {formatMoney(product.offer.price)}{" "}
+          {product.offer.compareAtPrice && (
+            <del>{formatMoney(product.offer.compareAtPrice)}</del>
+          )}
         </p>
         <ProductActions product={product} compact />
       </div>

@@ -1,14 +1,35 @@
 import type { Metadata } from "next";
 import { ProductCard } from "@/components/product-card";
-import { Container, SectionHeading } from "@/components/ui";
-import { categories, products } from "@/data/catalog";
+import {
+  Container,
+  EmptyState,
+  LinkButton,
+  SectionHeading,
+} from "@/components/ui";
+import { catalogRepository, type CatalogSort } from "@/features/catalog";
 export const metadata: Metadata = {
   title: "Shop",
   description:
     "Explore premium multi-brand beauty and personal care at REYON, including our authentic Korean beauty specialization.",
   alternates: { canonical: "/shop" },
 };
-export default function ShopPage() {
+export default async function ShopPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string; sort?: string }>;
+}) {
+  const params = await searchParams;
+  const categories = catalogRepository.listCategories();
+  const sort: CatalogSort =
+    params.sort === "new" || params.sort === "newest"
+      ? "newest"
+      : params.sort === "price-asc"
+        ? "price-asc"
+        : "featured";
+  const products = catalogRepository.listProducts({
+    category: params.category,
+    sort,
+  });
   return (
     <Container className="page">
       <SectionHeading
@@ -18,27 +39,44 @@ export default function ShopPage() {
       />
       <div className="shop-toolbar">
         <p>{products.length} products</p>
-        <div>
+        <form method="get">
           <label htmlFor="category">Category</label>
-          <select id="category" defaultValue="all">
-            <option value="all">All categories</option>
+          <select
+            id="category"
+            name="category"
+            defaultValue={params.category ?? ""}
+          >
+            <option value="">All categories</option>
             {categories.map((c) => (
-              <option key={c}>{c}</option>
+              <option key={c.id} value={c.slug}>
+                {c.name}
+              </option>
             ))}
           </select>
           <label htmlFor="sort">Sort</label>
-          <select id="sort">
-            <option>Featured</option>
-            <option>Newest</option>
-            <option>Price: low to high</option>
+          <select id="sort" name="sort" defaultValue={sort}>
+            <option value="featured">Featured</option>
+            <option value="newest">Newest</option>
+            <option value="price-asc">Price: low to high</option>
           </select>
+          <button className="button button--secondary" type="submit">
+            Apply
+          </button>
+        </form>
+      </div>
+      {products.length ? (
+        <div className="product-grid">
+          {products.map((p) => (
+            <ProductCard key={p.slug} product={p} />
+          ))}
         </div>
-      </div>
-      <div className="product-grid">
-        {products.map((p) => (
-          <ProductCard key={p.slug} product={p} />
-        ))}
-      </div>
+      ) : (
+        <EmptyState
+          title="No products in this collection"
+          body="Explore all categories while this collection is being prepared."
+          action={<LinkButton href="/shop">View all products</LinkButton>}
+        />
+      )}
     </Container>
   );
 }

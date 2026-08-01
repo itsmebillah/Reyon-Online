@@ -37,7 +37,19 @@ This document provides a controlled, outcome-oriented planning structure for REY
 | Committed | Deliver an approved outcome with owner, capacity, and acceptance criteria | Explicit Product Owner commitment       |
 | Released  | Operate, measure, support, and improve                                    | Evidence-based review                   |
 
-No item is currently marked committed.
+The Product Owner approved sequential roadmap execution on 2026-08-02. Technical foundations may proceed in dependency order; business behavior still requires explicit approved rules.
+
+## Committed Delivery Sequence
+
+| Sprint | Outcome                                                            | Status                  | Dependency                               |
+| ------ | ------------------------------------------------------------------ | ----------------------- | ---------------------------------------- |
+| 0      | Environment and ownership foundation                               | Released                | Existing infrastructure                  |
+| 0.5    | AI-ready SEO and content architecture                              | Released (architecture) | Documentation foundation                 |
+| 1      | Premium customer experience foundation                             | Released                | Sprint 0                                 |
+| 2      | Governed product catalog foundation                                | In progress             | Sprint 1                                 |
+| 3+     | Inventory, orders, delivery, accounts, reports, automation, and AI | Sequenced candidates    | Approved rules and preceding foundations |
+
+Sprint 2 begins with a policy-neutral catalog contract, replaceable data adapter, customer discovery, and product lookup. Persistent administration and publication workflows remain gated by catalog-owner rules.
 
 ## Entry and Exit Criteria
 
