@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added the Product Owner-supplied circular REYON Beauty & Care logo as the primary website brand mark and applied it consistently to the header and footer.
+  - Approval/owner: Product Owner logo directive dated 2026-08-01
+  - Impact: public brand presentation and logo-governance documentation
+  - Related: [Brand and Business Configuration](17_BRAND_BUSINESS_CONFIGURATION.md)
+
 - Added the Sprint 1 premium customer experience foundation using Next.js App Router, strict TypeScript, reusable design-system and commerce presentation components, original REYON imagery, responsive customer routes, metadata/robots/sitemap support, and isolated Playwright browser acceptance tests.
   - Approval/owner: Sprint 1 Premium Customer Experience Foundation mandate
   - Impact: customer-facing presentation and development pipeline; no backend, commerce transaction, authentication, database, or AI behavior

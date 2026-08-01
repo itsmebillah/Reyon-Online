@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { businessConfig } from "@/config/business";
 import { Container } from "./ui";
@@ -8,8 +9,17 @@ export function Footer() {
       <Container>
         <div className="footer-grid">
           <div>
-            <Link className="wordmark wordmark--light" href="/">
-              REYON<span>BEAUTY &amp; CARE</span>
+            <Link
+              className="brand-logo brand-logo--footer"
+              href="/"
+              aria-label="REYON home"
+            >
+              <Image
+                src="/images/reyon-logo-primary.png"
+                alt="REYON Beauty & Care"
+                width={144}
+                height={144}
+              />
             </Link>
             <p>
               Premium beauty and personal care from multiple brands, selected

@@ -88,16 +88,21 @@ img {
   align-items: center;
   gap: 42px;
 }
-.wordmark {
-  font-family: var(--serif);
-  font-size: 28px;
-  letter-spacing: 0.18em;
-  line-height: 1;
+.brand-logo {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
-.wordmark span {
+.brand-logo img {
   display: block;
-  font: 7px/1.5 var(--sans);
-  letter-spacing: 0.38em;
+  border-radius: 50%;
+  object-fit: contain;
+}
+.brand-logo--header img {
+  width: 62px;
+  height: 62px;
   margin-top: 7px;
 }
 .primary-nav {
@@ -547,8 +552,9 @@ img {
   grid-template-columns: 2fr repeat(3, 1fr) 1.6fr;
   gap: 40px;
 }
-.wordmark--light {
-  display: inline-block;
+.brand-logo--footer img {
+  width: 144px;
+  height: 144px;
 }
 .footer p {
   color: #aaa;
@@ -558,7 +564,7 @@ img {
 .footer h2 {
   font: 18px var(--serif);
 }
-.footer-grid > div > a:not(.wordmark) {
+.footer-grid > div > a:not(.brand-logo) {
   display: block;
   color: #bbb;
   font-size: 13px;
@@ -833,8 +839,9 @@ details p {
     height: 68px;
     gap: 10px;
   }
-  .wordmark {
-    font-size: 22px;
+  .brand-logo--header img {
+    width: 52px;
+    height: 52px;
   }
   .nav-actions {
     gap: 9px;

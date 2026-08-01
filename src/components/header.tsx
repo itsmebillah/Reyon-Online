@@ -1,6 +1,7 @@
 "use client";
 
 import { Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
@@ -42,8 +43,18 @@ export function Header() {
         >
           {open ? <X /> : <Menu />}
         </button>
-        <Link className="wordmark" href="/" aria-label="REYON home">
-          REYON<span>BEAUTY &amp; CARE</span>
+        <Link
+          className="brand-logo brand-logo--header"
+          href="/"
+          aria-label="REYON home"
+        >
+          <Image
+            src="/images/reyon-logo-primary.png"
+            alt="REYON Beauty & Care"
+            width={72}
+            height={72}
+            priority
+          />
         </Link>
         <nav
           className={`primary-nav ${open ? "is-open" : ""}`}

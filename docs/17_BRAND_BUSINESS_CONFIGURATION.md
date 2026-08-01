@@ -13,6 +13,7 @@ This document is the authoritative, Product Owner-approved configuration baselin
 - [Customer contact channels](#customer-contact-channels)
 - [Website](#website)
 - [Brand presentation](#brand-presentation)
+- [Logo assets](#logo-assets)
 - [Content and localization](#content-and-localization)
 - [Required customer experience](#required-customer-experience)
 - [Change control](#change-control)
@@ -86,9 +87,15 @@ The approved direction is premium, minimal, elegant, and modern, with a luxury b
 
 Visual restraint must not reduce usability. Color contrast, keyboard focus, readable typography, clear status feedback, and accessible interaction targets remain acceptance criteria.
 
+## Logo Assets
+
+The Product Owner approved the supplied light circular REYON Beauty & Care mark as the primary website logo on 2026-08-01. The optimized project source is `public/images/reyon-logo-primary.png`. It includes the rose-gold REYON monogram, profile and leaf motif, REYON wordmark, Beauty & Care descriptor, and “Beauty Beyond Ordinary” tagline.
+
+The complete mark must remain legible and retain its aspect ratio. It may be scaled responsively but must not be stretched, recolored, cropped, rearranged, or used as a third-party product brand. Header and footer placements use the same approved source asset. A simplified small-format mark, vector master, monochrome variant, dark-background variant, exclusion zone, and minimum-size specification remain pending Product Owner approval.
+
 ### TODO — Product Owner / Brand Owner
 
-- Supply approved logo files, exact color values, typography licenses, imagery rules, and trademark guidance.
+- Supply the editable vector master, logo variants, exact color values, typography licenses, imagery rules, and trademark guidance.
 - Approve iconography, photography, motion, and social-template standards.
 - Define permissible promotional treatments and sale messaging.
 
