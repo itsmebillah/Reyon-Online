@@ -32,6 +32,8 @@ The `catalog` schema owns product, brand, category, variant, product-media, cate
 
 The `organization` schema owns stable organization, location, channel, and location-channel reference identities. It does not own inventory quantities, fulfillment decisions, order state, tax treatment, or financial postings.
 
+The `inventory` schema owns stock-item and lot identities plus append-only movement headers and signed quantity lines. It references catalog variants and operating locations but does not duplicate their master data. Availability, reservations, valuation, and accounting remain separate governed responsibilities.
+
 ### TODO — Architecture
 
 - Create bounded-context and data-ownership maps after business discovery.
@@ -104,3 +106,4 @@ Add context and entity-relationship diagrams, data dictionary, classification ca
 - [AI SEO and Product Content Architecture](16_AI_SEO_CONTENT_ARCHITECTURE.md)
 - [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
 - [Operating Topology Architecture](19_OPERATING_TOPOLOGY_ARCHITECTURE.md)
+- [Inventory System](05_INVENTORY_SYSTEM.md)

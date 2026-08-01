@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Added and deployed an empty inventory ledger schema for stock items, optional lots, attributable movement headers, and signed location-level quantity lines, with append-only history, idempotency, RLS, and deny-by-default client access.
+  - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02
+  - Impact: linked Supabase schema and migration history; no stock, movement vocabulary, balance formula, reservation, valuation, or inventory data inserted
+  - Related: [Inventory System](05_INVENTORY_SYSTEM.md), [Database Architecture](08_DATABASE_ARCHITECTURE.md)
+
 - Added and deployed an empty operating-topology schema for organization, location, channel, and structural location-channel identities, with restrictive ownership, RLS, and deny-by-default client access.
   - Approval/owner: Product Owner roadmap-execution directive dated 2026-08-02
   - Impact: linked Supabase schema and migration history; no organization, location, channel, fulfillment, or inventory data inserted

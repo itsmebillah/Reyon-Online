@@ -33,18 +33,18 @@ The system is expected to be modular, but modularity does not require distribute
 
 ### Approved Sprint 1 Baseline
 
-| Responsibility        | Selection                                | Rationale                                                                                                 |
-| --------------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Runtime               | Node.js 24.x                             | Matches the verified local and Vercel runtime; pinned to the supported major                              |
-| Language              | TypeScript 5.9, strict mode              | Strong contracts and scalable refactoring                                                                 |
-| Web framework         | Next.js 16 App Router                    | Server-first rendering, route-level metadata, image optimization, static generation, and Vercel alignment |
-| UI runtime            | React 19                                 | Supported Next.js rendering and component model                                                           |
-| Package manager       | npm 11 with lockfile                     | Available, auditable, deterministic baseline without an additional tool dependency                        |
-| Icons                 | Lucide React                             | Accessible, consistent, tree-shakeable interface icons                                                    |
-| Quality               | ESLint 9 and Prettier 3                  | Automated correctness and formatting gates                                                                |
-| Browser testing       | Playwright with installed Microsoft Edge | Real browser, responsive, console, network, image, and interaction verification                           |
-| Deployment            | Vercel                                   | Existing linked project and native Next.js delivery                                                       |
-| Catalog data platform | Supabase PostgreSQL                      | Approved Sprint 2 private schema with migration history, exact monetary storage, constraints, and RLS     |
+| Responsibility            | Selection                                | Rationale                                                                                                    |
+| ------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Runtime                   | Node.js 24.x                             | Matches the verified local and Vercel runtime; pinned to the supported major                                 |
+| Language                  | TypeScript 5.9, strict mode              | Strong contracts and scalable refactoring                                                                    |
+| Web framework             | Next.js 16 App Router                    | Server-first rendering, route-level metadata, image optimization, static generation, and Vercel alignment    |
+| UI runtime                | React 19                                 | Supported Next.js rendering and component model                                                              |
+| Package manager           | npm 11 with lockfile                     | Available, auditable, deterministic baseline without an additional tool dependency                           |
+| Icons                     | Lucide React                             | Accessible, consistent, tree-shakeable interface icons                                                       |
+| Quality                   | ESLint 9 and Prettier 3                  | Automated correctness and formatting gates                                                                   |
+| Browser testing           | Playwright with installed Microsoft Edge | Real browser, responsive, console, network, image, and interaction verification                              |
+| Deployment                | Vercel                                   | Existing linked project and native Next.js delivery                                                          |
+| Operational data platform | Supabase PostgreSQL                      | Private domain schemas, append-only migrations, exact numerics, constraints, RLS, and deny-by-default access |
 
 Transitive `postcss` and `sharp` versions are explicitly overridden to patched compatible releases while upstream Next.js dependency ranges lag the current advisories. Overrides must be reviewed during every framework upgrade.
 
