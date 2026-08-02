@@ -89,9 +89,11 @@ All policy-neutral technical foundations currently derivable from approved docum
 
 The first proposed operational vertical slice is Product Catalog Administration because governed product facts enable ecommerce, inventory, purchasing, content, reporting, and future channels. Its scope and decision requirements are consolidated in the [Sprint 14 Product Catalog Administration Decision Packet](25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md). This is discovery readiness, not approval of the proposed behavior.
 
-The Product Owner approved core Sprint 14 rules on 2026-08-02. The catalog administration persistence and domain-validation foundation is released. Authentication/permissions, real operating data, enhanced duplicate/correction behavior, and media upload remain individually feature-blocked by the decisions listed in the Sprint 14 document; they do not block other roadmap work.
+The Product Owner approved core Sprint 14 rules on 2026-08-02. The catalog administration persistence and domain-validation foundation is released. Real operating data, detailed permissions, enhanced duplicate/correction behavior, and media upload remain individually feature-blocked by the decisions listed in the Sprint 14 document; they do not block other roadmap work.
 
 Sprint 14A establishes independent delivery assurance with automated GitHub quality gates, cross-platform isolated browser testing, and a documented live-verification contract. Feature-specific dependencies are isolated so unrelated technical foundations can continue.
+
+Sprint 14B releases deny-by-default admin authentication: Supabase SSR sessions, server-verified claims, explicit active admin membership, disabled public signup, protected routing, and a responsive private workspace shell. Brand Management is the next implementation milestone; detailed per-action permissions remain independently gated.
 
 ## Entry and Exit Criteria
 

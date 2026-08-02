@@ -146,9 +146,9 @@ The arrows establish the approved forward workflow. Actor permissions, segregati
 
 These unresolved items block only their dependent subfeatures:
 
-### Administration Access — Feature Blocked
+### Administration Authorization — Feature Blocked
 
-- Authentication provider, account recovery, session requirements, and privileged-support policy.
+- First-admin provisioning, account recovery, and privileged-support procedures. Authentication and deny-by-default admin membership are implemented.
 - Responsibilities allowed to create, edit, review, approve, publish, hide, archive, manage price, manage brand/category, or view history.
 - Whether review and approval require different people.
 

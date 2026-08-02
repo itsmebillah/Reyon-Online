@@ -1,0 +1,29 @@
+import { requireReyonAdmin } from "@/features/access/data/admin-access";
+import { logoutAdmin } from "@/app/admin/login/actions";
+
+export const dynamic = "force-dynamic";
+
+export default async function ProtectedAdminLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  const admin = await requireReyonAdmin();
+
+  return (
+    <div className="admin-shell">
+      <header className="admin-header">
+        <div>
+          <p className="eyebrow">REYON Business OS</p>
+          <p className="admin-header__identity">
+            {typeof admin.email === "string" ? admin.email : "Administrator"}
+          </p>
+        </div>
+        <form action={logoutAdmin}>
+          <button className="button button--secondary" type="submit">
+            Sign out
+          </button>
+        </form>
+      </header>
+      <main id="main">{children}</main>
+    </div>
+  );
+}

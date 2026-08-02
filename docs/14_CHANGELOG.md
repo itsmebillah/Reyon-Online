@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Released the Sprint 14 admin authentication foundation with Supabase SSR sessions, server-verified claims, explicit active-membership authorization, disabled public signup, protected admin routing, sign-in/sign-out actions, and a responsive operational shell.
+  - Approval/owner: Product Owner Sprint 14 execution priorities dated 2026-08-02
+  - Impact: admin routes, authentication configuration, and migration `20260802160000_admin_authentication_foundation.sql`; no user, membership, role, or business record created
+  - Related: [User Roles](03_USER_ROLES.md), [Roadmap](13_ROADMAP.md), [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
+
 - Aligned the Sprint 14 foundation exactly with the repeated Product Owner approval: brand, primary category, and one image are universal product requirements, while Product Code remains optional without an invented uniqueness policy.
   - Approval/owner: Product Owner catalog decisions dated 2026-08-02
   - Impact: typed validation, domain tests, and additive migration history; no business or customer data changed

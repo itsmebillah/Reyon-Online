@@ -2,7 +2,7 @@
 
 REYON Business OS is the planned operating platform for REYON, a premium multi-brand beauty and personal care retailer. Authentic Korean beauty is one of REYON's strongest specialties, not its entire identity. REYON is the retailer and curator, not a product manufacturer. The platform is broader than an ecommerce site: it is intended to unify ecommerce, administration, point of sale, customer relationships, inventory, purchasing, accounting, reporting, analytics, automation, and AI-enabled capabilities.
 
-This repository contains the documentation foundation and the Sprint 1 customer experience module. The frontend is a production-quality, responsive experience foundation; commerce, authentication, persistence, and other business behavior remain intentionally inactive until their rules are approved.
+This repository contains the documentation foundation, responsive customer experience, private operational schemas, and the deny-by-default REYON Business OS admin authentication foundation. Commerce and domain write workflows remain inactive until their applicable rules and access capabilities are released.
 
 ## Table of Contents
 
@@ -64,6 +64,8 @@ The target system is a modular retail operating system. Each module must be capa
 3. Run `npm run format` and `npm run quality` before committing.
 4. Run `npm run test:e2e` for isolated Microsoft Edge coverage on an OS-assigned local port.
 5. Read the project vision and relevant business documents before implementing domain behavior.
+
+Admin authentication requires `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Public signup is disabled; admin accounts and active memberships must be provisioned explicitly.
 
 ## Governance
 

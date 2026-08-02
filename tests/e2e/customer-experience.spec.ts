@@ -16,6 +16,8 @@ const routes = [
   "/returns",
   "/privacy",
   "/terms",
+  "/admin/login",
+  "/admin/access-denied",
   "/robots.txt",
   "/sitemap.xml",
 ];
@@ -85,6 +87,33 @@ test("unknown routes render the branded 404", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: "This page has wandered" }),
   ).toBeVisible();
+});
+
+test("admin authentication is private and deny-by-default", async ({
+  page,
+}) => {
+  const failures = monitor(page);
+  await page.goto("/admin", { waitUntil: "load" });
+  await expect(page).toHaveURL(/\/admin\/login$/);
+  await expect(
+    page.getByRole("heading", { name: "Welcome back" }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Email address")).toBeVisible();
+  await expect(page.getByLabel("Password")).toBeVisible();
+  await expect(page.getByRole("link", { name: /sign up/i })).toHaveCount(0);
+  await expect(page.getByRole("banner")).toHaveCount(0);
+  expect(failures).toEqual([]);
+});
+
+test("admin login form uses native required-field protection", async ({
+  page,
+}) => {
+  const failures = monitor(page);
+  await page.goto("/admin/login", { waitUntil: "load" });
+  await page.getByRole("button", { name: "Sign in securely" }).click();
+  await expect(page.getByLabel("Email address")).toBeFocused();
+  await expect(page).toHaveURL(/\/admin\/login$/);
+  expect(failures).toEqual([]);
 });
 
 test("navigation and search remain usable", async ({ page }) => {

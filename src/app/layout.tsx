@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { BackNavigation } from "@/components/back-navigation";
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+import { SiteChrome } from "@/components/site-chrome";
 import { businessConfig } from "@/config/business";
 import "./globals.css";
 
@@ -31,10 +29,7 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <Header />
-        <BackNavigation />
-        <main id="main">{children}</main>
-        <Footer />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

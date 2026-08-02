@@ -89,7 +89,7 @@ The Product Owner supplied the core catalog decisions in [Product Catalog Admini
 ### TODO — Product Owner / Catalog Owner / Security
 
 - Approve initial brands and product records, operating currency, actor permissions, review segregation, exception transitions, naming, duplicate/correction behavior, and detailed media controls.
-- Approve authentication and production administration access before any user-facing write workflow is enabled.
+- Provision the first admin account and active membership before authenticated production workflows can be exercised; define detailed domain permissions before enabling catalog writes.
 - Define secondary categories, merchandising collections, promotions, scheduled pricing, and channel variation separately.
 
 ### TODO — Architecture

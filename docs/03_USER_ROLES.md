@@ -66,6 +66,10 @@ High-risk activities may require segregation between initiation, approval, execu
 
 Required lifecycle stages include invitation or provisioning, verification, access grant, modification, suspension, recovery, termination, and archival. Service identities require named ownership and credential rotation.
 
+### Implemented Admin Authentication Foundation
+
+The REYON Business OS admin surface uses Supabase Auth sessions with server-verified identity claims and an explicit active admin-membership check. Public signup is disabled, protected routes deny access by default, and sign-in errors do not disclose whether an account exists. This foundation authenticates and gates the private workspace; it does not assign unapproved catalog capabilities or create an admin account.
+
 ## Audit and Review
 
 Access decisions and privileged actions should produce durable evidence. Access reviews must verify continuing need, scope, conflicting privileges, inactive accounts, and ownership of non-human identities.
@@ -74,7 +78,7 @@ Access decisions and privileged actions should produce durable evidence. Access 
 
 ### TODO — Product Owner / Security Owner
 
-- Approve the identity provider, authentication requirements, and account-recovery policy.
+- Define initial admin provisioning, account recovery, and privileged-support procedures.
 - Define role owners, access approvers, review frequency, and session policy.
 - Confirm regulatory or contractual identity and privacy obligations.
 
