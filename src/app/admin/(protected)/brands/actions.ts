@@ -9,6 +9,8 @@ const initialError =
 const text = (form: FormData, key: string) =>
   String(form.get(key) ?? "").trim();
 const nullable = (form: FormData, key: string) => text(form, key) || null;
+const displayOrder = (form: FormData) =>
+  Math.max(0, Number.parseInt(text(form, "displayOrder") || "0", 10) || 0);
 const slugify = (input: string) =>
   input
     .toLowerCase()
@@ -46,11 +48,14 @@ export async function createBrand(
   const name = text(form, "name");
   if (!name) return { error: "Brand name is required." };
   const supabase = await createSupabaseServerClient();
-  const { data: brandId, error } = await supabase.rpc("admin_create_brand_v2", {
+  const { data: brandId, error } = await supabase.rpc("admin_create_brand_v3", {
     p_name: name,
     p_slug: slugify(name),
     p_description: nullable(form, "description"),
     p_website_url: nullable(form, "websiteUrl"),
+    p_country_code: nullable(form, "countryCode"),
+    p_display_order: displayOrder(form),
+    p_is_featured: form.get("isFeatured") === "on",
     p_is_visible: form.get("isVisible") === "on",
   });
   if (error || !brandId)
@@ -58,15 +63,21 @@ export async function createBrand(
   try {
     const logoPath = await uploadLogo(String(brandId), form);
     if (logoPath) {
-      const { error: updateError } = await supabase.rpc("admin_update_brand", {
-        p_brand_id: brandId,
-        p_name: name,
-        p_slug: slugify(name),
-        p_description: nullable(form, "description"),
-        p_website_url: nullable(form, "websiteUrl"),
-        p_logo_path: logoPath,
-        p_is_visible: form.get("isVisible") === "on",
-      });
+      const { error: updateError } = await supabase.rpc(
+        "admin_update_brand_v2",
+        {
+          p_brand_id: brandId,
+          p_name: name,
+          p_slug: slugify(name),
+          p_description: nullable(form, "description"),
+          p_website_url: nullable(form, "websiteUrl"),
+          p_logo_path: logoPath,
+          p_country_code: nullable(form, "countryCode"),
+          p_display_order: displayOrder(form),
+          p_is_featured: form.get("isFeatured") === "on",
+          p_is_visible: form.get("isVisible") === "on",
+        },
+      );
       if (updateError) throw new Error(initialError);
     }
   } catch (uploadError) {
@@ -90,13 +101,16 @@ export async function updateBrand(
   try {
     const logoPath = await uploadLogo(id, form);
     const supabase = await createSupabaseServerClient();
-    const { error } = await supabase.rpc("admin_update_brand", {
+    const { error } = await supabase.rpc("admin_update_brand_v2", {
       p_brand_id: id,
       p_name: name,
       p_slug: slugify(name),
       p_description: nullable(form, "description"),
       p_website_url: nullable(form, "websiteUrl"),
       p_logo_path: logoPath,
+      p_country_code: nullable(form, "countryCode"),
+      p_display_order: displayOrder(form),
+      p_is_featured: form.get("isFeatured") === "on",
       p_is_visible: form.get("isVisible") === "on",
     });
     if (error) return { error: friendly(error.message) };

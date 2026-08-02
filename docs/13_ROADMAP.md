@@ -95,7 +95,7 @@ Sprint 14A establishes independent delivery assurance with automated GitHub qual
 
 Sprint 14B releases deny-by-default admin authentication: Supabase SSR sessions, server-verified claims, one explicitly provisioned initial administrator with active membership, disabled public signup, protected routing, and a responsive private workspace shell.
 
-Sprint 14C releases Brand Management as the first complete catalog module. The administrator can create and edit brands, upload or replace a logo, maintain approved descriptive and website details, control store visibility, archive brands, and restore archived brands. Category Management is next; product and customer-publication primitives are prepared but their interfaces are not part of this milestone.
+Sprint 14C releases Brand Management as the first complete catalog module. The administrator can create and edit brands, upload or replace a logo, maintain country, descriptive, and website details, activate or deactivate store visibility, mark featured brands, control display order, archive brands, and restore archived brands. Search, lifecycle/visibility/featured filters, deterministic sorting, timestamps, case-insensitive duplicate-name prevention, and SEO-friendly generated slugs support daily catalog operations. Products reference immutable Brand IDs while presentation fields remain editable.
 
 Sprint 14D releases Category Management with create/edit workflows, optional parent categories, cycle-safe hierarchy changes, descriptive details, display ordering, store visibility, archive, and restore controls. Visible active categories synchronize immediately to the customer category experience. Product Management is next.
 

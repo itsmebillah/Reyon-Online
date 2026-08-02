@@ -175,6 +175,57 @@
   display: grid;
   gap: 12px;
 }
+.brand-toolbar {
+  display: grid;
+  grid-template-columns: minmax(220px, 2fr) repeat(4, minmax(130px, 1fr));
+  gap: 14px;
+  align-items: end;
+  padding: 22px;
+  border: 1px solid #ddd5ce;
+  background: #fff;
+}
+.brand-toolbar label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.brand-toolbar input,
+.brand-toolbar select {
+  min-height: 44px;
+  padding: 9px 11px;
+  border: 1px solid #cfc5bd;
+  background: #fff;
+  font: inherit;
+}
+.brand-toolbar a {
+  justify-self: start;
+  color: #625a54;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.brand-audit {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 24px 24px;
+  padding: 16px;
+  background: #f7f2ee;
+}
+.brand-audit div {
+  min-width: 0;
+}
+.brand-audit dt {
+  color: #776c65;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.brand-audit dd {
+  margin: 3px 0 0;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
 .brand-list-heading {
   display: flex;
   align-items: center;
@@ -265,6 +316,10 @@
   }
   .catalog-admin-form fieldset {
     padding: 16px;
+  }
+  .brand-toolbar,
+  .brand-audit {
+    grid-template-columns: 1fr;
   }
 }
 * {

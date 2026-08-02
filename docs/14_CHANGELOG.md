@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Completed the production Brand Management operations scope with search, lifecycle/visibility/featured filtering, deterministic sorting, display ordering, featured merchandising status, ISO country storage, visible audit timestamps, and case-insensitive duplicate-name protection.
+  - Approval/owner: Product Owner Sprint 14B continuation dated 2026-08-02
+  - Related: [Roadmap](13_ROADMAP.md), [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
+
 ### Added
 
 - Released guided Product Management for complete first-product creation, Draft saving, one-action approved-lifecycle publication, and immediate Published-only customer website synchronization.

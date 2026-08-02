@@ -9,8 +9,13 @@ export type ManagedBrand = Readonly<{
   websiteUrl: string | null;
   logoPath: string | null;
   logoUrl: string | null;
+  countryCode: string | null;
+  displayOrder: number;
+  isFeatured: boolean;
   isVisible: boolean;
   archivedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
 }>;
 
 export async function listManagedBrands(): Promise<readonly ManagedBrand[]> {

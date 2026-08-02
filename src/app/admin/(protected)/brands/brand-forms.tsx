@@ -40,6 +40,28 @@ function Fields({ brand }: { brand?: ManagedBrand }) {
           defaultValue={brand?.websiteUrl ?? ""}
         />
       </label>
+      <div className="form-grid">
+        <label>
+          Country of origin <span>(optional two-letter country code)</span>
+          <input
+            name="countryCode"
+            maxLength={2}
+            pattern="[A-Za-z]{2}"
+            placeholder="KR"
+            defaultValue={brand?.countryCode ?? ""}
+          />
+        </label>
+        <label>
+          Display order
+          <input
+            name="displayOrder"
+            type="number"
+            min="0"
+            step="1"
+            defaultValue={brand?.displayOrder ?? 0}
+          />
+        </label>
+      </div>
       <label>
         Brand logo <span>(JPG, PNG or WebP; maximum 2 MB)</span>
         <input
@@ -58,6 +80,19 @@ function Fields({ brand }: { brand?: ManagedBrand }) {
           <strong>Visible in the store</strong>
           <small>
             Hidden brands remain available for internal catalog records.
+          </small>
+        </span>
+      </label>
+      <label className="publish-choice">
+        <input
+          name="isFeatured"
+          type="checkbox"
+          defaultChecked={brand?.isFeatured ?? false}
+        />
+        <span>
+          <strong>Featured brand</strong>
+          <small>
+            Prioritize this brand in future merchandising placements.
           </small>
         </span>
       </label>
