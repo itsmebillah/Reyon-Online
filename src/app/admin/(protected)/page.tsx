@@ -21,12 +21,13 @@ const modules: readonly Readonly<{
   {
     name: "Categories",
     description: "Organize the approved catalog",
-    status: "Next",
+    status: "Available",
+    href: "/admin/categories",
   },
   {
     name: "Products",
     description: "Create and publish product records",
-    status: "Planned",
+    status: "Next",
   },
   {
     name: "Media",

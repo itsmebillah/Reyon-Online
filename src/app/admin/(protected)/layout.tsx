@@ -21,6 +21,7 @@ export default async function ProtectedAdminLayout({
         <nav className="admin-header__actions" aria-label="Admin navigation">
           <Link href="/admin">Overview</Link>
           <Link href="/admin/brands">Brands</Link>
+          <Link href="/admin/categories">Categories</Link>
           <form action={logoutAdmin}>
             <button className="button button--secondary" type="submit">
               Sign out

@@ -99,7 +99,7 @@ The Product Owner supplied the core catalog decisions in [Product Catalog Admini
 
 ## Future Expansion
 
-Brand Management is released with authenticated create/edit operations, admin-only logo storage writes, store visibility, and reversible archive controls. Secured category/product writes and the Published-only customer projection are prepared for the next vertical slices; private purchase prices and non-published records remain excluded from that projection.
+Brand and Category Management are released with authenticated create/edit operations, visibility, and reversible archive controls. Brand logos use admin-only storage writes. Categories support cycle-safe parent relationships and explicit display order. Visible active categories synchronize to customer pages; hidden or archived brands and categories suppress their products from the Published-only customer projection. Product administration is the next vertical slice, and private purchase prices and non-published records remain excluded from customer reads.
 
 After the feature-specific access and operational decisions are approved, add an authenticated server-only repository adapter, administration workflows, media storage, conflict-safe correction, localized content projections, faceted search, product relationships, inventory availability projections, audit browsing, and catalog feeds. Adapters for Google Merchant Center, Meta, TikTok, Pinterest, and marketplaces must consume versioned channel projections.
 

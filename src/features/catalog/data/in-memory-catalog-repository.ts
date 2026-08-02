@@ -1,5 +1,9 @@
 import type { CatalogRepository } from "../domain/catalog-repository";
-import type { CatalogProduct, CatalogQuery } from "../domain/catalog";
+import type {
+  CatalogCategory,
+  CatalogProduct,
+  CatalogQuery,
+} from "../domain/catalog";
 import { demoBrands, demoCategories, demoProducts } from "./demo-catalog";
 import { getSupabasePublicConfig } from "@/config/supabase";
 
@@ -75,6 +79,39 @@ const loadPublishedProducts = async (): Promise<readonly CatalogProduct[]> => {
   }
 };
 
+const loadVisibleCategories = async (): Promise<
+  readonly CatalogCategory[] | null
+> => {
+  try {
+    const { url, publishableKey } = getSupabasePublicConfig();
+    const response = await fetch(`${url}/rest/v1/rpc/visible_categories`, {
+      method: "POST",
+      headers: {
+        apikey: publishableKey,
+        Authorization: `Bearer ${publishableKey}`,
+        "Content-Type": "application/json",
+      },
+      body: "{}",
+      cache: "no-store",
+    });
+    if (!response.ok) return null;
+    const rows = (await response.json()) as ReadonlyArray<{
+      id: string;
+      slug: string;
+      name: string;
+      display_order: number;
+    }>;
+    return rows.map((row) => ({
+      id: row.id,
+      slug: row.slug,
+      name: row.name,
+      displayOrder: row.display_order,
+    }));
+  } catch {
+    return null;
+  }
+};
+
 const normalize = (value: string) => value.trim().toLocaleLowerCase();
 
 const matchesQuery = (product: CatalogProduct, query: CatalogQuery) => {
@@ -122,12 +159,6 @@ export const catalogRepository: CatalogRepository = {
     );
   },
   async listCategories() {
-    const products = await loadPublishedProducts();
-    return [...demoCategories, ...products.map((product) => product.category)]
-      .filter(
-        (category, index, all) =>
-          all.findIndex((item) => item.id === category.id) === index,
-      )
-      .sort((a, b) => a.displayOrder - b.displayOrder);
+    return (await loadVisibleCategories()) ?? demoCategories;
   },
 };

@@ -19,6 +19,7 @@ const routes = [
   "/admin/login",
   "/admin/access-denied",
   "/admin/brands",
+  "/admin/categories",
   "/robots.txt",
   "/sitemap.xml",
 ];

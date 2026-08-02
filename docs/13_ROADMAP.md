@@ -97,6 +97,8 @@ Sprint 14B releases deny-by-default admin authentication: Supabase SSR sessions,
 
 Sprint 14C releases Brand Management as the first complete catalog module. The administrator can create and edit brands, upload or replace a logo, maintain approved descriptive and website details, control store visibility, archive brands, and restore archived brands. Category Management is next; product and customer-publication primitives are prepared but their interfaces are not part of this milestone.
 
+Sprint 14D releases Category Management with create/edit workflows, optional parent categories, cycle-safe hierarchy changes, descriptive details, display ordering, store visibility, archive, and restore controls. Visible active categories synchronize immediately to the customer category experience. Product Management is next.
+
 ## Entry and Exit Criteria
 
 A candidate should identify outcome, owner, users, business rules, process, data, controls, dependencies, risks, non-functional needs, migration, operational owner, and measurable acceptance. Exit requires verified acceptance, documentation, training/support readiness, monitoring, and post-release ownership.
