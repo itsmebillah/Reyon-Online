@@ -5,9 +5,11 @@ import { Container, LinkButton, SectionHeading } from "@/components/ui";
 import { businessConfig } from "@/config/business";
 import { catalogRepository } from "@/features/catalog";
 
-export default function Home() {
-  const categories = catalogRepository.listCategories();
-  const products = catalogRepository.listProducts();
+export default async function Home() {
+  const [categories, products] = await Promise.all([
+    catalogRepository.listCategories(),
+    catalogRepository.listProducts(),
+  ]);
   return (
     <>
       <section className="hero">

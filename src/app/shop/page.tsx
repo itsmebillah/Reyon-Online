@@ -19,14 +19,14 @@ export default async function ShopPage({
   searchParams: Promise<{ category?: string; sort?: string }>;
 }) {
   const params = await searchParams;
-  const categories = catalogRepository.listCategories();
+  const categories = await catalogRepository.listCategories();
   const sort: CatalogSort =
     params.sort === "new" || params.sort === "newest"
       ? "newest"
       : params.sort === "price-asc"
         ? "price-asc"
         : "featured";
-  const products = catalogRepository.listProducts({
+  const products = await catalogRepository.listProducts({
     category: params.category,
     sort,
   });

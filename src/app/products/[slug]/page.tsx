@@ -3,16 +3,14 @@ import { notFound } from "next/navigation";
 import { ProductActions } from "@/components/store-actions";
 import { Container } from "@/components/ui";
 import { catalogRepository, formatMoney } from "@/features/catalog";
-export function generateStaticParams() {
-  return catalogRepository.listProducts().map(({ slug }) => ({ slug }));
-}
+export const dynamic = "force-dynamic";
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const p = catalogRepository.getProductBySlug(slug);
+  const p = await catalogRepository.getProductBySlug(slug);
   return p
     ? {
         title: p.name,
@@ -27,7 +25,7 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const p = catalogRepository.getProductBySlug(slug);
+  const p = await catalogRepository.getProductBySlug(slug);
   if (!p) notFound();
   return (
     <Container className="product-page">
@@ -38,6 +36,7 @@ export default async function ProductPage({
           fill
           priority
           sizes="(max-width: 800px) 100vw, 55vw"
+          unoptimized={p.media.src.startsWith("http")}
         />
       </div>
       <div className="product-detail">

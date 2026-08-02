@@ -7,7 +7,7 @@ export default async function SearchPage({
   searchParams: Promise<{ q?: string }>;
 }) {
   const q = (await searchParams).q?.trim() ?? "";
-  const matches = q ? catalogRepository.listProducts({ search: q }) : [];
+  const matches = q ? await catalogRepository.listProducts({ search: q }) : [];
   return (
     <Container className="page">
       <p className="eyebrow">Search REYON</p>

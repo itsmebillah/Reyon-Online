@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { catalogRepository } from "@/features/catalog";
-export default function sitemap(): MetadataRoute.Sitemap {
-  const products = catalogRepository.listProducts();
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const products = await catalogRepository.listProducts();
   const base = "https://reyon-online.vercel.app";
   const routes = ["", "/shop", "/categories", "/about", "/contact"];
   return [

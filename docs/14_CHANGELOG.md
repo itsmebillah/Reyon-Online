@@ -42,6 +42,16 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Released the complete Brand Management interface with create/edit workflows, JPG/PNG/WebP logo upload and replacement, descriptive details, website link, store visibility, archive, and restore controls.
+  - Approval/owner: Product Owner Sprint 14 execution direction dated 2026-08-02
+  - Impact: authenticated brand interface, private brand fields, public `brand-logos` bucket with admin-only writes, and migrations `20260802171000_brand_management.sql` and `20260802172000_brand_logo_upsert_policy.sql`; no verification records retained
+  - Related: [Roadmap](13_ROADMAP.md), [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
+
+- Prepared secured category/product write primitives and a Published-only customer catalog projection without releasing their administration interfaces.
+  - Approval/owner: Product Owner catalog vertical-slice direction dated 2026-08-02
+  - Impact: migration `20260802170000_catalog_operations_vertical_slice.sql`; no business records inserted
+  - Related: [Roadmap](13_ROADMAP.md), [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
+
 - Provisioned the single Product Owner-approved initial administrator and assigned the active admin membership required by the current deny-by-default authorization model; public registration remains disabled.
   - Approval/owner: Product Owner approval dated 2026-08-02
   - Impact: one Supabase Auth identity and one private admin membership; no credential stored in the repository and no additional user created

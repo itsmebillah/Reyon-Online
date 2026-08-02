@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Business OS",
@@ -8,14 +9,40 @@ export const metadata: Metadata = {
 const modules: readonly Readonly<{
   name: string;
   description: string;
-  next?: boolean;
+  status: "Available" | "Next" | "Planned";
+  href?: string;
 }>[] = [
-  { name: "Brands", description: "Manage trusted product brands", next: true },
-  { name: "Categories", description: "Organize the approved catalog" },
-  { name: "Products", description: "Create and review product records" },
-  { name: "Media", description: "Prepare product imagery" },
-  { name: "Inventory", description: "Enter variant-level stock" },
-  { name: "Publication", description: "Review website visibility" },
+  {
+    name: "Brands",
+    description: "Manage trusted product brands",
+    status: "Available",
+    href: "/admin/brands",
+  },
+  {
+    name: "Categories",
+    description: "Organize the approved catalog",
+    status: "Next",
+  },
+  {
+    name: "Products",
+    description: "Create and publish product records",
+    status: "Planned",
+  },
+  {
+    name: "Media",
+    description: "Prepare expanded product galleries",
+    status: "Planned",
+  },
+  {
+    name: "Inventory",
+    description: "Enter variant-level stock",
+    status: "Planned",
+  },
+  {
+    name: "Publication",
+    description: "Review website visibility",
+    status: "Planned",
+  },
 ] as const;
 
 export default function AdminHomePage() {
@@ -32,9 +59,14 @@ export default function AdminHomePage() {
       <div className="admin-module-grid">
         {modules.map((module) => (
           <article className="admin-module-card" key={module.name}>
-            <span>{module.next ? "Next" : "Planned"}</span>
+            <span>{module.status}</span>
             <h2>{module.name}</h2>
             <p>{module.description}</p>
+            {module.href && (
+              <Link className="button button--primary" href={module.href}>
+                Manage {module.name.toLowerCase()}
+              </Link>
+            )}
           </article>
         ))}
       </div>

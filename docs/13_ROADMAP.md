@@ -93,7 +93,9 @@ The Product Owner approved core Sprint 14 rules on 2026-08-02. The catalog admin
 
 Sprint 14A establishes independent delivery assurance with automated GitHub quality gates, cross-platform isolated browser testing, and a documented live-verification contract. Feature-specific dependencies are isolated so unrelated technical foundations can continue.
 
-Sprint 14B releases deny-by-default admin authentication: Supabase SSR sessions, server-verified claims, one explicitly provisioned initial administrator with active membership, disabled public signup, protected routing, and a responsive private workspace shell. Brand Management is the next implementation milestone; detailed per-action permissions remain independently gated.
+Sprint 14B releases deny-by-default admin authentication: Supabase SSR sessions, server-verified claims, one explicitly provisioned initial administrator with active membership, disabled public signup, protected routing, and a responsive private workspace shell.
+
+Sprint 14C releases Brand Management as the first complete catalog module. The administrator can create and edit brands, upload or replace a logo, maintain approved descriptive and website details, control store visibility, archive brands, and restore archived brands. Category Management is next; product and customer-publication primitives are prepared but their interfaces are not part of this milestone.
 
 ## Entry and Exit Criteria
 

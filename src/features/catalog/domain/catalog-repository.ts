@@ -6,8 +6,8 @@ import type {
 } from "./catalog";
 
 export interface CatalogRepository {
-  listProducts(query?: CatalogQuery): readonly CatalogProduct[];
-  getProductBySlug(slug: string): CatalogProduct | undefined;
-  listBrands(): readonly CatalogBrand[];
-  listCategories(): readonly CatalogCategory[];
+  listProducts(query?: CatalogQuery): Promise<readonly CatalogProduct[]>;
+  getProductBySlug(slug: string): Promise<CatalogProduct | undefined>;
+  listBrands(): Promise<readonly CatalogBrand[]>;
+  listCategories(): Promise<readonly CatalogCategory[]>;
 }

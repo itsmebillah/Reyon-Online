@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Container, SectionHeading } from "@/components/ui";
 import { catalogRepository } from "@/features/catalog";
-export default function CategoriesPage() {
-  const categories = catalogRepository.listCategories();
+export default async function CategoriesPage() {
+  const categories = await catalogRepository.listCategories();
   return (
     <Container className="page">
       <SectionHeading

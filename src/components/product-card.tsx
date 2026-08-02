@@ -24,6 +24,7 @@ export function ProductCard({
             fill
             sizes="(max-width: 600px) 50vw, (max-width: 1000px) 33vw, 25vw"
             priority={priority}
+            unoptimized={product.media.src.startsWith("http")}
           />
         </Link>
         <div className="badge-stack">

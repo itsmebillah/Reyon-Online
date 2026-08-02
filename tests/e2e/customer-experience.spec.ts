@@ -18,6 +18,7 @@ const routes = [
   "/terms",
   "/admin/login",
   "/admin/access-denied",
+  "/admin/brands",
   "/robots.txt",
   "/sitemap.xml",
 ];
