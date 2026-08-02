@@ -9,6 +9,12 @@ on:
 permissions:
   contents: read
 
+# Public, non-production placeholders let the isolated runner exercise the
+# deny-by-default admin shell without depending on production configuration.
+env:
+  NEXT_PUBLIC_SUPABASE_URL: https://ci.invalid
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_only
+
 concurrency:
   group: quality-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
