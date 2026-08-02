@@ -20,6 +20,7 @@ const routes = [
   "/admin/access-denied",
   "/admin/brands",
   "/admin/categories",
+  "/admin/products",
   "/robots.txt",
   "/sitemap.xml",
 ];

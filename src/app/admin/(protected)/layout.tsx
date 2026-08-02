@@ -22,6 +22,7 @@ export default async function ProtectedAdminLayout({
           <Link href="/admin">Overview</Link>
           <Link href="/admin/brands">Brands</Link>
           <Link href="/admin/categories">Categories</Link>
+          <Link href="/admin/products">Products</Link>
           <form action={logoutAdmin}>
             <button className="button button--secondary" type="submit">
               Sign out

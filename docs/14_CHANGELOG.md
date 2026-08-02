@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Released guided Product Management for complete first-product creation, Draft saving, one-action approved-lifecycle publication, and immediate Published-only customer website synchronization.
+  - Approval/owner: Product Owner Sprint 14 execution direction dated 2026-08-02
+  - Impact: authenticated product interface, filtered brand/category options, atomic variant/pricing/offer/media creation, publication operation, and migration `20260802175000_product_management_entry.sql`; no verification records retained
+  - Related: [Roadmap](13_ROADMAP.md), [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
+
 - Released complete Category Management with create/edit workflows, optional subcategory hierarchy, cycle prevention, descriptions, display ordering, store visibility, archive/restore controls, and immediate visible-category synchronization to customer pages.
   - Approval/owner: Product Owner Sprint 14 execution direction dated 2026-08-02
   - Impact: authenticated category interface, public visible-category projection, published-product visibility enforcement, and migration `20260802174000_category_management.sql`; no verification records retained

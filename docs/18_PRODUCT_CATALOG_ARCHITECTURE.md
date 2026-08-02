@@ -99,7 +99,7 @@ The Product Owner supplied the core catalog decisions in [Product Catalog Admini
 
 ## Future Expansion
 
-Brand and Category Management are released with authenticated create/edit operations, visibility, and reversible archive controls. Brand logos use admin-only storage writes. Categories support cycle-safe parent relationships and explicit display order. Visible active categories synchronize to customer pages; hidden or archived brands and categories suppress their products from the Published-only customer projection. Product administration is the next vertical slice, and private purchase prices and non-published records remain excluded from customer reads.
+Brand, Category, and guided Product creation are released. Product entry atomically creates the approved identity, primary category, first variant, price facts, website offer, and primary image reference; the administrator can save Draft or publish through each approved lifecycle state in one action. Published records synchronize immediately through the customer projection. Private purchase prices, hidden/archived relationships, and non-published products remain excluded from customer reads. Product Media upload and Inventory Entry are the next vertical slices.
 
 After the feature-specific access and operational decisions are approved, add an authenticated server-only repository adapter, administration workflows, media storage, conflict-safe correction, localized content projections, faceted search, product relationships, inventory availability projections, audit browsing, and catalog feeds. Adapters for Google Merchant Center, Meta, TikTok, Pinterest, and marketplaces must consume versioned channel projections.
 

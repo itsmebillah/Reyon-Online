@@ -27,12 +27,13 @@ const modules: readonly Readonly<{
   {
     name: "Products",
     description: "Create and publish product records",
-    status: "Next",
+    status: "Available",
+    href: "/admin/products",
   },
   {
     name: "Media",
     description: "Prepare expanded product galleries",
-    status: "Planned",
+    status: "Next",
   },
   {
     name: "Inventory",
