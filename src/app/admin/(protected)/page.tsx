@@ -31,6 +31,12 @@ const modules: readonly Readonly<{
     href: "/admin/products",
   },
   {
+    name: "Collections",
+    description: "Configure dynamic homepage merchandising",
+    status: "Available",
+    href: "/admin/collections",
+  },
+  {
     name: "Media",
     description: "Prepare expanded product galleries",
     status: "Next",

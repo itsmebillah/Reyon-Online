@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Approved and implemented the permanent Dynamic Product Collections rule: all customer product collections use governed database configuration and reusable strategies, with optional ordered pins and no demonstration-product fallback.
+  - Approval/owner: Product Owner Dynamic Product Collections decision dated 2026-08-02
+  - Related: [Dynamic Product Collections](27_DYNAMIC_PRODUCT_COLLECTIONS.md), [Roadmap](13_ROADMAP.md)
+
 - Completed the production Brand Management operations scope with search, lifecycle/visibility/featured filtering, deterministic sorting, display ordering, featured merchandising status, ISO country storage, visible audit timestamps, and case-insensitive duplicate-name protection.
   - Approval/owner: Product Owner Sprint 14B continuation dated 2026-08-02
   - Related: [Roadmap](13_ROADMAP.md), [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)

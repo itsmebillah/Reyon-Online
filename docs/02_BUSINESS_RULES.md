@@ -87,6 +87,10 @@ When rules are approved, add a versioned rule catalog or link to a dedicated con
 
 Sprint 12 provides an empty automation control plane that can reference future immutable rule contracts but cannot execute them. Draft TODOs, examples, unreviewed versions, or absent approval evidence must never become activation authority.
 
+## Approved Dynamic Collection Rule
+
+Every customer-facing product collection is generated from governed database records and reusable business strategies. Homepage products must never be hardcoded. Automatic rules and optional administrator pins update customer channels without source-code changes. The authoritative strategy, administration, eligibility, and future-signal rules are defined in [Dynamic Product Collections](27_DYNAMIC_PRODUCT_COLLECTIONS.md).
+
 ## Related Documents
 
 - [Order Lifecycle](04_ORDER_LIFECYCLE.md)
@@ -94,3 +98,4 @@ Sprint 12 provides an empty automation control plane that can reference future i
 - [Purchase System](06_PURCHASE_SYSTEM.md)
 - [Accounting Rules](07_ACCOUNTING_RULES.md)
 - [Automation Control-Plane Architecture](24_AUTOMATION_CONTROL_PLANE_ARCHITECTURE.md)
+- [Dynamic Product Collections](27_DYNAMIC_PRODUCT_COLLECTIONS.md)

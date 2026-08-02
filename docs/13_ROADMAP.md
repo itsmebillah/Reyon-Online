@@ -101,6 +101,8 @@ Sprint 14D releases Category Management with create/edit workflows, optional par
 
 Sprint 14E releases guided Product creation with approved identity, brand, primary category, country of origin, first variant, hybrid SKU, optional barcode, four approved price types, primary image reference, Draft saving, and one-action publication through every approved lifecycle state. Published products synchronize immediately to customer pages. Product Media upload and Inventory Entry are next.
 
+Sprint 14F replaces all hardcoded customer product lists with the reusable Dynamic Product Collection engine. Governed database configuration and optional ordered pins power New Arrivals, Most Loved, Featured Products, and On Sale now; sales, inventory, trending, and personalized strategies remain inactive until their authoritative signals are released.
+
 ## Entry and Exit Criteria
 
 A candidate should identify outcome, owner, users, business rules, process, data, controls, dependencies, risks, non-functional needs, migration, operational owner, and measurable acceptance. Exit requires verified acceptance, documentation, training/support readiness, monitoring, and post-release ownership.

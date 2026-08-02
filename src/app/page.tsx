@@ -1,14 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import { ProductCard } from "@/components/product-card";
 import { Container, LinkButton, SectionHeading } from "@/components/ui";
 import { businessConfig } from "@/config/business";
 import { catalogRepository } from "@/features/catalog";
 
 export default async function Home() {
-  const [categories, products] = await Promise.all([
+  const [categories, collections] = await Promise.all([
     catalogRepository.listCategories(),
-    catalogRepository.listProducts(),
+    catalogRepository.listHomepageCollections(),
   ]);
   return (
     <>
@@ -60,25 +61,34 @@ export default async function Home() {
           </div>
         </Container>
       </section>
-      <section className="section section--cream">
-        <Container>
-          <SectionHeading eyebrow="The essentials" title="Most loved" />
-          <div className="product-grid">
-            {products.map((product, index) => (
-              <ProductCard
-                key={product.slug}
-                product={product}
-                priority={index < 2}
+      {collections.map((collection, collectionIndex) => (
+        <Fragment key={collection.key}>
+          <section
+            className={`section${collectionIndex % 2 === 0 ? " section--cream" : ""}`}
+          >
+            <Container>
+              <SectionHeading
+                eyebrow="Live from the REYON catalog"
+                title={collection.name}
               />
-            ))}
-          </div>
-          <div className="center">
-            <LinkButton href="/shop" variant="secondary">
-              View all products
-            </LinkButton>
-          </div>
-        </Container>
-      </section>
+              <div className="product-grid">
+                {collection.products.map((product, index) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    priority={collectionIndex === 0 && index < 2}
+                  />
+                ))}
+              </div>
+              <div className="center">
+                <LinkButton href="/shop" variant="secondary">
+                  View all products
+                </LinkButton>
+              </div>
+            </Container>
+          </section>
+        </Fragment>
+      ))}
       <section className="promise">
         <Container>
           <p className="eyebrow">The REYON standard</p>

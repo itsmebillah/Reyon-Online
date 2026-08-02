@@ -112,3 +112,4 @@ After the feature-specific access and operational decisions are approved, add an
 - [AI SEO and Product Content Architecture](16_AI_SEO_CONTENT_ARCHITECTURE.md)
 - [Brand and Business Configuration](17_BRAND_BUSINESS_CONFIGURATION.md)
 - [Sprint 14 Product Catalog Administration Decision Packet](25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md)
+- [Dynamic Product Collections](27_DYNAMIC_PRODUCT_COLLECTIONS.md)

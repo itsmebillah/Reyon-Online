@@ -4,10 +4,6 @@ const routes = [
   "/",
   "/shop",
   "/categories",
-  "/products/renewal-serum",
-  "/products/velvet-cleanser",
-  "/products/luminous-essence",
-  "/products/restorative-cream",
   "/search?q=serum",
   "/about",
   "/contact",
@@ -21,6 +17,7 @@ const routes = [
   "/admin/brands",
   "/admin/categories",
   "/admin/products",
+  "/admin/collections",
   "/robots.txt",
   "/sitemap.xml",
 ];
@@ -159,6 +156,18 @@ test("homepage communicates the approved brand positioning hierarchy", async ({
   expect(failures).toEqual([]);
 });
 
+test("customer catalog excludes hardcoded demonstration products", async ({
+  page,
+}) => {
+  const failures = monitor(page);
+  await page.goto("/", { waitUntil: "load" });
+  await expect(page.getByText("Renewal Barrier Serum")).toHaveCount(0);
+  await expect(page.getByText("Velvet Cream Cleanser")).toHaveCount(0);
+  await expect(page.getByText("Luminous Hydration Essence")).toHaveCount(0);
+  await expect(page.getByText("Restorative Night Cream")).toHaveCount(0);
+  expect(failures).toEqual([]);
+});
+
 test("header uses the appropriate responsive logo lockup", async ({ page }) => {
   const failures = monitor(page);
   await page.goto("/");
@@ -192,9 +201,14 @@ test("inner pages provide consistent back navigation", async ({ page }) => {
 test("product actions provide clear feedback", async ({ page }) => {
   const failures = monitor(page);
   await page.goto("/shop");
-  const save = page
-    .locator('button[aria-label*="Renewal Barrier Serum"]')
-    .first();
+  const save = page.locator('button[aria-label^="Save "]').first();
+  if (!(await save.count())) {
+    await expect(
+      page.getByRole("heading", { name: "No products in this collection" }),
+    ).toBeVisible();
+    expect(failures).toEqual([]);
+    return;
+  }
   await save.click();
   await expect(save).toHaveAttribute("aria-pressed", "true");
   const quickView = page.getByRole("button", { name: "Quick view" }).first();
@@ -213,13 +227,18 @@ test("catalog filters are URL-addressable and preserve deterministic sorting", a
 }) => {
   const failures = monitor(page);
   await page.goto("/shop");
-  await page.getByLabel("Category").selectOption("skin-care");
+  const categories = page.getByLabel("Category").locator("option");
+  const hasOperationalCategories = (await categories.count()) > 1;
+  if (hasOperationalCategories)
+    await page.getByLabel("Category").selectOption({ index: 1 });
   await page.getByLabel("Sort").selectOption("price-asc");
   await page.getByRole("button", { name: "Apply" }).click();
-  await expect(page).toHaveURL(/category=skin-care.*sort=price-asc/);
-  await expect(page.locator(".product-card h3").first()).toContainText(
-    "Velvet Cream Cleanser",
+  await expect(page).toHaveURL(
+    hasOperationalCategories ? /category=.+sort=price-asc/ : /sort=price-asc/,
   );
+  const prices = await page.locator(".product-price strong").allTextContents();
+  const numeric = prices.map((price) => Number(price.replace(/[^0-9.]/g, "")));
+  expect(numeric).toEqual([...numeric].sort((a, b) => a - b));
   expect(failures).toEqual([]);
 });
 

@@ -44,6 +44,7 @@ This repository contains the documentation foundation, responsive customer exper
 | Automation      | [Automation Control-Plane Architecture](docs/24_AUTOMATION_CONTROL_PLANE_ARCHITECTURE.md)             | Defines versioned automation contracts, human controls, and execution evidence boundaries.            |
 | Sprint 14       | [Product Catalog Administration Decisions](docs/25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md)                | Records approved catalog rules, implemented controls, and isolated feature-specific dependencies.     |
 | Delivery        | [Delivery Assurance](docs/26_DELIVERY_ASSURANCE.md)                                                   | Defines automated quality checks, deployment evidence, live verification, and blocker isolation.      |
+| Merchandising   | [Dynamic Product Collections](docs/27_DYNAMIC_PRODUCT_COLLECTIONS.md)                                 | Defines reusable database-driven collections, ranking strategies, administration, and future signals. |
 
 ## Product Scope
 
