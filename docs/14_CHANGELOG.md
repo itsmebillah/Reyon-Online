@@ -42,6 +42,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ### Added
 
+- Provisioned the single Product Owner-approved initial administrator and assigned the active admin membership required by the current deny-by-default authorization model; public registration remains disabled.
+  - Approval/owner: Product Owner approval dated 2026-08-02
+  - Impact: one Supabase Auth identity and one private admin membership; no credential stored in the repository and no additional user created
+  - Related: [User Roles](03_USER_ROLES.md), [Roadmap](13_ROADMAP.md)
+
 - Released the Sprint 14 admin authentication foundation with Supabase SSR sessions, server-verified claims, explicit active-membership authorization, disabled public signup, protected admin routing, sign-in/sign-out actions, and a responsive operational shell.
   - Approval/owner: Product Owner Sprint 14 execution priorities dated 2026-08-02
   - Impact: admin routes, authentication configuration, and migration `20260802160000_admin_authentication_foundation.sql`; no user, membership, role, or business record created

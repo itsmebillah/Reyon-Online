@@ -93,7 +93,7 @@ The Product Owner approved core Sprint 14 rules on 2026-08-02. The catalog admin
 
 Sprint 14A establishes independent delivery assurance with automated GitHub quality gates, cross-platform isolated browser testing, and a documented live-verification contract. Feature-specific dependencies are isolated so unrelated technical foundations can continue.
 
-Sprint 14B releases deny-by-default admin authentication: Supabase SSR sessions, server-verified claims, explicit active admin membership, disabled public signup, protected routing, and a responsive private workspace shell. Brand Management is the next implementation milestone; detailed per-action permissions remain independently gated.
+Sprint 14B releases deny-by-default admin authentication: Supabase SSR sessions, server-verified claims, one explicitly provisioned initial administrator with active membership, disabled public signup, protected routing, and a responsive private workspace shell. Brand Management is the next implementation milestone; detailed per-action permissions remain independently gated.
 
 ## Entry and Exit Criteria
 

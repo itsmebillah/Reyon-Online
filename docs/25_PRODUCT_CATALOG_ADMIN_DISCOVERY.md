@@ -148,7 +148,7 @@ These unresolved items block only their dependent subfeatures:
 
 ### Administration Authorization — Feature Blocked
 
-- First-admin provisioning, account recovery, and privileged-support procedures. Authentication and deny-by-default admin membership are implemented.
+- Account recovery and privileged-support procedures. Authentication, first-admin provisioning, and deny-by-default admin membership are implemented.
 - Responsibilities allowed to create, edit, review, approve, publish, hide, archive, manage price, manage brand/category, or view history.
 - Whether review and approval require different people.
 

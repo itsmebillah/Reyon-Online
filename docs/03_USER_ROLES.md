@@ -68,7 +68,7 @@ Required lifecycle stages include invitation or provisioning, verification, acce
 
 ### Implemented Admin Authentication Foundation
 
-The REYON Business OS admin surface uses Supabase Auth sessions with server-verified identity claims and an explicit active admin-membership check. Public signup is disabled, protected routes deny access by default, and sign-in errors do not disclose whether an account exists. This foundation authenticates and gates the private workspace; it does not assign unapproved catalog capabilities or create an admin account.
+The REYON Business OS admin surface uses Supabase Auth sessions with server-verified identity claims and an explicit active admin-membership check. Public signup is disabled, protected routes deny access by default, and sign-in errors do not disclose whether an account exists. One Product Owner-approved initial administrator is provisioned with active membership; no additional role hierarchy or catalog capabilities are implied.
 
 ## Audit and Review
 
@@ -78,7 +78,7 @@ Access decisions and privileged actions should produce durable evidence. Access 
 
 ### TODO — Product Owner / Security Owner
 
-- Define initial admin provisioning, account recovery, and privileged-support procedures.
+- Define account recovery and privileged-support procedures for the initial administrator.
 - Define role owners, access approvers, review frequency, and session policy.
 - Confirm regulatory or contractual identity and privacy obligations.
 
