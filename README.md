@@ -1,81 +1,122 @@
 # REYON Business OS
 
-REYON Business OS is the planned operating platform for REYON, a premium multi-brand beauty and personal care retailer. Authentic Korean beauty is one of REYON's strongest specialties, not its entire identity. REYON is the retailer and curator, not a product manufacturer. The platform is broader than an ecommerce site: it is intended to unify ecommerce, administration, point of sale, customer relationships, inventory, purchasing, accounting, reporting, analytics, automation, and AI-enabled capabilities.
+Premium multi-brand beauty retail experience with a governed foundation for catalog and business operations.
 
-This repository contains the documentation foundation, responsive customer experience, private operational schemas, and the deny-by-default REYON Business OS admin authentication foundation. Commerce and domain write workflows remain inactive until their applicable rules and access capabilities are released.
+![REYON Business OS social preview](assets/social-preview/reyon-business-os-social-preview.png)
 
-## Table of Contents
+[![Version](https://img.shields.io/badge/version-0.1.0-0f766e?style=flat-square)](package.json)
+[![Status](https://img.shields.io/badge/status-active%20foundation-b45309?style=flat-square)](docs/13_ROADMAP.md)
+[![Framework](https://img.shields.io/badge/framework-Next.js%2016-111827?style=flat-square)](#technology-stack)
+[![Tests](https://img.shields.io/badge/domain%20tests-8%20passing-15803d?style=flat-square)](tests/domain/catalog-administration.test.ts)
 
-- [Documentation map](#documentation-map)
-- [Product scope](#product-scope)
-- [Documentation conventions](#documentation-conventions)
-- [Getting started](#getting-started)
-- [Governance](#governance)
-- [Future expansion](#future-expansion)
-- [Related documents](#related-documents)
+[Live Storefront](https://reyon-online.vercel.app) | [Project Vision](docs/00_PROJECT_VISION.md) | [Architecture](docs/08_DATABASE_ARCHITECTURE.md) | [Roadmap](docs/13_ROADMAP.md) | [Security](SECURITY.md)
 
-## Documentation Map
+## Overview
 
-| Area            | Document                                                                                              | Purpose                                                                                               |
-| --------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| Direction       | [Project Vision](docs/00_PROJECT_VISION.md)                                                           | Defines intent, outcomes, boundaries, and principles.                                                 |
-| Business        | [Business Overview](docs/01_BUSINESS_OVERVIEW.md)                                                     | Captures operating context and business capabilities.                                                 |
-| Policy          | [Business Rules](docs/02_BUSINESS_RULES.md)                                                           | Provides the controlled register for approved business rules.                                         |
-| Access          | [User Roles](docs/03_USER_ROLES.md)                                                                   | Defines the framework for personas, roles, and permissions.                                           |
-| Commerce        | [Order Lifecycle](docs/04_ORDER_LIFECYCLE.md)                                                         | Specifies the future order state model and controls.                                                  |
-| Operations      | [Inventory System](docs/05_INVENTORY_SYSTEM.md)                                                       | Defines inventory concepts, movements, and control points.                                            |
-| Operations      | [Purchase System](docs/06_PURCHASE_SYSTEM.md)                                                         | Defines procurement boundaries and lifecycle structure.                                               |
-| Finance         | [Accounting Rules](docs/07_ACCOUNTING_RULES.md)                                                       | Provides the governance framework for financial treatment.                                            |
-| Data            | [Database Architecture](docs/08_DATABASE_ARCHITECTURE.md)                                             | Establishes data architecture principles and decision gates.                                          |
-| Experience      | [UI Guidelines](docs/09_UI_GUIDELINES.md)                                                             | Establishes cross-module interface standards.                                                         |
-| Engineering     | [Tech Stack](docs/10_TECH_STACK.md)                                                                   | Records technology-selection criteria and pending decisions.                                          |
-| Engineering     | [Coding Standards](docs/11_CODING_STANDARDS.md)                                                       | Defines quality, security, review, and delivery expectations.                                         |
-| Repository      | [Folder Structure](docs/12_FOLDER_STRUCTURE.md)                                                       | Defines the intended scalable repository organization.                                                |
-| Delivery        | [Roadmap](docs/13_ROADMAP.md)                                                                         | Provides a dependency-aware planning framework.                                                       |
-| History         | [Changelog](docs/14_CHANGELOG.md)                                                                     | Records meaningful documentation and product changes.                                                 |
-| Environment     | [Sprint 0 Environment Audit](docs/15_ENVIRONMENT_AUDIT.md)                                            | Records verified tool, repository, and service readiness.                                             |
-| Content and SEO | [AI SEO and Product Content Architecture](docs/16_AI_SEO_CONTENT_ARCHITECTURE.md)                     | Defines AI-ready content boundaries, human review, SEO quality, and channel extensibility.            |
-| Catalog         | [Product Catalog Architecture](docs/18_PRODUCT_CATALOG_ARCHITECTURE.md)                               | Defines the product read model, repository boundary, controls, and expansion path.                    |
-| Operating model | [Operating Topology Architecture](docs/19_OPERATING_TOPOLOGY_ARCHITECTURE.md)                         | Defines organization, location, and channel identity boundaries required by operations.               |
-| Fulfillment     | [Fulfillment and Delivery Architecture](docs/20_FULFILLMENT_DELIVERY_ARCHITECTURE.md)                 | Defines order fulfillment, partial-line assignment, delivery evidence, and privacy boundaries.        |
-| Payments        | [Payment Evidence Architecture](docs/21_PAYMENT_EVIDENCE_ARCHITECTURE.md)                             | Defines provider-neutral monetary evidence, order allocations, events, and sensitive-data boundaries. |
-| Customer / CRM  | [Customer and CRM Identity Architecture](docs/22_CUSTOMER_CRM_IDENTITY_ARCHITECTURE.md)               | Defines pseudonymous customer identity, order associations, and privacy boundaries.                   |
-| Reporting       | [Reporting and Analytics Contract Architecture](docs/23_REPORTING_ANALYTICS_CONTRACT_ARCHITECTURE.md) | Defines versioned metric semantics, source bindings, review evidence, and projection lineage.         |
-| Automation      | [Automation Control-Plane Architecture](docs/24_AUTOMATION_CONTROL_PLANE_ARCHITECTURE.md)             | Defines versioned automation contracts, human controls, and execution evidence boundaries.            |
-| Sprint 14       | [Product Catalog Administration Decisions](docs/25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md)                | Records approved catalog rules, implemented controls, and isolated feature-specific dependencies.     |
-| Delivery        | [Delivery Assurance](docs/26_DELIVERY_ASSURANCE.md)                                                   | Defines automated quality checks, deployment evidence, live verification, and blocker isolation.      |
-| Merchandising   | [Dynamic Product Collections](docs/27_DYNAMIC_PRODUCT_COLLECTIONS.md)                                 | Defines reusable database-driven collections, ranking strategies, administration, and future signals. |
+REYON Business OS combines a responsive customer storefront with a governed operational foundation for a premium multi-brand beauty and personal-care retailer. The current implementation delivers catalog browsing, search, categories, dynamic collections, protected administration, and database-backed brand and product management. Broader order, inventory, purchasing, finance, CRM, analytics, automation, and AI capabilities remain documented future scope rather than released features.
 
-## Product Scope
+## Implemented Capabilities
 
-The target system is a modular retail operating system. Each module must be capable of evolving independently while sharing governed identity, product, customer, inventory, transaction, and financial concepts. Module inclusion in the vision is not approval to implement it; scope enters delivery only through the roadmap and an approved specification.
+- Responsive storefront, product discovery, search, category, and product-detail routes
+- Database-driven brands, categories, products, variants, media, and dynamic collections
+- Protected administrator authentication with explicit membership provisioning
+- Catalog lifecycle and visibility rules backed by Supabase migrations
+- Product, brand, category, and collection administration workflows
+- SEO metadata, sitemap, robots, policy, contact, and information routes
+- Domain tests for identifiers, variants, lifecycle transitions, visibility, and money rules
 
-## Documentation Conventions
+## Screenshots
 
-- **TODO — Product Owner:** business intent, policy, market, or priority requires an accountable product decision.
-- **TODO — Architecture:** a technical design must be evaluated and recorded before implementation.
-- **TODO — Domain Owner:** specialist operational or financial validation is required.
-- **Decision:** an approved conclusion with owner and date; decisions must replace, not merely sit beside, the related TODO.
-- **Assumption:** a temporary proposition that must not silently become a business rule.
+### Storefront
 
-## Getting Started
+![REYON storefront on desktop](assets/screenshots/reyon-storefront-desktop.png)
 
-1. Install Node.js 24 and run `npm install`.
-2. Run `npm run dev` for local development.
-3. Run `npm run format` and `npm run quality` before committing.
-4. Run `npm run test:e2e` for isolated Microsoft Edge coverage on an OS-assigned local port.
-5. Read the project vision and relevant business documents before implementing domain behavior.
+### Mobile experience
 
-Admin authentication requires `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Public signup is disabled; admin accounts and active memberships must be provisioned explicitly.
+<p align="center">
+  <img src="assets/screenshots/reyon-storefront-mobile.png" alt="REYON storefront on mobile" width="390" />
+</p>
 
-## Governance
+## Architecture
 
-Documentation changes require review by the owner of the affected domain. Cross-domain changes must identify downstream impacts. Business behavior must not be inferred from technical convenience, and unapproved TODO items must not be implemented as policy.
+```mermaid
+flowchart LR
+    C[Customer storefront] --> N[Next.js App Router]
+    A[Protected admin] --> N
+    N --> D[Catalog domain services]
+    D --> S[Supabase Auth and PostgreSQL]
+    S --> R[Row Level Security]
+    D --> M[Products, brands, categories and collections]
+```
 
-## Future Expansion
+Customer routes use governed catalog projections. Protected administrator routes resolve authenticated membership before invoking catalog operations. Supabase migrations define the current data and authorization foundation; domain documents describe future modules without implying they are already active.
 
-Future documentation may include architecture decision records, API standards, event catalogs, data classification, threat models, disaster recovery, testing strategy, deployment operations, module specifications, and support runbooks. Add these when their scope and accountable owner are known.
+## Technology Stack
 
-## Related Documents
+| Area          | Technology                                    |
+| ------------- | --------------------------------------------- |
+| Application   | Next.js 16, React 19, TypeScript              |
+| Data and auth | Supabase Auth, PostgreSQL, Row Level Security |
+| Styling       | CSS design system, Lucide icons               |
+| Testing       | Node test runner, Playwright                  |
+| Delivery      | Vercel, GitHub Actions                        |
 
-Start with [Project Vision](docs/00_PROJECT_VISION.md), then use [Roadmap](docs/13_ROADMAP.md) for delivery sequencing and [Changelog](docs/14_CHANGELOG.md) for repository history.
+## Local Development
+
+Requirements: Node.js 24, npm, and a development Supabase project.
+
+```bash
+git clone https://github.com/itsmebillah/Reyon-Online.git
+cd Reyon-Online
+npm ci
+```
+
+Copy `.env.example` to `.env.local` and configure the public Supabase project values:
+
+```dotenv
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
+```
+
+Apply the reviewed migrations in `supabase/migrations/`, then run:
+
+```bash
+npm run dev
+```
+
+## Verification
+
+```bash
+npm run format:check
+npm run lint
+npm run typecheck
+npm run test:domain
+npm run build
+npm run test:e2e
+```
+
+The current domain suite contains eight passing tests. End-to-end tests require the documented isolated environment and Microsoft Edge setup.
+
+## Documentation
+
+| Area                 | Start here                                                                                                                                                                                     |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Product and business | [Vision](docs/00_PROJECT_VISION.md), [Business Overview](docs/01_BUSINESS_OVERVIEW.md), [Business Rules](docs/02_BUSINESS_RULES.md)                                                            |
+| Catalog              | [Catalog Architecture](docs/18_PRODUCT_CATALOG_ARCHITECTURE.md), [Administration Decisions](docs/25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md), [Collections](docs/27_DYNAMIC_PRODUCT_COLLECTIONS.md) |
+| Operations           | [Order Lifecycle](docs/04_ORDER_LIFECYCLE.md), [Inventory](docs/05_INVENTORY_SYSTEM.md), [Purchasing](docs/06_PURCHASE_SYSTEM.md)                                                              |
+| Platform             | [Database](docs/08_DATABASE_ARCHITECTURE.md), [Tech Stack](docs/10_TECH_STACK.md), [Delivery Assurance](docs/26_DELIVERY_ASSURANCE.md)                                                         |
+| Future systems       | [CRM](docs/22_CUSTOMER_CRM_IDENTITY_ARCHITECTURE.md), [Analytics](docs/23_REPORTING_ANALYTICS_CONTRACT_ARCHITECTURE.md), [Automation](docs/24_AUTOMATION_CONTROL_PLANE_ARCHITECTURE.md)        |
+
+## Roadmap
+
+See [docs/13_ROADMAP.md](docs/13_ROADMAP.md). Documentation distinguishes approved implementation from target architecture; module inclusion in the business vision is not a claim that the workflow is released.
+
+## Contributing and License
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). No open-source license has been selected; all rights remain with the repository owner unless a license is added.
+
+---
+
+**Md. Masum Billah** · Data Analyst | Automation Developer | Business Intelligence Specialist
+
+[Portfolio](https://itsmebillah.github.io/) · [GitHub](https://github.com/itsmebillah) · [LinkedIn](https://www.linkedin.com/in/itsmebillah/) · [Email](mailto:itsmbillah@gmail.com) · [Live Storefront](https://reyon-online.vercel.app) · [Documentation](docs/00_PROJECT_VISION.md)
