@@ -2,6 +2,7 @@ import { requireReyonAdmin } from "@/features/access/data/admin-access";
 import { logoutAdmin } from "@/app/admin/login/actions";
 import Link from "next/link";
 import { AdminNavigation } from "@/components/admin-navigation";
+import { AdminBackNavigation } from "@/components/admin-back-navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -38,7 +39,10 @@ export default async function ProtectedAdminLayout({
             View store
           </Link>
         </header>
-        <main id="main">{children}</main>
+        <main id="main">
+          <AdminBackNavigation />
+          {children}
+        </main>
       </div>
     </div>
   );
