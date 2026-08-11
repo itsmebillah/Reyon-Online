@@ -105,9 +105,9 @@ export default async function CartPage() {
               Prices and stock are revalidated before confirmation. Items in
               your bag are not reserved.
             </p>
-            <button className="button button--primary" disabled>
-              Checkout is the next milestone
-            </button>
+            <Link className="button button--primary" href="/checkout">
+              Continue to checkout
+            </Link>
           </aside>
         </div>
       )}

@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Released Sprint 15B Checkout review with authoritative current-price and stock projection, explicit edit/exception paths, and no premature order or reservation side effects.
+  - Approval/owner: Product Owner finalized Sprint 15 rules dated 2026-08-11
+  - Related: [Order Lifecycle](04_ORDER_LIFECYCLE.md), [Roadmap](13_ROADMAP.md)
+
 - Released Sprint 15A persistent guest Cart with secure opaque identity, rolling 30-day retention, a 10-unit per-variant limit, live catalog/stock projection, quantity management, and no cart-time reservation.
   - Approval/owner: Product Owner finalized Sprint 15 rules dated 2026-08-11
   - Related: [Business Rules](02_BUSINESS_RULES.md), [Roadmap](13_ROADMAP.md)
