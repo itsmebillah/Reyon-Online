@@ -45,7 +45,8 @@ const modules: readonly Readonly<{
   {
     name: "Inventory",
     description: "Enter variant-level stock",
-    status: "Planned",
+    status: "Available",
+    href: "/admin/inventory",
   },
   {
     name: "Publication",

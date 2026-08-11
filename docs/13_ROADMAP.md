@@ -107,6 +107,8 @@ Sprint 14G releases operational Product Publication controls. Administrators can
 
 Sprint 14H releases Product Media Management under the approved media policy. Administrators can upload, replace, order, designate, describe, and safely remove licensed JPG, PNG, and WebP product images. Server validation enforces the 5 MB limit, 800 × 800 minimum, required editable ALT text, 12-image gallery maximum, and primary-first ordering while preserving Product identity.
 
+Sprint 14I releases Inventory Entry. Administrators record approved variant-level movements at Main Inventory, see ledger-derived on-hand, reserved, and available positions, and correct mistakes through auditable reversals. Negative stock is blocked transactionally, customer availability synchronizes automatically, and Low Stock and Out of Stock collections become inventory-driven.
+
 ## Entry and Exit Criteria
 
 A candidate should identify outcome, owner, users, business rules, process, data, controls, dependencies, risks, non-functional needs, migration, operational owner, and measurable acceptance. Exit requires verified acceptance, documentation, training/support readiness, monitoring, and post-release ownership.

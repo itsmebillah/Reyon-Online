@@ -15,6 +15,7 @@ export function ProductActions({
   const [saved, setSaved] = useState(false);
   const [message, setMessage] = useState("");
   const [quickView, setQuickView] = useState(false);
+  const isOutOfStock = product.offer.availabilityLabel === "Out of stock";
   const notify = (text: string) => {
     setMessage(text);
     window.setTimeout(() => setMessage(""), 2200);
@@ -44,10 +45,11 @@ export function ProductActions({
         </button>
         <Button
           className="add-button"
+          disabled={isOutOfStock}
           onClick={() => notify(`${product.name} added to your bag`)}
         >
           <ShoppingBag size={17} />
-          {compact ? "Add" : "Add to bag"}
+          {isOutOfStock ? "Out of stock" : compact ? "Add" : "Add to bag"}
         </Button>
       </div>
       {message && (
@@ -82,12 +84,13 @@ export function ProductActions({
               {product.variant.label} · {product.offer.availabilityLabel}
             </p>
             <Button
+              disabled={isOutOfStock}
               onClick={() => {
                 notify(`${product.name} added to your bag`);
                 setQuickView(false);
               }}
             >
-              Add to bag
+              {isOutOfStock ? "Out of stock" : "Add to bag"}
             </Button>
           </div>
         </div>

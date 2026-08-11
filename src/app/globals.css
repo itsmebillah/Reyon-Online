@@ -413,6 +413,114 @@
   border-top: 0;
   background: #fff;
 }
+.inventory-entry-card,
+.inventory-position-card,
+.inventory-history-card {
+  margin-bottom: 24px;
+}
+.inventory-table-wrap {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.inventory-table th,
+.inventory-table td {
+  padding: 13px 12px;
+  border-bottom: 1px solid #e8e0da;
+  text-align: left;
+  white-space: nowrap;
+}
+.inventory-table th {
+  color: #6f655e;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+.inventory-table td:first-child {
+  display: grid;
+  gap: 3px;
+  white-space: normal;
+}
+.inventory-table small,
+.inventory-movement small {
+  color: #756a63;
+}
+.status-pill--out {
+  background: #f4e5e3;
+  color: #7c2823 !important;
+}
+.inventory-history {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+}
+.inventory-movement {
+  border: 1px solid #ded7cf;
+}
+.inventory-movement summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 18px;
+  cursor: pointer;
+}
+.inventory-movement summary span:first-child {
+  display: grid;
+  gap: 4px;
+}
+.stock-in {
+  color: #256237;
+}
+.stock-out {
+  color: #8a3029;
+}
+.inventory-audit {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 18px;
+  border-top: 1px solid #eee7e2;
+  background: #faf7f5;
+}
+.inventory-audit dt {
+  color: #776c65;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.inventory-audit dd {
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+.inventory-correction-form {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+  padding: 18px;
+}
+.inventory-correction-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.inventory-correction-form input {
+  min-height: 44px;
+  padding: 9px 11px;
+  border: 1px solid #cfc5bd;
+  font: inherit;
+}
+.inventory-correction-form .admin-form-error,
+.inventory-correction-form .admin-form-success {
+  grid-column: 1 / -1;
+}
 
 @media (max-width: 720px) {
   .catalog-admin-grid,
@@ -436,6 +544,10 @@
     grid-template-columns: 1fr;
   }
   .media-editor-grid {
+    grid-template-columns: 1fr;
+  }
+  .inventory-audit,
+  .inventory-correction-form {
     grid-template-columns: 1fr;
   }
 }

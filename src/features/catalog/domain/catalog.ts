@@ -31,7 +31,7 @@ export type CatalogProduct = Readonly<{
   offer: Readonly<{
     price: Money;
     compareAtPrice?: Money;
-    availabilityLabel: "In stock" | "Low stock";
+    availabilityLabel: "In stock" | "Low stock" | "Out of stock";
   }>;
   merchandising: Readonly<{
     badge?: string;

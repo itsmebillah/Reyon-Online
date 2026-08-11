@@ -59,9 +59,11 @@ const mapPublishedRows = (rows: readonly PublishedCatalogRow[]) =>
             },
           }),
       availabilityLabel:
-        row.availability_label === "Low stock"
-          ? ("Low stock" as const)
-          : ("In stock" as const),
+        row.availability_label === "Out of stock"
+          ? ("Out of stock" as const)
+          : row.availability_label === "Low stock"
+            ? ("Low stock" as const)
+            : ("In stock" as const),
     },
     merchandising: { isFeatured: false, isNewArrival: true },
     content: {

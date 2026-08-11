@@ -2,13 +2,14 @@
 
 ## Purpose
 
-This document defines the future inventory domain's conceptual boundaries and control framework. It does not assume valuation, reservation, replenishment, or adjustment rules.
+This document defines REYON's inventory boundaries, approved Inventory Entry rules, controls, and future expansion path.
 
 ## Table of Contents
 
 - [Objectives and scope](#objectives-and-scope)
 - [Inventory concepts](#inventory-concepts)
-- [Implemented persistence foundation](#implemented-persistence-foundation)
+- [Implemented inventory foundation](#implemented-inventory-foundation)
+- [Approved Inventory Entry rules](#approved-inventory-entry-rules)
 - [Stock dimensions](#stock-dimensions)
 - [Movement ledger](#movement-ledger)
 - [Availability and reservation](#availability-and-reservation)
@@ -32,20 +33,33 @@ Candidate concepts include stock item, product variant, location, sublocation, l
 - Approve inventory terminology, identifiers, units of measure, and location hierarchy.
 - Define which product attributes require traceability.
 
-## Implemented Persistence Foundation
+## Implemented Inventory Foundation
 
-Migration `20260802050000_inventory_ledger_foundation.sql` establishes an empty private `inventory` schema with the following rule-neutral records:
+Migrations `20260802050000_inventory_ledger_foundation.sql` and `20260811140000_inventory_entry.sql` establish the private inventory ledger and approved operating layer:
 
-| Record        | Responsibility                                                                                    | Explicit boundary                                                         |
-| ------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| Stock item    | Inventory identity linked to one sellable catalog variant when stocked                            | Does not define whether every catalog variant is currently stocked        |
-| Lot           | Optional lot/batch identity and date facts                                                        | Does not require lot tracking or define expiry policy                     |
-| Movement      | Attributable event header, source, actor reference, occurrence time, and optional correction link | Movement-type and reason vocabularies remain unapproved                   |
-| Movement line | Signed quantity delta by stock item and location                                                  | Does not calculate availability, value, reservations, or financial impact |
+| Record        | Responsibility                                                                                    | Explicit boundary                                                       |
+| ------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Stock item    | Inventory identity linked to one sellable catalog variant when stocked                            | Does not define whether every catalog variant is currently stocked      |
+| Lot           | Optional lot/batch identity and date facts                                                        | Does not require lot tracking or define expiry policy                   |
+| Movement      | Attributable event header, source, actor reference, occurrence time, and optional correction link | Uses the approved Inventory Entry movement vocabulary                   |
+| Movement line | Signed quantity delta by stock item and location                                                  | Authoritative input for derived on-hand stock                           |
+| Reservation   | Future order allocation against an item and location                                              | Persistence-ready; current Inventory Entry does not create reservations |
 
 Movement headers and lines are append-only at the database boundary. Corrections require new attributable movements rather than overwriting history. Idempotency keys prevent the same integration command from silently creating duplicate movement headers. Exact numeric quantities and explicit unit codes avoid floating-point assumptions.
 
-Every inventory table has row-level security enabled. Anonymous and authenticated roles have no privileges or policies, the schema is not exposed by the configured Data API, and no stock or reference data has been inserted.
+Every inventory table has row-level security enabled. Direct anonymous and authenticated access is denied; administrator operations use narrowly scoped authenticated functions. The approved Main Inventory location is created idempotently.
+
+## Approved Inventory Entry Rules
+
+- REYON begins with one **Main Inventory** location; the model supports future stores and warehouses.
+- Stock is tracked per sellable product variant.
+- Approved movements are Opening Stock, Purchase / Receive, Sale, Return In, Return Out, Adjustment In, Adjustment Out, and Damage / Loss.
+- Negative on-hand stock is rejected transactionally.
+- On-hand is derived from the immutable movement ledger. Available equals on-hand minus active reservations.
+- Historical movements are never edited or deleted. A correction adds an attributable reversing movement and preserves the original evidence.
+- The audit trail records actor, occurrence and recording timestamps, type, signed quantity, variant, location, and applicable reason/reference.
+- Published variants with zero available stock display **Out of Stock** and cannot be added to the bag.
+- Batch and expiry fields remain available through inventory lots; operational workflows are deferred.
 
 ## Stock Dimensions
 
@@ -57,18 +71,15 @@ Inventory changes should be represented by attributable business movements with 
 
 The persistence foundation represents movement impact as one or more signed lines. A transfer can later be represented by balanced lines at different locations, while receipts, issues, adjustments, and condition changes can use approved line patterns. No balancing or allowed-pattern rule is implemented until movement policies are approved.
 
-### TODO — Product Owner
-
-- Define approved movement types and their initiating business events.
-- Define rules for backdating, reversal, negative stock, and corrections.
+The approved movement vocabulary is enforced by the database. Backdating is not exposed in the current administrator workflow. Corrections require a reason and are themselves append-only.
 
 ## Availability and Reservation
 
-Physical quantity, available-to-sell, reserved, expected, damaged, quarantined, and other views must not be treated as interchangeable. No calculation is approved.
+On-hand is the sum of movement deltas. Reserved is the sum of active future order reservations. Available equals on-hand minus reserved. Expected, damaged, quarantined, and other views remain separate future concerns.
 
 ### TODO — Domain Owner
 
-- Define availability formulas, reservation timing, allocation priority, expiry, release, and overselling policy.
+- Define reservation timing, allocation priority, expiry, release, and order integration behavior.
 - Define channel and location sharing or partitioning of stock.
 
 ## Counting and Reconciliation
@@ -87,7 +98,7 @@ Inventory interacts with product catalog, orders, fulfillment, POS, purchasing, 
 
 ### TODO — Product Owner / Inventory Owner
 
-- Confirm locations, stock ownership, unit conversions, bundles/kits, lot and expiry requirements.
+- Confirm additional locations, stock ownership, unit conversions, bundles/kits, and required lot/expiry workflows.
 - Define receiving, transfer, damage, loss, return-to-vendor, and customer-return treatment.
 - Define valuation responsibility, reconciliation cadence, and required reports.
 
