@@ -1,6 +1,7 @@
 import { requireReyonAdmin } from "@/features/access/data/admin-access";
 import { logoutAdmin } from "@/app/admin/login/actions";
 import Link from "next/link";
+import { AdminNavigation } from "@/components/admin-navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -11,30 +12,34 @@ export default async function ProtectedAdminLayout({
 
   return (
     <div className="admin-shell">
-      <header className="admin-header">
-        <div>
-          <p className="eyebrow">REYON Business OS</p>
-          <p className="admin-header__identity">
+      <aside className="admin-sidebar">
+        <Link className="admin-sidebar__brand" href="/admin">
+          <strong>REYON</strong>
+          <span>Business OS</span>
+        </Link>
+        <AdminNavigation />
+        <div className="admin-sidebar__account">
+          <small>Signed in as</small>
+          <span>
             {typeof admin.email === "string" ? admin.email : "Administrator"}
-          </p>
-        </div>
-        <nav className="admin-header__actions" aria-label="Admin navigation">
-          <Link href="/admin">Overview</Link>
-          <Link href="/admin/brands">Brands</Link>
-          <Link href="/admin/categories">Categories</Link>
-          <Link href="/admin/products">Products</Link>
-          <Link href="/admin/media">Media</Link>
-          <Link href="/admin/inventory">Inventory</Link>
-          <Link href="/admin/delivery">Delivery</Link>
-          <Link href="/admin/collections">Collections</Link>
+          </span>
           <form action={logoutAdmin}>
-            <button className="button button--secondary" type="submit">
-              Sign out
-            </button>
+            <button type="submit">Sign out</button>
           </form>
-        </nav>
-      </header>
-      <main id="main">{children}</main>
+        </div>
+      </aside>
+      <div className="admin-workspace">
+        <header className="admin-topbar">
+          <div>
+            <span>Administration</span>
+            <strong>Business workspace</strong>
+          </div>
+          <Link className="button button--secondary" href="/">
+            View store
+          </Link>
+        </header>
+        <main id="main">{children}</main>
+      </div>
     </div>
   );
 }

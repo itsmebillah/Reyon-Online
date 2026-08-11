@@ -40,6 +40,9 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Improved the Admin workspace with grouped sidebar navigation, clearer dashboard actions, consistent module cards, responsive layouts, and shared loading/error states without changing business behavior.
+  - Impact: Administration usability and navigation only; customer pages and domain rules are unchanged.
+
 - Released Sprint 15E administrator-configurable delivery zones and charges without hardcoded prices.
   - Approval/owner: Product Owner finalized Sprint 15 rules dated 2026-08-11
   - Related: [Fulfillment and Delivery Architecture](20_FULFILLMENT_DELIVERY_ARCHITECTURE.md), [Roadmap](13_ROADMAP.md)
