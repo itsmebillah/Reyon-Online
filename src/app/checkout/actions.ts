@@ -19,6 +19,21 @@ export type AddressState = {
   error?: string;
   fieldErrors?: Partial<Record<keyof CheckoutAddress, string>>;
 };
+export type CheckoutState = { success?: string; error?: string };
+export type CheckoutOrderState = Readonly<{
+  addressSaved: boolean;
+  deliverySelected: boolean;
+  deliveryZoneId: string | null;
+  deliveryZoneName: string | null;
+  deliveryCharge: number | null;
+  currency: "BDT";
+  paymentSelected: boolean;
+  paymentMethodId: string | null;
+  paymentMethodName: string | null;
+  identityVerified: boolean;
+  existingOrderId: string | null;
+  ready: boolean;
+}>;
 const value = (form: FormData, key: string) =>
   String(form.get(key) ?? "").trim();
 export async function saveCheckoutAddress(
@@ -76,6 +91,58 @@ export async function getCheckoutAddress(): Promise<CheckoutAddress | null> {
     p_access_token: token,
   });
   return error || !data ? null : (data as CheckoutAddress);
+}
+
+export async function getCheckoutOrderState(): Promise<CheckoutOrderState | null> {
+  const token = (await cookies()).get("reyon_cart")?.value;
+  if (!token) return null;
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.rpc("checkout_order_state", {
+    p_access_token: token,
+  });
+  return error || !data ? null : (data as CheckoutOrderState);
+}
+
+export async function saveDeliveryZone(
+  _state: CheckoutState,
+  form: FormData,
+): Promise<CheckoutState> {
+  const token = (await cookies()).get("reyon_cart")?.value;
+  if (!token) return { error: "Your active bag could not be found." };
+  const zoneId = value(form, "deliveryZone");
+  if (!zoneId) return { error: "Choose a delivery zone." };
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.rpc("checkout_select_delivery_zone", {
+    p_access_token: token,
+    p_zone_id: zoneId,
+  });
+  if (error) return { error: "This delivery zone is no longer available." };
+  revalidatePath("/checkout");
+  return { success: "Delivery zone and charge saved." };
+}
+
+export async function confirmOrder(
+  _state: CheckoutState,
+  _form: FormData,
+): Promise<CheckoutState> {
+  void _state;
+  void _form;
+  const token = (await cookies()).get("reyon_cart")?.value;
+  if (!token) return { error: "Your active bag could not be found." };
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.rpc("checkout_confirm_order", {
+    p_access_token: token,
+  });
+  if (error)
+    return {
+      error: /verified customer identity/i.test(error.message)
+        ? "Verify your phone number before confirming the order."
+        : "The order could not be confirmed. Review the current checkout details and try again.",
+    };
+  revalidatePath("/checkout");
+  return {
+    success: `Order ${String((data as { orderId: string }).orderId)} created.`,
+  };
 }
 
 export async function savePaymentSelection(

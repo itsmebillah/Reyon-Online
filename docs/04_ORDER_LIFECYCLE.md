@@ -56,6 +56,8 @@ Guest checkout is allowed and creates a customer account from checkout details. 
 
 Before confirmation the customer reviews the revalidated cart, structured address, calculated delivery charge, and payment method. Confirmation idempotently creates the order and begins a 30-minute stock reservation based only on current price and availability. Insufficient stock cannot be over-reserved and produces an auditable administrator-handled exception.
 
+The released confirmation boundary does not perform or simulate OTP verification. It requires the active cart to reference a customer with an existing verified contact before it can create an order. Order lines, delivery address, configured zone/charge, and selected payment evidence are stored as immutable-at-creation snapshots. A Confirmed transition and reservation-created events preserve audit evidence; expired reservations cease reducing availability and can be materialized as explicit expiry events by the reservation maintenance function.
+
 Sprint 15 must not define the broader Order Management lifecycle reserved for Sprint 16.
 
 ## Lifecycle Definition

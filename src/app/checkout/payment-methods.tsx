@@ -1,5 +1,6 @@
 "use client";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { savePaymentSelection } from "./actions";
 export type PaymentMethod = {
   id: string;
@@ -12,11 +13,17 @@ export type PaymentMethod = {
 };
 export function PaymentMethods({
   methods,
+  selectedId,
 }: {
   methods: readonly PaymentMethod[];
+  selectedId: string | null;
 }) {
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState(selectedId ?? "");
   const [state, action, pending] = useActionState(savePaymentSelection, {});
+  const router = useRouter();
+  useEffect(() => {
+    if (state.success) router.refresh();
+  }, [router, state.success]);
   return (
     <form action={action} className="checkout-payment" id="payment-method">
       <h2>Payment method</h2>
@@ -70,7 +77,11 @@ export function PaymentMethods({
         className="button button--secondary"
         disabled={!selected || pending}
       >
-        {pending ? "Saving…" : "Save payment method"}
+        {pending
+          ? "Saving…"
+          : selectedId
+            ? "Update payment method"
+            : "Save payment method"}
       </button>
     </form>
   );

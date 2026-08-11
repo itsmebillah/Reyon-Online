@@ -157,6 +157,8 @@ Sprint 15E releases administrator-configurable Delivery Zones and Charges. Insid
 
 Sprint 15F releases honest Payment Method Selection: COD is initially selectable, mobile methods require configured instructions before selection, Card remains visible but unavailable without a real gateway, and no method can imply unverified success.
 
+Sprint 15G prepares transactional Order Creation without fabricating OTP completion. Checkout now persists an active configured delivery zone and charge, retains payment selection/evidence, and exposes readiness from authoritative data. Confirmation remains deny-by-default until the cart is associated with a genuinely verified customer contact. Once verified identity is available, one idempotent transaction revalidates published cart items, current prices, availability, address, delivery configuration, and payment selection; snapshots the commercial order; appends lifecycle evidence; and creates auditable 30-minute variant reservations. Insufficient stock creates a non-reserving confirmation-exception order for administrative handling.
+
 ## Entry and Exit Criteria
 
 A candidate should identify outcome, owner, users, business rules, process, data, controls, dependencies, risks, non-functional needs, migration, operational owner, and measurable acceptance. Exit requires verified acceptance, documentation, training/support readiness, monitoring, and post-release ownership.

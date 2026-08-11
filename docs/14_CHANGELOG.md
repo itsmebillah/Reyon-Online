@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Prepared Sprint 15 Order Creation and Stock Reservation independently of the unavailable OTP provider. Checkout now persists delivery-zone selection and configured charges, preserves manual payment selection/evidence, reports authoritative readiness, and blocks confirmation until a real verified customer contact exists. The idempotent confirmation transaction revalidates cart, price, stock, address, delivery, and payment facts; snapshots the order; appends lifecycle/customer evidence; and creates auditable 30-minute reservations or a non-reserving insufficient-stock exception.
+  - Approval/owner: Product Owner Sprint 15 continuation dated 2026-08-12
+  - Impact: checkout flow and migration `20260811210000_order_confirmation.sql`; no OTP provider or verified identity is fabricated
+
 - Extended Product Media Management with direct device uploads in Product creation and a reusable, storage-provider-neutral Media Library backed initially by Supabase Storage. Existing assets can be shared across products without copying physical files while preserving product-specific ALT text, primary selection, and gallery order.
   - Approval/owner: Product Owner Product Media workflow direction dated 2026-08-12
   - Impact: admin Product and Media workflows plus migration `20260811200000_reusable_media_library.sql`
