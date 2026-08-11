@@ -153,6 +153,8 @@ Sprint 15C establishes private minimal customer profile/contact storage and data
 
 Sprint 15D releases secure structured Checkout Address entry with the approved required fields, optional Flat No, opaque-cart ownership, and no public customer-data access.
 
+Sprint 15E releases administrator-configurable Delivery Zones and Charges. Inside Dhaka and Outside Dhaka identities are seeded without invented prices and remain unavailable at checkout until an administrator supplies a valid charge and enables them.
+
 ## Entry and Exit Criteria
 
 A candidate should identify outcome, owner, users, business rules, process, data, controls, dependencies, risks, non-functional needs, migration, operational owner, and measurable acceptance. Exit requires verified acceptance, documentation, training/support readiness, monitoring, and post-release ownership.
