@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useActionState, useState } from "react";
+import { savePaymentSelection } from "./actions";
 export type PaymentMethod = {
   id: string;
   method_key: string;
@@ -15,8 +16,9 @@ export function PaymentMethods({
   methods: readonly PaymentMethod[];
 }) {
   const [selected, setSelected] = useState("");
+  const [state, action, pending] = useActionState(savePaymentSelection, {});
   return (
-    <section className="checkout-payment">
+    <form action={action} className="checkout-payment">
       <h2>Payment method</h2>
       <div>
         {methods.map((method) => (
@@ -54,6 +56,22 @@ export function PaymentMethods({
             <input name="transactionReference" required />
           </label>
         )}
-    </section>
+      {state.error && (
+        <p className="admin-form-error" role="alert">
+          {state.error}
+        </p>
+      )}
+      {state.success && (
+        <p className="admin-form-success" role="status">
+          {state.success}
+        </p>
+      )}
+      <button
+        className="button button--secondary"
+        disabled={!selected || pending}
+      >
+        {pending ? "Saving…" : "Save payment method"}
+      </button>
+    </form>
   );
 }

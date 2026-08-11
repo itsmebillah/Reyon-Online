@@ -45,3 +45,26 @@ export async function saveCheckoutAddress(
   revalidatePath("/checkout");
   return { success: "Delivery address saved securely." };
 }
+
+export async function savePaymentSelection(
+  _state: AddressState,
+  form: FormData,
+): Promise<AddressState> {
+  const token = (await cookies()).get("reyon_cart")?.value;
+  if (!token) return { error: "Your active bag could not be found." };
+  const methodId = value(form, "paymentMethod");
+  if (!methodId) return { error: "Choose an available payment method." };
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.rpc("checkout_select_payment", {
+    p_access_token: token,
+    p_method_id: methodId,
+    p_transaction_reference: value(form, "transactionReference") || null,
+  });
+  if (error)
+    return {
+      error:
+        "This payment method is not ready or required evidence is missing.",
+    };
+  revalidatePath("/checkout");
+  return { success: "Payment method saved." };
+}
