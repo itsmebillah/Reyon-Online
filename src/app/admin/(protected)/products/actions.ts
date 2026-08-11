@@ -71,11 +71,12 @@ export async function createProduct(
       : `${name} was saved as a draft.`,
   };
 }
-export async function publishProduct(form: FormData) {
+export async function transitionProduct(form: FormData) {
   const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.rpc("admin_publish_product", {
+  const { error } = await supabase.rpc("admin_transition_product", {
     p_product_id: text(form, "productId"),
+    p_target_status: text(form, "targetStatus"),
   });
-  if (error) throw new Error("The product could not be published.");
+  if (error) throw new Error("The product status could not be changed.");
   refresh(text(form, "slug"));
 }

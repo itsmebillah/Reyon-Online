@@ -340,6 +340,10 @@
 .collection-pin-form .admin-form-success {
   grid-column: 1 / -1;
 }
+.product-toolbar {
+  grid-template-columns: minmax(240px, 2fr) repeat(2, minmax(150px, 1fr)) auto;
+  margin-bottom: 20px;
+}
 
 @media (max-width: 720px) {
   .catalog-admin-grid,

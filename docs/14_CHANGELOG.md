@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Released searchable Product publication operations with explicit one-step Submit, Approve, Publish, Hide, and Archive controls backed by the approved append-only lifecycle.
+  - Approval/owner: Product Owner-approved Sprint 14 lifecycle
+  - Related: [Roadmap](13_ROADMAP.md), [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
+
 - Approved and implemented the permanent Dynamic Product Collections rule: all customer product collections use governed database configuration and reusable strategies, with optional ordered pins and no demonstration-product fallback.
   - Approval/owner: Product Owner Dynamic Product Collections decision dated 2026-08-02
   - Related: [Dynamic Product Collections](27_DYNAMIC_PRODUCT_COLLECTIONS.md), [Roadmap](13_ROADMAP.md)

@@ -103,6 +103,8 @@ Sprint 14E releases guided Product creation with approved identity, brand, prima
 
 Sprint 14F replaces all hardcoded customer product lists with the reusable Dynamic Product Collection engine. Governed database configuration and optional ordered pins power New Arrivals, Most Loved, Featured Products, and On Sale now; sales, inventory, trending, and personalized strategies remain inactive until their authoritative signals are released.
 
+Sprint 14G releases operational Product Publication controls. Administrators can search, filter, and sort products, then move one approved step at a time through Draft, Review, Approved, Published, Hidden, and Archived. Every transition remains attributable and append-only; only Published remains customer-visible.
+
 ## Entry and Exit Criteria
 
 A candidate should identify outcome, owner, users, business rules, process, data, controls, dependencies, risks, non-functional needs, migration, operational owner, and measurable acceptance. Exit requires verified acceptance, documentation, training/support readiness, monitoring, and post-release ownership.
