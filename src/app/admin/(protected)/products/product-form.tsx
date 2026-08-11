@@ -1,15 +1,23 @@
 "use client";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
+import Image from "next/image";
+import type { MediaLibraryAsset } from "@/features/catalog/data/product-media-management";
 import type { ProductOptions } from "@/features/catalog/data/product-management";
 import { createProduct, type ProductActionState } from "./actions";
 const initial: ProductActionState = {};
 export function ProductForm({
   brands,
   categories,
+  mediaAssets,
 }: {
   brands: ProductOptions["brands"];
   categories: ProductOptions["categories"];
+  mediaAssets: readonly MediaLibraryAsset[];
 }) {
+  const [source, setSource] = useState<"upload" | "library">("upload"),
+    [assetId, setAssetId] = useState(""),
+    [uploadPreview, setUploadPreview] = useState("");
+  const selected = mediaAssets.find((asset) => asset.id === assetId);
   const [state, action, pending] = useActionState(createProduct, initial),
     blocked = !brands.length || !categories.length;
   return (
@@ -124,16 +132,94 @@ export function ProductForm({
       </fieldset>
       <fieldset>
         <legend>Primary image</legend>
+        <div className="media-source-actions">
+          <button
+            type="button"
+            className={`button ${source === "upload" ? "button--primary" : "button--secondary"}`}
+            onClick={() => setSource("upload")}
+          >
+            Upload image
+          </button>
+          <button
+            type="button"
+            className={`button ${source === "library" ? "button--primary" : "button--secondary"}`}
+            onClick={() => setSource("library")}
+          >
+            Choose from Media Library
+          </button>
+        </div>
         <div className="form-grid">
+          {source === "upload" ? (
+            <>
+              <label>
+                Image{" "}
+                <span>
+                  JPG, PNG or WebP · 5 MB maximum · at least 800 × 800 px
+                </span>
+                <input
+                  name="image"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  required
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (!file) {
+                      setUploadPreview("");
+                      return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = () =>
+                      setUploadPreview(String(reader.result));
+                    reader.readAsDataURL(file);
+                  }}
+                />
+              </label>
+              <label className="publish-choice">
+                <input name="licensingConfirmed" type="checkbox" required />
+                <span>
+                  <strong>Licensing confirmed</strong>
+                  <small>
+                    I confirm REYON is authorized to use this image.
+                  </small>
+                </span>
+              </label>
+            </>
+          ) : (
+            <label>
+              Media Library
+              <select
+                name="assetId"
+                required
+                value={assetId}
+                onChange={(event) => setAssetId(event.target.value)}
+              >
+                <option value="" disabled>
+                  Select an existing image
+                </option>
+                {mediaAssets.map((asset) => (
+                  <option value={asset.id} key={asset.id}>
+                    {asset.locator}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
           <label>
-            Secure image URL
-            <input name="imageUrl" type="url" required placeholder="https://" />
-          </label>
-          <label>
-            Image description <span>(optional)</span>
-            <input name="imageAlt" />
+            Image description
+            <input name="imageAlt" required />
           </label>
         </div>
+        {(selected || uploadPreview) && (
+          <div className="media-selection-preview">
+            <Image
+              src={selected?.url ?? uploadPreview}
+              alt="Selected product image preview"
+              width={180}
+              height={180}
+              unoptimized
+            />
+          </div>
+        )}
       </fieldset>
       <label className="publish-choice">
         <input name="publish" type="checkbox" defaultChecked />

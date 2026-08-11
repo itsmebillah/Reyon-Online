@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
-import { listManagedProductMedia } from "@/features/catalog/data/product-media-management";
-import { AddProductImageForm, ProductImageEditor } from "./media-forms";
+import {
+  listManagedProductMedia,
+  listMediaLibrary,
+} from "@/features/catalog/data/product-media-management";
+import {
+  AddProductImageForm,
+  LibraryImageForm,
+  ProductImageEditor,
+} from "./media-forms";
 import { removeProductImage } from "./actions";
 
 export const metadata: Metadata = {
@@ -10,7 +17,10 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function ProductMediaPage() {
-  const products = await listManagedProductMedia();
+  const [products, mediaAssets] = await Promise.all([
+    listManagedProductMedia(),
+    listMediaLibrary(),
+  ]);
   return (
     <section
       className="admin-dashboard catalog-admin"
@@ -53,6 +63,16 @@ export default async function ProductMediaPage() {
                       defaultAlt={defaultAlt}
                       disabled={product.media.length >= 12}
                     />
+                    <details className="media-library-picker">
+                      <summary>Choose from Media Library</summary>
+                      <LibraryImageForm
+                        productId={product.id}
+                        slug={product.slug}
+                        defaultAlt={defaultAlt}
+                        assets={mediaAssets}
+                        disabled={product.media.length >= 12}
+                      />
+                    </details>
                   </section>
                   <section>
                     <h2>Current gallery</h2>

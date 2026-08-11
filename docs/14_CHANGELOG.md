@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Extended Product Media Management with direct device uploads in Product creation and a reusable, storage-provider-neutral Media Library backed initially by Supabase Storage. Existing assets can be shared across products without copying physical files while preserving product-specific ALT text, primary selection, and gallery order.
+  - Approval/owner: Product Owner Product Media workflow direction dated 2026-08-12
+  - Impact: admin Product and Media workflows plus migration `20260811200000_reusable_media_library.sql`
+
 - Improved the Admin workspace with grouped sidebar navigation, clearer dashboard actions, consistent module cards, responsive layouts, and shared loading/error states without changing business behavior.
   - Impact: Administration usability and navigation only; customer pages and domain rules are unchanged.
 

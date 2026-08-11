@@ -1,10 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useActionState } from "react";
-import type { ManagedProductImage } from "@/features/catalog/data/product-media-management";
+import { useActionState, useState } from "react";
+import type {
+  ManagedProductImage,
+  MediaLibraryAsset,
+} from "@/features/catalog/data/product-media-management";
 import {
   addProductImage,
+  attachLibraryImage,
   replaceProductImage,
   updateProductImage,
   type MediaActionState,
@@ -27,17 +31,44 @@ function Result({ state }: { state: MediaActionState }) {
   return null;
 }
 
-const fileField = (
-  <label>
-    Image <span>JPG, PNG or WebP · 5 MB maximum · at least 800 × 800 px</span>
-    <input
-      name="image"
-      type="file"
-      accept="image/jpeg,image/png,image/webp"
-      required
-    />
-  </label>
-);
+function UploadFileField() {
+  const [preview, setPreview] = useState("");
+  return (
+    <>
+      <label>
+        Image{" "}
+        <span>JPG, PNG or WebP · 5 MB maximum · at least 800 × 800 px</span>
+        <input
+          name="image"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          required
+          onChange={(event) => {
+            const file = event.target.files?.[0];
+            if (!file) {
+              setPreview("");
+              return;
+            }
+            const reader = new FileReader();
+            reader.onload = () => setPreview(String(reader.result));
+            reader.readAsDataURL(file);
+          }}
+        />
+      </label>
+      {preview && (
+        <div className="media-selection-preview">
+          <Image
+            src={preview}
+            alt="Selected upload preview"
+            width={180}
+            height={180}
+            unoptimized
+          />
+        </div>
+      )}
+    </>
+  );
+}
 const licenseField = (
   <label className="publish-choice">
     <input name="licensingConfirmed" type="checkbox" required />
@@ -65,7 +96,7 @@ export function AddProductImageForm({
       <input type="hidden" name="productId" value={productId} />
       <input type="hidden" name="slug" value={slug} />
       <input type="hidden" name="defaultAlt" value={defaultAlt} />
-      {fileField}
+      <UploadFileField />
       <label>
         ALT text <span>Required; edit the suggested draft when needed</span>
         <input name="altText" required defaultValue={defaultAlt} />
@@ -78,6 +109,74 @@ export function AddProductImageForm({
           : pending
             ? "Uploading…"
             : "Add image"}
+      </button>
+    </form>
+  );
+}
+
+export function LibraryImageForm({
+  productId,
+  slug,
+  defaultAlt,
+  assets,
+  disabled,
+}: {
+  productId: string;
+  slug: string;
+  defaultAlt: string;
+  assets: readonly MediaLibraryAsset[];
+  disabled: boolean;
+}) {
+  const [state, action, pending] = useActionState(attachLibraryImage, initial);
+  const [selected, setSelected] = useState("");
+  const asset = assets.find((item) => item.id === selected);
+  return (
+    <form action={action} className="catalog-admin-form media-upload-form">
+      <input type="hidden" name="productId" value={productId} />
+      <input type="hidden" name="slug" value={slug} />
+      <label>
+        Media Library
+        <select
+          name="assetId"
+          required
+          value={selected}
+          onChange={(event) => setSelected(event.target.value)}
+        >
+          <option value="" disabled>
+            Select an existing image
+          </option>
+          {assets.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.locator}
+            </option>
+          ))}
+        </select>
+      </label>
+      {asset && (
+        <div className="media-selection-preview">
+          <Image
+            src={asset.url}
+            alt="Selected media preview"
+            width={180}
+            height={180}
+            unoptimized
+          />
+        </div>
+      )}
+      <label>
+        ALT text
+        <input name="altText" required defaultValue={defaultAlt} />
+      </label>
+      <Result state={state} />
+      <button
+        className="button button--primary"
+        disabled={pending || disabled || !assets.length}
+      >
+        {disabled
+          ? "Gallery limit reached"
+          : pending
+            ? "Attaching…"
+            : "Choose from Media Library"}
       </button>
     </form>
   );
@@ -154,7 +253,7 @@ export function ProductImageEditor({
           <input type="hidden" name="productId" value={productId} />
           <input type="hidden" name="slug" value={slug} />
           <input type="hidden" name="altText" value={image.altText} />
-          {fileField}
+          <UploadFileField />
           {licenseField}
           <Result state={replaceState} />
           <button className="button button--secondary" disabled={replacing}>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getProductOptions } from "@/features/catalog/data/product-management";
 import { ProductForm } from "./product-form";
 import { transitionProduct } from "./actions";
+import { listMediaLibrary } from "@/features/catalog/data/product-media-management";
 
 export const metadata: Metadata = {
   title: "Product Management",
@@ -24,7 +25,10 @@ export default async function ProductsPage({
 }: {
   searchParams: Promise<{ q?: string; status?: string; sort?: string }>;
 }) {
-  const data = await getProductOptions();
+  const [data, mediaAssets] = await Promise.all([
+    getProductOptions(),
+    listMediaLibrary(),
+  ]);
   const query = await searchParams;
   const term = query.q?.trim().toLocaleLowerCase() ?? "";
   const status = query.status ?? "all";
@@ -56,7 +60,11 @@ export default async function ProductsPage({
       <article className="admin-module-card catalog-product-card">
         <span>New product</span>
         <h2>Create a product</h2>
-        <ProductForm brands={data.brands} categories={data.categories} />
+        <ProductForm
+          brands={data.brands}
+          categories={data.categories}
+          mediaAssets={mediaAssets}
+        />
       </article>
       <form
         className="brand-toolbar product-toolbar"

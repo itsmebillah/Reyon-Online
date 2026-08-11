@@ -24,6 +24,17 @@ export type ManagedProductMedia = Readonly<{
   brand: string;
   media: readonly ManagedProductImage[];
 }>;
+export type MediaLibraryAsset = Readonly<{
+  id: string;
+  provider: string;
+  locator: string;
+  url: string;
+  mimeType: string | null;
+  width: number | null;
+  height: number | null;
+  licensingConfirmedAt: string;
+  createdAt: string;
+}>;
 
 export async function listManagedProductMedia(): Promise<
   readonly ManagedProductMedia[]
@@ -32,4 +43,12 @@ export async function listManagedProductMedia(): Promise<
   const { data, error } = await supabase.rpc("admin_product_media");
   if (error || !data) throw new Error("Unable to load Product Media.");
   return data as ManagedProductMedia[];
+}
+export async function listMediaLibrary(): Promise<
+  readonly MediaLibraryAsset[]
+> {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.rpc("admin_media_library");
+  if (error || !data) throw new Error("Unable to load Media Library.");
+  return data as MediaLibraryAsset[];
 }

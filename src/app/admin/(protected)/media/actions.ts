@@ -52,11 +52,9 @@ async function validatedImage(form: FormData) {
   return { file, buffer, width: metadata.width, height: metadata.height };
 }
 
-async function upload(form: FormData) {
-  const productId = text(form, "productId");
-  if (!productId) throw new Error("Choose a product.");
+export async function uploadMediaAsset(form: FormData) {
   const image = await validatedImage(form);
-  const objectPath = `${productId}/${randomUUID()}.${extension[image.file.type]}`;
+  const objectPath = `library/${randomUUID()}.${extension[image.file.type]}`;
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.storage
     .from("product-media")
@@ -68,7 +66,22 @@ async function upload(form: FormData) {
   if (error) throw new Error("The image upload failed. Please try again.");
   const url = supabase.storage.from("product-media").getPublicUrl(objectPath)
     .data.publicUrl;
-  return { supabase, objectPath, url, ...image };
+  const { data: assetId, error: assetError } = await supabase.rpc(
+    "admin_create_media_asset",
+    {
+      p_provider_key: "supabase-storage",
+      p_provider_locator: objectPath,
+      p_url: url,
+      p_mime_type: image.file.type,
+      p_width: image.width,
+      p_height: image.height,
+    },
+  );
+  if (assetError) {
+    await supabase.storage.from("product-media").remove([objectPath]);
+    throw new Error("The image could not be added to the Media Library.");
+  }
+  return { supabase, assetId: assetId as string, objectPath, url, ...image };
 }
 
 async function removeIfUnreferenced(objectPath: string | null) {
@@ -91,15 +104,11 @@ export async function addProductImage(
   try {
     const alt = text(form, "altText") || text(form, "defaultAlt");
     if (!alt) throw new Error("ALT text is required.");
-    const uploaded = await upload(form);
-    const { error } = await uploaded.supabase.rpc("admin_add_product_media", {
+    const uploaded = await uploadMediaAsset(form);
+    const { error } = await uploaded.supabase.rpc("admin_attach_media_asset", {
       p_product_id: text(form, "productId"),
-      p_url: uploaded.url,
-      p_object_path: uploaded.objectPath,
+      p_asset_id: uploaded.assetId,
       p_alt_text: alt,
-      p_mime_type: uploaded.file.type,
-      p_width: uploaded.width,
-      p_height: uploaded.height,
     });
     if (error) {
       await removeIfUnreferenced(uploaded.objectPath);
@@ -149,24 +158,19 @@ export async function replaceProductImage(
   try {
     const alt = text(form, "altText");
     if (!alt) throw new Error("ALT text is required.");
-    const uploaded = await upload(form);
-    const { data: oldPath, error } = await uploaded.supabase.rpc(
-      "admin_replace_product_media",
+    const uploaded = await uploadMediaAsset(form);
+    const { error } = await uploaded.supabase.rpc(
+      "admin_replace_product_media_asset",
       {
         p_media_id: text(form, "mediaId"),
-        p_url: uploaded.url,
-        p_object_path: uploaded.objectPath,
+        p_asset_id: uploaded.assetId,
         p_alt_text: alt,
-        p_mime_type: uploaded.file.type,
-        p_width: uploaded.width,
-        p_height: uploaded.height,
       },
     );
     if (error) {
       await removeIfUnreferenced(uploaded.objectPath);
       throw new Error("The replacement image could not be saved.");
     }
-    await removeIfUnreferenced(oldPath as string | null);
     refresh(text(form, "slug"));
     return {
       success: "The image was replaced without changing the product record.",
@@ -179,6 +183,30 @@ export async function replaceProductImage(
           : "The image could not be replaced.",
     };
   }
+}
+
+export async function attachLibraryImage(
+  _state: MediaActionState,
+  form: FormData,
+): Promise<MediaActionState> {
+  const alt = text(form, "altText");
+  if (!alt) return { error: "ALT text is required." };
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.rpc("admin_attach_media_asset", {
+    p_product_id: text(form, "productId"),
+    p_asset_id: text(form, "assetId"),
+    p_alt_text: alt,
+  });
+  if (error)
+    return {
+      error: error.message.includes("12 images")
+        ? error.message
+        : "The library image could not be attached.",
+    };
+  refresh(text(form, "slug"));
+  return {
+    success: "Media Library image attached without duplicating the file.",
+  };
 }
 
 export async function removeProductImage(form: FormData) {

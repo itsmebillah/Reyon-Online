@@ -1,6 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { uploadMediaAsset } from "../media/actions";
 export type ProductActionState = Readonly<{ success?: string; error?: string }>;
 const text = (f: FormData, k: string) => String(f.get(k) ?? "").trim(),
   nullable = (f: FormData, k: string) => text(f, k) || null,
@@ -34,17 +35,25 @@ export async function createProduct(
   form: FormData,
 ): Promise<ProductActionState> {
   const name = text(form, "name"),
-    selling = money(form, "sellingPrice"),
-    image = text(form, "imageUrl");
+    selling = money(form, "sellingPrice");
   if (!name || !text(form, "brandId") || !text(form, "categoryId"))
     return { error: "Product name, brand, and category are required." };
   if (selling === null || selling < 0)
     return { error: "Enter a valid selling price." };
-  if (!image.startsWith("https://"))
-    return { error: "Enter a secure HTTPS image URL." };
+  let assetId = text(form, "assetId");
+  try {
+    if (!assetId) assetId = (await uploadMediaAsset(form)).assetId;
+  } catch (error) {
+    return {
+      error:
+        error instanceof Error
+          ? error.message
+          : "Choose or upload a valid product image.",
+    };
+  }
   const supabase = await createSupabaseServerClient();
   const publish = form.get("publish") === "on";
-  const { error } = await supabase.rpc("admin_create_product", {
+  const { error } = await supabase.rpc("admin_create_product_with_asset", {
     p_name: name,
     p_slug: slugify(name),
     p_brand_id: text(form, "brandId"),
@@ -57,7 +66,7 @@ export async function createProduct(
     p_selling_price: selling,
     p_compare_at_price: money(form, "compareAtPrice"),
     p_discount_price: money(form, "discountPrice"),
-    p_image_url: image,
+    p_asset_id: assetId,
     p_image_alt: nullable(form, "imageAlt"),
     p_country_code: nullable(form, "countryCode"),
     p_product_code: nullable(form, "productCode"),
