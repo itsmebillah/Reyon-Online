@@ -149,6 +149,8 @@ Sprint 15A releases persistent guest Cart: opaque 30-day cart identity, a databa
 
 Sprint 15B releases the Checkout review boundary. Customers review a server-projected cart using current catalog prices and inventory availability before any identity, address, payment, order, or reservation action occurs.
 
+Sprint 15C establishes private minimal customer profile/contact storage and database-enforced uniqueness for verified phone/email identities. Public access remains denied until OTP verification can establish the customer session.
+
 ## Entry and Exit Criteria
 
 A candidate should identify outcome, owner, users, business rules, process, data, controls, dependencies, risks, non-functional needs, migration, operational owner, and measurable acceptance. Exit requires verified acceptance, documentation, training/support readiness, monitoring, and post-release ownership.

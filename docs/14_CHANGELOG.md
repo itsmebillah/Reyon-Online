@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Established the Sprint 15C private customer account data boundary with minimal profiles and unique verified phone/email identities.
+  - Approval/owner: Product Owner finalized Sprint 15 rules dated 2026-08-11
+  - Related: [Customer and CRM Identity Architecture](22_CUSTOMER_CRM_IDENTITY_ARCHITECTURE.md), [Roadmap](13_ROADMAP.md)
+
 - Released Sprint 15B Checkout review with authoritative current-price and stock projection, explicit edit/exception paths, and no premature order or reservation side effects.
   - Approval/owner: Product Owner finalized Sprint 15 rules dated 2026-08-11
   - Related: [Order Lifecycle](04_ORDER_LIFECYCLE.md), [Roadmap](13_ROADMAP.md)
