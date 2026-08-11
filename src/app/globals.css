@@ -926,6 +926,26 @@ img {
   padding: 9px;
   border: 1px solid var(--border);
 }
+.payment-confirmation-step {
+  display: grid;
+  gap: 16px;
+  scroll-margin-top: 24px;
+}
+.checkout-step-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+.checkout-step-heading .eyebrow {
+  margin-bottom: 5px;
+}
+.checkout-step-heading .checkout-edit {
+  flex: 0 0 auto;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
 @media (max-width: 720px) {
   .cart-layout {
     grid-template-columns: 1fr;

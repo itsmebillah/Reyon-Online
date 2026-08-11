@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Corrected Sprint 15 payment-step navigation by separating method selection from payment confirmation/evidence. Continue now follows client selection state, mobile evidence remains mandatory, Card is represented as manual pending follow-up without collecting card data or claiming gateway success, COD remains payable on delivery, and server-side persistence errors are explicit.
+  - Approval/owner: Product Owner checkout payment-step correction dated 2026-08-12
+  - Impact: checkout payment component, payment administration wording, and migration `20260811220000_payment_step_navigation.sql`
+
 - Prepared Sprint 15 Order Creation and Stock Reservation independently of the unavailable OTP provider. Checkout now persists delivery-zone selection and configured charges, preserves manual payment selection/evidence, reports authoritative readiness, and blocks confirmation until a real verified customer contact exists. The idempotent confirmation transaction revalidates cart, price, stock, address, delivery, and payment facts; snapshots the order; appends lifecycle/customer evidence; and creates auditable 30-minute reservations or a non-reserving insufficient-stock exception.
   - Approval/owner: Product Owner Sprint 15 continuation dated 2026-08-12
   - Impact: checkout flow and migration `20260811210000_order_confirmation.sql`; no OTP provider or verified identity is fabricated

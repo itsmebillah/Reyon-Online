@@ -159,11 +159,18 @@ export async function savePaymentSelection(
     p_method_id: methodId,
     p_transaction_reference: value(form, "transactionReference") || null,
   });
-  if (error)
+  if (error) {
+    const message = error.message.toLowerCase();
     return {
-      error:
-        "This payment method is not ready or required evidence is missing.",
+      error: message.includes("transaction reference")
+        ? "Enter the mobile-payment transaction or reference number."
+        : message.includes("active cart")
+          ? "Your shopping bag expired. Return to your bag and try again."
+          : message.includes("not currently selectable")
+            ? "This payment method is no longer available. Choose another method."
+            : "The payment selection could not be saved. Review the details and try again.",
     };
+  }
   revalidatePath("/checkout");
   return { success: "Payment method saved." };
 }

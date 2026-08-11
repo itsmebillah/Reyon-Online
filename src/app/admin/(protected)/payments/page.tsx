@@ -31,8 +31,8 @@ export default async function Page() {
         <p className="eyebrow">Checkout operations</p>
         <h1>Payment methods</h1>
         <p>
-          Configure honest customer payment choices and manual mobile-payment
-          instructions.
+          Configure honest customer payment choices and manual-payment
+          instructions. Card selection never records gateway success.
         </p>
       </header>
       <div className="catalog-admin-grid">
@@ -71,7 +71,6 @@ export default async function Page() {
                   name="selectable"
                   type="checkbox"
                   defaultChecked={m.isSelectable}
-                  disabled={m.kind === "card"}
                 />
                 <span>
                   <strong>Customer can select</strong>

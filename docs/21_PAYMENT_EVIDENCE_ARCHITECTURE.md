@@ -65,6 +65,8 @@ Checkout displays bKash, Nagad, Rocket, Card, and Cash on Delivery (COD). Initia
 
 Card remains represented in the architecture and UI, but automatic gateway processing is deferred and the system must never report Card success without a real gateway. COD is initially supported and its future eligibility restrictions remain configurable. Provider-neutral evidence preserves the later gateway expansion path.
 
+The checkout payment journey separates method selection from confirmation/evidence. Every currently selectable method enables an explicit Continue action. Mobile methods require transaction/reference evidence before persistence; Card may proceed only as a manual pending-follow-up selection and never collects cardholder data or records gateway success; COD remains payable on delivery. Persisted selections remain unverified until the approved manual verification or collection event occurs.
+
 ## Pending Business Decisions
 
 ### TODO — Product Owner / Finance Owner

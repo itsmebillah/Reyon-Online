@@ -145,12 +145,12 @@ export default async function CheckoutPage() {
             </p>
           )}
           {orderState?.paymentSelected ? (
-            <a className="button button--primary" href="#payment-method">
+            <a className="button button--primary" href="#payment-confirmation">
               Review payment
             </a>
           ) : orderState?.deliverySelected ? (
             <a className="button button--primary" href="#payment-method">
-              Continue to payment
+              Choose payment method
             </a>
           ) : address ? (
             <a className="button button--primary" href="#delivery-zone">
