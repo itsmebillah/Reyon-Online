@@ -829,6 +829,33 @@ img {
   margin-top: 20px;
   text-decoration: underline;
 }
+.checkout-address-form {
+  display: grid;
+  gap: 20px;
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border);
+}
+.checkout-address-form h2 {
+  margin: 0;
+  font: 32px var(--serif);
+}
+.checkout-address-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.checkout-address-form label span {
+  color: var(--gray);
+  font-weight: 400;
+}
+.checkout-address-form input {
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  font: inherit;
+}
 @media (max-width: 720px) {
   .cart-layout {
     grid-template-columns: 1fr;

@@ -151,6 +151,8 @@ Sprint 15B releases the Checkout review boundary. Customers review a server-proj
 
 Sprint 15C establishes private minimal customer profile/contact storage and database-enforced uniqueness for verified phone/email identities. Public access remains denied until OTP verification can establish the customer session.
 
+Sprint 15D releases secure structured Checkout Address entry with the approved required fields, optional Flat No, opaque-cart ownership, and no public customer-data access.
+
 ## Entry and Exit Criteria
 
 A candidate should identify outcome, owner, users, business rules, process, data, controls, dependencies, risks, non-functional needs, migration, operational owner, and measurable acceptance. Exit requires verified acceptance, documentation, training/support readiness, monitoring, and post-release ownership.

@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Released Sprint 15D private structured Checkout Address entry with required-field enforcement and opaque-cart ownership.
+  - Approval/owner: Product Owner finalized Sprint 15 rules dated 2026-08-11
+  - Related: [Fulfillment and Delivery Architecture](20_FULFILLMENT_DELIVERY_ARCHITECTURE.md), [Roadmap](13_ROADMAP.md)
+
 - Established the Sprint 15C private customer account data boundary with minimal profiles and unique verified phone/email identities.
   - Approval/owner: Product Owner finalized Sprint 15 rules dated 2026-08-11
   - Related: [Customer and CRM Identity Architecture](22_CUSTOMER_CRM_IDENTITY_ARCHITECTURE.md), [Roadmap](13_ROADMAP.md)

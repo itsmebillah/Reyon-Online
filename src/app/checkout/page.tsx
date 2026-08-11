@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { Container } from "@/components/ui";
 import { formatMoney } from "@/features/catalog";
 import { getCartSummary } from "@/features/cart/actions";
+import { AddressForm } from "./address-form";
 
 export const metadata: Metadata = { title: "Checkout" };
 export const dynamic = "force-dynamic";
@@ -56,6 +57,7 @@ export default async function CheckoutPage() {
           <Link className="checkout-edit" href="/cart">
             Edit shopping bag
           </Link>
+          <AddressForm />
         </section>
         <aside className="cart-summary checkout-summary">
           <p className="eyebrow">Checkout summary</p>
@@ -80,7 +82,7 @@ export default async function CheckoutPage() {
             </p>
           )}
           <button className="button button--primary" disabled>
-            Customer details are the next step
+            Delivery zone is the next step
           </button>
           <p>No stock is reserved at this stage.</p>
         </aside>
