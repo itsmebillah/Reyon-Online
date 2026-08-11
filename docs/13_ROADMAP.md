@@ -155,6 +155,8 @@ Sprint 15D releases secure structured Checkout Address entry with the approved r
 
 Sprint 15E releases administrator-configurable Delivery Zones and Charges. Inside Dhaka and Outside Dhaka identities are seeded without invented prices and remain unavailable at checkout until an administrator supplies a valid charge and enables them.
 
+Sprint 15F releases honest Payment Method Selection: COD is initially selectable, mobile methods require configured instructions before selection, Card remains visible but unavailable without a real gateway, and no method can imply unverified success.
+
 ## Entry and Exit Criteria
 
 A candidate should identify outcome, owner, users, business rules, process, data, controls, dependencies, risks, non-functional needs, migration, operational owner, and measurable acceptance. Exit requires verified acceptance, documentation, training/support readiness, monitoring, and post-release ownership.

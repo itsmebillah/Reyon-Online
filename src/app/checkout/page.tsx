@@ -6,6 +6,8 @@ import { Container } from "@/components/ui";
 import { formatMoney } from "@/features/catalog";
 import { getCartSummary } from "@/features/cart/actions";
 import { AddressForm } from "./address-form";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { PaymentMethods, type PaymentMethod } from "./payment-methods";
 
 export const metadata: Metadata = { title: "Checkout" };
 export const dynamic = "force-dynamic";
@@ -14,6 +16,9 @@ export default async function CheckoutPage() {
   const cart = await getCartSummary();
   if (!cart.items.length) redirect("/cart");
   const valid = cart.items.every((item) => item.isAvailable);
+  const supabase = await createSupabaseServerClient();
+  const { data: paymentData } = await supabase.rpc("checkout_payment_methods");
+  const paymentMethods = (paymentData ?? []) as PaymentMethod[];
   return (
     <Container className="page checkout-page">
       <header className="checkout-header">
@@ -58,6 +63,7 @@ export default async function CheckoutPage() {
             Edit shopping bag
           </Link>
           <AddressForm />
+          <PaymentMethods methods={paymentMethods} />
         </section>
         <aside className="cart-summary checkout-summary">
           <p className="eyebrow">Checkout summary</p>

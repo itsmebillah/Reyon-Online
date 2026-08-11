@@ -10,6 +10,7 @@ import {
   PackageOpen,
   Tags,
   Truck,
+  CreditCard,
 } from "lucide-react";
 
 const groups = [
@@ -36,6 +37,7 @@ const groups = [
     items: [
       { label: "Inventory", href: "/admin/inventory", icon: Boxes },
       { label: "Delivery", href: "/admin/delivery", icon: Truck },
+      { label: "Payments", href: "/admin/payments", icon: CreditCard },
     ],
   },
 ] as const;
