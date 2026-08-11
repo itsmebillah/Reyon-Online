@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Released Product Media Management with validated licensed uploads, editable generated ALT-text drafts, ordered galleries, primary-image control, safe replacement, unreferenced-object cleanup, and a 12-image limit.
+  - Approval/owner: Product Owner Product Media baseline dated 2026-08-11
+  - Related: [Roadmap](13_ROADMAP.md), [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
+
 - Released searchable Product publication operations with explicit one-step Submit, Approve, Publish, Hide, and Archive controls backed by the approved append-only lifecycle.
   - Approval/owner: Product Owner-approved Sprint 14 lifecycle
   - Related: [Roadmap](13_ROADMAP.md), [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)

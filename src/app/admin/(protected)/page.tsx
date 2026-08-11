@@ -38,8 +38,9 @@ const modules: readonly Readonly<{
   },
   {
     name: "Media",
-    description: "Prepare expanded product galleries",
-    status: "Next",
+    description: "Manage validated product galleries",
+    status: "Available",
+    href: "/admin/media",
   },
   {
     name: "Inventory",

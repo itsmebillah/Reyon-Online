@@ -166,11 +166,11 @@ These unresolved items block only their dependent subfeatures:
 - Merge/split behavior, mistaken-publication recovery, reactivation, and permanent-deletion policy.
 - Concurrent-edit conflict resolution and historical retention terms.
 
-### Media Upload — Feature Blocked
+### Media Upload — Approved and Released
 
-- File formats, dimensions, size limits, licensing evidence, storage retention, scanning, and moderation.
-- ALT-text ownership and approval.
-- Complete mobile administration and formal accessibility target.
+- JPG, PNG, and WebP are accepted up to 5 MB with an 800 × 800 minimum and 1600 × 1600 recommendation.
+- Galleries support 12 images, primary-first ordering, required editable ALT text with an authoritative product-data draft, and administrator licensing confirmation.
+- Replacement preserves Product identity; obsolete objects are removed only after reference checks. MIME and file-content validation are active; malware scanning remains architecture-ready.
 
 ## Acceptance Scenarios
 

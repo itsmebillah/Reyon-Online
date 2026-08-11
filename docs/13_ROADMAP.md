@@ -105,6 +105,8 @@ Sprint 14F replaces all hardcoded customer product lists with the reusable Dynam
 
 Sprint 14G releases operational Product Publication controls. Administrators can search, filter, and sort products, then move one approved step at a time through Draft, Review, Approved, Published, Hidden, and Archived. Every transition remains attributable and append-only; only Published remains customer-visible.
 
+Sprint 14H releases Product Media Management under the approved media policy. Administrators can upload, replace, order, designate, describe, and safely remove licensed JPG, PNG, and WebP product images. Server validation enforces the 5 MB limit, 800 × 800 minimum, required editable ALT text, 12-image gallery maximum, and primary-first ordering while preserving Product identity.
+
 ## Entry and Exit Criteria
 
 A candidate should identify outcome, owner, users, business rules, process, data, controls, dependencies, risks, non-functional needs, migration, operational owner, and measurable acceptance. Exit requires verified acceptance, documentation, training/support readiness, monitoring, and post-release ownership.
