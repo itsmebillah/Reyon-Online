@@ -145,6 +145,8 @@ Sprint 15 is approved for sequential implementation.
 
 The Product Owner finalized the Sprint 15 baseline on 2026-08-11. External OTP delivery credentials/provider setup may block the OTP integration milestone, but it does not block preceding Cart and Checkout work.
 
+Sprint 15A releases persistent guest Cart: opaque 30-day cart identity, a database-enforced 10-unit variant limit, live price/availability projection, customer bag management, and no inventory reservation. The configurable 24-hour social-proof foundation remains hidden until a privacy threshold is configured.
+
 ## Entry and Exit Criteria
 
 A candidate should identify outcome, owner, users, business rules, process, data, controls, dependencies, risks, non-functional needs, migration, operational owner, and measurable acceptance. Exit requires verified acceptance, documentation, training/support readiness, monitoring, and post-release ownership.

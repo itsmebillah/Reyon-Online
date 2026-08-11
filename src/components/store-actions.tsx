@@ -1,7 +1,8 @@
 "use client";
 
 import { Heart, ShoppingBag, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { addCartItem } from "@/features/cart/actions";
 import type { CatalogProduct } from "@/features/catalog";
 import { Button } from "./ui";
 
@@ -16,6 +17,13 @@ export function ProductActions({
   const [message, setMessage] = useState("");
   const [quickView, setQuickView] = useState(false);
   const isOutOfStock = product.offer.availabilityLabel === "Out of stock";
+  const [adding, startAdding] = useTransition();
+  const addToCart = () =>
+    startAdding(async () => {
+      const result = await addCartItem(product.id);
+      notify(result.error ?? result.success ?? "");
+      if (!result.error) window.dispatchEvent(new Event("reyon:cart-updated"));
+    });
   const notify = (text: string) => {
     setMessage(text);
     window.setTimeout(() => setMessage(""), 2200);
@@ -45,11 +53,17 @@ export function ProductActions({
         </button>
         <Button
           className="add-button"
-          disabled={isOutOfStock}
-          onClick={() => notify(`${product.name} added to your bag`)}
+          disabled={isOutOfStock || adding}
+          onClick={addToCart}
         >
           <ShoppingBag size={17} />
-          {isOutOfStock ? "Out of stock" : compact ? "Add" : "Add to bag"}
+          {isOutOfStock
+            ? "Out of stock"
+            : adding
+              ? "Adding…"
+              : compact
+                ? "Add"
+                : "Add to bag"}
         </Button>
       </div>
       {message && (
@@ -86,7 +100,7 @@ export function ProductActions({
             <Button
               disabled={isOutOfStock}
               onClick={() => {
-                notify(`${product.name} added to your bag`);
+                addToCart();
                 setQuickView(false);
               }}
             >

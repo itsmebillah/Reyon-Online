@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { useEffect } from "react";
+import { getCartSummary } from "@/features/cart/actions";
 import { Container } from "./ui";
 
 const links = [
@@ -18,7 +20,15 @@ const links = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const router = useRouter();
+  useEffect(() => {
+    void getCartSummary().then((cart) => setCartCount(cart.itemCount));
+    const refresh = () =>
+      void getCartSummary().then((cart) => setCartCount(cart.itemCount));
+    window.addEventListener("reyon:cart-updated", refresh);
+    return () => window.removeEventListener("reyon:cart-updated", refresh);
+  }, []);
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -82,10 +92,13 @@ export function Header() {
           <Link href="/account" aria-label="Account">
             <UserRound />
           </Link>
-          <button aria-label="Shopping bag">
+          <Link
+            href="/cart"
+            aria-label={`Shopping bag with ${cartCount} items`}
+          >
             <ShoppingBag />
-            <span className="cart-count">0</span>
-          </button>
+            <span className="cart-count">{cartCount}</span>
+          </Link>
         </div>
       </Container>
       {search && (

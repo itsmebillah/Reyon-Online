@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Released Sprint 15A persistent guest Cart with secure opaque identity, rolling 30-day retention, a 10-unit per-variant limit, live catalog/stock projection, quantity management, and no cart-time reservation.
+  - Approval/owner: Product Owner finalized Sprint 15 rules dated 2026-08-11
+  - Related: [Business Rules](02_BUSINESS_RULES.md), [Roadmap](13_ROADMAP.md)
+
 - Finalized the Sprint 15 Cart, Checkout, and Customer Account baseline covering verified identity reuse, 30-day carts, quantity limits, 24-hour privacy-safe cart social proof, authoritative checkout revalidation, 30-minute auditable reservations, structured addresses, configurable delivery zones and charges, manual payment evidence, and customer-data protection.
   - Approval/owner: Product Owner Sprint 15 decision set dated 2026-08-11
   - Impact: Sprint 15 is approved for sequential implementation; OTP provider credentials may independently gate its integration milestone.
