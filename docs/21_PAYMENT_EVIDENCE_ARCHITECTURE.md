@@ -12,6 +12,7 @@ This document defines a provider-neutral payment evidence boundary for REYON Bus
 - [Evidence and corrections](#evidence-and-corrections)
 - [Security and sensitive data](#security-and-sensitive-data)
 - [Domain boundaries](#domain-boundaries)
+- [Approved Sprint 15 payment presentation](#approved-sprint-15-payment-presentation)
 - [Pending business decisions](#pending-business-decisions)
 - [Future expansion](#future-expansion)
 - [Related documents](#related-documents)
@@ -57,6 +58,12 @@ The foundation stores no customer identity, cardholder data, account number, pay
 - Customer/CRM will own customer identity and consent.
 - Provider adapters own protocol translation, signature verification, retries, and reconciliation transport.
 - Order state cannot infer payment success from an unapproved provider event.
+
+## Approved Sprint 15 Payment Presentation
+
+Checkout displays bKash, Nagad, Rocket, Card, and Cash on Delivery (COD). Initial processing is manual. Admin configures mobile-payment instructions/number, the customer supplies transaction/reference evidence, and an administrator verifies it before payment becomes verified.
+
+Card remains represented in the architecture and UI, but automatic gateway processing is deferred and the system must never report Card success without a real gateway. COD is initially supported and its future eligibility restrictions remain configurable. Provider-neutral evidence preserves the later gateway expansion path.
 
 ## Pending Business Decisions
 

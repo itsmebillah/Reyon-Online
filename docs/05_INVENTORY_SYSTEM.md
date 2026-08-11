@@ -77,6 +77,8 @@ The approved movement vocabulary is enforced by the database. Backdating is not 
 
 On-hand is the sum of movement deltas. Reserved is the sum of active future order reservations. Available equals on-hand minus reserved. Expected, damaged, quarantined, and other views remain separate future concerns.
 
+For Sprint 15, adding a product to a cart does not reserve stock. Order confirmation starts an auditable 30-minute reservation. Cancellation, expiry, or leaving confirmed state without successful fulfillment releases it. Confirmation never reserves above available stock; insufficient stock places the order into an administrator-handled exception without trusting stale cart availability.
+
 ### TODO — Domain Owner
 
 - Define reservation timing, allocation priority, expiry, release, and order integration behavior.

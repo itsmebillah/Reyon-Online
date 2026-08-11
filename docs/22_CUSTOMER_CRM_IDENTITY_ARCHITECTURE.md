@@ -12,6 +12,7 @@ This document defines the privacy-minimizing customer identity boundary for REYO
 - [Evidence and corrections](#evidence-and-corrections)
 - [Security and privacy](#security-and-privacy)
 - [Domain boundaries](#domain-boundaries)
+- [Approved Sprint 15 customer identity](#approved-sprint-15-customer-identity)
 - [Pending business decisions](#pending-business-decisions)
 - [Future expansion](#future-expansion)
 - [Related documents](#related-documents)
@@ -58,6 +59,12 @@ This foundation deliberately applies data minimization by storing no directly id
 - Fulfillment owns delivery work but no customer address or contact data in the current foundation.
 - Payments owns monetary evidence and stores no customer identity or payment instrument.
 - Reporting and automation may consume customer facts only through approved, purpose-limited projections.
+
+## Approved Sprint 15 Customer Identity
+
+Guest checkout is allowed and checkout/order creation automatically creates the customer account. Phone OTP is primary; email OTP may be used when email is supplied and phone verification is unavailable. An existing verified phone/email match reuses the customer identity. The persisted guest cart associates with the verified account.
+
+Only data required for account, order, delivery, and support is collected. Private information is protected by existing authentication/authorization boundaries and never exposed publicly. Required privacy notice/consent, recovery, correction, and configurable retention/deletion paths are part of the customer-data contract. The structured address requirements are defined in the Delivery Architecture.
 
 ## Pending Business Decisions
 

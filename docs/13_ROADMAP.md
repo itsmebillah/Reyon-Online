@@ -11,6 +11,7 @@ This document provides a controlled, outcome-oriented planning structure for REY
 - [Entry and exit criteria](#entry-and-exit-criteria)
 - [Foundation work](#foundation-work)
 - [Capability planning](#capability-planning)
+- [Proposed post-Sprint 14 execution roadmap](#proposed-post-sprint-14-execution-roadmap)
 - [Dependencies and sequencing](#dependencies-and-sequencing)
 - [Risks and readiness](#risks-and-readiness)
 - [Measures and review](#measures-and-review)
@@ -41,25 +42,25 @@ The Product Owner approved sequential roadmap execution on 2026-08-02. Technical
 
 ## Committed Delivery Sequence
 
-| Sprint | Outcome                                       | Status                                                 | Dependency                                                          |
-| ------ | --------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------- |
-| 0      | Environment and ownership foundation          | Released                                               | Existing infrastructure                                             |
-| 0.5    | AI-ready SEO and content architecture         | Released (architecture)                                | Documentation foundation                                            |
-| 1      | Premium customer experience foundation        | Released                                               | Sprint 0                                                            |
-| 2      | Governed product catalog foundation           | Released (foundation)                                  | Sprint 1                                                            |
-| 3      | Organization, location, and channel topology  | Released (foundation)                                  | Sprint 2                                                            |
-| 4      | Inventory ledger foundation                   | Released (foundation)                                  | Sprint 3                                                            |
-| 5      | Order lifecycle foundation                    | Released (foundation)                                  | Sprint 4                                                            |
-| 6      | Fulfillment and delivery foundation           | Released (foundation)                                  | Sprint 5                                                            |
-| 7      | Payment evidence foundation                   | Released (foundation)                                  | Sprint 5                                                            |
-| 8      | Supplier and purchase foundation              | Released (foundation)                                  | Catalog, topology, and inventory                                    |
-| 9      | Accounting evidence foundation                | Released (foundation)                                  | Operational evidence and finance boundaries                         |
-| 10     | Customer and CRM identity foundation          | Released (foundation)                                  | Organization, channels, and order boundaries                        |
-| 11     | Reporting and analytics contract foundation   | Released (foundation)                                  | Governed operational source evidence                                |
-| 12     | Automation control-plane foundation           | Released (foundation)                                  | Approved rules, metrics, and audit boundaries                       |
-| 13     | AI governance and content-artifact foundation | Released (foundation)                                  | Sprint 0.5 architecture, human review, and source boundaries        |
-| 14     | Product Catalog Administration                | Foundation released; dependent features active/blocked | Approved Product Owner catalog rules and feature-specific decisions |
-| 14A    | Delivery assurance foundation                 | Released                                               | Policy-neutral engineering quality and release evidence             |
+| Sprint | Outcome                                       | Status                  | Dependency                                                   |
+| ------ | --------------------------------------------- | ----------------------- | ------------------------------------------------------------ |
+| 0      | Environment and ownership foundation          | Released                | Existing infrastructure                                      |
+| 0.5    | AI-ready SEO and content architecture         | Released (architecture) | Documentation foundation                                     |
+| 1      | Premium customer experience foundation        | Released                | Sprint 0                                                     |
+| 2      | Governed product catalog foundation           | Released (foundation)   | Sprint 1                                                     |
+| 3      | Organization, location, and channel topology  | Released (foundation)   | Sprint 2                                                     |
+| 4      | Inventory ledger foundation                   | Released (foundation)   | Sprint 3                                                     |
+| 5      | Order lifecycle foundation                    | Released (foundation)   | Sprint 4                                                     |
+| 6      | Fulfillment and delivery foundation           | Released (foundation)   | Sprint 5                                                     |
+| 7      | Payment evidence foundation                   | Released (foundation)   | Sprint 5                                                     |
+| 8      | Supplier and purchase foundation              | Released (foundation)   | Catalog, topology, and inventory                             |
+| 9      | Accounting evidence foundation                | Released (foundation)   | Operational evidence and finance boundaries                  |
+| 10     | Customer and CRM identity foundation          | Released (foundation)   | Organization, channels, and order boundaries                 |
+| 11     | Reporting and analytics contract foundation   | Released (foundation)   | Governed operational source evidence                         |
+| 12     | Automation control-plane foundation           | Released (foundation)   | Approved rules, metrics, and audit boundaries                |
+| 13     | AI governance and content-artifact foundation | Released (foundation)   | Sprint 0.5 architecture, human review, and source boundaries |
+| 14     | Product Catalog Administration                | Released                | Approved Product Owner catalog and inventory-entry rules     |
+| 14A    | Delivery assurance foundation                 | Released                | Policy-neutral engineering quality and release evidence      |
 
 Sprint 2 now includes a policy-neutral catalog contract, replaceable data adapter, customer discovery, product lookup, and an empty deny-by-default Supabase catalog schema. Persistent administration, runtime data access, and publication workflows remain gated by catalog-owner and access rules.
 
@@ -108,6 +109,41 @@ Sprint 14G releases operational Product Publication controls. Administrators can
 Sprint 14H releases Product Media Management under the approved media policy. Administrators can upload, replace, order, designate, describe, and safely remove licensed JPG, PNG, and WebP product images. Server validation enforces the 5 MB limit, 800 × 800 minimum, required editable ALT text, 12-image gallery maximum, and primary-first ordering while preserving Product identity.
 
 Sprint 14I releases Inventory Entry. Administrators record approved variant-level movements at Main Inventory, see ledger-derived on-hand, reserved, and available positions, and correct mistakes through auditable reversals. Negative stock is blocked transactionally, customer availability synchronizes automatically, and Low Stock and Out of Stock collections become inventory-driven.
+
+## Proposed Post-Sprint 14 Execution Roadmap
+
+The following sequence governs post-Sprint 14 execution. Sprint 15 rules are approved for implementation; later milestones begin only after their listed Product Owner decisions are approved.
+
+| Sprint | Proposed milestone                   | Depends on                                                                                         | Product Owner decisions required before implementation                                                                                                                                                                                                 |
+| ------ | ------------------------------------ | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 15     | Cart, Checkout, and Customer Account | Published catalog, pricing, inventory availability, customer identity foundation                   | Approved for implementation                                                                                                                                                                                                                            |
+| 16     | Order Management                     | Sprint 15 checkout contract; order and inventory foundations                                       | Order numbering; lifecycle states and transitions; reservation timing; edit/cancel windows; fraud/manual review; administrator permissions; customer notifications; correction and exception policy                                                    |
+| 17     | Sales Processing                     | Order Management; inventory movements; payment evidence foundation                                 | Sale-completion event; payment timing and methods; cash-on-delivery policy; discount authority; invoice/receipt requirements; partial, failed, duplicate, and abandoned-sale treatment; daily operating controls                                       |
+| 18     | Delivery Operations                  | Order Management; Sales Processing; fulfillment foundation                                         | Delivery areas, carriers, methods, charges, free-delivery threshold, promises and cutoffs; address validation; assignment and tracking; attempts, proof, failure, loss, damage, cancellation, and reconciliation rules                                 |
+| 19     | Returns and Refunds                  | Orders, sales, delivery, payment evidence, inventory corrections                                   | Eligibility window and condition; non-returnable products; request/approval states; return shipping responsibility; inspection and restocking; refund method and timing; partial returns; exchanges; damaged/wrong/missing-item evidence and authority |
+| 20     | Supplier and Purchase Operations     | Catalog, Main Inventory, supplier/purchase foundation, approved receiving movements                | Supplier records and terms; purchase lifecycle and approvals; purchasing units/currency; expected delivery; receiving and discrepancy rules; returns to supplier; cost capture; replenishment ownership and emergency buying                           |
+| 21     | Accounts and Payments                | Sales, refunds, purchasing, accounting and payment foundations                                     | Legal entity and fiscal calendar; chart of accounts; payment providers/methods; cash and bank controls; posting rules; payable/receivable treatment; tax position; settlement, fees, reconciliation, close, approvals, and external-system integration |
+| 22     | Reports and Analytics                | Governed operational data from Sprints 15–21; reporting contract foundation                        | Priority dashboards and reports; metric definitions and owners; dimensions; targets and thresholds; latency; correction/restatement rules; access, export, retention, statutory, management, and audit requirements                                    |
+| 23     | CRM                                  | Customer Account, Orders, Sales, Returns, privacy-safe reporting                                   | Customer profile and contact fields; consent and communication preferences; duplicate/merge rules; segments; service cases; loyalty scope; retention and deletion; privileged support access; approved engagement and value measures                   |
+| 24     | Automation                           | Stable operational workflows and approved metrics; automation control-plane foundation             | First automation use cases; triggers, conditions, actions, limits, approvals, schedules, notifications, retries, escalation, human review, correction, kill switch, and accountable owner for each workflow                                            |
+| 25     | AI-Assisted Operations and Content   | Governed source data, human-review workflows, metrics, automation controls, AI artifact foundation | First AI use cases and success criteria; authoritative inputs; allowed outputs/channels; provider and model constraints; review roles; regeneration and rejection; quality, brand, SEO, privacy, retention, cost, monitoring, and publication controls |
+
+### Sprint 15 Implementation Plan
+
+Sprint 15 is approved for sequential implementation.
+
+1. **Cart:** deliver 30-day persistent guest carts, the 10-unit variant limit, current-availability revalidation, account-association contract, and configurable privacy-safe 24-hour aggregate cart count. Adding to cart performs no reservation.
+2. **Checkout:** add the review journey and authoritative server revalidation of price and stock; cart values are never accepted as final facts.
+3. **Customer Account:** create/reuse the customer identity during checkout, avoid verified phone/email duplicates, protect private data, and provide recovery/correction boundaries.
+4. **OTP verification:** make phone OTP primary with approved email fallback, abuse controls, and verified identity association.
+5. **Address:** collect the approved required structured address and optional Flat No without mixing private delivery data into public records.
+6. **Delivery charge:** add administrator-managed zones/charges, seed the two approved zone identities without hardcoded prices, and show the calculated charge before confirmation.
+7. **Manual payment:** present all approved methods, support configured mobile instructions and reference evidence, require administrator verification, represent deferred Card honestly, and keep COD eligibility configurable.
+8. **Order creation:** create the order idempotently only after customer review and current price/stock validation.
+9. **Stock reservation:** create an auditable 30-minute confirmation-time reservation, deterministic release paths, and an administrator-handled insufficient-stock exception without over-reservation.
+10. **Verification and release:** validate security, accessibility, responsive commerce journeys, cart continuity, totals, stock concurrency, OTP abuse controls, admin configuration, audit evidence, and deployment.
+
+The Product Owner finalized the Sprint 15 baseline on 2026-08-11. External OTP delivery credentials/provider setup may block the OTP integration milestone, but it does not block preceding Cart and Checkout work.
 
 ## Entry and Exit Criteria
 

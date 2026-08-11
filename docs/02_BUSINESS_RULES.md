@@ -10,6 +10,7 @@ This document is the controlled structure for recording approved business rules.
 - [Rule record format](#rule-record-format)
 - [Rule domains](#rule-domains)
 - [Approved catalog rules](#approved-catalog-rules)
+- [Approved Sprint 15 commerce rules](#approved-sprint-15-commerce-rules)
 - [Conflict and precedence](#conflict-and-precedence)
 - [Exceptions](#exceptions)
 - [Testing and traceability](#testing-and-traceability)
@@ -48,6 +49,22 @@ The rule register must eventually cover product and catalog, pricing and promoti
 The Product Owner approved the Sprint 14 catalog rules on 2026-08-02. The stable rule statements and acceptance implications are maintained in [Product Catalog Administration — Sprint 14 Decisions](25_PRODUCT_CATALOG_ADMIN_DISCOVERY.md). They govern immutable internal product identity, optional Product Code, hybrid unique SKU, optional barcode, variant types, image minimum and order, product lifecycle and customer visibility, third-party brand ownership, primary category, authenticity/origin facts, variant-level stock identity, four price types, and the absence of separate tax calculation.
 
 These rules are approved version 1 for Product Catalog Administration. Authentication, action permissions, generated SKU presentation, currency, exception transitions, duplicate resolution, media-file controls, and initial product records remain feature-specific pending decisions and are not implied by this approval.
+
+## Approved Sprint 15 Commerce Rules
+
+The Product Owner approved the following rules for Sprint 15 on 2026-08-11:
+
+| Rule area           | Approved behavior                                                                                                                                                                                                                                                                          |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Checkout identity   | Guest checkout is allowed. Checkout/order creation creates an account. Phone OTP is primary; email OTP is the fallback when supplied and phone verification is unavailable. Verified phone/email matches reuse the existing customer identity.                                             |
+| Cart continuity     | Guest carts persist for 30 days after last activity and associate with the verified account. A line may contain at most 10 units of one variant. Price and availability are revalidated before checkout and confirmation.                                                                  |
+| Inventory           | Cart addition creates no reservation. Confirmation reserves only available stock for 30 minutes. Cancellation, expiry, or leaving confirmed state without fulfillment releases it. Reservation history is auditable; insufficient stock produces an administrator-handled exception.       |
+| Social proof        | Aggregate active carts from the preceding 24 hours. Expose no identity, hide counts that are not useful/privacy-safe, and keep the calculation configurable.                                                                                                                               |
+| Address             | Require Full name, Phone, House No, Road, Village/City, Thana/Upazila, District, and Division. Flat No is optional where not applicable.                                                                                                                                                   |
+| Delivery            | Initial zones are Inside Dhaka and Outside Dhaka. Admin configures zones and charges; prices are never hardcoded. Show the calculated charge before confirmation and support future zones without redesign.                                                                                |
+| Payment             | Display bKash, Nagad, Rocket, Card, and COD. Mobile payments use admin instructions plus customer reference evidence and administrator verification. Card gateway processing is deferred and cannot report false success. COD is initially supported with future-configurable eligibility. |
+| Customer protection | Minimize collection to account, order, delivery, and support needs. Protect private data, provide required privacy notice/consent, recovery and correction, and configurable future-compliant retention/deletion.                                                                          |
+| Confirmation        | The customer reviews cart, address, delivery charge, and payment method. Confirmation revalidates price and stock, creates the order, and starts the approved reservation flow. Stale cart facts are never authoritative.                                                                  |
 
 ### TODO — Product Owner and Domain Owners
 

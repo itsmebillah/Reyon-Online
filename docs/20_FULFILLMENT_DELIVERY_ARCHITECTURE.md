@@ -12,6 +12,7 @@ This document defines the boundary between commercial orders, physical or virtua
 - [Lifecycle evidence](#lifecycle-evidence)
 - [Security and privacy](#security-and-privacy)
 - [Domain boundaries](#domain-boundaries)
+- [Approved Sprint 15 delivery configuration](#approved-sprint-15-delivery-configuration)
 - [Pending business decisions](#pending-business-decisions)
 - [Future expansion](#future-expansion)
 - [Related documents](#related-documents)
@@ -57,6 +58,12 @@ Customer names, phone numbers, addresses, delivery instructions, and proof artif
 - Organization owns eligible location identities but not routing rules.
 - Payments and accounting remain independent of delivery completion.
 - Returns require a separate reverse-logistics lifecycle and do not mutate fulfillment history.
+
+## Approved Sprint 15 Delivery Configuration
+
+Sprint 15 begins with **Inside Dhaka** and **Outside Dhaka** delivery zones. Delivery zones and charges are business configuration managed through Admin, and the model must accept additional zones and prices without redesign. The applicable delivery charge is shown in the cart and order summary.
+
+Checkout requires Full name, Phone, House No, Road, Village/City, Thana/Upazila, District, and Division. Flat No is optional where not applicable. Admin owns zone and charge configuration; application code must not hardcode prices. The calculated charge appears before confirmation.
 
 ## Pending Business Decisions
 

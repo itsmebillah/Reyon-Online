@@ -40,6 +40,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Finalized the Sprint 15 Cart, Checkout, and Customer Account baseline covering verified identity reuse, 30-day carts, quantity limits, 24-hour privacy-safe cart social proof, authoritative checkout revalidation, 30-minute auditable reservations, structured addresses, configurable delivery zones and charges, manual payment evidence, and customer-data protection.
+  - Approval/owner: Product Owner Sprint 15 decision set dated 2026-08-11
+  - Impact: Sprint 15 is approved for sequential implementation; OTP provider credentials may independently gate its integration milestone.
+  - Related: [Business Rules](02_BUSINESS_RULES.md), [Roadmap](13_ROADMAP.md)
+
 - Released Inventory Entry with Main Inventory, all approved movement types, immutable corrections, transactional negative-stock prevention, complete audit evidence, and ledger-derived stock positions.
   - Approval/owner: Product Owner Inventory Entry baseline dated 2026-08-11
   - Impact: Customer availability, purchase controls, and dynamic Low Stock/Out of Stock collections now synchronize from inventory.

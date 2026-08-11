@@ -9,6 +9,7 @@ This document provides the structure for defining orders consistently across cha
 - [Scope and principles](#scope-and-principles)
 - [Order aggregate](#order-aggregate)
 - [Implemented persistence foundation](#implemented-persistence-foundation)
+- [Approved Sprint 15 checkout boundary](#approved-sprint-15-checkout-boundary)
 - [Lifecycle definition](#lifecycle-definition)
 - [State dimensions](#state-dimensions)
 - [Transition controls](#transition-controls)
@@ -48,6 +49,14 @@ Order source and transition idempotency keys prevent duplicate commands from sil
 Every table has row-level security enabled. Anonymous and authenticated roles have no privileges or policies, the schema is not exposed through the configured Data API, and no order data has been inserted.
 
 Sprint 10 adds append-only customer-order association evidence in the separate private `crm` schema. Orders continue to contain no customer PII and do not infer customer ownership or role. Association vocabulary, cardinality, guest behavior, and customer-facing effects remain pending approved customer and privacy rules.
+
+## Approved Sprint 15 Checkout Boundary
+
+Guest checkout is allowed and creates a customer account from checkout details. Phone OTP is primary; email OTP is a fallback when supplied and phone verification is unavailable. Verified phone/email matches reuse the existing identity. A guest cart can be associated with that verified identity.
+
+Before confirmation the customer reviews the revalidated cart, structured address, calculated delivery charge, and payment method. Confirmation idempotently creates the order and begins a 30-minute stock reservation based only on current price and availability. Insufficient stock cannot be over-reserved and produces an auditable administrator-handled exception.
+
+Sprint 15 must not define the broader Order Management lifecycle reserved for Sprint 16.
 
 ## Lifecycle Definition
 
