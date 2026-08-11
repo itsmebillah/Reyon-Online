@@ -875,6 +875,14 @@ img {
   border: 1px solid var(--border);
   font: inherit;
 }
+.checkout-address-form .field-error {
+  color: #a33232;
+  font-size: 12px;
+  font-weight: 600;
+}
+.checkout-address-form input[aria-invalid="true"] {
+  border-color: #a33232;
+}
 .checkout-payment {
   display: grid;
   gap: 18px;

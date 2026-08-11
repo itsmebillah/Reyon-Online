@@ -8,6 +8,7 @@ import { getCartSummary } from "@/features/cart/actions";
 import { AddressForm } from "./address-form";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { PaymentMethods, type PaymentMethod } from "./payment-methods";
+import { getCheckoutAddress } from "./actions";
 
 export const metadata: Metadata = { title: "Checkout" };
 export const dynamic = "force-dynamic";
@@ -17,7 +18,10 @@ export default async function CheckoutPage() {
   if (!cart.items.length) redirect("/cart");
   const valid = cart.items.every((item) => item.isAvailable);
   const supabase = await createSupabaseServerClient();
-  const { data: paymentData } = await supabase.rpc("checkout_payment_methods");
+  const [{ data: paymentData }, address] = await Promise.all([
+    supabase.rpc("checkout_payment_methods"),
+    getCheckoutAddress(),
+  ]);
   const paymentMethods = (paymentData ?? []) as PaymentMethod[];
   return (
     <Container className="page checkout-page">
@@ -62,8 +66,14 @@ export default async function CheckoutPage() {
           <Link className="checkout-edit" href="/cart">
             Edit shopping bag
           </Link>
-          <AddressForm />
-          <PaymentMethods methods={paymentMethods} />
+          <AddressForm address={address} />
+          {address ? (
+            <PaymentMethods methods={paymentMethods} />
+          ) : (
+            <p className="checkout-step-notice">
+              Save your delivery address to continue to payment.
+            </p>
+          )}
         </section>
         <aside className="cart-summary checkout-summary">
           <p className="eyebrow">Checkout summary</p>
@@ -87,9 +97,15 @@ export default async function CheckoutPage() {
               Your bag needs attention before checkout can continue.
             </p>
           )}
-          <button className="button button--primary" disabled>
-            Delivery zone is the next step
-          </button>
+          {address ? (
+            <a className="button button--primary" href="#payment-method">
+              Continue to payment
+            </a>
+          ) : (
+            <button className="button button--primary" disabled>
+              Save address to continue
+            </button>
+          )}
           <p>No stock is reserved at this stage.</p>
         </aside>
       </div>

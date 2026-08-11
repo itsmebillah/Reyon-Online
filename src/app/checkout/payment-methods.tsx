@@ -18,7 +18,7 @@ export function PaymentMethods({
   const [selected, setSelected] = useState("");
   const [state, action, pending] = useActionState(savePaymentSelection, {});
   return (
-    <form action={action} className="checkout-payment">
+    <form action={action} className="checkout-payment" id="payment-method">
       <h2>Payment method</h2>
       <div>
         {methods.map((method) => (

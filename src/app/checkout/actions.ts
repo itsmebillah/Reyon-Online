@@ -3,7 +3,22 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-export type AddressState = { success?: string; error?: string };
+export type CheckoutAddress = Readonly<{
+  fullName: string;
+  phone: string;
+  flatNo: string | null;
+  houseNo: string;
+  road: string;
+  villageCity: string;
+  thanaUpazila: string;
+  district: string;
+  division: string;
+}>;
+export type AddressState = {
+  success?: string;
+  error?: string;
+  fieldErrors?: Partial<Record<keyof CheckoutAddress, string>>;
+};
 const value = (form: FormData, key: string) =>
   String(form.get(key) ?? "").trim();
 export async function saveCheckoutAddress(
@@ -12,7 +27,7 @@ export async function saveCheckoutAddress(
 ): Promise<AddressState> {
   const token = (await cookies()).get("reyon_cart")?.value;
   if (!token) return { error: "Your active bag could not be found." };
-  const required = [
+  const required: readonly (keyof CheckoutAddress)[] = [
     "fullName",
     "phone",
     "houseNo",
@@ -22,8 +37,14 @@ export async function saveCheckoutAddress(
     "district",
     "division",
   ];
-  if (required.some((key) => !value(form, key)))
-    return { error: "Complete every required address field." };
+  const fieldErrors: Partial<Record<keyof CheckoutAddress, string>> =
+    Object.fromEntries(
+      required
+        .filter((key) => !value(form, key))
+        .map((key) => [key, "This field is required."]),
+    );
+  if (Object.keys(fieldErrors).length)
+    return { error: "Complete the highlighted address fields.", fieldErrors };
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.rpc("checkout_save_address", {
     p_access_token: token,
@@ -39,11 +60,22 @@ export async function saveCheckoutAddress(
   });
   if (error)
     return {
-      error:
-        "The address could not be saved. Review the information and try again.",
+      error: /active cart/i.test(error.message)
+        ? "Your shopping bag expired. Return to your bag and try again."
+        : "The address could not be saved. Review the information and try again.",
     };
   revalidatePath("/checkout");
   return { success: "Delivery address saved securely." };
+}
+
+export async function getCheckoutAddress(): Promise<CheckoutAddress | null> {
+  const token = (await cookies()).get("reyon_cart")?.value;
+  if (!token) return null;
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.rpc("checkout_address", {
+    p_access_token: token,
+  });
+  return error || !data ? null : (data as CheckoutAddress);
 }
 
 export async function savePaymentSelection(
