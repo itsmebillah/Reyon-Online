@@ -202,7 +202,7 @@ test("inner pages provide consistent back navigation", async ({ page }) => {
 test("product actions provide clear feedback", async ({ page }) => {
   const failures = monitor(page);
   await page.goto("/shop");
-  const save = page.locator('button[aria-label^="Save "]').first();
+  const save = page.locator("button[aria-pressed]").first();
   if (!(await save.count())) {
     await expect(
       page.getByRole("heading", { name: "No products in this collection" }),
@@ -219,7 +219,7 @@ test("product actions provide clear feedback", async ({ page }) => {
     await page.getByRole("button", { name: "Close quick view" }).click();
   }
   await page.getByRole("button", { name: "Add" }).first().click();
-  await expect(page.getByRole("status")).toContainText("added to your bag");
+  await expect(page.getByRole("status")).toContainText(/added to your bag/i);
   expect(failures).toEqual([]);
 });
 

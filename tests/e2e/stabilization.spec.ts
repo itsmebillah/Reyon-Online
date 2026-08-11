@@ -1,0 +1,236 @@
+import { expect, test, type Page } from "@playwright/test";
+
+function monitor(page: Page) {
+  const failures: string[] = [];
+  page.on("console", (message) => {
+    if (message.type() === "error") failures.push(`console: ${message.text()}`);
+  });
+  page.on("pageerror", (error) => failures.push(`page: ${error.message}`));
+  page.on("response", (response) => {
+    if (response.status() >= 400)
+      failures.push(`response: ${response.status()} ${response.url()}`);
+  });
+  page.on("requestfailed", (request) => {
+    if (request.failure()?.errorText !== "net::ERR_ABORTED")
+      failures.push(
+        `network: ${request.url()} ${request.failure()?.errorText}`,
+      );
+  });
+  return failures;
+}
+
+test("customer can browse, add to cart, preserve address, and reach configured checkout steps", async ({
+  page,
+}) => {
+  const failures = monitor(page);
+  await page.goto("/shop");
+  const productLink = page.locator(".product-card h3 a").first();
+  const productName = await productLink.innerText();
+  await productLink.click();
+  await expect(page).toHaveURL(/\/products\//);
+  await expect(page.getByRole("heading", { name: productName })).toBeVisible();
+  await expect(page.locator(".product-gallery img")).toHaveJSProperty(
+    "complete",
+    true,
+  );
+  await page.getByRole("button", { name: /^Add/ }).first().click();
+  await expect(page.getByRole("status")).toContainText(/added to your bag/i);
+  await page.goto("/cart");
+  await expect(
+    page.getByRole("heading", { name: "Shopping bag" }),
+  ).toBeVisible();
+  await page.getByRole("link", { name: "Continue to checkout" }).click();
+  await expect(page).toHaveURL(/\/checkout/);
+  await page.getByLabel("Full name").fill("REYON Browser Test");
+  await page.getByLabel("Phone").fill("01000000000");
+  await page.getByLabel("House No").fill("QA-1");
+  await page.getByLabel("Road").fill("Stabilization Road");
+  await page.getByLabel("Village / City").fill("Dhaka");
+  await page.getByLabel("Thana / Upazila").fill("Dhaka");
+  await page.getByLabel("District").fill("Dhaka");
+  await page.getByLabel("Division").fill("Dhaka");
+  await page.getByRole("button", { name: "Save and continue" }).click();
+  await expect(page.getByRole("status")).toContainText(
+    "address saved securely",
+  );
+  await expect(page.getByLabel("Full name")).toHaveValue("REYON Browser Test");
+
+  const zoneOptions = page.locator('#delivery-zone input[name="deliveryZone"]');
+  if (await zoneOptions.count()) {
+    await zoneOptions.first().check();
+    await page.getByRole("button", { name: "Save delivery zone" }).click();
+    await expect(page.getByRole("status")).toContainText(
+      "zone and charge saved",
+    );
+    await page
+      .locator("#payment-method label", { hasText: "Card" })
+      .locator("input")
+      .check();
+    const continueButton = page.getByRole("button", {
+      name: "Continue to payment",
+    });
+    await expect(continueButton).toBeEnabled();
+    await continueButton.click();
+    await expect(page.locator("#payment-confirmation")).toBeVisible();
+    await expect(page.getByText("No card number, PIN, CVV")).toBeVisible();
+    await page.getByRole("button", { name: "Save and continue" }).click();
+    await expect(
+      page.locator("#payment-method").getByRole("status"),
+    ).toContainText("Payment method saved");
+    await expect(
+      page.getByText("Phone verification is required"),
+    ).toBeVisible();
+
+    await page.getByRole("button", { name: "Change method" }).click();
+    await page
+      .locator("#payment-method label", { hasText: "Cash on Delivery" })
+      .locator("input")
+      .check();
+    await page.getByRole("button", { name: "Continue to payment" }).click();
+    await expect(
+      page.getByText("Cash on Delivery will remain payable"),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Save and continue" }).click();
+    await expect(
+      page.locator("#payment-method").getByRole("status"),
+    ).toContainText("Payment method saved");
+    await page.reload();
+    await expect(page.locator("#payment-confirmation")).toContainText(
+      "Cash on Delivery",
+    );
+    await expect(
+      page.getByRole("button", { name: "Confirm order" }),
+    ).toBeDisabled();
+  } else {
+    await expect(
+      page.getByText("Delivery is not configured yet"),
+    ).toBeVisible();
+  }
+  expect(failures).toEqual([]);
+});
+
+test("authenticated administrator can traverse every released workspace module", async ({
+  page,
+}) => {
+  const email = process.env.REYON_ADMIN_EMAIL;
+  const password = process.env.REYON_ADMIN_PASSWORD;
+  test.skip(
+    !email || !password,
+    "Administrator browser credentials are required",
+  );
+  const failures = monitor(page);
+  await page.goto("/admin/login");
+  await page.getByLabel("Email address").fill(email!);
+  await page.getByLabel("Password").fill(password!);
+  await page.getByRole("button", { name: "Sign in securely" }).click();
+  await expect(page).toHaveURL(/\/admin$/);
+  await expect(
+    page.getByRole("heading", { name: "Your business workspace" }),
+  ).toBeVisible();
+
+  const modules = [
+    ["brands", "Brand Management"],
+    ["categories", "Category Management"],
+    ["products", "Product Management"],
+    ["media", "Product Media"],
+    ["collections", "Homepage Collections"],
+    ["inventory", "Inventory Entry"],
+    ["delivery", "Delivery zones & charges"],
+    ["payments", "Payment methods"],
+  ] as const;
+  for (const [path, heading] of modules) {
+    await page.goto(`/admin/${path}`);
+    await expect(
+      page.getByRole("heading", { name: heading, level: 1 }),
+    ).toBeVisible();
+    await expect(page.getByRole("button", { name: "Back" })).toBeVisible();
+  }
+
+  await page.goto("/admin/brands");
+  const brandEditor = page.locator("details.brand-editor").first();
+  await brandEditor.locator(":scope > summary").click();
+  await expect(brandEditor.locator('input[name="name"]')).not.toHaveValue("");
+  await expect(
+    brandEditor.getByRole("button", { name: "Save brand" }),
+  ).toBeVisible();
+
+  await page.goto("/admin/categories");
+  const categoryEditor = page.locator("details.brand-editor").first();
+  await categoryEditor.locator(":scope > summary").click();
+  await expect(categoryEditor.locator('input[name="name"]')).not.toHaveValue(
+    "",
+  );
+
+  await page.goto("/admin/products?q=logos");
+  await expect(page.getByText("logos", { exact: true }).first()).toBeVisible();
+  await expect(page.locator(".status-pill").first()).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Choose from Media Library" }),
+  ).toBeVisible();
+
+  await page.goto("/admin/media");
+  const gallery = page.locator("details.product-media-product").first();
+  await gallery.locator(":scope > summary").click();
+  await expect(
+    gallery.getByRole("heading", { name: "Current gallery" }),
+  ).toBeVisible();
+  await expect(gallery.locator("img").first()).toBeVisible();
+
+  await page.goto("/admin/inventory");
+  expect(
+    await page.locator('select[name="variantId"] option').count(),
+  ).toBeGreaterThan(1);
+  expect(
+    await page.locator('select[name="locationId"] option').count(),
+  ).toBeGreaterThan(0);
+  await page
+    .locator('select[name="movementType"]')
+    .selectOption("adjustment-in");
+  await page.locator('input[name="quantity"]').fill("1");
+
+  await page.goto("/admin/delivery");
+  for (const card of await page.locator(".admin-module-card").all()) {
+    if (await card.locator('input[name="isEnabled"]').isChecked())
+      await expect(card.locator('input[name="charge"]')).not.toHaveValue("");
+  }
+
+  await page.goto("/admin/payments");
+  const cardMethod = page.locator(".admin-module-card", { hasText: "Card" });
+  await expect(cardMethod.locator('input[name="selectable"]')).toBeChecked();
+
+  await page.goto("/admin/products");
+  await page
+    .locator('.catalog-product-form input[name="name"]')
+    .fill("Unsaved navigation check");
+  page.once("dialog", async (dialog) => dialog.dismiss());
+  await page.getByRole("button", { name: "Back" }).click();
+  await expect(page).toHaveURL(/\/admin\/products/);
+  page.once("dialog", async (dialog) => dialog.accept());
+  await page.getByRole("button", { name: "Back" }).click();
+  await expect(page).toHaveURL(/\/admin$/);
+  expect(failures).toEqual([]);
+});
+
+test("mobile customer navigation and cart controls remain usable", async ({
+  page,
+}) => {
+  test.skip(
+    test.info().project.name !== "mobile",
+    "Mobile-only stabilization workflow",
+  );
+  const failures = monitor(page);
+  await page.goto("/");
+  await page.getByRole("button", { name: "Open menu" }).click();
+  await expect(
+    page.getByRole("navigation", { name: "Primary navigation" }),
+  ).toBeVisible();
+  await page.getByRole("link", { name: "Shop" }).first().click();
+  await expect(page).toHaveURL(/\/shop/);
+  await page.getByRole("button", { name: /^Add/ }).first().click();
+  await expect(page.getByRole("status")).toContainText(/added to your bag/i);
+  await page.goto("/cart");
+  await expect(
+    page.getByRole("link", { name: "Continue to checkout" }),
+  ).toBeVisible();
+  expect(failures).toEqual([]);
+});
