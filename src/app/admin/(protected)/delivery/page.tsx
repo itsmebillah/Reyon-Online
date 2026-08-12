@@ -6,6 +6,7 @@ import {
 import {
   assignShipment,
   configureDeliveryPartner,
+  transitionDelivery,
   updateDeliveryZone,
 } from "./actions";
 export const metadata: Metadata = {
@@ -146,6 +147,53 @@ export default async function DeliveryPage() {
                           />
                           <button className="button button--primary">
                             Assign
+                          </button>
+                        </form>
+                      ) : shipment.state === "courier-assigned" ? (
+                        <form
+                          action={transitionDelivery}
+                          className="catalog-admin-form"
+                        >
+                          <input
+                            type="hidden"
+                            name="fulfillmentId"
+                            value={shipment.id}
+                          />
+                          <input
+                            type="hidden"
+                            name="targetState"
+                            value="picked-up"
+                          />
+                          <input
+                            name="note"
+                            required
+                            placeholder="Pickup / handoff evidence"
+                          />
+                          <button className="button button--primary">
+                            Record pickup
+                          </button>
+                        </form>
+                      ) : shipment.state === "picked-up" ||
+                        shipment.state === "in-transit" ? (
+                        <form action={transitionDelivery}>
+                          <input
+                            type="hidden"
+                            name="fulfillmentId"
+                            value={shipment.id}
+                          />
+                          <input
+                            type="hidden"
+                            name="targetState"
+                            value={
+                              shipment.state === "picked-up"
+                                ? "in-transit"
+                                : "out-for-delivery"
+                            }
+                          />
+                          <button className="button button--secondary">
+                            {shipment.state === "picked-up"
+                              ? "Mark in transit"
+                              : "Mark out for delivery"}
                           </button>
                         </form>
                       ) : (

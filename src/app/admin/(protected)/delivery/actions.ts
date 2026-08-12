@@ -40,3 +40,15 @@ export async function assignShipment(form: FormData) {
   if (error) throw new Error(error.message);
   revalidatePath("/admin/delivery");
 }
+
+export async function transitionDelivery(form: FormData) {
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.rpc("admin_transition_delivery", {
+    p_fulfillment_id: String(form.get("fulfillmentId") ?? ""),
+    p_target_state: String(form.get("targetState") ?? ""),
+    p_note: String(form.get("note") ?? "").trim() || null,
+  });
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin/delivery");
+  revalidatePath("/admin/orders");
+}
