@@ -49,6 +49,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 - Added auditable reservation-expiry processing that releases stock, moves confirmed orders to a reservation exception, appends lifecycle evidence, and opens review cases.
 - Added permission-gated manual payment verification/rejection, append-only evidence history, a minimal private review queue, and customer resubmission of rejected references; COD remains separate.
 - Added a provider-neutral notification outbox for order and manual-payment events with separate append-only delivery-attempt evidence; notification failure cannot mutate order state.
+- Added append-only correction and return boundaries: pre-shipment corrections enter controlled review, while shipped/delivered changes hand off to Return/Refund without mutating history.
 
 - Corrected Sprint 15 payment-step navigation by separating method selection from payment confirmation/evidence. Continue now follows client selection state, mobile evidence remains mandatory, Card is represented as manual pending follow-up without collecting card data or claiming gateway success, COD remains payable on delivery, and server-side persistence errors are explicit.
   - Approval/owner: Product Owner checkout payment-step correction dated 2026-08-12

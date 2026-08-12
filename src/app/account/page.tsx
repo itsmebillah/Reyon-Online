@@ -1,6 +1,7 @@
 import { Container, EmptyState, LinkButton } from "@/components/ui";
 import { CancelOrderForm } from "./cancel-order-form";
 import { ResubmitPaymentForm } from "./resubmit-payment-form";
+import { OrderChangeForm } from "./order-change-form";
 export default function Account() {
   return (
     <Container className="page">
@@ -19,6 +20,15 @@ export default function Account() {
         <span>Manual payment</span>
         <h2>Correct rejected payment evidence</h2>
         <ResubmitPaymentForm />
+      </section>
+      <section className="admin-module-card">
+        <span>Append-only request</span>
+        <h2>Request a correction or return</h2>
+        <p>
+          After shipment, requests enter the Return/Refund workflow. Existing
+          order history is never overwritten.
+        </p>
+        <OrderChangeForm />
       </section>
     </Container>
   );

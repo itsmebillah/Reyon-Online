@@ -54,6 +54,11 @@ export default async function OrdersPage({
           Open cancellation & review queue
         </Link>
       </p>
+      <p>
+        <Link className="button button--secondary" href="/admin/orders/changes">
+          Open correction & return requests
+        </Link>
+      </p>
       <form className="brand-toolbar" method="get" role="search">
         <label>
           <span>Search orders</span>

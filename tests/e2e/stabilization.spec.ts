@@ -135,6 +135,7 @@ test("authenticated administrator can traverse every released workspace module",
     ["collections", "Homepage Collections"],
     ["orders", "Order Management"],
     ["orders/reviews", "Cancellation & Review Queue"],
+    ["orders/changes", "Correction & Return Boundaries"],
     ["notifications", "Notification Outbox"],
     ["inventory", "Inventory Entry"],
     ["delivery", "Delivery zones & charges"],
@@ -203,7 +204,7 @@ test("authenticated administrator can traverse every released workspace module",
     await expect(
       page.getByRole("heading", { name: "Advance or resolve" }),
     ).toBeVisible();
-    }
+  }
 
   await page.goto("/admin/orders/reviews");
   await expect(
