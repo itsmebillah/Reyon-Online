@@ -15,3 +15,17 @@ export async function requestCancellation(
     ? { error: error.message }
     : { success: "Cancellation request received for administrator review." };
 }
+export async function resubmitPayment(
+  _state: CancellationState,
+  form: FormData,
+): Promise<CancellationState> {
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.rpc("resubmit_manual_payment_evidence", {
+    p_order_reference: String(form.get("orderReference") ?? ""),
+    p_phone: String(form.get("phone") ?? ""),
+    p_reference: String(form.get("transactionReference") ?? ""),
+  });
+  return error
+    ? { error: error.message }
+    : { success: "Corrected payment evidence submitted for review." };
+}

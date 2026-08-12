@@ -216,6 +216,9 @@ test("authenticated administrator can traverse every released workspace module",
   }
 
   await page.goto("/admin/payments");
+  await expect(
+    page.getByRole("heading", { name: "Pending payment evidence" }),
+  ).toBeVisible();
   const cardMethod = page.locator(".admin-module-card", { hasText: "Card" });
   await expect(cardMethod.locator('input[name="selectable"]')).toBeChecked();
 

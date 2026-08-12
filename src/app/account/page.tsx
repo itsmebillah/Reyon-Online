@@ -1,5 +1,6 @@
 import { Container, EmptyState, LinkButton } from "@/components/ui";
 import { CancelOrderForm } from "./cancel-order-form";
+import { ResubmitPaymentForm } from "./resubmit-payment-form";
 export default function Account() {
   return (
     <Container className="page">
@@ -13,6 +14,11 @@ export default function Account() {
         <h2>Request order cancellation</h2>
         <p>After shipment, order changes move to the return workflow.</p>
         <CancelOrderForm />
+      </section>
+      <section className="admin-module-card">
+        <span>Manual payment</span>
+        <h2>Correct rejected payment evidence</h2>
+        <ResubmitPaymentForm />
       </section>
     </Container>
   );

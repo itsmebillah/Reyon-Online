@@ -13,9 +13,23 @@ async function save(form: FormData) {
   revalidatePath("/admin/payments");
   revalidatePath("/checkout");
 }
+async function decide(form: FormData) {
+  "use server";
+  const s = await createSupabaseServerClient();
+  await s.rpc("admin_decide_manual_payment", {
+    p_order_id: String(form.get("orderId")),
+    p_decision: String(form.get("decision")),
+    p_note: String(form.get("note") ?? "") || null,
+  });
+  revalidatePath("/admin/payments");
+  revalidatePath("/admin/orders");
+}
 export default async function Page() {
   const s = await createSupabaseServerClient();
-  const { data } = await s.rpc("admin_payment_methods");
+  const [{ data }, { data: pendingData }] = await Promise.all([
+    s.rpc("admin_payment_methods"),
+    s.rpc("admin_pending_manual_payments"),
+  ]);
   const methods = (data ?? []) as Array<{
     id: string;
     name: string;
@@ -24,6 +38,17 @@ export default async function Page() {
     isSelectable: boolean;
     instructions: string | null;
     accountReference: string | null;
+  }>;
+  const pending = (pendingData ?? []) as Array<{
+    orderId: string;
+    orderNumber: string;
+    orderState: string;
+    customerName: string;
+    method: string;
+    amount: number;
+    currency: string;
+    reference: string;
+    paymentState: string;
   }>;
   return (
     <section className="admin-dashboard catalog-admin">
@@ -35,6 +60,57 @@ export default async function Page() {
           instructions. Card selection never records gateway success.
         </p>
       </header>
+      <article className="admin-module-card">
+        <span>Manual review</span>
+        <h2>Pending payment evidence</h2>
+        {pending.length ? (
+          pending.map((item) => (
+            <form
+              action={decide}
+              className="catalog-admin-form"
+              key={item.orderId}
+            >
+              <input type="hidden" name="orderId" value={item.orderId} />
+              <p>
+                <strong>{item.orderNumber}</strong> · {item.customerName} ·{" "}
+                {item.orderState}
+              </p>
+              <p>
+                {item.method} ·{" "}
+                {new Intl.NumberFormat("en-BD", {
+                  style: "currency",
+                  currency: "BDT",
+                }).format(Number(item.amount))}{" "}
+                · Reference <strong>{item.reference}</strong>
+              </p>
+              <label>
+                Internal rejection note
+                <textarea name="note" />
+              </label>
+              <div className="admin-quick-actions">
+                <button
+                  className="button button--primary"
+                  name="decision"
+                  value="verified"
+                >
+                  Verify evidence
+                </button>
+                <button
+                  className="button button--secondary"
+                  name="decision"
+                  value="rejected"
+                >
+                  Reject evidence
+                </button>
+              </div>
+            </form>
+          ))
+        ) : (
+          <p className="admin-empty">
+            No manual payment evidence is awaiting review.
+          </p>
+        )}
+      </article>
       <div className="catalog-admin-grid">
         {methods.map((m) => (
           <article className="admin-module-card" key={m.id}>
