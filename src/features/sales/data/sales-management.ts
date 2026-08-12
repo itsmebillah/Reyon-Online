@@ -5,6 +5,8 @@ export type CompletedSale = Readonly<{
   id: string;
   orderId: string;
   orderNumber: string;
+  invoiceNumber: number;
+  receiptNumber: number | null;
   completedAt: string;
   productSales: number;
   deliveryCharge: number;

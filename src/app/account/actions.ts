@@ -1,6 +1,44 @@
 "use server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 export type CancellationState = { success?: string; error?: string };
+export type SalesDocumentState = {
+  error?: string;
+  document?: {
+    orderNumber: string;
+    invoiceNumber: number;
+    issuedAt: string;
+    productSales: number;
+    deliveryCharge: number;
+    grandTotal: number;
+    lines: {
+      lineNumber: number;
+      description: string;
+      quantity: number;
+      unitPrice: number;
+      lineTotal: number;
+    }[];
+    receipts: {
+      receiptNumber: number;
+      method: string;
+      amount: number;
+      issuedAt: string;
+    }[];
+  };
+};
+
+export async function findSalesDocuments(
+  _state: SalesDocumentState,
+  form: FormData,
+): Promise<SalesDocumentState> {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.rpc("customer_sales_documents", {
+    p_order_reference: String(form.get("orderReference") ?? ""),
+    p_phone: String(form.get("phone") ?? ""),
+  });
+  if (error || !data)
+    return { error: "No completed-sale invoice matched those details." };
+  return { document: data as SalesDocumentState["document"] };
+}
 export async function requestCancellation(
   _state: CancellationState,
   form: FormData,

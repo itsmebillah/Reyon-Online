@@ -75,6 +75,7 @@ export default async function SalesPage() {
                 <tr>
                   <th>Order</th>
                   <th>Completed</th>
+                  <th>Documents</th>
                   <th>Payment</th>
                   <th>Product sales</th>
                   <th>Delivery</th>
@@ -92,6 +93,14 @@ export default async function SalesPage() {
                       </strong>
                     </td>
                     <td>{date(sale.completedAt)}</td>
+                    <td>
+                      <strong>Invoice #{sale.invoiceNumber}</strong>
+                      <small>
+                        {sale.receiptNumber
+                          ? `Receipt #${sale.receiptNumber}`
+                          : "No payment receipt"}
+                      </small>
+                    </td>
                     <td>
                       <strong>{sale.paymentMethod}</strong>
                       <small>{sale.paymentState}</small>

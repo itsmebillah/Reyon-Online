@@ -86,6 +86,8 @@ The checkout payment journey separates method selection from confirmation/eviden
 
 Add approved payment commands, provider adapters, checkout sessions, cash evidence, settlement batches, reconciliation, disputes, refunds, chargebacks, exception queues, operational dashboards, and accounting-event projections. Sensitive payment instruments should remain with compliant providers whenever possible.
 
+Sprint 17 introduces a separate immutable Payment Receipt issued only when manual/prepaid payment is verified or COD is collected. A receipt is not an Invoice, does not complete the sale, and never implies automatic gateway processing. Both receipt and invoice identities are globally unique and database-generated.
+
 ## Related Documents
 
 - [Order Lifecycle](04_ORDER_LIFECYCLE.md)

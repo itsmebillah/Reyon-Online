@@ -44,6 +44,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 - Approved Completed as the operational completed-sale event, Shipped inventory conversion, separate product/delivery reporting, invoice and receipt identities, audited discounts, and net-of-returns sales measures.
 - Added the first Sales Processing milestone: Shipped atomically converts active reservations into one idempotent sold inventory movement, Delivered records COD collection separately, Completed creates immutable official sale evidence, and the Admin sales register separates product sales, delivery charges, and Grand Total.
+- Added globally unique database-numbered customer invoices for completed sales and separate payment receipts for verified manual payments or collected COD, with immutable document snapshots and a privacy-scoped customer retrieval boundary.
 
 ### Sprint 16 — Order Management
 
