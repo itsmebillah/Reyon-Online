@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getOrderManagementDashboard } from "@/features/orders/data/order-management";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Order Management",
@@ -90,7 +91,11 @@ export default async function OrdersPage({
                 {data.orders.map((order) => (
                   <tr key={order.id}>
                     <td>
-                      <strong>{order.orderNumber}</strong>
+                      <strong>
+                        <Link href={`/admin/orders/${order.id}`}>
+                          {order.orderNumber}
+                        </Link>
+                      </strong>
                       <small>
                         {date(order.occurredAt)} · {order.lineCount} item
                         {order.lineCount === 1 ? "" : "s"}

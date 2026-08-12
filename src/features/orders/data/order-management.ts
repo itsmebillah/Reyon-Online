@@ -44,3 +44,57 @@ export async function getOrderManagementDashboard(filters?: {
     states: (states ?? []) as OrderStateOption[],
   };
 }
+
+export async function getOrderDetail(id: string) {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.rpc("admin_order_detail", {
+    p_order_id: id,
+  });
+  if (error || !data) throw new Error("Order details could not be loaded.");
+  return data as unknown as {
+    id: string;
+    orderNumber: string;
+    state: string;
+    occurredAt: string;
+    subtotal: number;
+    deliveryAmount: number;
+    total: number;
+    currency: "BDT";
+    address: {
+      full_name: string;
+      phone: string;
+      house_no: string;
+      road: string;
+      village_city: string;
+      district: string;
+      division: string;
+    };
+    delivery: { zone_name_snapshot: string; charge_amount: number };
+    payment: {
+      method_name_snapshot: string;
+      evidence_state_key: string;
+      transaction_reference: string | null;
+    };
+    lines: {
+      id: string;
+      product_name_snapshot: string;
+      variant_label_snapshot: string;
+      sku_snapshot: string;
+      quantity: number;
+      unit_price_amount: number;
+    }[];
+    history: {
+      sequence: number;
+      from: string | null;
+      to: string;
+      occurredAt: string;
+      reason: string | null;
+    }[];
+    allowedTransitions: {
+      key: string;
+      name: string;
+      requiresReason: boolean;
+      requiresHandoff: boolean;
+    }[];
+  };
+}

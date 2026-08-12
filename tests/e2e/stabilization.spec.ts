@@ -192,8 +192,16 @@ test("authenticated administrator can traverse every released workspace module",
   const orderReferences = page.locator(
     ".order-table tbody tr td:first-child strong",
   );
-  if (await orderReferences.count())
+  if (await orderReferences.count()) {
     await expect(orderReferences.first()).toHaveText(/^RYN-\d{4}-\d{6}$/);
+    const reference = await orderReferences.first().innerText();
+    await orderReferences.first().getByRole("link").click();
+    await expect(page.getByRole("heading", { name: reference })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "History" })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Advance or resolve" }),
+    ).toBeVisible();
+  }
 
   await page.goto("/admin/delivery");
   for (const card of await page.locator(".admin-module-card").all()) {
