@@ -169,20 +169,20 @@ test("customer catalog excludes hardcoded demonstration products", async ({
   expect(failures).toEqual([]);
 });
 
-test("header uses the appropriate responsive logo lockup", async ({ page }) => {
+test("header uses the horizontal logo lockup at every viewport", async ({
+  page,
+}) => {
   const failures = monitor(page);
   await page.goto("/");
-  const isMobile = (page.viewportSize()?.width ?? 0) <= 680;
+  const mark = page.locator(".header-logo-mark");
   const wordmark = page.locator(".header-logo--wordmark");
-  const seal = page.locator(".header-logo--seal");
-
-  if (isMobile) {
-    await expect(wordmark).toBeVisible();
-    await expect(seal).toBeHidden();
-  } else {
-    await expect(seal).toBeVisible();
-    await expect(wordmark).toBeHidden();
-  }
+  await expect(mark).toBeVisible();
+  await expect(wordmark).toBeVisible();
+  const markBox = await mark.boundingBox();
+  const wordmarkBox = await wordmark.boundingBox();
+  expect(markBox).not.toBeNull();
+  expect(wordmarkBox).not.toBeNull();
+  expect(markBox!.x + markBox!.width).toBeLessThanOrEqual(wordmarkBox!.x);
 
   expect(failures).toEqual([]);
 });

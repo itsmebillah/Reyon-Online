@@ -58,14 +58,16 @@ export function Header() {
           href="/"
           aria-label="REYON home"
         >
-          <Image
-            className="header-logo header-logo--seal"
-            src="/images/reyon-logo-primary.png"
-            alt="REYON Beauty & Care"
-            width={72}
-            height={72}
-            priority
-          />
+          <span className="header-logo-mark" aria-hidden="true">
+            <Image
+              className="header-logo header-logo--mark-source"
+              src="/images/reyon-logo-primary.png"
+              alt=""
+              width={126}
+              height={126}
+              priority
+            />
+          </span>
           <Image
             className="header-logo header-logo--wordmark"
             src="/images/reyon-wordmark-horizontal.webp"

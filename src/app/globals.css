@@ -659,13 +659,32 @@ img {
   border-radius: 50%;
   object-fit: contain;
 }
-.brand-logo--header .header-logo--seal {
-  width: 62px;
-  height: 62px;
-  margin-top: 7px;
+.brand-logo--header {
+  gap: 9px;
+  border-radius: 0;
 }
-.brand-logo .header-logo--wordmark {
-  display: none;
+.brand-logo--header img {
+  border-radius: 0;
+}
+.header-logo-mark {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  flex: 0 0 50px;
+  overflow: hidden;
+}
+.header-logo-mark .header-logo--mark-source {
+  position: absolute;
+  width: 104px;
+  height: 104px;
+  max-width: none;
+  top: -7px;
+  left: -27px;
+}
+.brand-logo--header .header-logo--wordmark {
+  display: block;
+  width: 132px;
+  height: auto;
 }
 .primary-nav {
   display: flex;
@@ -1707,16 +1726,22 @@ details p {
   .brand-logo--header {
     justify-self: center;
     min-width: 0;
-    border-radius: 0;
+    gap: 7px;
   }
-  .brand-logo--header .header-logo--seal {
-    display: none;
+  .brand-logo--header .header-logo-mark {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+  }
+  .brand-logo--header .header-logo--mark-source {
+    width: 88px;
+    height: 88px;
+    top: -6px;
+    left: -23px;
   }
   .brand-logo--header .header-logo--wordmark {
-    display: block;
-    width: min(132px, 100%);
+    width: min(118px, 100%);
     height: auto;
-    border-radius: 0;
   }
   .nav-actions {
     justify-self: end;
