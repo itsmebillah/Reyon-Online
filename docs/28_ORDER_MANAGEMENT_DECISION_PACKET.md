@@ -2,12 +2,12 @@
 
 ## Purpose
 
-This packet records only the business decisions required to implement Sprint 16 Order Management. It does not approve behavior, reopen Sprint 15, or define Sales Processing, Delivery Operations, or Returns and Refunds beyond the handoff points Order Management must recognize.
+This packet records the Product Owner-approved business decisions for Sprint 16 Order Management. The decisions became authoritative on 2026-08-12. It does not reopen Sprint 15 or define Sales Processing, Delivery Operations, or Returns and Refunds beyond the handoff points Order Management must recognize.
 
 ## Table of Contents
 
 - [Approved baseline](#approved-baseline)
-- [Decisions required](#decisions-required)
+- [Approved decisions](#approved-decisions)
 - [Stage action matrix](#stage-action-matrix)
 - [Decision dependencies](#decision-dependencies)
 - [Future expansion](#future-expansion)
@@ -28,9 +28,23 @@ The following rules are already approved and are not open for reconsideration in
 - Profile existence, OTP/contact verification, and REYON customer verification are separate. Only a genuinely delivered/completed order verifies the REYON customer.
 - Historical order, inventory, payment, delivery, customer, and transition evidence is not silently edited or deleted.
 
-## Decisions Required
+## Approved Decisions
 
-Product Owner approval is required for each numbered decision before its dependent workflow is implemented.
+The following specification supersedes the discovery prompts under OM-01 through OM-14:
+
+- Order references are globally unique and sequential in `RYN-YYYY-XXXXXX` format; the internal Order ID remains immutable and separate.
+- The standard lifecycle is Pending Payment → Confirmed → Processing → Packed → Shipped → Delivered → Completed. Delivered and Completed are distinct. Cancelled, Rejected, Failed, Returned, and required payment/reservation exceptions are exceptional states.
+- Customers may cancel before shipment; after shipment they enter the return workflow. Administrators may cancel or reject before delivery with a required reason.
+- Editing becomes progressively restricted. Customer-visible product, price, or stock changes require authoritative revalidation and customer confirmation.
+- Payment mismatch, stock exceptions, suspicious orders, delivery/address exceptions, and configured risk conditions require manual review. Internal review notes are private.
+- Initial roles are Super Admin, Admin, and Staff. No second approval is initially required, and permissions remain extensible.
+- Manual payment is never falsely verified. COD may proceed without prior payment verification.
+- The auditable reservation remains 30 minutes. Expiry releases stock and moves the order to an exception. Partial stock never creates a partial order automatically.
+- Packed → Shipped requires delivery-handoff evidence. After Delivered, corrections use Return/Refund workflows.
+- Customer/admin notifications are event-driven, failure-safe, configurable, and provider-neutral.
+- Every correction is additive and auditable; destructive historical override is prohibited.
+
+The detailed sections below remain as implementation traceability for each approved decision area, not unresolved questions.
 
 ### OM-01 — Order Reference
 

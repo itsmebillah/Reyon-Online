@@ -65,7 +65,7 @@ Sprint 15 must not define the broader Order Management lifecycle reserved for Sp
 
 ## Sprint 16 Decision Status
 
-Sprint 16 Order Management is in Product Owner decision review. No broader lifecycle state, transition, cancellation, editing, review, permission, payment effect, fulfillment handoff, notification, or correction behavior is approved by this document. The required decisions and the Sprint 15 rules that must not be reopened are consolidated in the [Sprint 16 Order Management Product Owner Decision Packet](28_ORDER_MANAGEMENT_DECISION_PACKET.md).
+Sprint 16 Order Management was approved on 2026-08-12. The standard lifecycle is Pending Payment → Confirmed → Processing → Packed → Shipped → Delivered → Completed; Delivered and Completed remain distinct. Approved exceptional states cover Cancelled, Rejected, Failed, Returned, manual review, and required payment, reservation, or confirmation exceptions. The authoritative rules and the Sprint 15 baseline that must not be reopened are consolidated in the [Sprint 16 Order Management Product Owner Decision Packet](28_ORDER_MANAGEMENT_DECISION_PACKET.md).
 
 ## Lifecycle Definition
 

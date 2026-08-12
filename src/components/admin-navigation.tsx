@@ -11,6 +11,7 @@ import {
   Tags,
   Truck,
   CreditCard,
+  ClipboardList,
 } from "lucide-react";
 
 const groups = [
@@ -35,6 +36,7 @@ const groups = [
   {
     label: "Operations",
     items: [
+      { label: "Orders", href: "/admin/orders", icon: ClipboardList },
       { label: "Inventory", href: "/admin/inventory", icon: Boxes },
       { label: "Delivery", href: "/admin/delivery", icon: Truck },
       { label: "Payments", href: "/admin/payments", icon: CreditCard },

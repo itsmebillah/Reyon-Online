@@ -133,6 +133,7 @@ test("authenticated administrator can traverse every released workspace module",
     ["products", "Product Management"],
     ["media", "Product Media"],
     ["collections", "Homepage Collections"],
+    ["orders", "Order Management"],
     ["inventory", "Inventory Entry"],
     ["delivery", "Delivery zones & charges"],
     ["payments", "Payment methods"],
@@ -186,6 +187,13 @@ test("authenticated administrator can traverse every released workspace module",
     .locator('select[name="movementType"]')
     .selectOption("adjustment-in");
   await page.locator('input[name="quantity"]').fill("1");
+
+  await page.goto("/admin/orders");
+  const orderReferences = page.locator(
+    ".order-table tbody tr td:first-child strong",
+  );
+  if (await orderReferences.count())
+    await expect(orderReferences.first()).toHaveText(/^RYN-\d{4}-\d{6}$/);
 
   await page.goto("/admin/delivery");
   for (const card of await page.locator(".admin-module-card").all()) {
