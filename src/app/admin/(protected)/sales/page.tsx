@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getCompletedSales } from "@/features/sales/data/sales-management";
+import {
+  getCompletedSales,
+  getDailySalesControl,
+} from "@/features/sales/data/sales-management";
 
 export const metadata: Metadata = {
   title: "Sales Processing",
@@ -23,7 +26,10 @@ const date = (value: string) =>
   }).format(new Date(value));
 
 export default async function SalesPage() {
-  const sales = await getCompletedSales();
+  const [sales, daily] = await Promise.all([
+    getCompletedSales(),
+    getDailySalesControl(),
+  ]);
   const productSales = sales.reduce(
     (total, sale) => total + Number(sale.productSales),
     0,
@@ -64,6 +70,45 @@ export default async function SalesPage() {
           <p>Reported separately</p>
         </article>
       </div>
+
+      <article className="admin-module-card order-list-card">
+        <span>Daily control</span>
+        <h2>Sales reconciliation</h2>
+        {daily.length ? (
+          <div className="inventory-table-wrap">
+            <table className="inventory-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Sales</th>
+                  <th>Products</th>
+                  <th>Delivery</th>
+                  <th>Discounts</th>
+                  <th>Grand total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {daily.map((row) => (
+                  <tr key={`${row.businessDate}-${row.currency}`}>
+                    <td>{row.businessDate}</td>
+                    <td>{row.completedSalesCount}</td>
+                    <td>{money(Number(row.productSales))}</td>
+                    <td>{money(Number(row.deliveryCharges))}</td>
+                    <td>{money(Number(row.discounts))}</td>
+                    <td>
+                      <strong>{money(Number(row.grandTotal))}</strong>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="admin-empty">
+            No completed sales are available for daily reconciliation.
+          </p>
+        )}
+      </article>
 
       <article className="admin-module-card order-list-card">
         <span>Completed-sale register</span>

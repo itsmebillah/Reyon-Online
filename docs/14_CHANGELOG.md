@@ -46,6 +46,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 - Added the first Sales Processing milestone: Shipped atomically converts active reservations into one idempotent sold inventory movement, Delivered records COD collection separately, Completed creates immutable official sale evidence, and the Admin sales register separates product sales, delivery charges, and Grand Total.
 - Added globally unique database-numbered customer invoices for completed sales and separate payment receipts for verified manual payments or collected COD, with immutable document snapshots and a privacy-scoped customer retrieval boundary.
 - Added role-controlled line/order discounts with approved Super Admin/Admin/Staff limits, transactional cumulative enforcement, mandatory reasons, append-only evidence, protected finalized orders, and discount-aware customer invoices.
+- Added reporting-oriented daily sales reconciliation from immutable Completed-sale facts, separating product sales, delivery charges, discounts, and Grand Total without introducing a POS opening/closing workflow.
 
 ### Sprint 16 — Order Management
 
