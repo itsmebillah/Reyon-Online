@@ -67,6 +67,8 @@ Chart of accounts, fiscal periods, legal entities, cost centers, locations, chan
 
 No revenue recognition, inventory valuation, cost allocation, discount allocation, rounding, bad debt, depreciation, or accrual policy is assumed.
 
+The approved operational completed-sale event is Order `Completed`; Delivered alone is not a completed sale. Product sales and delivery charges remain separate operational measures while Grand Total includes both. This creates source evidence only and does not define debit/credit mappings, statutory recognition, inventory costing, tax, or general-ledger posting.
+
 ### TODO — Finance Owner
 
 - Approve applicable accounting framework and every required treatment.

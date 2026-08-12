@@ -79,6 +79,8 @@ On-hand is the sum of movement deltas. Reserved is the sum of active future orde
 
 For Sprint 15, adding a product to a cart does not reserve stock. Order confirmation starts an auditable 30-minute reservation. Cancellation, expiry, or leaving confirmed state without successful fulfillment releases it. Confirmation never reserves above available stock; insufficient stock places the order into an administrator-handled exception without trusting stale cart availability.
 
+Sprint 17 converts the active reservation into one append-only sold/fulfilled inventory movement when the order reaches Shipped. The conversion, reservation release, and order transition are transactional and idempotent so stock is never deducted twice.
+
 ### TODO — Domain Owner
 
 - Define reservation timing, allocation priority, expiry, release, and order integration behavior.

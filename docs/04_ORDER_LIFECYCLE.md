@@ -108,6 +108,19 @@ No amendment, cancellation, return, exchange, refund, or store-credit policy is 
 
 Every lifecycle transition must explicitly state whether it reserves or moves inventory, initiates or reverses payment, creates fulfillment work, changes customer commitments, produces accounting events, or triggers notifications and automation.
 
+### Approved Sprint 17 Sales Effects
+
+| Transition / fact                         | Approved effect                                                                                                                                                               |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Verified prepaid/manual payment           | Permits the order to enter Processing; it does not complete or recognize the sale.                                                                                            |
+| Shipped                                   | Transactionally converts the active reservation into one auditable sold/fulfilled inventory movement. The operation is idempotent and must never deduct the same stock twice. |
+| Delivered                                 | Records the delivery milestone. COD payment is collected at delivery, but delivery alone does not recognize the sale.                                                         |
+| Completed                                 | Creates the official completed-sale fact and customer Invoice. This is the sole positive lifecycle state included in completed-sales reporting.                               |
+| Cancelled, Rejected, Failed, or abandoned | Does not create a completed sale. Any existing active reservation follows its approved release path.                                                                          |
+| Returned / refunded                       | Preserves the original completed sale and appends separate return/refund adjustment evidence.                                                                                 |
+
+Customer Grand Total remains product subtotal plus delivery charge. Product sales revenue and delivery charges remain separately identifiable in sales evidence and reporting.
+
 ## Exceptions and Recovery
 
 Expected exception classes include unavailable dependencies, inconsistent external responses, duplicate commands, partial completion, and manual override. Recovery policy and authority are pending; failures must remain visible and reconcilable.
@@ -136,3 +149,4 @@ Add approved state diagrams, transition tables, event definitions, sequence diag
 - [Sprint 16 Order Management Product Owner Decision Packet](28_ORDER_MANAGEMENT_DECISION_PACKET.md)
 - [Payment Evidence Architecture](21_PAYMENT_EVIDENCE_ARCHITECTURE.md)
 - [Customer and CRM Identity Architecture](22_CUSTOMER_CRM_IDENTITY_ARCHITECTURE.md)
+- [Sprint 17 Sales Processing](29_SALES_PROCESSING.md)

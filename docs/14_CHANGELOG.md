@@ -40,6 +40,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+### Sprint 17 — Sales Processing
+
+- Approved Completed as the operational completed-sale event, Shipped inventory conversion, separate product/delivery reporting, invoice and receipt identities, audited discounts, and net-of-returns sales measures.
+- Added the first Sales Processing milestone: Shipped atomically converts active reservations into one idempotent sold inventory movement, Delivered records COD collection separately, Completed creates immutable official sale evidence, and the Admin sales register separates product sales, delivery charges, and Grand Total.
+
 ### Sprint 16 — Order Management
 
 - Approved the Order Management lifecycle, cancellation, review, role, payment, reservation, delivery-handoff, notification, and append-only correction rules.

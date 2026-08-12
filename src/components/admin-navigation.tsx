@@ -13,6 +13,7 @@ import {
   CreditCard,
   ClipboardList,
   Bell,
+  BadgeDollarSign,
 } from "lucide-react";
 
 const groups = [
@@ -38,6 +39,7 @@ const groups = [
     label: "Operations",
     items: [
       { label: "Orders", href: "/admin/orders", icon: ClipboardList },
+      { label: "Sales", href: "/admin/sales", icon: BadgeDollarSign },
       { label: "Notifications", href: "/admin/notifications", icon: Bell },
       { label: "Inventory", href: "/admin/inventory", icon: Boxes },
       { label: "Delivery", href: "/admin/delivery", icon: Truck },

@@ -66,6 +66,10 @@ The foundation contains contract metadata and provenance, not copied operational
 - Automation and AI may consume only approved metric versions and must preserve version and lineage.
 - Observability metrics describe technical operation and must not be conflated with business metrics.
 
+## Approved Sprint 17 Sales Measures
+
+Completed orders are the population for completed sales; Delivered, Cancelled, Rejected, Failed, and abandoned orders are excluded. Product sales revenue and delivery charges are reported separately, while customer Grand Total includes both. Best Seller and net-sales measures use completed quantities and product revenue net of append-only returned quantities/revenue. Daily sales control is reporting/reconciliation oriented and does not require POS opening/closing.
+
 ## Pending Business Decisions
 
 ### TODO — Product Owner / Domain Owners
