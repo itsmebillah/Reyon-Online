@@ -39,7 +39,7 @@ export default async function Home() {
           </div>
         </Container>
       </section>
-      <section className="section">
+      <section className="section home-categories">
         <Container>
           <SectionHeading
             eyebrow="Shop with intention"
