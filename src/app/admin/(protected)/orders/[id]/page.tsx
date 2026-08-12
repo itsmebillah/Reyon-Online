@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getOrderDetail } from "@/features/orders/data/order-management";
 import { TransitionForm } from "../transition-form";
+import { DiscountForm } from "../discount-form";
 
 const label = (value: string) =>
   value
@@ -62,7 +63,9 @@ export default async function OrderDetailPage({
         <article className="admin-module-card">
           <span>Order total</span>
           <h2>{money(Number(order.total))}</h2>
-          <p>Items {money(Number(order.subtotal))}</p>
+          <p>Gross items {money(Number(order.discounts.grossProductAmount))}</p>
+          <p>Discounts −{money(Number(order.discounts.discountAmount))}</p>
+          <p>Net items {money(Number(order.subtotal))}</p>
           <p>Delivery {money(Number(order.deliveryAmount))}</p>
         </article>
       </div>
@@ -94,6 +97,24 @@ export default async function OrderDetailPage({
             </tbody>
           </table>
         </div>
+      </article>
+      <article className="admin-module-card">
+        <span>Role-controlled adjustment</span>
+        <h2>Apply discount</h2>
+        <p>
+          Original price snapshots remain unchanged. Finalized orders cannot be
+          discounted.
+        </p>
+        <DiscountForm orderId={order.id} lines={order.lines} />
+        {order.discounts.events.map((event) => (
+          <p key={event.id}>
+            <strong>
+              {label(event.scope)} {label(event.type)}
+            </strong>{" "}
+            · −{money(Number(event.discountAmount))} · {event.reason} ·{" "}
+            {label(event.actorRole)} · {date(event.occurredAt)}
+          </p>
+        ))}
       </article>
       <article className="admin-module-card">
         <span>Append-only lifecycle</span>

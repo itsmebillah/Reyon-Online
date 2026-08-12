@@ -7,6 +7,8 @@ export type SalesDocumentState = {
     orderNumber: string;
     invoiceNumber: number;
     issuedAt: string;
+    grossProductAmount: number;
+    discountAmount: number;
     productSales: number;
     deliveryCharge: number;
     grandTotal: number;

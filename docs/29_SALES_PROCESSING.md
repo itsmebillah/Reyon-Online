@@ -18,6 +18,7 @@ This document records the approved Sales Processing rules connecting completed o
 - Verified prepaid/manual payment permits processing but does not complete a sale. COD is collected at delivery; its sale is recognized only at Completed.
 - Shipped transactionally converts the active reservation into one auditable sold/fulfilled inventory movement. Idempotency prevents double deduction.
 - Existing catalog prices remain valid. Authorized admins may apply line/order discounts with complete audit evidence.
+- Discount authority is cumulative against the original product subtotal: Super Admin is unrestricted within the applicable subtotal, Admin is limited to 20%, and Staff to 5%. Percentage and fixed discounts require a reason, cannot produce negative totals, and are rejected above authority without an approval workflow. Discount evidence records actor, role, time, original/value/resulting amounts and remains append-only. Shipped or finalized orders cannot be silently repriced.
 - A globally unique database-generated customer Invoice is required. Payment Receipt is separate and generated only for verified/collected payment.
 - Cancelled, Rejected, Failed, and abandoned orders are excluded from completed sales.
 - Returns/refunds append adjustments and never destroy original sale evidence.

@@ -53,6 +53,11 @@ export function SalesDocumentForm() {
               </tbody>
             </table>
           </div>
+          <p>
+            Gross product amount:{" "}
+            {money(Number(state.document.grossProductAmount))}
+          </p>
+          <p>Discounts: −{money(Number(state.document.discountAmount))}</p>
           <p>Product sales: {money(Number(state.document.productSales))}</p>
           <p>Delivery charge: {money(Number(state.document.deliveryCharge))}</p>
           <p>
