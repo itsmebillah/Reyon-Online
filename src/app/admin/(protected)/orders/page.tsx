@@ -49,6 +49,11 @@ export default async function OrdersPage({
           current payment, delivery, and reservation facts.
         </p>
       </header>
+      <p>
+        <Link className="button button--secondary" href="/admin/orders/reviews">
+          Open cancellation & review queue
+        </Link>
+      </p>
       <form className="brand-toolbar" method="get" role="search">
         <label>
           <span>Search orders</span>
