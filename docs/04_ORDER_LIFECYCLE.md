@@ -10,6 +10,7 @@ This document provides the structure for defining orders consistently across cha
 - [Order aggregate](#order-aggregate)
 - [Implemented persistence foundation](#implemented-persistence-foundation)
 - [Approved Sprint 15 checkout boundary](#approved-sprint-15-checkout-boundary)
+- [Sprint 16 decision status](#sprint-16-decision-status)
 - [Lifecycle definition](#lifecycle-definition)
 - [State dimensions](#state-dimensions)
 - [Transition controls](#transition-controls)
@@ -61,6 +62,10 @@ The released confirmation boundary does not perform or simulate OTP verification
 Account/profile existence, OTP/contact verification, and REYON customer verification are independent states. A transition to genuinely delivered or completed automatically marks the associated profile as a verified REYON customer and appends immutable evidence containing source `successful-order-delivery`, order reference, and timestamp. Cancelled, failed, returned, rejected, and undelivered orders cannot trigger this verification.
 
 Sprint 15 must not define the broader Order Management lifecycle reserved for Sprint 16.
+
+## Sprint 16 Decision Status
+
+Sprint 16 Order Management is in Product Owner decision review. No broader lifecycle state, transition, cancellation, editing, review, permission, payment effect, fulfillment handoff, notification, or correction behavior is approved by this document. The required decisions and the Sprint 15 rules that must not be reopened are consolidated in the [Sprint 16 Order Management Product Owner Decision Packet](28_ORDER_MANAGEMENT_DECISION_PACKET.md).
 
 ## Lifecycle Definition
 
@@ -128,5 +133,6 @@ Add approved state diagrams, transition tables, event definitions, sequence diag
 - [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
 - [Operating Topology Architecture](19_OPERATING_TOPOLOGY_ARCHITECTURE.md)
 - [Fulfillment and Delivery Architecture](20_FULFILLMENT_DELIVERY_ARCHITECTURE.md)
+- [Sprint 16 Order Management Product Owner Decision Packet](28_ORDER_MANAGEMENT_DECISION_PACKET.md)
 - [Payment Evidence Architecture](21_PAYMENT_EVIDENCE_ARCHITECTURE.md)
 - [Customer and CRM Identity Architecture](22_CUSTOMER_CRM_IDENTITY_ARCHITECTURE.md)

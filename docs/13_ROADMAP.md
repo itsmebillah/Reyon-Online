@@ -112,12 +112,12 @@ Sprint 14I releases Inventory Entry. Administrators record approved variant-leve
 
 ## Proposed Post-Sprint 14 Execution Roadmap
 
-The following sequence governs post-Sprint 14 execution. Sprint 15 rules are approved for implementation; later milestones begin only after their listed Product Owner decisions are approved.
+The following sequence governs post-Sprint 14 execution. Sprint 15 is released. Sprint 16 is in Product Owner decision review; later milestones begin only after their listed Product Owner decisions are approved.
 
 | Sprint | Proposed milestone                   | Depends on                                                                                         | Product Owner decisions required before implementation                                                                                                                                                                                                 |
 | ------ | ------------------------------------ | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 15     | Cart, Checkout, and Customer Account | Published catalog, pricing, inventory availability, customer identity foundation                   | Approved for implementation                                                                                                                                                                                                                            |
-| 16     | Order Management                     | Sprint 15 checkout contract; order and inventory foundations                                       | Order numbering; lifecycle states and transitions; reservation timing; edit/cancel windows; fraud/manual review; administrator permissions; customer notifications; correction and exception policy                                                    |
+| 15     | Cart, Checkout, and Customer Account | Published catalog, pricing, inventory availability, customer identity foundation                   | Released                                                                                                                                                                                                                                               |
+| 16     | Order Management                     | Sprint 15 checkout contract; order and inventory foundations                                       | Product Owner decision review: [Sprint 16 Order Management Decision Packet](28_ORDER_MANAGEMENT_DECISION_PACKET.md)                                                                                                                                    |
 | 17     | Sales Processing                     | Order Management; inventory movements; payment evidence foundation                                 | Sale-completion event; payment timing and methods; cash-on-delivery policy; discount authority; invoice/receipt requirements; partial, failed, duplicate, and abandoned-sale treatment; daily operating controls                                       |
 | 18     | Delivery Operations                  | Order Management; Sales Processing; fulfillment foundation                                         | Delivery areas, carriers, methods, charges, free-delivery threshold, promises and cutoffs; address validation; assignment and tracking; attempts, proof, failure, loss, damage, cancellation, and reconciliation rules                                 |
 | 19     | Returns and Refunds                  | Orders, sales, delivery, payment evidence, inventory corrections                                   | Eligibility window and condition; non-returnable products; request/approval states; return shipping responsibility; inspection and restocking; refund method and timing; partial returns; exchanges; damaged/wrong/missing-item evidence and authority |
@@ -158,6 +158,8 @@ Sprint 15E releases administrator-configurable Delivery Zones and Charges. Insid
 Sprint 15F releases honest Payment Method Selection: COD is initially selectable, mobile methods require configured instructions before selection, Card remains visible but unavailable without a real gateway, and no method can imply unverified success.
 
 Sprint 15G releases transactional Order Creation without fabricating OTP completion. Checkout persists an active configured delivery zone and charge, retains payment selection/evidence, and exposes readiness from authoritative data. One idempotent transaction creates or associates an initially unverified customer profile, revalidates published cart items, current prices, availability, address, delivery configuration, and payment selection; snapshots the commercial order; appends lifecycle evidence; and creates auditable 30-minute variant reservations. Insufficient stock creates a non-reserving confirmation-exception order for administrative handling. A later genuinely delivered/completed transition produces separate auditable REYON customer verification.
+
+Sprint 15 is complete and deployed. Sprint 16 planning is limited to the unresolved business decisions in the [Sprint 16 Order Management Product Owner Decision Packet](28_ORDER_MANAGEMENT_DECISION_PACKET.md). No Order Management application implementation begins until the applicable decisions are approved.
 
 ## Entry and Exit Criteria
 
@@ -208,6 +210,7 @@ Add approved initiative records, dependency visualization, milestones, release p
 ## Related Documents
 
 - [Project Vision](00_PROJECT_VISION.md)
+- [Sprint 16 Order Management Product Owner Decision Packet](28_ORDER_MANAGEMENT_DECISION_PACKET.md)
 - [Business Overview](01_BUSINESS_OVERVIEW.md)
 - [Tech Stack](10_TECH_STACK.md)
 - [Changelog](14_CHANGELOG.md)
