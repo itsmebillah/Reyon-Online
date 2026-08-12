@@ -70,6 +70,8 @@ The foundation contains contract metadata and provenance, not copied operational
 
 Completed orders are the population for completed sales; Delivered, Cancelled, Rejected, Failed, and abandoned orders are excluded. Product sales revenue and delivery charges are reported separately, while customer Grand Total includes both. Best Seller and net-sales measures use completed quantities and product revenue net of append-only returned quantities/revenue. Daily sales control is reporting/reconciliation oriented and does not require POS opening/closing.
 
+Returned quantity, refunded revenue, net-sales, and net Best Seller projections are deferred until Sprint 19 supplies approved auditable adjustment facts. Reporting must preserve gross completed-sale history and consume future adjustments as separate evidence.
+
 ## Pending Business Decisions
 
 ### TODO — Product Owner / Domain Owners

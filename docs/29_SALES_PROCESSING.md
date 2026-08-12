@@ -34,6 +34,8 @@ This document records the approved Sales Processing rules connecting completed o
 4. Sales register, daily reconciliation, and net-sales projections.
 5. Return/refund adjustment consumption when Sprint 19 supplies approved workflows.
 
+Sprint 17 is complete. Returned quantities, refunded revenue, net sales, and net Best Seller calculations remain deliberate Sprint 19 dependencies. Sales will consume append-only return/refund adjustments without changing original sale, invoice, receipt, discount, payment, or inventory evidence. Sprint 17 does not define return eligibility, refund calculation, restocking, or reverse logistics.
+
 ## Controls
 
 Sales evidence, documents, discounts, inventory movements, and adjustments are append-only or corrected by attributable counter-evidence. Accounting posting remains deferred until Finance approves accounts and entry mappings.

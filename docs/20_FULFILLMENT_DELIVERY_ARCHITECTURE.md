@@ -67,6 +67,8 @@ Checkout requires Full name, Phone, House No, Road, Village/City, Thana/Upazila,
 
 ## Pending Business Decisions
 
+Sprint 18 implementation is feature-blocked pending the focused decisions in the [Sprint 18 Delivery Operations Decision Packet](30_DELIVERY_OPERATIONS_DECISION_PACKET.md). Existing Sprint 15–17 delivery-zone, address, handoff, inventory, COD, and sale-recognition rules remain approved and are not reopened.
+
 ### TODO — Product Owner / Operations Owner
 
 - Define fulfillment types, lifecycle states, allowed transitions, actors, evidence, and exception paths.
@@ -92,3 +94,4 @@ Add approved assignments, waves, picking, packing, packages, labels, manifests, 
 - [Database Architecture](08_DATABASE_ARCHITECTURE.md)
 - [Operating Topology Architecture](19_OPERATING_TOPOLOGY_ARCHITECTURE.md)
 - [Roadmap](13_ROADMAP.md)
+- [Sprint 18 Delivery Operations Decision Packet](30_DELIVERY_OPERATIONS_DECISION_PACKET.md)

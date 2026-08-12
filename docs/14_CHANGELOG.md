@@ -47,6 +47,8 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 - Added globally unique database-numbered customer invoices for completed sales and separate payment receipts for verified manual payments or collected COD, with immutable document snapshots and a privacy-scoped customer retrieval boundary.
 - Added role-controlled line/order discounts with approved Super Admin/Admin/Staff limits, transactional cumulative enforcement, mandatory reasons, append-only evidence, protected finalized orders, and discount-aware customer invoices.
 - Added reporting-oriented daily sales reconciliation from immutable Completed-sale facts, separating product sales, delivery charges, discounts, and Grand Total without introducing a POS opening/closing workflow.
+- Closed Sprint 17 while deferring returned quantity, refunded revenue, net-sales, and net Best Seller adjustments to Sprint 19; completed Sales evidence remains unchanged.
+- Opened Sprint 18 Delivery Operations decision review without implementing unapproved carrier, tracking, attempt, proof, failure, or reconciliation behavior.
 
 ### Sprint 16 — Order Management
 
