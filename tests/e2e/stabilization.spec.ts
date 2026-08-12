@@ -202,7 +202,12 @@ test("authenticated administrator can traverse every released workspace module",
     await expect(
       page.getByRole("heading", { name: "Advance or resolve" }),
     ).toBeVisible();
-  }
+    }
+
+  await page.goto("/admin/orders/reviews");
+  await expect(
+    page.getByRole("button", { name: "Process expired reservations" }),
+  ).toBeVisible();
 
   await page.goto("/admin/delivery");
   for (const card of await page.locator(".admin-module-card").all()) {

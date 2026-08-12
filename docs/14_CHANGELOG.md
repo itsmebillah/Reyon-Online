@@ -46,6 +46,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 - Added the first Order Management milestone: immutable globally sequential `RYN-YYYY-XXXXXX` references, governed state/transition records, extensible Super Admin/Admin/Staff memberships, and a secure searchable Admin order register.
 - Added secure order details, commercial snapshots, append-only lifecycle history, guarded state commands, private reason evidence, delivery-handoff evidence, payment/reservation gates, and auditable reservation release.
 - Added customer cancellation requests before shipment and a private administrator cancellation/manual-review queue with role-gated, reasoned resolutions.
+- Added auditable reservation-expiry processing that releases stock, moves confirmed orders to a reservation exception, appends lifecycle evidence, and opens review cases.
 
 - Corrected Sprint 15 payment-step navigation by separating method selection from payment confirmation/evidence. Continue now follows client selection state, mobile evidence remains mandatory, Card is represented as manual pending follow-up without collecting card data or claiming gateway success, COD remains payable on delivery, and server-side persistence errors are explicit.
   - Approval/owner: Product Owner checkout payment-step correction dated 2026-08-12

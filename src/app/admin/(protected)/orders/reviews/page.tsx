@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { resolveReview } from "./actions";
+import { processExpiredReservations, resolveReview } from "./actions";
 export default async function ReviewsPage() {
   const supabase = await createSupabaseServerClient();
   const { data } = await supabase.rpc("admin_order_review_queue");
@@ -23,6 +23,11 @@ export default async function ReviewsPage() {
           Private operational exceptions and customer cancellation requests.
         </p>
       </header>
+      <form action={processExpiredReservations}>
+        <button className="button button--secondary">
+          Process expired reservations
+        </button>
+      </form>
       {cases.length ? (
         cases.map((item) => (
           <article className="admin-module-card" key={item.id}>

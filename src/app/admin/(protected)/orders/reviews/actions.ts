@@ -10,3 +10,9 @@ export async function resolveReview(form: FormData) {
   });
   revalidatePath("/admin/orders/reviews");
 }
+export async function processExpiredReservations() {
+  const supabase = await createSupabaseServerClient();
+  await supabase.rpc("admin_process_expired_reservations");
+  revalidatePath("/admin/orders/reviews");
+  revalidatePath("/admin/orders");
+}
