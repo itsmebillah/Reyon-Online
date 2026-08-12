@@ -1,13 +1,23 @@
 import type { Metadata } from "next";
-import { getDeliveryZones } from "@/features/delivery/data/delivery-management";
-import { updateDeliveryZone } from "./actions";
+import {
+  getDeliveryOperations,
+  getDeliveryZones,
+} from "@/features/delivery/data/delivery-management";
+import {
+  assignShipment,
+  configureDeliveryPartner,
+  updateDeliveryZone,
+} from "./actions";
 export const metadata: Metadata = {
   title: "Delivery Configuration",
   robots: { index: false, follow: false },
 };
 export const dynamic = "force-dynamic";
 export default async function DeliveryPage() {
-  const zones = await getDeliveryZones();
+  const [zones, operations] = await Promise.all([
+    getDeliveryZones(),
+    getDeliveryOperations(),
+  ]);
   return (
     <section className="admin-dashboard catalog-admin">
       <header>
@@ -67,6 +77,93 @@ export default async function DeliveryPage() {
           </article>
         ))}
       </div>
+      <article className="admin-module-card">
+        <span>Provider-neutral configuration</span>
+        <h2>Delivery partner</h2>
+        <form action={configureDeliveryPartner} className="catalog-admin-form">
+          <label>
+            Partner key
+            <input name="partnerKey" required placeholder="delivery-partner" />
+          </label>
+          <label>
+            Display name
+            <input name="displayName" required />
+          </label>
+          <label className="publish-choice">
+            <input name="isActive" type="checkbox" defaultChecked />
+            <span>
+              <strong>Active delivery partner</strong>
+              <small>Only one can be active initially.</small>
+            </span>
+          </label>
+          <button className="button button--primary">Save partner</button>
+        </form>
+      </article>
+      <article className="admin-module-card order-list-card">
+        <span>One order · one shipment</span>
+        <h2>Delivery operations</h2>
+        {operations.shipments.length ? (
+          <div className="inventory-table-wrap">
+            <table className="inventory-table">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Status</th>
+                  <th>Partner</th>
+                  <th>Reference</th>
+                  <th>Assignment</th>
+                </tr>
+              </thead>
+              <tbody>
+                {operations.shipments.map((shipment) => (
+                  <tr key={shipment.id}>
+                    <td>
+                      <strong>{shipment.orderNumber}</strong>
+                    </td>
+                    <td>{shipment.state}</td>
+                    <td>{shipment.partner ?? "Not assigned"}</td>
+                    <td>{shipment.reference ?? "Not available"}</td>
+                    <td>
+                      {shipment.state === "ready-for-dispatch" ? (
+                        <form
+                          action={assignShipment}
+                          className="catalog-admin-form"
+                        >
+                          <input
+                            type="hidden"
+                            name="fulfillmentId"
+                            value={shipment.id}
+                          />
+                          <input
+                            name="handlerName"
+                            required
+                            placeholder="Courier / handler"
+                          />
+                          <input
+                            name="shipmentReference"
+                            required
+                            placeholder="Shipment reference"
+                          />
+                          <button className="button button--primary">
+                            Assign
+                          </button>
+                        </form>
+                      ) : (
+                        shipment.handler
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="admin-empty">
+            Packed orders will create Ready for Dispatch shipments
+            automatically.
+          </p>
+        )}
+      </article>
     </section>
   );
 }

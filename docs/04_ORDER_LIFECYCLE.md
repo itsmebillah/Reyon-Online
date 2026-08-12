@@ -119,6 +119,8 @@ Every lifecycle transition must explicitly state whether it reserves or moves in
 | Cancelled, Rejected, Failed, or abandoned | Does not create a completed sale. Any existing active reservation follows its approved release path.                                                                          |
 | Returned / refunded                       | Preserves the original completed sale and appends separate return/refund adjustment evidence.                                                                                 |
 
+Sprint 18 maps delivery operations without collapsing them into Order state. Packed creates Ready for Dispatch work. Picked Up supplies the approved handoff evidence for Order Shipped; delivery Delivered supplies attributable proof for Order Delivered. Shipment exceptions remain separately auditable and cannot silently rewrite Order, inventory, payment, or Sales history.
+
 Customer Grand Total remains product subtotal plus delivery charge. Product sales revenue and delivery charges remain separately identifiable in sales evidence and reporting.
 
 ## Exceptions and Recovery

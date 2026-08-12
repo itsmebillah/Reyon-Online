@@ -50,6 +50,11 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 - Closed Sprint 17 while deferring returned quantity, refunded revenue, net-sales, and net Best Seller adjustments to Sprint 19; completed Sales evidence remains unchanged.
 - Opened Sprint 18 Delivery Operations decision review without implementing unapproved carrier, tracking, attempt, proof, failure, or reconciliation behavior.
 
+### Sprint 18 — Delivery Operations
+
+- Approved the provider-neutral single-courier/single-shipment model, lifecycle and exceptions, three-attempt maximum, handoff/proof evidence, address-change boundary, COD reconciliation, permissions, customer visibility, and notification rules.
+- Added the first Delivery Operations milestone: Packed orders create exactly one Ready for Dispatch shipment, Admin configures one active provider-neutral partner, authorized staff assign handler/reference evidence, and delivery transitions enqueue customer/Admin notifications.
+
 ### Sprint 16 — Order Management
 
 - Approved the Order Management lifecycle, cancellation, review, role, payment, reservation, delivery-handoff, notification, and append-only correction rules.

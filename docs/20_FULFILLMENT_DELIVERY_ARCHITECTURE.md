@@ -65,17 +65,17 @@ Sprint 15 begins with **Inside Dhaka** and **Outside Dhaka** delivery zones. Del
 
 Checkout requires Full name, Phone, House No, Road, Village/City, Thana/Upazila, District, and Division. Flat No is optional where not applicable. Admin owns zone and charge configuration; application code must not hardcode prices. The calculated charge appears before confirmation.
 
+## Approved Sprint 18 Operations
+
+Sprint 18 uses one configurable provider-neutral courier partner and one shipment per order initially. Its lifecycle is Ready for Dispatch, Courier Assigned, Picked Up, In Transit, Out for Delivery, and Delivered, with Delivery Failed, Delivery Cancelled, Lost, Damaged, and Returned exceptions. Pickup requires attributable handoff evidence and a shipment reference. Delivery attempts and proof are append-only, customer status never claims unsupported real-time tracking, and split shipment remains a future-compatible extension.
+
+Address corrections, inventory effects, COD reconciliation, permissions, and notification rules are governed by the [Sprint 18 Delivery Operations Decision Packet](30_DELIVERY_OPERATIONS_DECISION_PACKET.md).
+
 ## Pending Business Decisions
 
-Sprint 18 implementation is feature-blocked pending the focused decisions in the [Sprint 18 Delivery Operations Decision Packet](30_DELIVERY_OPERATIONS_DECISION_PACKET.md). Existing Sprint 15–17 delivery-zone, address, handoff, inventory, COD, and sale-recognition rules remain approved and are not reopened.
+### TODO — Future Product Owner / Operations Owner
 
-### TODO — Product Owner / Operations Owner
-
-- Define fulfillment types, lifecycle states, allowed transitions, actors, evidence, and exception paths.
-- Define delivery areas, carriers, methods, charges, free-delivery rules, promises, cutoffs, and customer messaging.
-- Define location eligibility, split fulfillment, substitutions, backorders, partial quantities, and cancellation behavior.
-- Define address capture, validation, modification, privacy, and retention requirements.
-- Define tracking, delivery attempts, proof of delivery, failed delivery, loss, damage, and reconciliation policy.
+- Approve any split-shipment, additional-provider, signature/photo proof, or real-time courier integration expansion.
 
 ### TODO — Architecture / Security
 

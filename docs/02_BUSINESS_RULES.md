@@ -11,6 +11,7 @@ This document is the controlled structure for recording approved business rules.
 - [Rule domains](#rule-domains)
 - [Approved catalog rules](#approved-catalog-rules)
 - [Approved Sprint 15 commerce rules](#approved-sprint-15-commerce-rules)
+- [Approved Sprint 18 delivery rules](#approved-sprint-18-delivery-rules)
 - [Conflict and precedence](#conflict-and-precedence)
 - [Exceptions](#exceptions)
 - [Testing and traceability](#testing-and-traceability)
@@ -72,6 +73,10 @@ The Product Owner approved the following rules for Sprint 15 on 2026-08-11:
 - Supply approved rules for each domain using the rule record format.
 - Identify jurisdictional, channel, location, product, and customer-segment variations.
 - State which rules require configurable parameters versus controlled code changes.
+
+## Approved Sprint 18 Delivery Rules
+
+The Product Owner approved provider-neutral single-courier, single-shipment delivery on 2026-08-13. The governed lifecycle, three-attempt maximum, pickup/handoff evidence, delivery proof, address-change boundary, exceptions, COD reconciliation, permissions, customer visibility, and notification rules are maintained in [Sprint 18 Delivery Operations](30_DELIVERY_OPERATIONS_DECISION_PACKET.md). Courier integrations and credentials are not approved or inferred.
 
 ## Conflict and Precedence
 

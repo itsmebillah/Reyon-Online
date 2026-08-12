@@ -2,12 +2,12 @@
 
 ## Purpose
 
-This packet requests only the Product Owner decisions required to implement Delivery Operations. It reuses the approved Order, Inventory, Payment, Sales, address, delivery-zone, audit, and notification foundations.
+This document records the authoritative Product Owner decisions for Delivery Operations. It reuses the approved Order, Inventory, Payment, Sales, address, delivery-zone, audit, and notification foundations.
 
 ## Table of Contents
 
 - [Already approved](#already-approved)
-- [Decisions required](#decisions-required)
+- [Approved rules](#approved-rules)
 - [Implementation sequence after approval](#implementation-sequence-after-approval)
 - [Dependencies and boundaries](#dependencies-and-boundaries)
 - [Related documents](#related-documents)
@@ -20,22 +20,20 @@ This packet requests only the Product Owner decisions required to implement Deli
 - Delivered is distinct from Completed; COD collection occurs at Delivered and sale recognition at Completed.
 - Operational history is append-only and notifications are provider-neutral and failure-safe.
 
-## Decisions Required
+## Approved Rules
 
-1. **Operating model:** in-house delivery, external courier, or both; initial courier and manual versus integrated launch operation.
-2. **Fulfillment unit:** one shipment per order initially, or split shipments/partial delivery.
-3. **Workflow:** operational states and transitions for assignment, handoff, Shipped, attempts, Delivered, and delivery exceptions.
-4. **Handoff evidence:** required courier, tracking/consignment reference, handoff time, actor, and package details.
-5. **Tracking:** REYON tracking, external tracking, or both; customer-visible events.
-6. **Attempts:** maximum attempts, rescheduling, customer-unavailable handling, and exhausted-attempt outcome.
-7. **Proof of delivery:** required evidence and authorized actor; recipient name, OTP, signature, image, or courier confirmation if applicable.
-8. **Address changes:** authorized roles, cutoff stage, and delivery-charge revalidation after confirmation.
-9. **Failure, loss, and damage:** outcomes, required evidence, stock/payment effects, and escalation owner.
-10. **Cancellation interaction:** behavior before handoff and required carrier-cancellation evidence after assignment.
-11. **COD reconciliation:** collection evidence, responsible role, cash handover/settlement, mismatch handling, and reconciliation owner.
-12. **Roles and notifications:** Super Admin/Admin/Staff permissions and approved customer/admin delivery events and initial channels.
+- The initial model uses one configurable provider-neutral courier/delivery partner and one shipment per order. Split shipment remains architecture-ready but deferred.
+- Lifecycle: Ready for Dispatch → Courier Assigned → Picked Up → In Transit → Out for Delivery → Delivered. Exceptions are Delivery Failed, Delivery Cancelled, Lost, Damaged, and Returned.
+- Pickup requires courier/handler, timestamp, shipment/reference ID, and handoff evidence. Customers see status and shipment reference when present; REYON never presents simulated real-time tracking.
+- At most three delivery attempts are allowed initially. Each records timestamp, result, reason, and note. The third failed attempt moves the shipment to Delivery Failed for review/return handling.
+- Delivered requires timestamp, receiver confirmation/name, and responsible courier/staff identity. Signature/photo proof is optional and architecture-ready.
+- Address changes before pickup require revalidation and audit. After pickup they require exceptional Admin review and never silently modify shipment evidence.
+- Failure, loss, and damage create append-only exceptions and never silently modify inventory. Courier-assignment cancellation is allowed before pickup; later changes use cancellation/return handling.
+- COD collection is recorded at delivery and reconciled to the expected amount. Mismatches create an auditable exception. Completed remains the sole official sale-recognition event.
+- Super Admin has full control; Admin has normal assignment, exception, and reconciliation control; Staff may perform operational delivery actions. Sensitive COD corrections require Admin or Super Admin.
+- Customer/Admin delivery events use the provider-neutral notification outbox. No courier credential or integration is implied.
 
-## Implementation Sequence After Approval
+## Implementation Sequence
 
 1. Fulfillment creation and shipment assignment.
 2. Provider-neutral handoff and tracking evidence.

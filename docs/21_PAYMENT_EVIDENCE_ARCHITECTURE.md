@@ -88,6 +88,8 @@ Add approved payment commands, provider adapters, checkout sessions, cash eviden
 
 Sprint 17 introduces a separate immutable Payment Receipt issued only when manual/prepaid payment is verified or COD is collected. A receipt is not an Invoice, does not complete the sale, and never implies automatic gateway processing. Both receipt and invoice identities are globally unique and database-generated.
 
+Sprint 18 records COD collection at delivery and reconciles the collected amount against expected Order Grand Total. A mismatch creates auditable reconciliation-exception evidence requiring Admin or Super Admin control; it cannot fake successful collection or complete the sale. Completed remains the official sale-recognition event.
+
 ## Related Documents
 
 - [Order Lifecycle](04_ORDER_LIFECYCLE.md)

@@ -81,6 +81,8 @@ For Sprint 15, adding a product to a cart does not reserve stock. Order confirma
 
 Sprint 17 converts the active reservation into one append-only sold/fulfilled inventory movement when the order reaches Shipped. The conversion, reservation release, and order transition are transactional and idempotent so stock is never deducted twice.
 
+Sprint 18 delivery failure, loss, damage, cancellation, and return states never silently alter inventory. Any physical stock correction or return movement requires its separately approved append-only workflow.
+
 ### TODO — Domain Owner
 
 - Define reservation timing, allocation priority, expiry, release, and order integration behavior.
