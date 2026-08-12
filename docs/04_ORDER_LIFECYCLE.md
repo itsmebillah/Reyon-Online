@@ -52,11 +52,13 @@ Sprint 10 adds append-only customer-order association evidence in the separate p
 
 ## Approved Sprint 15 Checkout Boundary
 
-Guest checkout is allowed and creates a customer account from checkout details. Phone OTP is primary; email OTP is a fallback when supplied and phone verification is unavailable. Verified phone/email matches reuse the existing identity. A guest cart can be associated with that verified identity.
+Guest checkout is allowed. Successful order creation creates or associates an initially unverified customer profile from checkout details. OTP verification is optional and deferred until a provider is configured; it is not required for order placement in the current release and is never simulated. A confidently matched existing verified phone/email reuses the existing identity.
 
 Before confirmation the customer reviews the revalidated cart, structured address, calculated delivery charge, and payment method. Confirmation idempotently creates the order and begins a 30-minute stock reservation based only on current price and availability. Insufficient stock cannot be over-reserved and produces an auditable administrator-handled exception.
 
-The released confirmation boundary does not perform or simulate OTP verification. It requires the active cart to reference a customer with an existing verified contact before it can create an order. Order lines, delivery address, configured zone/charge, and selected payment evidence are stored as immutable-at-creation snapshots. A Confirmed transition and reservation-created events preserve audit evidence; expired reservations cease reducing availability and can be materialized as explicit expiry events by the reservation maintenance function.
+The released confirmation boundary does not perform or simulate OTP verification and does not require verified contact status. It creates or associates the unverified customer profile transactionally, while preserving all cart, price, stock, address, delivery, payment, idempotency, and reservation validation. Order lines, delivery address, configured zone/charge, and selected payment evidence are stored as immutable-at-creation snapshots. A Confirmed transition and reservation-created events preserve audit evidence; expired reservations cease reducing availability and can be materialized as explicit expiry events by the reservation maintenance function.
+
+Account/profile existence, OTP/contact verification, and REYON customer verification are independent states. A transition to genuinely delivered or completed automatically marks the associated profile as a verified REYON customer and appends immutable evidence containing source `successful-order-delivery`, order reference, and timestamp. Cancelled, failed, returned, rejected, and undelivered orders cannot trigger this verification.
 
 Sprint 15 must not define the broader Order Management lifecycle reserved for Sprint 16.
 

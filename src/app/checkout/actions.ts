@@ -135,9 +135,8 @@ export async function confirmOrder(
   });
   if (error)
     return {
-      error: /verified customer identity/i.test(error.message)
-        ? "Verify your phone number before confirming the order."
-        : "The order could not be confirmed. Review the current checkout details and try again.",
+      error:
+        "The order could not be confirmed. Review the current checkout details and try again.",
     };
   revalidatePath("/checkout");
   return {

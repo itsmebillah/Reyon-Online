@@ -4,11 +4,7 @@ import { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { confirmOrder, type CheckoutState } from "./actions";
 
-export function ConfirmOrderForm({
-  identityVerified,
-}: {
-  identityVerified: boolean;
-}) {
+export function ConfirmOrderForm() {
   const [state, action, pending] = useActionState<CheckoutState, FormData>(
     confirmOrder,
     {},
@@ -19,12 +15,6 @@ export function ConfirmOrderForm({
   }, [router, state.success]);
   return (
     <form action={action} className="checkout-confirmation">
-      {!identityVerified && (
-        <p className="cart-warning" role="status">
-          Phone verification is required before the order can be confirmed. OTP
-          delivery is not currently available.
-        </p>
-      )}
       {state.error && (
         <p className="admin-form-error" role="alert">
           {state.error}
@@ -35,13 +25,13 @@ export function ConfirmOrderForm({
           {state.success}
         </p>
       )}
-      <button
-        className="button button--primary"
-        disabled={!identityVerified || pending}
-      >
+      <button className="button button--primary" disabled={pending}>
         {pending ? "Confirming…" : "Confirm order"}
       </button>
-      <p>No identity is marked verified by this checkout action.</p>
+      <p>
+        Your customer profile will be created or associated when the order is
+        placed. Contact verification is not required in this release.
+      </p>
     </form>
   );
 }

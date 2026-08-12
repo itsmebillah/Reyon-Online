@@ -62,7 +62,9 @@ This foundation deliberately applies data minimization by storing no directly id
 
 ## Approved Sprint 15 Customer Identity
 
-Guest checkout is allowed and checkout/order creation automatically creates the customer account. Phone OTP is primary; email OTP may be used when email is supplied and phone verification is unavailable. An existing verified phone/email match reuses the customer identity. The persisted guest cart associates with the verified account.
+Guest checkout is allowed and successful checkout/order creation automatically creates or associates an initially unverified customer profile. OTP verification is optional and deferred until a provider is configured; it is not required for order placement in the current release and must never be simulated. An existing verified phone/email match reuses the customer identity under the approved confidence rule.
+
+Three states remain explicit and independent: profile/account existence, OTP/contact verification, and REYON customer verification. Only a genuinely delivered/completed order marks the associated profile as a verified REYON customer. Append-only verification evidence records source `successful-order-delivery`, order reference, and timestamp. Cancelled, failed, returned, rejected, or undelivered orders do not verify customers.
 
 Only data required for account, order, delivery, and support is collected. Private information is protected by existing authentication/authorization boundaries and never exposed publicly. Required privacy notice/consent, recovery, correction, and configurable retention/deletion paths are part of the customer-data contract. The structured address requirements are defined in the Delivery Architecture.
 

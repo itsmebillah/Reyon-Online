@@ -135,7 +135,7 @@ Sprint 15 is approved for sequential implementation.
 1. **Cart:** deliver 30-day persistent guest carts, the 10-unit variant limit, current-availability revalidation, account-association contract, and configurable privacy-safe 24-hour aggregate cart count. Adding to cart performs no reservation.
 2. **Checkout:** add the review journey and authoritative server revalidation of price and stock; cart values are never accepted as final facts.
 3. **Customer Account:** create/reuse the customer identity during checkout, avoid verified phone/email duplicates, protect private data, and provide recovery/correction boundaries.
-4. **OTP verification:** make phone OTP primary with approved email fallback, abuse controls, and verified identity association.
+4. **OTP verification (deferred/optional):** retain the provider-ready phone/email verification boundary for future activation. OTP is not required for order placement in the current release and must not be simulated.
 5. **Address:** collect the approved required structured address and optional Flat No without mixing private delivery data into public records.
 6. **Delivery charge:** add administrator-managed zones/charges, seed the two approved zone identities without hardcoded prices, and show the calculated charge before confirmation.
 7. **Manual payment:** present all approved methods, support configured mobile instructions and reference evidence, require administrator verification, represent deferred Card honestly, and keep COD eligibility configurable.
@@ -157,7 +157,7 @@ Sprint 15E releases administrator-configurable Delivery Zones and Charges. Insid
 
 Sprint 15F releases honest Payment Method Selection: COD is initially selectable, mobile methods require configured instructions before selection, Card remains visible but unavailable without a real gateway, and no method can imply unverified success.
 
-Sprint 15G prepares transactional Order Creation without fabricating OTP completion. Checkout now persists an active configured delivery zone and charge, retains payment selection/evidence, and exposes readiness from authoritative data. Confirmation remains deny-by-default until the cart is associated with a genuinely verified customer contact. Once verified identity is available, one idempotent transaction revalidates published cart items, current prices, availability, address, delivery configuration, and payment selection; snapshots the commercial order; appends lifecycle evidence; and creates auditable 30-minute variant reservations. Insufficient stock creates a non-reserving confirmation-exception order for administrative handling.
+Sprint 15G releases transactional Order Creation without fabricating OTP completion. Checkout persists an active configured delivery zone and charge, retains payment selection/evidence, and exposes readiness from authoritative data. One idempotent transaction creates or associates an initially unverified customer profile, revalidates published cart items, current prices, availability, address, delivery configuration, and payment selection; snapshots the commercial order; appends lifecycle evidence; and creates auditable 30-minute variant reservations. Insufficient stock creates a non-reserving confirmation-exception order for administrative handling. A later genuinely delivered/completed transition produces separate auditable REYON customer verification.
 
 ## Entry and Exit Criteria
 

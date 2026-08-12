@@ -4,7 +4,7 @@ export default function Account() {
     <Container className="page">
       <EmptyState
         title="Your REYON space"
-        body="Your account is created securely during checkout and linked after phone verification. Email may be used as a fallback when provided."
+        body="Your customer profile is created securely when you place an order. OTP verification is deferred and does not prevent checkout in the current release."
         action={<LinkButton href="/shop">Continue shopping</LinkButton>}
       />
     </Container>

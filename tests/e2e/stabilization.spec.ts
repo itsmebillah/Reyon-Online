@@ -77,10 +77,6 @@ test("customer can browse, add to cart, preserve address, and reach configured c
     await expect(
       page.locator("#payment-method").getByRole("status"),
     ).toContainText("Payment method saved");
-    await expect(
-      page.getByText("Phone verification is required"),
-    ).toBeVisible();
-
     await page.getByRole("button", { name: "Change method" }).click();
     await page
       .locator("#payment-method label", { hasText: "Cash on Delivery" })
@@ -98,9 +94,12 @@ test("customer can browse, add to cart, preserve address, and reach configured c
     await expect(page.locator("#payment-confirmation")).toContainText(
       "Cash on Delivery",
     );
+    const confirmOrder = page.getByRole("button", { name: "Confirm order" });
+    await expect(confirmOrder).toBeEnabled();
+    await confirmOrder.click();
     await expect(
-      page.getByRole("button", { name: "Confirm order" }),
-    ).toBeDisabled();
+      page.getByText(/This checkout has already created order/),
+    ).toBeVisible();
   } else {
     await expect(
       page.getByText("Delivery is not configured yet"),

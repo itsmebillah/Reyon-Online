@@ -100,7 +100,7 @@ export default async function CheckoutPage() {
               {orderState.existingOrderId}.
             </p>
           ) : orderState?.paymentSelected ? (
-            <ConfirmOrderForm identityVerified={orderState.identityVerified} />
+            <ConfirmOrderForm />
           ) : null}
         </section>
         <aside className="cart-summary checkout-summary">
