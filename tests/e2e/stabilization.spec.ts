@@ -386,6 +386,19 @@ test("authenticated administrator can load every released data workspace", async
   }
 });
 
+test("authenticated Finance workspace exposes real posting configuration and journals", async ({
+  page,
+}) => {
+  await signInAsAdmin(page);
+  await page.goto("/admin/accounts");
+  await expect(page.getByText("Something needs attention")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "Accounts & Payments" }),
+  ).toBeVisible();
+  await expect(page.getByText("Completed-sale journals")).toBeVisible();
+  await expect(page.getByText("Completed-sale posting mappings")).toBeVisible();
+});
+
 test("delivery partner validation remains on the form", async ({ page }) => {
   await signInAsAdmin(page);
   await page.goto("/admin/delivery");

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-13 — Completed-sale accounting posting hardening
+
+- Revalidated the released immutable Completed-sale journal against the Sprint 21 specification without creating accounts, balances, or financial transactions.
+- Made payment/receivable account selection deterministic: posting now requires exactly one matching active, approved Finance-configured account and rejects ambiguous mappings.
+- Revalidates Product Sales, Delivery Revenue, and Sales Discount mappings as active, approved accounts at posting time while retaining balance, immutability, source idempotency, and private RLS boundaries.
+
 ## 2026-08-13 — Cart-to-order integrity stabilization
 
 - Fixed stale-order reuse caused by leaving an already ordered cart active and
