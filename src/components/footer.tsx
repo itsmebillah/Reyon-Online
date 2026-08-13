@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="footer">
       <Container>
         <div className="footer-grid">
-          <div>
+          <div className="footer-brand">
             <Link
               className="brand-logo brand-logo--footer"
               href="/"
@@ -18,13 +18,13 @@ export function Footer() {
             </Link>
             <p>{businessConfig.positioning}</p>
           </div>
-          <div>
+          <div className="footer-group">
             <h2>Explore</h2>
             <Link href="/shop">Shop all</Link>
             <Link href="/categories">Categories</Link>
             <Link href="/about">Our story</Link>
           </div>
-          <div>
+          <div className="footer-group">
             <h2>Care</h2>
             <Link href="/contact">Contact</Link>
             <Link href="/shipping">Delivery</Link>
@@ -32,13 +32,13 @@ export function Footer() {
             <Link href="/privacy">Privacy policy</Link>
             <Link href="/terms">Terms</Link>
           </div>
-          <div>
+          <div className="footer-group">
             <h2>Connect</h2>
             <a href={businessConfig.contact.facebookUrl}>Facebook</a>
             <a href={businessConfig.contact.instagramUrl}>Instagram</a>
             <a href={businessConfig.contact.whatsappUrl}>WhatsApp</a>
           </div>
-          <div>
+          <div className="footer-group footer-newsletter">
             <h2>Stay close</h2>
             <p>New rituals and considered edits, delivered occasionally.</p>
             <form className="newsletter">

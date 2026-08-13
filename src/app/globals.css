@@ -1489,6 +1489,12 @@ img {
   grid-template-columns: 2fr repeat(3, 1fr) 1.6fr;
   gap: 40px;
 }
+.footer-grid > div {
+  min-width: 0;
+}
+.footer-grid h2 {
+  margin: 0 0 14px;
+}
 .brand-logo--footer .reyon-logo__wordmark {
   width: 150px;
 }
@@ -1761,6 +1767,12 @@ details p {
   }
   .footer-grid {
     grid-template-columns: repeat(2, 1fr);
+    column-gap: 36px;
+    row-gap: 34px;
+  }
+  .footer-brand,
+  .footer-newsletter {
+    grid-column: 1 / -1;
   }
   .product-page {
     grid-template-columns: 1fr;
@@ -1947,8 +1959,28 @@ details p {
     grid-template-columns: repeat(2, 1fr);
   }
   .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+    row-gap: 26px;
+  }
+  .footer {
+    padding: 48px 0 20px;
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+  .footer-newsletter {
+    grid-column: auto;
+  }
+  .footer-grid h2 {
+    margin-bottom: 10px;
+  }
+  .footer-grid > div > a:not(.brand-logo) {
+    margin: 6px 0;
+    min-height: 28px;
+  }
+  .footer-bottom {
+    margin-top: 34px;
   }
   .footer-bottom {
     flex-direction: column;

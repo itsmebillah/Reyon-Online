@@ -188,6 +188,31 @@ test("header uses the horizontal logo lockup at every viewport", async ({
   expect(failures).toEqual([]);
 });
 
+test("footer groups use a compact responsive grid", async ({ page }) => {
+  await page.goto("/");
+  const footer = page.locator(".footer");
+  await expect(footer.locator(".reyon-logo")).toBeVisible();
+  const explore = footer.getByRole("heading", { name: "Explore" });
+  const care = footer.getByRole("heading", { name: "Care" });
+  const connect = footer.getByRole("heading", { name: "Connect" });
+  const stayClose = footer.getByRole("heading", { name: "Stay close" });
+  for (const heading of [explore, care, connect, stayClose])
+    await expect(heading).toBeVisible();
+  if (test.info().project.name === "mobile") {
+    const [exploreBox, careBox, connectBox, stayBox, footerBox] =
+      await Promise.all([
+        explore.boundingBox(),
+        care.boundingBox(),
+        connect.boundingBox(),
+        stayClose.boundingBox(),
+        footer.boundingBox(),
+      ]);
+    expect(Math.abs(exploreBox!.y - careBox!.y)).toBeLessThan(8);
+    expect(Math.abs(connectBox!.y - stayBox!.y)).toBeLessThan(8);
+    expect(footerBox!.height).toBeLessThan(720);
+  }
+});
+
 test("inner pages provide consistent back navigation", async ({ page }) => {
   const failures = monitor(page);
   await page.goto("/");

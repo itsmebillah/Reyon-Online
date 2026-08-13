@@ -43,6 +43,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 ### Customer shell usability
 
 - Made Cart and Account consistently accessible in the mobile header, applied authoritative cart counts immediately after successful additions, and consolidated the approved horizontal REYON mark/wordmark treatment into one shared component across customer and Admin shells.
+- Compacted the customer footer into a responsive two-column mobile grid with wider tablet/desktop layouts while retaining every link, the newsletter, comfortable touch spacing, and the shared horizontal REYON logo.
 
 ### Sprint 20 — Supplier and Purchase Operations
 
