@@ -89,15 +89,41 @@ export async function addCartItem(
   };
 }
 
-export async function setCartQuantity(form: FormData) {
+export type CartQuantityState = Readonly<{
+  error?: string;
+  success?: string;
+  persistedQuantity?: number;
+}>;
+
+export async function setCartQuantity(
+  _state: CartQuantityState,
+  form: FormData,
+): Promise<CartQuantityState> {
   const accessToken = await token();
-  if (!accessToken) return;
+  if (!accessToken) return { error: "Your active bag could not be found." };
   const supabase = await createSupabaseServerClient();
-  const quantity = Number(form.get("quantity"));
-  await supabase.rpc("cart_set_quantity", {
+  const quantity =
+    form.get("intent") === "remove" ? 0 : Number(form.get("quantity"));
+  const variantId = String(form.get("variantId") ?? "");
+  if (!Number.isInteger(quantity) || quantity < 0 || quantity > 10)
+    return { error: "Choose a quantity between 1 and 10." };
+  const { error } = await supabase.rpc("cart_set_quantity", {
     p_access_token: accessToken,
-    p_variant_id: String(form.get("variantId") ?? ""),
+    p_variant_id: variantId,
     p_quantity: quantity,
   });
+  if (error) return { error: "The quantity could not be saved. Try again." };
+  const persisted = await getCartSummary();
+  const savedQuantity =
+    persisted.items.find((item) => item.variantId === variantId)?.quantity ?? 0;
+  if (savedQuantity !== quantity)
+    return {
+      error: "The quantity was not persisted. Try again before checkout.",
+    };
   revalidatePath("/cart");
+  revalidatePath("/checkout");
+  return {
+    success: quantity === 0 ? "Item removed." : `Quantity ${quantity} saved.`,
+    persistedQuantity: quantity,
+  };
 }

@@ -52,8 +52,22 @@ test("customer can browse, add to cart, preserve address, and reach configured c
   await expect(
     page.getByRole("heading", { name: "Shopping bag" }),
   ).toBeVisible();
+  const quantity = page
+    .locator('.cart-quantity select[name="quantity"]')
+    .first();
+  await quantity.selectOption("9");
+  await expect(page.getByRole("status")).toContainText("Quantity 9 saved");
+  await page.reload();
+  await expect(quantity).toHaveValue("9");
+  await quantity.selectOption("2");
+  await expect(page.getByRole("status")).toContainText("Quantity 2 saved");
+  await page.reload();
+  await expect(quantity).toHaveValue("2");
+  await quantity.selectOption("9");
+  await expect(page.getByRole("status")).toContainText("Quantity 9 saved");
   await page.getByRole("link", { name: "Continue to checkout" }).click();
   await expect(page).toHaveURL(/\/checkout/);
+  await expect(page.getByText(/Quantity 9/).first()).toBeVisible();
   await page.getByLabel("Full name").fill("REYON Browser Test");
   await page.getByLabel("Phone").fill("01000000000");
   await page.getByLabel("House No").fill("QA-1");
@@ -113,6 +127,11 @@ test("customer can browse, add to cart, preserve address, and reach configured c
     await expect(page.locator("#payment-confirmation")).toContainText(
       "Cash on Delivery",
     );
+    const checkoutTotal = await page
+      .locator(".checkout-summary dt", { hasText: /^Total$/ })
+      .locator("..")
+      .locator("dd")
+      .innerText();
     const confirmOrder = page.getByRole("button", { name: "Confirm order" });
     await expect(confirmOrder).toBeEnabled();
     await confirmOrder.click();
@@ -129,9 +148,12 @@ test("customer can browse, add to cart, preserve address, and reach configured c
     await expect(
       page.getByText("Cash on Delivery", { exact: true }),
     ).toBeVisible();
+    await expect(page.locator(".checkout-success-item").first()).toContainText(
+      "Quantity 9",
+    );
     await expect(
       page.locator(".checkout-success-details dd").nth(2),
-    ).toContainText(/৳|BDT/);
+    ).toHaveText(checkoutTotal);
     await expect(
       page.getByRole("link", { name: "View Order / My Orders" }),
     ).toBeVisible();

@@ -40,6 +40,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Fixed cart quantity persistence by auto-saving selector changes, blocking checkout while persistence is pending, confirming the saved server quantity, and displaying persisted order quantities on the success screen.
 - Added the private immutable double-entry foundation and idempotent Completed-sale journal with Finance-controlled payment, Product Sales, Delivery Revenue, and Sales Discount account mappings; COGS is intentionally deferred.
 - Added the private, audited Accounts production-configuration workflow for legal/fiscal identity, Finance approvers, approved ledger and financial accounts, balanced evidence-backed opening balances, and explicit posting activation.
 - Added a server-confirmed, refresh-safe customer order success screen with persisted order reference, real status, COD/payment method, total, delivery summary, and clear next actions.

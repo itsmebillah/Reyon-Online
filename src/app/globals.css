@@ -2629,6 +2629,15 @@ details p {
   margin: 0.35rem 0;
 }
 
+.checkout-success-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
 .checkout-success-actions {
   display: flex;
   flex-wrap: wrap;

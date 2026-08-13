@@ -10,6 +10,13 @@ export type CheckoutOrderSuccess = Readonly<{
   totalAmount: number;
   currency: "BDT";
   deliveryZone: string;
+  items: readonly Readonly<{
+    name: string;
+    variant: string | null;
+    quantity: number;
+    unitPrice: number;
+    lineTotal: number;
+  }>[];
   address: Readonly<{
     fullName: string;
     phone: string;

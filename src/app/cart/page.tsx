@@ -3,7 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container, EmptyState } from "@/components/ui";
 import { formatMoney } from "@/features/catalog";
-import { getCartSummary, setCartQuantity } from "@/features/cart/actions";
+import { getCartSummary } from "@/features/cart/actions";
+import { CartQuantityForm } from "./cart-quantity-form";
+import { CheckoutLink } from "./checkout-link";
 
 export const metadata: Metadata = { title: "Shopping Bag" };
 export const dynamic = "force-dynamic";
@@ -56,25 +58,10 @@ export default async function CartPage() {
                     </p>
                   )}
                 </div>
-                <form action={setCartQuantity} className="cart-quantity">
-                  <input
-                    type="hidden"
-                    name="variantId"
-                    value={item.variantId}
-                  />
-                  <label>
-                    Quantity
-                    <select name="quantity" defaultValue={item.quantity}>
-                      {Array.from({ length: 10 }, (_, i) => i + 1).map((q) => (
-                        <option key={q}>{q}</option>
-                      ))}
-                    </select>
-                  </label>
-                  <button className="button button--secondary">Update</button>
-                  <button className="cart-remove" name="quantity" value="0">
-                    Remove
-                  </button>
-                </form>
+                <CartQuantityForm
+                  variantId={item.variantId}
+                  quantity={item.quantity}
+                />
                 <strong>
                   {formatMoney({
                     amount: Number(item.lineTotal),
@@ -105,9 +92,7 @@ export default async function CartPage() {
               Prices and stock are revalidated before confirmation. Items in
               your bag are not reserved.
             </p>
-            <Link className="button button--primary" href="/checkout">
-              Continue to checkout
-            </Link>
+            <CheckoutLink />
           </aside>
         </div>
       )}

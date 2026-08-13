@@ -78,6 +78,22 @@ export default async function CheckoutSuccessPage() {
           <p>{address.join(", ")}</p>
         </section>
 
+        <section
+          className="checkout-success-address"
+          aria-labelledby="items-title"
+        >
+          <h2 id="items-title">Order items</h2>
+          {order.items.map((item, index) => (
+            <p className="checkout-success-item" key={`${item.name}-${index}`}>
+              <span>
+                {item.name}
+                {item.variant ? ` · ${item.variant}` : ""}
+              </span>
+              <strong>Quantity {item.quantity}</strong>
+            </p>
+          ))}
+        </section>
+
         <div className="checkout-success-actions">
           <Link className="button button--primary" href="/account">
             View Order / My Orders
