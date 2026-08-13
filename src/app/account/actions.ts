@@ -27,6 +27,29 @@ export type SalesDocumentState = {
     }[];
   };
 };
+export type DeliveryStatusState = {
+  error?: string;
+  delivery?: {
+    orderNumber: string;
+    status: string;
+    shipmentReference: string | null;
+    updatedAt: string | null;
+  };
+};
+
+export async function findDeliveryStatus(
+  _state: DeliveryStatusState,
+  form: FormData,
+): Promise<DeliveryStatusState> {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.rpc("customer_delivery_status", {
+    p_order_reference: String(form.get("orderReference") ?? ""),
+    p_phone: String(form.get("phone") ?? ""),
+  });
+  if (error || !data)
+    return { error: "No delivery matched those order details." };
+  return { delivery: data as DeliveryStatusState["delivery"] };
+}
 
 export async function findSalesDocuments(
   _state: SalesDocumentState,

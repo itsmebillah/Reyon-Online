@@ -3,6 +3,7 @@ import { CancelOrderForm } from "./cancel-order-form";
 import { ResubmitPaymentForm } from "./resubmit-payment-form";
 import { OrderChangeForm } from "./order-change-form";
 import { SalesDocumentForm } from "./sales-document-form";
+import { DeliveryStatusForm } from "./delivery-status-form";
 export default function Account() {
   return (
     <Container className="page">
@@ -11,6 +12,15 @@ export default function Account() {
         body="Your customer profile is created securely when you place an order. OTP verification is deferred and does not prevent checkout in the current release."
         action={<LinkButton href="/shop">Continue shopping</LinkButton>}
       />
+      <section className="admin-module-card">
+        <span>Provider-neutral delivery status</span>
+        <h2>Track your delivery</h2>
+        <p>
+          See REYON&apos;s recorded shipment status and reference. Live courier
+          location tracking is not currently provided.
+        </p>
+        <DeliveryStatusForm />
+      </section>
       <section className="admin-module-card">
         <span>Completed sales</span>
         <h2>Invoice & payment receipts</h2>
