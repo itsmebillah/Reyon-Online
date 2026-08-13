@@ -89,6 +89,8 @@ Sprint 20 purchase receiving supports multiple and partial receipts. Only inspec
 
 Each accepted purchase receipt movement references its immutable receipt, PO, variant, Main Inventory location, actor, and optional lot/expiry identity. Damaged/rejected and quarantined receipt outcomes never create positive available-stock movements automatically.
 
+An approved supplier return reduces stock only when the physical return is recorded. The negative `purchase-return` movement references the return, eligible accepted receipt quantity, original PO/receipt, variant, Main Inventory, and applicable lot; negative stock and duplicate cumulative returns are rejected.
+
 ### TODO — Domain Owner
 
 - Define reservation timing, allocation priority, expiry, release, and order integration behavior.

@@ -76,6 +76,8 @@ Multiple and partial receipts are supported. Partial, short, and excess observat
 
 The released Receiving workspace records each supplier delivery as immutable receipt and line evidence. It rejects duplicate supplier delivery references and cumulative over-receipt unless an Admin/Super Admin explicitly approves the excess with a discrepancy note. Accepted quantities alone create referenced, idempotent Main Inventory movements; damaged/rejected and quarantined quantities remain unavailable. Cumulative observations transition Ordered POs to Partially Received or Fully Received without rewriting PO lines.
 
+Purchase Returns reference accepted receipt-line quantities and preserve PO, receipt, batch, and expiry facts. Partial and multiple returns are permitted within cumulative eligibility. Admin/Super Admin approval governs the Requested → Approved → Awaiting Return → Returned → Completed lifecycle; Rejected and Cancelled remain auditable exceptions. Physical return evidence is mandatory, and only the Returned transition posts the outward `purchase-return` movement.
+
 Receiving should preserve what was expected, what was observed, condition, time, location, actor, and evidence. Discrepancy handling must distinguish inventory acceptance from supplier and financial resolution.
 
 ### TODO — Domain Owners

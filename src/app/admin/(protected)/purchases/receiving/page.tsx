@@ -24,6 +24,12 @@ export default async function ReceivingPage() {
         <Link className="button button--secondary" href="/admin/purchases">
           Purchase order register
         </Link>
+        <Link
+          className="button button--secondary"
+          href="/admin/purchases/returns"
+        >
+          Purchase Returns
+        </Link>
       </header>
       <div className="brand-management-list">
         <div className="brand-list-heading">
