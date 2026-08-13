@@ -1023,6 +1023,12 @@ img {
   .checkout-review article > strong {
     grid-column: 2;
   }
+  #delivery-zone,
+  #payment-method,
+  #payment-confirmation,
+  #order-confirmation {
+    scroll-margin-top: 120px;
+  }
 }
 .nav-mobile {
   display: none;

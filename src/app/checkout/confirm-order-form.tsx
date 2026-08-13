@@ -14,7 +14,11 @@ export function ConfirmOrderForm() {
     if (state.success) router.refresh();
   }, [router, state.success]);
   return (
-    <form action={action} className="checkout-confirmation">
+    <form
+      action={action}
+      className="checkout-confirmation"
+      id="order-confirmation"
+    >
       {state.error && (
         <p className="admin-form-error" role="alert">
           {state.error}

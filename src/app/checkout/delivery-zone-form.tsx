@@ -70,16 +70,18 @@ export function DeliveryZoneForm({
           {state.success}
         </p>
       )}
-      <button
-        className="button button--secondary"
-        disabled={!selected || pending}
-      >
-        {pending
-          ? "Saving…"
-          : selectedId
-            ? "Update delivery zone"
-            : "Save delivery zone"}
-      </button>
+      {zones.length > 0 && (
+        <button
+          className="button button--secondary"
+          disabled={!selected || pending}
+        >
+          {pending
+            ? "Checking delivery…"
+            : selectedId
+              ? "Update delivery option"
+              : "Continue to payment"}
+        </button>
+      )}
     </form>
   );
 }

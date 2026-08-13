@@ -118,7 +118,7 @@ export async function saveDeliveryZone(
   });
   if (error) return { error: "This delivery zone is no longer available." };
   revalidatePath("/checkout");
-  return { success: "Delivery zone and charge saved." };
+  return { success: "Delivery option confirmed." };
 }
 
 export async function confirmOrder(

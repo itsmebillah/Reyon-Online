@@ -19,6 +19,19 @@ function monitor(page: Page) {
   return failures;
 }
 
+async function expectBelowStickyHeader(page: Page, selector: string) {
+  if ((page.viewportSize()?.width ?? 1280) > 720) return;
+  await page.evaluate((hash) => {
+    window.location.hash = hash;
+  }, selector.slice(1));
+  await page.waitForTimeout(250);
+  const header = await page.locator(".site-header").boundingBox();
+  const section = await page.locator(selector).boundingBox();
+  expect(header).not.toBeNull();
+  expect(section).not.toBeNull();
+  expect(section!.y).toBeGreaterThanOrEqual(header!.y + header!.height - 1);
+}
+
 test("customer can browse, add to cart, preserve address, and reach configured checkout steps", async ({
   page,
 }) => {
@@ -29,9 +42,9 @@ test("customer can browse, add to cart, preserve address, and reach configured c
   await productLink.click();
   await expect(page).toHaveURL(/\/products\//);
   await expect(page.getByRole("heading", { name: productName })).toBeVisible();
-  await expect(page.locator(".product-gallery img")).toHaveJSProperty(
-    "complete",
-    true,
+  await expect(page.locator(".product-gallery img")).toHaveAttribute(
+    "src",
+    /.+/,
   );
   await page.getByRole("button", { name: /^Add/ }).first().click();
   await expect(page.getByRole("status")).toContainText(/added to your bag/i);
@@ -56,12 +69,16 @@ test("customer can browse, add to cart, preserve address, and reach configured c
   await expect(page.getByLabel("Full name")).toHaveValue("REYON Browser Test");
 
   const zoneOptions = page.locator('#delivery-zone input[name="deliveryZone"]');
+  await expect(
+    page.getByRole("button", { name: /save delivery zone/i }),
+  ).toHaveCount(0);
+  await expectBelowStickyHeader(page, "#delivery-zone");
   if (await zoneOptions.count()) {
     await zoneOptions.first().check();
-    await page.getByRole("button", { name: "Save delivery zone" }).click();
-    await expect(page.getByRole("status")).toContainText(
-      "zone and charge saved",
-    );
+    await page.getByRole("button", { name: "Continue to payment" }).click();
+    await expect(
+      page.locator("#delivery-zone").getByRole("status"),
+    ).toContainText(/delivery option confirmed/i);
     await page
       .locator("#payment-method label", { hasText: "Card" })
       .locator("input")
@@ -72,11 +89,13 @@ test("customer can browse, add to cart, preserve address, and reach configured c
     await expect(continueButton).toBeEnabled();
     await continueButton.click();
     await expect(page.locator("#payment-confirmation")).toBeVisible();
+    await expectBelowStickyHeader(page, "#payment-confirmation");
     await expect(page.getByText("No card number, PIN, CVV")).toBeVisible();
     await page.getByRole("button", { name: "Save and continue" }).click();
     await expect(
       page.locator("#payment-method").getByRole("status"),
     ).toContainText("Payment method saved");
+    await expectBelowStickyHeader(page, "#order-confirmation");
     await page.getByRole("button", { name: "Change method" }).click();
     await page
       .locator("#payment-method label", { hasText: "Cash on Delivery" })

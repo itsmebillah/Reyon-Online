@@ -91,7 +91,7 @@ export default async function CheckoutPage() {
             />
           ) : address ? (
             <p className="checkout-step-notice">
-              Save a delivery zone to continue to payment.
+              Choose a delivery zone to continue to payment.
             </p>
           ) : null}
           {orderState?.existingOrderId ? (
