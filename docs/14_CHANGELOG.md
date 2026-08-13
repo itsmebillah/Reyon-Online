@@ -48,6 +48,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 - Added governed return review operations: attributable intake processing, Admin/Super Admin-only approval and rejection, Staff-safe operational progression, conflict-resistant state guards, customer withdrawal of newly requested returns, and lifecycle notifications.
 - Added auditable returned-item receipt and inspection: cumulative quantity caps prevent duplicate/over-receipt, every received unit requires an approved disposition, sellable stock posts an idempotent referenced Return In movement, and quarantine, damaged/loss, expiry, and batch outcomes remain unavailable and traceable without rewriting inventory or sales history.
 - Added Admin/Super Admin-controlled manual refunds with proportional discount allocation from immutable order values, actual-payment and prior-refund caps, optional reason-gated REYON-fault delivery refunds, separate globally numbered adjustment records, mandatory execution evidence, and append-only lifecycle/notification history.
+- Connected completed refund facts to sales reconciliation and the reusable Best Sellers collection strategy. Gross completed-sale history remains intact while Admin sees refunded and net product revenue, and ranking subtracts only quantities whose manual refund reached Refunded.
 
 ### Sprint 17 — Sales Processing
 

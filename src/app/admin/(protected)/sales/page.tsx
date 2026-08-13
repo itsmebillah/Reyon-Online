@@ -82,6 +82,8 @@ export default async function SalesPage() {
                   <th>Date</th>
                   <th>Sales</th>
                   <th>Products</th>
+                  <th>Refunded</th>
+                  <th>Net products</th>
                   <th>Delivery</th>
                   <th>Discounts</th>
                   <th>Grand total</th>
@@ -93,10 +95,14 @@ export default async function SalesPage() {
                     <td>{row.businessDate}</td>
                     <td>{row.completedSalesCount}</td>
                     <td>{money(Number(row.productSales))}</td>
+                    <td>{money(Number(row.refundedProductRevenue))}</td>
+                    <td>
+                      <strong>{money(Number(row.netProductSales))}</strong>
+                    </td>
                     <td>{money(Number(row.deliveryCharges))}</td>
                     <td>{money(Number(row.discounts))}</td>
                     <td>
-                      <strong>{money(Number(row.grandTotal))}</strong>
+                      <strong>{money(Number(row.netGrandTotal))}</strong>
                     </td>
                   </tr>
                 ))}

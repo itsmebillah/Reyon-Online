@@ -27,8 +27,12 @@ export type DailySalesControl = Readonly<{
   businessDate: string;
   completedSalesCount: number;
   productSales: number;
+  refundedProductRevenue: number;
+  netProductSales: number;
   deliveryCharges: number;
+  refundedDeliveryCharges: number;
   grandTotal: number;
+  netGrandTotal: number;
   discounts: number;
   currency: "BDT";
 }>;

@@ -72,6 +72,8 @@ Completed orders are the population for completed sales; Delivered, Cancelled, R
 
 Returned quantity, refunded revenue, net-sales, and net Best Seller projections are deferred until Sprint 19 supplies approved auditable adjustment facts. Reporting must preserve gross completed-sale history and consume future adjustments as separate evidence.
 
+Sprint 19 now supplies those adjustment facts. Only a manually executed refund in `Refunded` state reduces net product revenue and net Best Seller quantity; requested, approved, received, inspected, or refund-pending returns do not alter reported net sales. Gross Completed-sale evidence remains immutable.
+
 ## Pending Business Decisions
 
 ### TODO — Product Owner / Domain Owners
