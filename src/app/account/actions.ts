@@ -36,6 +36,58 @@ export type DeliveryStatusState = {
     updatedAt: string | null;
   };
 };
+export type ReturnEligibilityState = {
+  error?: string;
+  order?: {
+    orderNumber: string;
+    orderState: string;
+    eligibleUntil: string;
+    lines: {
+      lineId: string;
+      lineNumber: number;
+      productName: string;
+      variantLabel: string | null;
+      orderedQuantity: number;
+      remainingQuantity: number;
+      normallyReturnable: boolean;
+    }[];
+  };
+};
+
+export async function findReturnEligibility(
+  _state: ReturnEligibilityState,
+  form: FormData,
+): Promise<ReturnEligibilityState> {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.rpc("customer_return_eligible_lines", {
+    p_order_reference: String(form.get("orderReference") ?? ""),
+    p_phone: String(form.get("phone") ?? ""),
+  });
+  if (error || !data)
+    return { error: "No return-eligible order matched those details." };
+  return { order: data as ReturnEligibilityState["order"] };
+}
+
+export async function submitReturnRequest(
+  _state: CancellationState,
+  form: FormData,
+): Promise<CancellationState> {
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.rpc("customer_request_return", {
+    p_order_reference: String(form.get("orderReference") ?? ""),
+    p_phone: String(form.get("phone") ?? ""),
+    p_order_line_id: String(form.get("orderLineId") ?? ""),
+    p_quantity: Number(form.get("quantity")),
+    p_reason: String(form.get("reason") ?? ""),
+    p_condition: String(form.get("condition") ?? ""),
+    p_note: String(form.get("note") ?? ""),
+    p_photo_reference: String(form.get("photoReference") ?? "").trim() || null,
+    p_video_reference: String(form.get("videoReference") ?? "").trim() || null,
+  });
+  return error
+    ? { error: error.message }
+    : { success: "Return request submitted for REYON review." };
+}
 
 export async function findDeliveryStatus(
   _state: DeliveryStatusState,

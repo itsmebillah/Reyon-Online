@@ -43,6 +43,8 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 ### Sprint 19 — Returns and Refunds
 
 - Opened Product Owner decision review for eligibility, lifecycle, evidence, authority, reverse logistics, inspection, inventory disposition, refund execution, customer documents, notifications, reporting adjustments, and append-only corrections while preserving all Sprint 14–18 boundaries.
+- Approved the seven-day Delivered-based window, product/condition rules, reason/evidence catalog, partial and multiple returns, lifecycle and authority, shipping responsibility, inspected inventory dispositions, manual refunds, immutable source history, net adjustments, notifications, and append-only corrections.
+- Added the Sprint 19 return-request foundation: authoritative eligibility checks, product-level returnability, approved reason/condition evidence, partial quantity and duplicate-return protection, append-only request events, customer intake, Admin queue visibility, and notification outbox events.
 
 ### Sprint 17 — Sales Processing
 

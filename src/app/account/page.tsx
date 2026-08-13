@@ -4,6 +4,7 @@ import { ResubmitPaymentForm } from "./resubmit-payment-form";
 import { OrderChangeForm } from "./order-change-form";
 import { SalesDocumentForm } from "./sales-document-form";
 import { DeliveryStatusForm } from "./delivery-status-form";
+import { ReturnRequestForm } from "./return-request-form";
 export default function Account() {
   return (
     <Container className="page">
@@ -20,6 +21,14 @@ export default function Account() {
           location tracking is not currently provided.
         </p>
         <DeliveryStatusForm />
+      </section>
+      <section className="admin-module-card">
+        <span>Within seven days of delivery</span>
+        <h2>Request a product return</h2>
+        <p>
+          Check eligible items first. Exception claims require photo evidence.
+        </p>
+        <ReturnRequestForm />
       </section>
       <section className="admin-module-card">
         <span>Completed sales</span>
