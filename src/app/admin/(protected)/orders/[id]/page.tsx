@@ -153,6 +153,7 @@ export default async function OrderDetailPage({
           </p>
         ) : null}
         <TransitionForm
+          key={order.state}
           orderId={order.id}
           transitions={order.allowedTransitions}
         />
