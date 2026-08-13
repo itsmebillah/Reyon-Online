@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+### Sprint 20 — Supplier and Purchase Operations
+
+- Opened Product Owner decision review for supplier lifecycle and records, supplier–variant sourcing, PO identity/lifecycle/authority, commercial lines, partial receiving and discrepancies, supplier returns, operational payment/credit status, amendments/cancellation, cost scope, performance history, replenishment, and audit controls while preserving all Sprint 14–19 boundaries.
+
 ### Sprint 19 — Returns and Refunds
 
 - Opened Product Owner decision review for eligibility, lifecycle, evidence, authority, reverse logistics, inspection, inventory disposition, refund execution, customer documents, notifications, reporting adjustments, and append-only corrections while preserving all Sprint 14–18 boundaries.
