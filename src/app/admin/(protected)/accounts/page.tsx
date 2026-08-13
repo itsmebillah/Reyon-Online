@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
-import { getAccountingFoundation } from "@/features/accounting/data/accounting-foundation";
+import {
+  getAccountingFoundation,
+  getCompletedSaleJournals,
+} from "@/features/accounting/data/accounting-foundation";
 import {
   ActivationForm,
   ApproverForm,
   FinancialAccountForm,
   LedgerAccountForm,
   OpeningBalanceForm,
+  PostingMappingForm,
   ProfileForm,
 } from "./accounting-forms";
 
@@ -16,7 +20,10 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function AccountsPage() {
-  const data = await getAccountingFoundation();
+  const [data, journals] = await Promise.all([
+    getAccountingFoundation(),
+    getCompletedSaleJournals(),
+  ]);
   return (
     <section
       className="admin-dashboard catalog-admin"
@@ -144,7 +151,25 @@ export default async function AccountsPage() {
 
       <details className="brand-editor" open={!data.profile.postingEnabled}>
         <summary>
-          <strong>6. Validate and activate</strong>
+          <strong>6. Completed-sale posting mappings</strong>
+          <span>{data.postingMappings.length}/3 mapped</span>
+        </summary>
+        <p>
+          Product Sales and Delivery Revenue require approved revenue accounts.
+          Sales Discounts requires an approved contra-revenue account. Names are
+          never inferred.
+        </p>
+        {data.postingMappings.map((mapping) => (
+          <p key={mapping.purpose}>
+            {mapping.purpose} · {mapping.accountCode} · {mapping.accountName}
+          </p>
+        ))}
+        {data.canConfigure && <PostingMappingForm accounts={data.accounts} />}
+      </details>
+
+      <details className="brand-editor" open={!data.profile.postingEnabled}>
+        <summary>
+          <strong>7. Validate and activate</strong>
           <span>
             {data.profile.postingEnabled ? "Active" : "Posting blocked"}
           </span>
@@ -158,6 +183,48 @@ export default async function AccountsPage() {
           <ActivationForm />
         )}
       </details>
+
+      <section
+        className="brand-management-list"
+        aria-labelledby="journal-title"
+      >
+        <div className="brand-list-heading">
+          <h2 id="journal-title">Completed-sale journals</h2>
+          <span>{journals.length}</span>
+        </div>
+        {journals.length ? (
+          journals.map((journal) => (
+            <details className="brand-editor" key={journal.id}>
+              <summary>
+                <strong>
+                  {journal.reference} · {journal.description}
+                </strong>
+                <span>
+                  Debit {Number(journal.totalDebit).toFixed(2)} = Credit{" "}
+                  {Number(journal.totalCredit).toFixed(2)}
+                </span>
+              </summary>
+              <p>
+                {journal.sourceModule} · {journal.sourceReference} ·{" "}
+                {journal.postingSource} ·{" "}
+                {new Date(journal.postingDate).toLocaleString("en-BD")}
+              </p>
+              {journal.lines.map((line, index) => (
+                <p key={index}>
+                  {line.accountCode} · {line.accountName} — Debit{" "}
+                  {Number(line.debit).toFixed(2)} / Credit{" "}
+                  {Number(line.credit).toFixed(2)}
+                </p>
+              ))}
+            </details>
+          ))
+        ) : (
+          <p className="admin-empty">
+            No Completed sale has been posted. COGS is intentionally outside
+            this milestone.
+          </p>
+        )}
+      </section>
 
       <section
         className="brand-management-list"

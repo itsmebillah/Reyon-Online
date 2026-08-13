@@ -116,3 +116,18 @@ export async function activateConfiguration(
     "Accounting configuration activated. Posting controls are now enabled.",
   );
 }
+
+export async function savePostingMapping(
+  _state: AccountingActionState,
+  form: FormData,
+) {
+  return call(
+    "admin_save_posting_account_mapping",
+    {
+      p_purpose: text(form, "purpose"),
+      p_ledger_account_id: text(form, "ledgerAccountId"),
+      p_reason: text(form, "reason"),
+    },
+    "Posting account mapping saved. Reactivation is required.",
+  );
+}

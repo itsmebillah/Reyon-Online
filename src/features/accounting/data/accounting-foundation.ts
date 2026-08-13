@@ -66,11 +66,51 @@ export type AccountingFoundation = Readonly<{
     actorRole: string;
     occurredAt: string;
   }>[];
+  postingMappings: readonly Readonly<{
+    purpose: string;
+    ledgerAccountId: string;
+    accountCode: string;
+    accountName: string;
+  }>[];
+}>;
+
+export type CompletedSaleJournal = Readonly<{
+  id: string;
+  reference: string;
+  postingDate: string;
+  sourceModule: string;
+  sourceReference: string;
+  totalDebit: number;
+  totalCredit: number;
+  postingSource: string;
+  description: string;
+  lines: readonly Readonly<{
+    accountCode: string;
+    accountName: string;
+    debit: number;
+    credit: number;
+    memo: string;
+  }>[];
 }>;
 export async function getAccountingFoundation() {
   const db = await createSupabaseServerClient();
-  const { data, error } = await db.rpc("admin_accounting_foundation");
-  if (error || !data)
+  const [{ data, error }, { data: mappings, error: mappingError }] =
+    await Promise.all([
+      db.rpc("admin_accounting_foundation"),
+      db.rpc("admin_posting_account_mappings"),
+    ]);
+  if (error || !data || mappingError || !mappings)
     throw new Error("Unable to load accounting configuration.");
-  return data as AccountingFoundation;
+  return {
+    ...(data as AccountingFoundation),
+    postingMappings: mappings,
+  } as AccountingFoundation;
+}
+
+export async function getCompletedSaleJournals() {
+  const db = await createSupabaseServerClient();
+  const { data, error } = await db.rpc("admin_completed_sale_journals");
+  if (error || !data)
+    throw new Error("Unable to load completed-sale journals.");
+  return data as readonly CompletedSaleJournal[];
 }

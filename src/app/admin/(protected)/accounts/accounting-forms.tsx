@@ -8,6 +8,7 @@ import {
   saveFinancialAccount,
   saveLedgerAccount,
   saveOpeningBalances,
+  savePostingMapping,
   saveProfile,
   type AccountingActionState,
 } from "./actions";
@@ -390,6 +391,57 @@ export function ActivationForm() {
       <Result state={state} />
       <button className="button button--primary" disabled={pending}>
         {pending ? "Validating…" : "Validate and activate accounting"}
+      </button>
+    </form>
+  );
+}
+
+export function PostingMappingForm({
+  accounts,
+}: {
+  accounts: AccountingFoundation["accounts"];
+}) {
+  const [state, action, pending] = useActionState(savePostingMapping, {});
+  return (
+    <form action={action} className="catalog-admin-form accounting-inline-form">
+      <label>
+        Posting purpose
+        <select name="purpose" required defaultValue="">
+          <option value="" disabled>
+            Select purpose
+          </option>
+          <option value="product-sales">Product Sales</option>
+          <option value="delivery-revenue">Delivery Revenue</option>
+          <option value="sales-discounts">Sales Discounts</option>
+        </select>
+      </label>
+      <label>
+        Approved ledger account
+        <select name="ledgerAccountId" required defaultValue="">
+          <option value="" disabled>
+            Select account
+          </option>
+          {accounts
+            .filter(
+              (account) =>
+                account.active &&
+                account.approvedAt &&
+                ["revenue", "contra-revenue"].includes(account.class ?? ""),
+            )
+            .map((account) => (
+              <option key={account.id} value={account.id}>
+                {account.code} · {account.name} · {account.class}
+              </option>
+            ))}
+        </select>
+      </label>
+      <label>
+        Mapping reason
+        <input name="reason" required />
+      </label>
+      <Result state={state} />
+      <button className="button button--primary" disabled={pending}>
+        {pending ? "Saving…" : "Save posting mapping"}
       </button>
     </form>
   );
