@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {
   getAccountingFoundation,
+  getCogsPostingStatus,
   getCompletedSaleJournals,
 } from "@/features/accounting/data/accounting-foundation";
 import {
@@ -20,9 +21,10 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function AccountsPage() {
-  const [data, journals] = await Promise.all([
+  const [data, journals, cogs] = await Promise.all([
     getAccountingFoundation(),
     getCompletedSaleJournals(),
+    getCogsPostingStatus(),
   ]);
   return (
     <section
@@ -152,12 +154,12 @@ export default async function AccountsPage() {
       <details className="brand-editor" open={!data.profile.postingEnabled}>
         <summary>
           <strong>6. Completed-sale posting mappings</strong>
-          <span>{data.postingMappings.length}/3 mapped</span>
+          <span>{data.postingMappings.length}/5 mapped</span>
         </summary>
         <p>
           Product Sales and Delivery Revenue require approved revenue accounts.
-          Sales Discounts requires an approved contra-revenue account. Names are
-          never inferred.
+          Sales Discounts requires contra-revenue; Inventory requires an asset;
+          Cost of Sales requires a COGS account. Names are never inferred.
         </p>
         {data.postingMappings.map((mapping) => (
           <p key={mapping.purpose}>
@@ -220,9 +222,39 @@ export default async function AccountsPage() {
           ))
         ) : (
           <p className="admin-empty">
-            No Completed sale has been posted. COGS is intentionally outside
-            this milestone.
+            No Completed sale revenue journal has been posted.
           </p>
+        )}
+      </section>
+
+      <section className="brand-management-list" aria-labelledby="cogs-title">
+        <div className="brand-list-heading">
+          <h2 id="cogs-title">COGS posting status</h2>
+          <span>{cogs.postings.length} posted</span>
+        </div>
+        {cogs.postings.map((posting) => (
+          <article className="brand-editor" key={posting.journalReference}>
+            <strong>
+              {posting.journalReference} · {posting.orderReference}
+            </strong>
+            <p>
+              Quantity {Number(posting.quantity)} · WAC BDT{" "}
+              {Number(posting.weightedAverageCost).toFixed(6)} · COGS BDT{" "}
+              {Number(posting.amount).toFixed(2)}
+            </p>
+          </article>
+        ))}
+        {cogs.exceptions.map((exception) => (
+          <article
+            className="brand-editor"
+            key={`${exception.sourceSaleId}-${exception.key}`}
+          >
+            <strong>Blocked · {exception.key}</strong>
+            <p>{exception.detail}</p>
+          </article>
+        ))}
+        {!cogs.postings.length && !cogs.exceptions.length && (
+          <p className="admin-empty">No COGS posting activity is available.</p>
         )}
       </section>
 

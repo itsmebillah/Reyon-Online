@@ -87,6 +87,10 @@ Sprint 19 receipt and inspection keep returned goods outside available stock unt
 
 Sprint 20 purchase receiving supports multiple and partial receipts. Only inspected accepted quantities create an append-only `Purchase / Receive` movement and enter available inventory. Short, excess, damaged/rejected, batch, and expiry observations remain distinct evidence; purchase returns use separately authorized `Return Out` movements. Purchase cost is the initial cost basis while landed-cost allocation remains deferred.
 
+Sprint 21 adds a linked, private valuation subledger using weighted-average cost. Accepted receipts are valued at immutable net unit acquisition cost after their PO-line discount allocation; gross unit cost and per-unit discount remain separate audit facts. Each valuation event references its physical movement line and records quantity, unit/total value, previous quantity/value/WAC, and resulting quantity/value/WAC. The current valuation position is a rebuildable projection; historical events cannot be edited or deleted.
+
+Purchase returns remove value at the current authoritative WAC when the physical return is processed. Completed-sale COGS consumes the existing sold movement quantity at WAC at the `Completed` recognition point; accounting creates no second physical movement. Later receipts or returns update future WAC without rewriting receipt evidence or historical COGS.
+
 Each accepted purchase receipt movement references its immutable receipt, PO, variant, Main Inventory location, actor, and optional lot/expiry identity. Damaged/rejected and quarantined receipt outcomes never create positive available-stock movements automatically.
 
 An approved supplier return reduces stock only when the physical return is recorded. The negative `purchase-return` movement references the return, eligible accepted receipt quantity, original PO/receipt, variant, Main Inventory, and applicable lot; negative stock and duplicate cumulative returns are rejected.

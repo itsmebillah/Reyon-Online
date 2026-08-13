@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-14 — Weighted-average inventory valuation and COGS
+
+- Added an immutable valuation event history linked one-to-one with physical inventory movement lines and a rebuildable WAC position projection.
+- Accepted purchase receipts use net unit acquisition cost after PO-line discount allocation while retaining gross cost and discount evidence; purchase returns snapshot current WAC.
+- Added a separate idempotent Completed-sale COGS journal (`Dr Cost of Sales / Cr Inventory`) sourced from the existing sold movement, plus private posting exceptions for missing configuration or cost evidence.
+- Added Finance-controlled Inventory and Cost of Sales mappings and minimal Admin visibility without implementing payables, refunds, expenses, reconciliation, close, or reports.
+
 ## 2026-08-13 — Completed-sale accounting posting hardening
 
 - Revalidated the released immutable Completed-sale journal against the Sprint 21 specification without creating accounts, balances, or financial transactions.

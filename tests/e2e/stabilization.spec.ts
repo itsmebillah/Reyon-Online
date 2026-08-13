@@ -397,6 +397,9 @@ test("authenticated Finance workspace exposes real posting configuration and jou
   ).toBeVisible();
   await expect(page.getByText("Completed-sale journals")).toBeVisible();
   await expect(page.getByText("Completed-sale posting mappings")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "COGS posting status" }),
+  ).toBeVisible();
 });
 
 test("delivery partner validation remains on the form", async ({ page }) => {

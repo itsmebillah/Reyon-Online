@@ -413,6 +413,8 @@ export function PostingMappingForm({
           <option value="product-sales">Product Sales</option>
           <option value="delivery-revenue">Delivery Revenue</option>
           <option value="sales-discounts">Sales Discounts</option>
+          <option value="inventory">Inventory</option>
+          <option value="cost-of-sales">Cost of Sales</option>
         </select>
       </label>
       <label>
@@ -426,7 +428,9 @@ export function PostingMappingForm({
               (account) =>
                 account.active &&
                 account.approvedAt &&
-                ["revenue", "contra-revenue"].includes(account.class ?? ""),
+                ["revenue", "contra-revenue", "asset", "cogs"].includes(
+                  account.class ?? "",
+                ),
             )
             .map((account) => (
               <option key={account.id} value={account.id}>

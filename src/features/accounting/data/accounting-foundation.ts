@@ -92,6 +92,23 @@ export type CompletedSaleJournal = Readonly<{
     memo: string;
   }>[];
 }>;
+export type CogsPostingStatus = Readonly<{
+  postings: readonly Readonly<{
+    journalReference: string;
+    sourceSaleId: string;
+    orderReference: string;
+    postedAt: string;
+    amount: number;
+    quantity: number;
+    weightedAverageCost: number;
+  }>[];
+  exceptions: readonly Readonly<{
+    sourceSaleId: string;
+    key: string;
+    detail: string;
+    occurredAt: string;
+  }>[];
+}>;
 export async function getAccountingFoundation() {
   const db = await createSupabaseServerClient();
   const [{ data, error }, { data: mappings, error: mappingError }] =
@@ -113,4 +130,11 @@ export async function getCompletedSaleJournals() {
   if (error || !data)
     throw new Error("Unable to load completed-sale journals.");
   return data as readonly CompletedSaleJournal[];
+}
+
+export async function getCogsPostingStatus() {
+  const db = await createSupabaseServerClient();
+  const { data, error } = await db.rpc("admin_cogs_postings");
+  if (error || !data) throw new Error("Unable to load COGS posting status.");
+  return data as CogsPostingStatus;
 }

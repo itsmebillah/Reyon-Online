@@ -98,6 +98,8 @@ Completed-sale posting is configuration-gated and idempotent. It debits exactly 
 
 COGS, supplier payables, refunds, expenses, reconciliation, and period close remain outside this milestone.
 
+Sprint 21 now recognizes COGS in a separate immutable journal at the same authoritative `Completed` sale event. The journal debits the single configured, active, approved Cost of Sales account and credits the single configured, active, approved Inventory asset account. Its quantity basis is the existing sold inventory movement, and its amount is that quantity multiplied by the immutable WAC snapshot. Missing cost, insufficient valued quantity, inactive configuration, or invalid mappings create a private auditable posting exception rather than a fabricated or partial journal. Revenue and COGS journals use distinct source namespaces and idempotency keys while referencing the same Completed sale.
+
 ## Pending Decisions
 
 ### TODO — Product Owner / Finance Owner
