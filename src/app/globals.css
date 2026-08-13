@@ -659,6 +659,32 @@ img {
   border-radius: 50%;
   object-fit: contain;
 }
+.reyon-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.reyon-logo__mark {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  flex: 0 0 50px;
+  overflow: hidden;
+}
+.reyon-logo__mark .reyon-logo__mark-source {
+  position: absolute;
+  width: 104px;
+  height: 104px;
+  max-width: none;
+  top: -7px;
+  left: -27px;
+  border-radius: 0;
+}
+.reyon-logo .reyon-logo__wordmark {
+  width: 132px;
+  height: auto;
+  border-radius: 0;
+}
 .brand-logo--header {
   gap: 9px;
   border-radius: 0;
@@ -691,6 +717,9 @@ img {
   gap: 30px;
   margin: auto;
   font-size: 13px;
+}
+.primary-nav__account {
+  display: none;
 }
 .primary-nav a:hover,
 .primary-nav a:focus-visible {
@@ -1460,9 +1489,13 @@ img {
   grid-template-columns: 2fr repeat(3, 1fr) 1.6fr;
   gap: 40px;
 }
-.brand-logo--footer img {
-  width: 144px;
-  height: 144px;
+.brand-logo--footer .reyon-logo__wordmark {
+  width: 150px;
+}
+.brand-logo--footer .reyon-logo__mark {
+  width: 54px;
+  height: 54px;
+  flex-basis: 54px;
 }
 .footer p {
   color: #aaa;
@@ -1715,7 +1748,7 @@ details p {
     justify-content: space-between;
   }
   .nav-actions a {
-    display: none;
+    display: grid;
   }
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1749,8 +1782,9 @@ details p {
   .nav-row {
     height: 68px;
     display: grid;
-    grid-template-columns: 62px minmax(0, 1fr) 62px;
+    grid-template-columns: 42px minmax(0, 1fr) 72px;
     gap: 0;
+    position: relative;
   }
   .nav-mobile {
     justify-self: start;
@@ -1760,24 +1794,33 @@ details p {
     min-width: 0;
     gap: 7px;
   }
-  .brand-logo--header .header-logo-mark {
+  .brand-logo--header .reyon-logo__mark {
     width: 42px;
     height: 42px;
     flex-basis: 42px;
   }
-  .brand-logo--header .header-logo--mark-source {
+  .brand-logo--header .reyon-logo__mark-source {
     width: 88px;
     height: 88px;
     top: -6px;
     left: -23px;
   }
-  .brand-logo--header .header-logo--wordmark {
+  .brand-logo--header .reyon-logo__wordmark {
     width: min(118px, 100%);
     height: auto;
   }
   .nav-actions {
-    justify-self: end;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
     gap: 9px;
+  }
+  .nav-actions > button {
+    display: none;
+  }
+  .primary-nav__account {
+    display: block;
   }
   .hero {
     min-height: 640px;

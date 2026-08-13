@@ -174,8 +174,8 @@ test("header uses the horizontal logo lockup at every viewport", async ({
 }) => {
   const failures = monitor(page);
   await page.goto("/");
-  const mark = page.locator(".header-logo-mark");
-  const wordmark = page.locator(".header-logo--wordmark");
+  const mark = page.locator(".brand-logo--header .reyon-logo__mark");
+  const wordmark = page.locator(".brand-logo--header .reyon-logo__wordmark");
   await expect(mark).toBeVisible();
   await expect(wordmark).toBeVisible();
   const markBox = await mark.boundingBox();
@@ -183,6 +183,7 @@ test("header uses the horizontal logo lockup at every viewport", async ({
   expect(markBox).not.toBeNull();
   expect(wordmarkBox).not.toBeNull();
   expect(markBox!.x + markBox!.width).toBeLessThanOrEqual(wordmarkBox!.x);
+  await expect(page.locator(".brand-logo--footer .reyon-logo")).toBeVisible();
 
   expect(failures).toEqual([]);
 });

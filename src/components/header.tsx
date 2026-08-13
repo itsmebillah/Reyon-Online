@@ -1,13 +1,13 @@
 "use client";
 
 import { Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { useEffect } from "react";
 import { getCartSummary } from "@/features/cart/actions";
 import { Container } from "./ui";
+import { ReyonLogo } from "./reyon-logo";
 
 const links = [
   ["Shop", "/shop"],
@@ -24,8 +24,11 @@ export function Header() {
   const router = useRouter();
   useEffect(() => {
     void getCartSummary().then((cart) => setCartCount(cart.itemCount));
-    const refresh = () =>
-      void getCartSummary().then((cart) => setCartCount(cart.itemCount));
+    const refresh = (event: Event) => {
+      const immediate = (event as CustomEvent<number>).detail;
+      if (Number.isFinite(immediate)) setCartCount(immediate);
+      else void getCartSummary().then((cart) => setCartCount(cart.itemCount));
+    };
     window.addEventListener("reyon:cart-updated", refresh);
     return () => window.removeEventListener("reyon:cart-updated", refresh);
   }, []);
@@ -58,24 +61,7 @@ export function Header() {
           href="/"
           aria-label="REYON home"
         >
-          <span className="header-logo-mark" aria-hidden="true">
-            <Image
-              className="header-logo header-logo--mark-source"
-              src="/images/reyon-logo-primary.png"
-              alt=""
-              width={126}
-              height={126}
-              priority
-            />
-          </span>
-          <Image
-            className="header-logo header-logo--wordmark"
-            src="/images/reyon-wordmark-horizontal.webp"
-            alt="REYON Beauty & Care"
-            width={640}
-            height={246}
-            priority
-          />
+          <ReyonLogo priority />
         </Link>
         <nav
           className={`primary-nav ${open ? "is-open" : ""}`}
@@ -86,12 +72,19 @@ export function Header() {
               {label}
             </Link>
           ))}
+          <Link
+            className="primary-nav__account"
+            href="/account"
+            onClick={() => setOpen(false)}
+          >
+            Sign in / Account
+          </Link>
         </nav>
         <div className="nav-actions">
           <button aria-label="Search" onClick={() => setSearch(!search)}>
             <Search />
           </button>
-          <Link href="/account" aria-label="Account">
+          <Link href="/account" aria-label="Sign in or open your account">
             <UserRound />
           </Link>
           <Link
@@ -99,7 +92,9 @@ export function Header() {
             aria-label={`Shopping bag with ${cartCount} items`}
           >
             <ShoppingBag />
-            <span className="cart-count">{cartCount}</span>
+            <span className="cart-count" aria-live="polite">
+              {cartCount}
+            </span>
           </Link>
         </div>
       </Container>

@@ -250,11 +250,17 @@ test("mobile customer navigation and cart controls remain usable", async ({
   await expect(
     page.getByRole("navigation", { name: "Primary navigation" }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Sign in / Account" }),
+  ).toBeVisible();
   await page.getByRole("link", { name: "Shop" }).first().click();
   await expect(page).toHaveURL(/\/shop/);
   await page.getByRole("button", { name: /^Add/ }).first().click();
   await expect(page.getByRole("status")).toContainText(/added to your bag/i);
-  await page.goto("/cart");
+  const cart = page.getByRole("link", { name: /Shopping bag with 1 items/i });
+  await expect(cart).toBeVisible();
+  await cart.click();
+  await expect(page).toHaveURL(/\/cart/);
   await expect(
     page.getByRole("link", { name: "Continue to checkout" }),
   ).toBeVisible();

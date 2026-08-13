@@ -3,6 +3,7 @@ import { logoutAdmin } from "@/app/admin/login/actions";
 import Link from "next/link";
 import { AdminNavigation } from "@/components/admin-navigation";
 import { AdminBackNavigation } from "@/components/admin-back-navigation";
+import { ReyonLogo } from "@/components/reyon-logo";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +16,7 @@ export default async function ProtectedAdminLayout({
     <div className="admin-shell">
       <aside className="admin-sidebar">
         <Link className="admin-sidebar__brand" href="/admin">
-          <strong>REYON</strong>
+          <ReyonLogo />
           <span>Business OS</span>
         </Link>
         <AdminNavigation />

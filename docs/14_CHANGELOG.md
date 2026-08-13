@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+### Customer shell usability
+
+- Made Cart and Account consistently accessible in the mobile header, applied authoritative cart counts immediately after successful additions, and consolidated the approved horizontal REYON mark/wordmark treatment into one shared component across customer and Admin shells.
+
 ### Sprint 20 — Supplier and Purchase Operations
 
 - Opened Product Owner decision review for supplier lifecycle and records, supplier–variant sourcing, PO identity/lifecycle/authority, commercial lines, partial receiving and discrepancies, supplier returns, operational payment/credit status, amendments/cancellation, cost scope, performance history, replenishment, and audit controls while preserving all Sprint 14–19 boundaries.

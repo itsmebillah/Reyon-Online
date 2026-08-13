@@ -22,7 +22,10 @@ export function ProductActions({
     startAdding(async () => {
       const result = await addCartItem(product.id);
       notify(result.error ?? result.success ?? "");
-      if (!result.error) window.dispatchEvent(new Event("reyon:cart-updated"));
+      if (!result.error)
+        window.dispatchEvent(
+          new CustomEvent("reyon:cart-updated", { detail: result.count }),
+        );
     });
   const notify = (text: string) => {
     setMessage(text);

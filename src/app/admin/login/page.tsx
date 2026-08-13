@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { ReyonLogo } from "@/components/reyon-logo";
 import { LoginForm } from "./login-form";
 
 export const metadata: Metadata = {
@@ -14,13 +14,7 @@ export default function AdminLoginPage() {
   return (
     <main className="admin-auth-page" id="main">
       <section className="admin-auth-card" aria-labelledby="admin-login-title">
-        <Image
-          src="/images/reyon-wordmark-horizontal.webp"
-          width={360}
-          height={110}
-          alt="REYON Beauty & Care"
-          priority
-        />
+        <ReyonLogo priority />
         <p className="eyebrow">Business OS</p>
         <h1 id="admin-login-title">Welcome back</h1>
         <p>

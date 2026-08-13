@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { businessConfig } from "@/config/business";
 import { Container } from "./ui";
+import { ReyonLogo } from "./reyon-logo";
 
 export function Footer() {
   return (
@@ -14,12 +14,7 @@ export function Footer() {
               href="/"
               aria-label="REYON home"
             >
-              <Image
-                src="/images/reyon-logo-primary.png"
-                alt="REYON Beauty & Care"
-                width={144}
-                height={144}
-              />
+              <ReyonLogo />
             </Link>
             <p>{businessConfig.positioning}</p>
           </div>
