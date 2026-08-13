@@ -45,6 +45,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 ### Sprint 21 — Accounts and Payments
 
 - Added the bounded Product Owner decision packet for legal entity, chart of accounts, posting, valuation, balances, reconciliation, expenses, close, permissions, and reporting; recorded the permanent niche-agnostic core-engine boundary. No application behavior or financial posting was implemented.
+- Reconciled approved accrual, weighted-average, posting, payment, payable, refund, reconciliation, transfer, expense, close, permission, journal, correction, and reporting rules; added the private configurable accounting profile, Finance-approver, monthly-period, account-classification, real financial-account, and immutable opening-evidence foundation plus an Admin readiness workspace. Posting remains disabled pending real production configuration.
 
 ### Customer shell usability
 

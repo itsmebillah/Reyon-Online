@@ -67,7 +67,7 @@ Chart of accounts, fiscal periods, legal entities, cost centers, locations, chan
 
 ## Recognition and Valuation
 
-No revenue recognition, inventory valuation, cost allocation, discount allocation, rounding, bad debt, depreciation, or accrual policy is assumed.
+Accounting basis is Accrual. Order `Completed` is the approved revenue event; Weighted Average Cost is the initial inventory valuation method. Product revenue, delivery revenue, discounts, returns/refunds, Inventory, and Cost of Sales remain separately traceable through immutable journals.
 
 The approved operational completed-sale event is Order `Completed`; Delivered alone is not a completed sale. Product sales and delivery charges remain separate operational measures while Grand Total includes both. This creates source evidence only and does not define debit/credit mappings, statutory recognition, inventory costing, tax, or general-ledger posting.
 
@@ -78,7 +78,7 @@ The approved operational completed-sale event is Order `Completed`; Delivered al
 
 ## Tax, Currency, and Payments
 
-Jurisdictions, registrations, tax calculations, invoice requirements, functional/presentation currencies, exchange-rate sources, tender types, settlement, fees, and chargebacks require confirmation.
+Legal entity and fiscal-year values remain configurable and pending production configuration. Initial operational currency is BDT; Cash, Bank, MFS, Card/Clearing, and COD remain separately identifiable. Settlement, fees, transfers, reconciliation, and exceptions use append-only evidence.
 
 The private payment-evidence foundation records exact monetary facts and explicit order allocations without assigning debit, credit, revenue, receivable, cash, fee, tax, or settlement treatment. Finance-approved mappings must consume payment evidence through controlled contracts and must never rewrite it.
 

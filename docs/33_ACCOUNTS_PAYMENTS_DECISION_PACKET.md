@@ -1,91 +1,78 @@
-# Sprint 21 — Accounts and Payments Decision Packet
+# Sprint 21 — Accounts and Payments
 
 ## Purpose
 
-This packet requests only the Product Owner and qualified Finance decisions still required before Accounts and Payments can post financial records. It preserves the operational facts approved and released in Sprints 14–20.
+This document records the authoritative Sprint 21 Product Owner decisions and execution boundary. Sprints 14–20 remain unchanged.
 
 ## Table of Contents
 
-- [Decisions already closed](#decisions-already-closed)
-- [Permanent architecture boundary](#permanent-architecture-boundary)
-- [Required Product Owner decisions](#required-product-owner-decisions)
+- [Approved accounting policy](#approved-accounting-policy)
+- [Posting and valuation](#posting-and-valuation)
+- [Payments and balances](#payments-and-balances)
+- [Controls and reporting](#controls-and-reporting)
+- [Implementation sequence](#implementation-sequence)
+- [Required production configuration](#required-production-configuration)
 - [Future expansion](#future-expansion)
 - [Related documents](#related-documents)
 
-## Decisions Already Closed
+## Approved Accounting Policy
 
-- Order `Completed` is the official completed-sale event; `Delivered` is not.
-- Product sales and delivery charges are separate operational measures; Customer Grand Total includes both.
-- Verified prepaid payment permits processing but does not complete a sale. COD collection occurs at delivery and is reconciled against the expected amount.
-- bKash, Nagad, Rocket, Card, COD, supplier payments, and refunds remain manual/provider-neutral and evidence-backed. No gateway outcome may be fabricated.
-- Completed refunds append separate adjustments. Original Order, Sale, Invoice, Receipt, payment, and refund evidence remains immutable.
-- Supplier payable facts derive from accepted receipt value, PO commercial terms, physical purchase returns, and verified supplier payments.
-- Purchase cost is the initial inventory cost basis. Landed-cost allocation is deferred.
-- Current commerce behavior performs no separate customer tax calculation. Sprint 21 must not silently introduce one.
-- Financial corrections must use attributable append-only counter-evidence, never destructive mutation.
+- Accounting basis is **Accrual**; timezone is **Asia/Dhaka**.
+- Legal-entity identity and fiscal-year boundaries are configurable. Monthly periods are required.
+- Controlled financial actions require an authorized Finance approver.
+- Initial account groups support Assets (Cash, Bank, MFS, Card/Clearing, Accounts Receivable, Inventory), Liabilities (Accounts Payable, Customer Refund Payable, Other Current Liabilities), Equity (Owner/Business Equity, Retained Earnings), Revenue (Product Sales, Delivery Revenue), Contra Revenue (Sales Discounts, Sales Returns/Refunds), COGS (Cost of Sales), and Expenses (Delivery Expense, Payment/MFS Fees, configurable operating expenses).
+- The core Commerce and Accounting engine remains industry agnostic. Niche data belongs only to configurable Catalog and Presentation domains.
 
-## Permanent Architecture Boundary
+## Posting and Valuation
 
-The core Commerce and Accounting engine is industry agnostic. Order, Sales, Inventory, Purchase, Payment, Accounting, Delivery, Return, and Reporting rules may depend on governed commercial facts, but never on cosmetics-specific categories, claims, attributes, content, or branding. Niche configuration belongs to Catalog and Presentation. This boundary applies to all Sprint 21 decisions and implementation.
+- Order `Completed` remains the sale-recognition event. Product revenue, delivery revenue, and discounts remain separately traceable.
+- System journals are generated automatically for approved Sales, COGS, Inventory, Refund, and Supplier Payable events and are immutable.
+- Weighted Average Cost is the initial valuation method. Accepted purchase receipts update inventory cost; historical completed-sale cost is never silently rewritten.
+- Supplier Payable is recognized on accepted receipt, never on PO creation/approval. Supplier payments reduce payable; mismatches are auditable exceptions.
+- Completed refunds append accounting adjustments. Sellable returns reverse the applicable Inventory/COGS effect; refund settlement uses its actual source or Customer Refund Payable. Sprint 19 proportional rules remain authoritative.
+- Exceptional manual journals must be balanced, evidence-backed, and authorized. Corrections use reversal/replacement entries.
 
-## Required Product Owner Decisions
+## Payments and Balances
 
-### 1. Accounting authority, entity, and calendar
+- Cash, Bank, MFS, Card/Clearing, and COD remain separately identifiable.
+- Settlement and reconciliation are separate from Order status. Manual evidence remains append-only and provider-neutral.
+- Customer credit is unavailable initially; Accounts Receivable remains future-ready.
+- Supplier advances, deposits, overpayments, and unapplied balances are supported.
+- Reconciliation is initially manual and supported daily. Differences, fees, and settlement variances remain separate auditable facts.
+- Internal transfers record source, destination, amount, date, reference, and evidence; self-approval is prohibited.
+- Expenses require configurable category, payment source, amount, payee, evidence, and authorized approval. Recurring automation is deferred.
 
-1. What legal business/entity name owns the books, and is REYON Online currently operated as an individual/sole proprietorship, partnership, or registered company?
-2. Confirm accounting basis: cash basis or accrual basis.
-3. Confirm fiscal year start/end, reporting timezone, and whether monthly periods are required from the first release.
-4. Name the qualified accountant/finance adviser who will approve the opening chart, posting matrix, and opening balances before production posting begins.
+## Controls and Reporting
 
-### 2. Chart of accounts and opening balances
+- Super Admin has full accounting authority; Admin has approved operational authority; Staff is limited to permitted data entry and cannot approve its own financial transaction.
+- Monthly periods are lockable. Reopening requires Super Admin/authorized Finance approval; required reconciliations precede close.
+- Sensitive corrections record actor, timestamp, reason, affected evidence, and authorization.
+- Initial reporting supports Trial Balance, General Ledger, Profit & Loss, Balance Sheet, Cash/Bank/MFS position, Accounts Payable, Sales, COGS, Gross Profit, Refunds, Expenses, Supplier Payments, Reconciliation, and Journal history.
 
-5. Approve the initial account list and hierarchy, including at minimum Cash, each Bank account, each MFS wallet, COD clearing, Card clearing, Customer Receivables, Supplier Payables, Inventory, Product Sales, Delivery Revenue, Sales Returns/Refunds, Purchase/Inventory Cost, Cost of Sales, Expenses, Owner Equity/Capital, and opening-balance offset.
-6. For each real Cash/Bank/MFS account, provide its display name, institution/provider, masked business reference, opening balance, and opening date. Confirm whether negative opening balances are allowed.
-7. Should account identities be Admin-managed after setup, or Super Admin only? Should an account with history be deactivated rather than deleted? (Deletion of history is not permitted.)
+## Implementation Sequence
 
-### 3. Posting and recognition rules
+1. **Accounting configuration foundation:** legal/fiscal profile, monthly periods, Finance approver assignment, governed chart and real financial accounts.
+2. **Balanced posting engine:** immutable idempotent journals, period enforcement, reversal/replacement boundary.
+3. **Commerce posting projections:** Completed Sales, weighted-average COGS, accepted Purchase receipts/Supplier Payable, Refund adjustments.
+4. **Settlement operations:** customer/manual payments, COD, supplier payments, advances/unapplied amounts, fees and exceptions.
+5. **Cash operations:** financial accounts, transfers, expenses, evidence, segregation of duties.
+6. **Reconciliation and close:** daily reconciliation, monthly lock/reopen, controlled corrections.
+7. **Financial reports:** approved statements, balances, operational-financial reconciliation, and audit history.
 
-8. At Order `Completed`, approve the balanced entry pattern for product revenue, delivery revenue, customer payment/receivable, discounts, and COD/prepaid clearing.
-9. Approve the inventory valuation method used for Cost of Sales: moving weighted average, FIFO, or another accountant-approved method. Confirm rounding precision and treatment of cost changes.
-10. For accepted purchase receipts, confirm when Supplier Payable and Inventory are recognized: receipt date, supplier invoice date, or another approved matching event. Define treatment when the supplier invoice differs from the PO/receipt.
-11. For completed refunds, approve the entry pattern for product revenue reversal, optional delivery-charge reversal, payment/cash reduction or customer payable, and inventory/Cost of Sales effects for sellable versus damaged/quarantined returns.
+## Required Production Configuration
 
-### 4. Customer and supplier balances
+Implementation must not invent the following production records:
 
-12. Can a customer order be completed with an unpaid balance other than approved COD timing? If yes, define credit authority, limit, due date, and overdue handling; otherwise confirm no customer credit initially.
-13. Confirm supplier payable due-date source and overdue rule: PO credit terms, supplier invoice, receipt, or manual Admin entry. Define how disputed amounts affect outstanding and aging reports.
-14. Are advances, deposits, overpayments, and unapplied customer/supplier amounts allowed initially? If yes, approve allocation and refund/carry-forward rules.
+- Legal entity name/type and fiscal-year start date.
+- Named authorized Finance approver membership.
+- Real Cash, Bank, MFS, Card/COD clearing account identities and masked references.
+- Opening balances, effective dates, and evidence.
 
-### 5. Payment reconciliation and transfers
-
-15. Define who reconciles Cash, each MFS wallet, Bank, Card clearing, and COD clearing; required evidence; reconciliation frequency; and mismatch handling.
-16. Confirm whether verified manual MFS/Card evidence posts first to a provider clearing account and moves to Bank only when settlement is recorded. Define provider fees and settlement-shortfall treatment.
-17. Define COD remittance workflow: courier settlement batch/reference, expected versus received amount, fees/deductions, responsible role, and when COD clearing moves to Cash/Bank.
-18. Approve internal transfer rules between Cash/Bank/MFS accounts: initiation role, approval role, mandatory evidence/reference, transfer date, fees, and whether self-approval is prohibited.
-
-### 6. Expenses
-
-19. Approve initial expense categories/accounts and whether expenses may be paid from Cash, Bank, or MFS.
-20. Define required expense evidence, beneficiary/payee fields, expense date, approval roles, monetary approval limits, recurring expenses, and correction/cancellation rules.
-21. Confirm whether employee advances, owner drawings/contributions, payroll, fixed assets, depreciation, loans, and accrual/prepaid expenses are in Sprint 21 or explicitly deferred.
-
-### 7. Close, locks, corrections, and permissions
-
-22. Is daily closing required, optional reconciliation only, or deferred? Define who performs and approves it.
-23. Confirm monthly close workflow, close deadline, required reconciliations, who may lock a period, and whether reopening requires Super Admin plus mandatory reason.
-24. Approve role permissions for account setup, journals, payments, reconciliation, expenses, transfers, closing, reopening, and corrections across Super Admin, Admin, and Staff. Confirm whether Staff may create drafts but never approve their own financial operation.
-25. Confirm whether all system-generated journals post automatically from approved source events or enter a review queue first. Define which exceptional/manual journals require approval and whether self-approval is prohibited.
-26. Approve correction policy: reversal plus replacement entry, mandatory reason/evidence, authorized roles, and whether corrections in locked periods post in the current open period or require controlled reopening.
-
-### 8. Reports, retention, and external boundaries
-
-27. Approve initial financial reports: Trial Balance, General Ledger, Cash/Bank/MFS balances, Profit and Loss, Balance Sheet, Receivables aging, Payables aging, payment reconciliation, expense report, and daily/monthly summaries.
-28. Confirm report basis, comparative periods, export format, and who may view/export sensitive financial reports.
-29. Confirm financial record retention period and whether any external accounting system, accountant export, bank/MFS import, or statutory/tax report is required initially.
+The foundation may be deployed before these values exist, but financial posting remains disabled until required configuration is complete.
 
 ## Future Expansion
 
-Tax automation, landed cost, multi-currency, gateway settlement, bank feeds, payroll, fixed assets, budgeting, consolidation, and industry-specific reporting remain deferred unless explicitly approved. Their future addition must not replace source evidence or couple the core ledger to a retail niche.
+Payroll, fixed assets/depreciation, loans, complex accruals, prepayment accounting, automated bank/MFS integrations, landed cost, multi-currency, and recurring-expense automation are deferred. The schema remains extensible without niche coupling.
 
 ## Related Documents
 

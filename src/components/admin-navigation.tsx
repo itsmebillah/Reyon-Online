@@ -17,6 +17,7 @@ import {
   RotateCcw,
   Handshake,
   ShoppingBasket,
+  Landmark,
 } from "lucide-react";
 
 const groups = [
@@ -50,6 +51,7 @@ const groups = [
       { label: "Delivery", href: "/admin/delivery", icon: Truck },
       { label: "Returns", href: "/admin/returns", icon: RotateCcw },
       { label: "Payments", href: "/admin/payments", icon: CreditCard },
+      { label: "Accounts", href: "/admin/accounts", icon: Landmark },
     ],
   },
 ] as const;
