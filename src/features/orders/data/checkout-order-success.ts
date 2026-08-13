@@ -31,7 +31,10 @@ export type CheckoutOrderSuccess = Readonly<{
 }>;
 
 export async function getCheckoutOrderSuccess() {
-  const accessToken = (await cookies()).get("reyon_cart")?.value;
+  const cookieStore = await cookies();
+  const accessToken =
+    cookieStore.get("reyon_last_order")?.value ??
+    cookieStore.get("reyon_cart")?.value;
   if (!accessToken) return null;
   const db = await createSupabaseServerClient();
   const { data, error } = await db.rpc("checkout_order_success", {

@@ -69,19 +69,19 @@ test("customer can browse, add to cart, preserve address, and reach configured c
   const quantity = page
     .locator('.cart-quantity select[name="quantity"]')
     .first();
-  await quantity.selectOption("9");
-  await expect(page.getByRole("status")).toContainText("Quantity 9 saved");
+  await quantity.selectOption("10");
+  await expect(page.getByRole("status")).toContainText("Quantity 10 saved");
   await page.reload();
-  await expect(quantity).toHaveValue("9");
+  await expect(quantity).toHaveValue("10");
   await quantity.selectOption("2");
   await expect(page.getByRole("status")).toContainText("Quantity 2 saved");
   await page.reload();
   await expect(quantity).toHaveValue("2");
-  await quantity.selectOption("9");
-  await expect(page.getByRole("status")).toContainText("Quantity 9 saved");
+  await quantity.selectOption("10");
+  await expect(page.getByRole("status")).toContainText("Quantity 10 saved");
   await page.getByRole("link", { name: "Continue to checkout" }).click();
   await expect(page).toHaveURL(/\/checkout/);
-  await expect(page.getByText(/Quantity 9/).first()).toBeVisible();
+  await expect(page.getByText(/Quantity 10/).first()).toBeVisible();
   await page.getByLabel("Full name").fill("REYON Browser Test");
   await page.getByLabel("Phone").fill("01000000000");
   await page.getByLabel("House No").fill("QA-1");
@@ -149,6 +149,28 @@ test("customer can browse, add to cart, preserve address, and reach configured c
     const confirmOrder = page.getByRole("button", { name: "Confirm order" });
     await expect(confirmOrder).toBeEnabled();
     await confirmOrder.click();
+    let orderedQuantity = 10;
+    await page.waitForFunction(
+      () =>
+        window.location.pathname === "/checkout/success" ||
+        document.body.innerText.includes("Insufficient stock"),
+    );
+    const insufficientStock = page.getByRole("alert").filter({
+      hasText: /Insufficient stock.+Requested 10; available \d+\./i,
+    });
+    if (await insufficientStock.isVisible()) {
+      await expect(insufficientStock).toContainText("Requested 10");
+      await page.goto("/cart");
+      await expect(quantity).toHaveValue("10");
+      await quantity.selectOption("1");
+      await expect(page.getByRole("status")).toContainText("Quantity 1 saved");
+      await page.reload();
+      await expect(quantity).toHaveValue("1");
+      await page.getByRole("link", { name: "Continue to checkout" }).click();
+      await expect(page.getByText(/Quantity 1/).first()).toBeVisible();
+      await page.getByRole("button", { name: "Confirm order" }).click();
+      orderedQuantity = 1;
+    }
     await expect(page).toHaveURL(/\/checkout\/success$/);
     await expect(
       page.getByRole("heading", {
@@ -163,7 +185,7 @@ test("customer can browse, add to cart, preserve address, and reach configured c
       page.getByText("Cash on Delivery", { exact: true }),
     ).toBeVisible();
     await expect(page.locator(".checkout-success-item").first()).toContainText(
-      "Quantity 9",
+      `Quantity ${orderedQuantity}`,
     );
     await expect(
       page.locator(".checkout-success-details dd").nth(2),
@@ -181,6 +203,14 @@ test("customer can browse, add to cart, preserve address, and reach configured c
     await expect(page.locator(".checkout-success-reference")).toHaveText(
       reference,
     );
+    await page.goto("/cart");
+    await expect(
+      page.getByRole("heading", { name: "Your bag is empty" }),
+    ).toBeVisible();
+    await page.reload();
+    await expect(
+      page.getByRole("heading", { name: "Your bag is empty" }),
+    ).toBeVisible();
   } else {
     await expect(
       page.getByText("Delivery is not configured yet"),

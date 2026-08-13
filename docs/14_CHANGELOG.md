@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-08-13 — Cart-to-order integrity stabilization
+
+- Fixed stale-order reuse caused by leaving an already ordered cart active and
+  permanently associated with its first order.
+- Successful checkout now atomically archives the exact submitted cart,
+  preserves secure access to the success record, and establishes a fresh empty
+  active cart without deleting later concurrent additions.
+- Insufficient stock now aborts before order, reservation, or cart consumption
+  and reports requested versus available quantity; quantities are never
+  silently reduced.
+
 ## 2026-08-13 — Cross-system stabilization audit
 
 - Restored the existing Search action on mobile, where responsive CSS had made

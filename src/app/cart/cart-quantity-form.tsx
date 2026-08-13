@@ -7,6 +7,7 @@ import {
   useId,
   useRef,
   useState,
+  startTransition,
 } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -68,9 +69,13 @@ export function CartQuantityForm({
           value={quantity}
           disabled={pending}
           onChange={(event) => {
-            setQuantity(event.target.value);
+            const nextQuantity = event.target.value;
+            setQuantity(nextQuantity);
             announce(true);
-            formRef.current?.requestSubmit();
+            if (!formRef.current) return;
+            const submission = new FormData(formRef.current);
+            submission.set("quantity", nextQuantity);
+            startTransition(() => action(submission));
           }}
         >
           {Array.from({ length: 10 }, (_, i) => i + 1).map((value) => (

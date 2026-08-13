@@ -1,6 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export type CheckoutAddress = Readonly<{
@@ -131,25 +132,40 @@ export async function confirmOrder(
 ): Promise<CheckoutState> {
   void _state;
   void _form;
-  const token = (await cookies()).get("reyon_cart")?.value;
+  const cookieStore = await cookies();
+  const token = cookieStore.get("reyon_cart")?.value;
   if (!token) return { error: "Your active bag could not be found." };
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.rpc("checkout_confirm_order", {
     p_access_token: token,
   });
-  if (error)
+  if (error) {
+    const insufficient = error.message.match(
+      /Insufficient stock for .+?\. Requested \d+; available \d+\./i,
+    )?.[0];
+    return {
+      error:
+        insufficient ??
+        "The order could not be confirmed. Review the current checkout details and try again.",
+    };
+  }
+  const result = data as {
+    orderId?: string;
+    successAccessToken?: string;
+  } | null;
+  if (!result?.orderId || !result.successAccessToken)
     return {
       error:
         "The order could not be confirmed. Review the current checkout details and try again.",
     };
-  if (!(data as { orderId?: string } | null)?.orderId)
-    return {
-      error:
-        "The order could not be confirmed. Review the current checkout details and try again.",
-    };
-  revalidatePath("/checkout");
-  revalidatePath("/checkout/success");
-  return { orderPlaced: true };
+  cookieStore.set("reyon_last_order", result.successAccessToken, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 30,
+  });
+  redirect("/checkout/success");
 }
 
 export async function savePaymentSelection(
