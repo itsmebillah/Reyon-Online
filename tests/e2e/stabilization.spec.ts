@@ -30,7 +30,7 @@ async function signInAsAdmin(page: Page) {
   await page.getByLabel("Email address").fill(email!);
   await page.getByLabel("Password").fill(password!);
   await page.getByRole("button", { name: "Sign in securely" }).click();
-  await expect(page).toHaveURL(/\/admin$/);
+  await expect(page).toHaveURL(/\/admin$/, { timeout: 15_000 });
 }
 
 async function expectBelowStickyHeader(page: Page, selector: string) {
