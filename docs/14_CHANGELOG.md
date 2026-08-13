@@ -46,6 +46,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 - Approved the seven-day Delivered-based window, product/condition rules, reason/evidence catalog, partial and multiple returns, lifecycle and authority, shipping responsibility, inspected inventory dispositions, manual refunds, immutable source history, net adjustments, notifications, and append-only corrections.
 - Added the Sprint 19 return-request foundation: authoritative eligibility checks, product-level returnability, approved reason/condition evidence, partial quantity and duplicate-return protection, append-only request events, customer intake, Admin queue visibility, and notification outbox events.
 - Added governed return review operations: attributable intake processing, Admin/Super Admin-only approval and rejection, Staff-safe operational progression, conflict-resistant state guards, customer withdrawal of newly requested returns, and lifecycle notifications.
+- Added auditable returned-item receipt and inspection: cumulative quantity caps prevent duplicate/over-receipt, every received unit requires an approved disposition, sellable stock posts an idempotent referenced Return In movement, and quarantine, damaged/loss, expiry, and batch outcomes remain unavailable and traceable without rewriting inventory or sales history.
 
 ### Sprint 17 — Sales Processing
 

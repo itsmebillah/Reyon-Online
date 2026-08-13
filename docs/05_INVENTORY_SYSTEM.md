@@ -83,6 +83,8 @@ Sprint 17 converts the active reservation into one append-only sold/fulfilled in
 
 Sprint 18 delivery failure, loss, damage, cancellation, and return states never silently alter inventory. Any physical stock correction or return movement requires its separately approved append-only workflow.
 
+Sprint 19 receipt and inspection keep returned goods outside available stock until disposition. Only an inspected Sellable quantity creates an append-only `Return In` movement at Main Inventory. Quarantine, Damaged/Loss, and Expiry/Batch Issue dispositions remain separately traceable and unavailable; they do not inflate sellable on-hand stock.
+
 ### TODO — Domain Owner
 
 - Define reservation timing, allocation priority, expiry, release, and order integration behavior.
