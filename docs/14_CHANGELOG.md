@@ -49,6 +49,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 - Added auditable returned-item receipt and inspection: cumulative quantity caps prevent duplicate/over-receipt, every received unit requires an approved disposition, sellable stock posts an idempotent referenced Return In movement, and quarantine, damaged/loss, expiry, and batch outcomes remain unavailable and traceable without rewriting inventory or sales history.
 - Added Admin/Super Admin-controlled manual refunds with proportional discount allocation from immutable order values, actual-payment and prior-refund caps, optional reason-gated REYON-fault delivery refunds, separate globally numbered adjustment records, mandatory execution evidence, and append-only lifecycle/notification history.
 - Connected completed refund facts to sales reconciliation and the reusable Best Sellers collection strategy. Gross completed-sale history remains intact while Admin sees refunded and net product revenue, and ranking subtracts only quantities whose manual refund reached Refunded.
+- Closed Sprint 19 with Admin/Super Admin-only append-only exceptional corrections and explicit non-physical Missing Item resolution. Missing quantities bypass receipt/inspection inventory disposition, never create Return In stock, and enter the same evidence-backed proportional refund and net-adjustment path.
 
 ### Sprint 17 — Sales Processing
 

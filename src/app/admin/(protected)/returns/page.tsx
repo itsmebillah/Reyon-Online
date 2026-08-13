@@ -1,5 +1,6 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { randomUUID } from "node:crypto";
 
 export const dynamic = "force-dynamic";
 
@@ -94,6 +95,31 @@ async function executeRefund(form: FormData) {
   revalidatePath("/admin/sales");
 }
 
+async function acceptMissingItemClaim(form: FormData) {
+  "use server";
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.rpc("admin_accept_missing_item_claim", {
+    p_request_id: String(form.get("requestId")),
+    p_note: String(form.get("note") ?? ""),
+  });
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin/returns");
+}
+
+async function recordCorrection(form: FormData) {
+  "use server";
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.rpc("admin_record_exceptional_correction", {
+    p_correction_key: String(form.get("correctionKey")),
+    p_target_kind: "return-request",
+    p_target_id: String(form.get("requestId")),
+    p_corrected_value: { value: String(form.get("correctedValue") ?? "") },
+    p_reason: String(form.get("reason") ?? ""),
+  });
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin/returns");
+}
+
 export default async function ReturnsPage() {
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.rpc("admin_return_queue");
@@ -162,6 +188,17 @@ export default async function ReturnsPage() {
                   label="Reject return"
                 />
               </div>
+            ) : row.state === "approved" && row.reason === "missing-item" ? (
+              <form action={acceptMissingItemClaim} className="admin-auth-form">
+                <input type="hidden" name="requestId" value={row.id} />
+                <label>
+                  Non-physical claim resolution note
+                  <textarea name="note" required />
+                </label>
+                <button className="button button--primary">
+                  Accept missing-item claim without receipt
+                </button>
+              </form>
             ) : row.state === "approved" ? (
               <ReturnAction
                 row={row}
@@ -267,6 +304,28 @@ export default async function ReturnsPage() {
                 </button>
               </form>
             ) : null}
+            <details>
+              <summary>Record exceptional correction evidence</summary>
+              <form action={recordCorrection} className="admin-auth-form">
+                <input type="hidden" name="requestId" value={row.id} />
+                <input
+                  type="hidden"
+                  name="correctionKey"
+                  value={randomUUID()}
+                />
+                <label>
+                  Corrected state / value
+                  <textarea name="correctedValue" required />
+                </label>
+                <label>
+                  Mandatory correction reason
+                  <textarea name="reason" required />
+                </label>
+                <button className="button button--secondary">
+                  Append correction evidence
+                </button>
+              </form>
+            </details>
           </article>
         ))
       ) : (

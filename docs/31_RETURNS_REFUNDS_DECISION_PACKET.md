@@ -55,6 +55,8 @@ Customer/Admin events use the provider-neutral notification outbox. Corrections 
 5. Net-sales and net-Best Seller adjustment projections plus customer/Admin notifications.
 6. Append-only corrections and targeted release verification.
 
+Sprint 19 is released. Missing Item claims use an explicit non-physical resolution after approval and cannot create inventory movements. Exceptional corrections append authorized counter-evidence containing the affected record, previous value, corrected value, actor, time, and mandatory reason; source history remains immutable.
+
 ## Future Expansion
 
 Future approvals may add automated carrier labels, gateway refunds, exchanges, store credit, supplier claims, warranties, multi-location routing, or accounting/tax documents without replacing the append-only source records.
