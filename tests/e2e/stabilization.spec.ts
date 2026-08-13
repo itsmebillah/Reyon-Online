@@ -318,6 +318,7 @@ test("authenticated administrator can load every released data workspace", async
     "/admin/purchases/returns",
     "/admin/purchases/payments",
     "/admin/purchases/performance",
+    "/admin/accounts",
   ] as const;
   for (const route of routes) {
     await test.step(route, async () => {

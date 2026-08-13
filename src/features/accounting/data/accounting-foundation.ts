@@ -10,8 +10,21 @@ export type AccountingFoundation = Readonly<{
     valuationMethod: string;
     currency: string;
     isConfigured: boolean;
+    postingEnabled: boolean;
+    activatedAt: string | null;
   }>;
-  financeApproverCount: number;
+  canConfigure: boolean;
+  isSuperAdmin: boolean;
+  financeApprovers: readonly Readonly<{
+    userId: string;
+    email: string;
+    authorizedAt: string;
+  }>[];
+  adminCandidates: readonly Readonly<{
+    userId: string;
+    email: string;
+    role: string;
+  }>[];
   periods: readonly Readonly<{
     key: string;
     startDate: string;
@@ -19,18 +32,39 @@ export type AccountingFoundation = Readonly<{
     status: string;
   }>[];
   accounts: readonly Readonly<{
+    id: string;
     code: string;
     name: string;
     class: string | null;
     group: string | null;
+    normalBalance: string | null;
     active: boolean;
+    approvedAt: string | null;
   }>[];
   financialAccounts: readonly Readonly<{
+    id: string;
+    ledgerAccountId: string;
     kind: string;
     name: string;
     provider: string | null;
     maskedReference: string | null;
     active: boolean;
+  }>[];
+  openingBalance: Readonly<{
+    id: string;
+    effectiveDate: string;
+    evidenceReference: string;
+    status: string;
+    debits: number;
+    credits: number;
+    lineCount: number;
+  }> | null;
+  auditEvents: readonly Readonly<{
+    event: string;
+    subject: string;
+    reason: string;
+    actorRole: string;
+    occurredAt: string;
   }>[];
 }>;
 export async function getAccountingFoundation() {

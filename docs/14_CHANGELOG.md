@@ -40,6 +40,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Added the private, audited Accounts production-configuration workflow for legal/fiscal identity, Finance approvers, approved ledger and financial accounts, balanced evidence-backed opening balances, and explicit posting activation.
 - Added a server-confirmed, refresh-safe customer order success screen with persisted order reference, real status, COD/payment method, total, delivery summary, and clear next actions.
 
 - Fixed Delivery Partner validation so URL-safe key errors and backend write errors remain visible on the Admin form instead of triggering the shared page-level load boundary; added explicit create/edit/activation/upsert contract verification with rollback-only production evidence.

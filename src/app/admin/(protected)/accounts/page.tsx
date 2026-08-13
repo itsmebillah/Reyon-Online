@@ -1,17 +1,22 @@
 import type { Metadata } from "next";
 import { getAccountingFoundation } from "@/features/accounting/data/accounting-foundation";
+import {
+  ActivationForm,
+  ApproverForm,
+  FinancialAccountForm,
+  LedgerAccountForm,
+  OpeningBalanceForm,
+  ProfileForm,
+} from "./accounting-forms";
+
 export const metadata: Metadata = {
   title: "Accounts & Payments",
   robots: { index: false, follow: false },
 };
 export const dynamic = "force-dynamic";
+
 export default async function AccountsPage() {
   const data = await getAccountingFoundation();
-  const ready =
-    data.profile.isConfigured &&
-    data.financeApproverCount > 0 &&
-    data.accounts.length > 0 &&
-    data.financialAccounts.length > 0;
   return (
     <section
       className="admin-dashboard catalog-admin"
@@ -21,11 +26,12 @@ export default async function AccountsPage() {
         <p className="eyebrow">Sprint 21</p>
         <h1 id="accounts-title">Accounts & Payments</h1>
         <p>
-          Accrual accounting configuration and control readiness. Financial
-          posting remains disabled until required production configuration is
-          complete.
+          Enter only Finance-approved production configuration. Posting remains
+          disabled until every control passes and an authorized approver
+          explicitly activates it.
         </p>
       </header>
+
       <div className="admin-kpi-grid">
         <article>
           <span>Basis</span>
@@ -36,72 +42,150 @@ export default async function AccountsPage() {
           <strong>{data.profile.valuationMethod}</strong>
         </article>
         <article>
-          <span>Periods</span>
-          <strong>{data.periods.length}</strong>
+          <span>Approvers</span>
+          <strong>{data.financeApprovers.length}</strong>
         </article>
         <article>
           <span>Posting</span>
-          <strong>{ready ? "Ready" : "Blocked"}</strong>
+          <strong>{data.profile.postingEnabled ? "Enabled" : "Blocked"}</strong>
         </article>
       </div>
-      <article className="admin-module-card">
-        <span>Production configuration</span>
-        <h2>
-          {ready ? "Foundation configured" : "Required details are pending"}
-        </h2>
-        <p>
-          Legal entity: {data.profile.legalEntityName ?? "Not configured"} ·
-          Fiscal start: {data.profile.fiscalYearStartMonth ?? "Not configured"}{" "}
-          · Finance approvers: {data.financeApproverCount}
+
+      {!data.canConfigure && (
+        <p className="admin-form-error" role="alert">
+          This workspace is read-only for your role. A Super Admin or active
+          Finance approver must make configuration changes.
         </p>
+      )}
+
+      <details className="brand-editor" open={!data.profile.isConfigured}>
+        <summary>
+          <strong>1. Legal entity and fiscal year</strong>
+          <span>{data.profile.isConfigured ? "Saved" : "Required"}</span>
+        </summary>
         <p>
-          Timezone {data.profile.timezone} · Currency {data.profile.currency}
+          {data.profile.legalEntityName ?? "No legal entity configured"} ·
+          Fiscal start {data.profile.fiscalYearStartMonth ?? "not set"}
         </p>
-      </article>
-      <div className="brand-management-list">
-        <div className="brand-list-heading">
-          <h2>Chart of accounts</h2>
-          <span>{data.accounts.length}</span>
-        </div>
-        {data.accounts.length ? (
-          data.accounts.map((a) => (
-            <article className="brand-editor" key={a.code}>
-              <h3>
+        {data.canConfigure && <ProfileForm profile={data.profile} />}
+      </details>
+
+      <details className="brand-editor" open={!data.financeApprovers.length}>
+        <summary>
+          <strong>2. Finance approver</strong>
+          <span>{data.financeApprovers.length ? "Assigned" : "Required"}</span>
+        </summary>
+        {data.financeApprovers.map((a) => (
+          <p key={a.userId}>
+            {a.email} · authorized{" "}
+            {new Date(a.authorizedAt).toLocaleDateString("en-BD")}
+          </p>
+        ))}
+        {data.isSuperAdmin && (
+          <ApproverForm candidates={data.adminCandidates} />
+        )}
+      </details>
+
+      <details className="brand-editor" open={!data.accounts.length}>
+        <summary>
+          <strong>3. Approved Chart of Accounts</strong>
+          <span>{data.accounts.length} accounts</span>
+        </summary>
+        <div className="accounting-record-list">
+          {data.accounts.map((a) => (
+            <p key={a.id}>
+              <strong>
                 {a.code} · {a.name}
-              </h3>
-              <p>
-                {a.class ?? "Unclassified"} · {a.group ?? "No group"} ·{" "}
-                {a.active ? "Active" : "Inactive"}
-              </p>
-            </article>
-          ))
-        ) : (
-          <p className="admin-empty">
-            No Finance-approved ledger accounts have been configured.
-          </p>
-        )}
-      </div>
-      <div className="brand-management-list">
-        <div className="brand-list-heading">
-          <h2>Monthly periods</h2>
-          <span>{data.periods.length}</span>
+              </strong>
+              <span>
+                {a.class} / {a.group} · {a.normalBalance} ·{" "}
+                {a.approvedAt ? "Approved" : "Pending approval"}
+              </span>
+            </p>
+          ))}
         </div>
-        {data.periods.length ? (
-          data.periods.map((p) => (
-            <article className="brand-editor" key={p.key}>
-              <h3>{p.key}</h3>
+        {data.canConfigure && <LedgerAccountForm />}
+      </details>
+
+      <details className="brand-editor" open={!data.financialAccounts.length}>
+        <summary>
+          <strong>4. Cash, Bank, MFS and clearing accounts</strong>
+          <span>{data.financialAccounts.length} accounts</span>
+        </summary>
+        <div className="accounting-record-list">
+          {data.financialAccounts.map((a) => (
+            <p key={a.id}>
+              <strong>{a.name}</strong>
+              <span>
+                {a.kind} · {a.provider ?? "No provider"} ·{" "}
+                {a.maskedReference ?? "No reference"}
+              </span>
+            </p>
+          ))}
+        </div>
+        {data.canConfigure && <FinancialAccountForm accounts={data.accounts} />}
+      </details>
+
+      <details className="brand-editor" open={!data.openingBalance}>
+        <summary>
+          <strong>5. Opening balances and evidence</strong>
+          <span>{data.openingBalance?.status ?? "Required"}</span>
+        </summary>
+        {data.openingBalance && (
+          <p>
+            Effective {data.openingBalance.effectiveDate} · Evidence{" "}
+            {data.openingBalance.evidenceReference} · Debits BDT{" "}
+            {Number(data.openingBalance.debits).toFixed(2)} · Credits BDT{" "}
+            {Number(data.openingBalance.credits).toFixed(2)}
+          </p>
+        )}
+        {data.canConfigure && <OpeningBalanceForm accounts={data.accounts} />}
+      </details>
+
+      <details className="brand-editor" open={!data.profile.postingEnabled}>
+        <summary>
+          <strong>6. Validate and activate</strong>
+          <span>
+            {data.profile.postingEnabled ? "Active" : "Posting blocked"}
+          </span>
+        </summary>
+        <p>
+          Activation validates the legal profile, Finance authority, all
+          approved account classes, every required financial-account type, and
+          balanced opening evidence. No default monetary value is created.
+        </p>
+        {data.canConfigure && !data.profile.postingEnabled && (
+          <ActivationForm />
+        )}
+      </details>
+
+      <section
+        className="brand-management-list"
+        aria-labelledby="accounting-audit-title"
+      >
+        <div className="brand-list-heading">
+          <h2 id="accounting-audit-title">Configuration audit</h2>
+          <span>{data.auditEvents.length}</span>
+        </div>
+        {data.auditEvents.length ? (
+          data.auditEvents.map((event, index) => (
+            <article
+              className="brand-editor"
+              key={`${event.occurredAt}-${index}`}
+            >
+              <h3>{event.event}</h3>
               <p>
-                {p.startDate} – {p.endDate} · {p.status}
+                {event.reason} · {event.actorRole} ·{" "}
+                {new Date(event.occurredAt).toLocaleString("en-BD")}
               </p>
             </article>
           ))
         ) : (
           <p className="admin-empty">
-            Fiscal-year configuration is required before monthly periods can be
-            generated.
+            No configuration change has been recorded.
           </p>
         )}
-      </div>
+      </section>
     </section>
   );
 }
