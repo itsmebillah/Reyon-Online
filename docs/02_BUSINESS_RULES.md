@@ -82,6 +82,8 @@ The Product Owner approved provider-neutral single-courier, single-shipment deli
 
 The Product Owner approved governed supplier lifecycle, multi-supplier variant sourcing, preferred suppliers, database-numbered purchase orders, approval authority, BDT commercial terms, amendment/reapproval, partial and discrepancy receiving, inspection, accepted-only inventory entry, purchase returns, credit and evidence-backed supplier payments, immutable closure, performance tracking, manual replenishment, and emergency flags on 2026-08-13. The authoritative rule set is maintained in [Sprint 20 — Supplier and Purchase Operations](32_SUPPLIER_PURCHASE_DECISION_PACKET.md).
 
+The core Order, Sales, Inventory, Purchase, Payment, Accounting, Delivery, Return, and Reporting domains must remain industry agnostic. Cosmetics and beauty specialization belongs to configurable Catalog and Presentation data and must never become a hardcoded core business-system dependency.
+
 ## Conflict and Precedence
 
 No precedence hierarchy is assumed. A future policy must define how legal requirements, contractual commitments, financial controls, organization policy, promotions, and local exceptions interact.

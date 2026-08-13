@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+### Sprint 21 — Accounts and Payments
+
+- Added the bounded Product Owner decision packet for legal entity, chart of accounts, posting, valuation, balances, reconciliation, expenses, close, permissions, and reporting; recorded the permanent niche-agnostic core-engine boundary. No application behavior or financial posting was implemented.
+
 ### Customer shell usability
 
 - Made Cart and Account consistently accessible in the mobile header, applied authoritative cart counts immediately after successful additions, and consolidated the approved horizontal REYON mark/wordmark treatment into one shared component across customer and Admin shells.

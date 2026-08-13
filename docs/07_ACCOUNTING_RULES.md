@@ -23,6 +23,8 @@ This document provides the governance structure for financial definitions, event
 
 Financial rules require named finance approval, jurisdictional context, effective dates, and source evidence. Operational modules emit business facts; approved accounting policy determines their financial interpretation. Posted history should be corrected through controlled entries rather than silent mutation.
 
+Accounting classifications and posting contracts must use industry-neutral commercial facts. Product niche, category, attributes, brand content, and presentation metadata cannot determine core ledger behavior.
+
 ## Accounting Scope
 
 Potential scope includes sales, discounts, tax, tender, refunds, customer balances, inventory value, cost of sales, purchasing, supplier liabilities, expenses, cash/bank activity, journals, period close, and financial reporting. Inclusion and system-of-record boundaries are pending.
@@ -112,3 +114,4 @@ Add an approved accounting policy register, chart of accounts, posting matrix, c
 - [Inventory System](05_INVENTORY_SYSTEM.md)
 - [Purchase System](06_PURCHASE_SYSTEM.md)
 - [Payment Evidence Architecture](21_PAYMENT_EVIDENCE_ARCHITECTURE.md)
+- [Sprint 21 Decision Packet](33_ACCOUNTS_PAYMENTS_DECISION_PACKET.md)
