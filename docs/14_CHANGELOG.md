@@ -55,6 +55,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 - Added Purchase Returns with receipt-line eligibility, partial/multiple return quantity caps, governed reasons and lifecycle, Admin approval, required physical evidence, batch traceability, append-only history, and negative `purchase-return` inventory movements only at physical return.
 - Added Supplier Payment Operations with receipt-derived payables, purchase-return deductions, manual BDT evidence, partial and credit settlement, overdue/dispute controls, conflict-safe amount caps, role-governed verification, and append-only payment history.
 - Added governed Fully Received → Closed purchase transitions, factual supplier operating-history metrics, and preferred-source replenishment visibility without automatic suspension or reorder decisions, completing Sprint 20.
+- Added explicit PostgREST schema-cache refresh after the Sprint 20 migration sequence and authenticated route-by-route Admin data verification, preventing newly released RPCs from temporarily surfacing the shared Admin load error.
 
 ### Sprint 19 — Returns and Refunds
 

@@ -256,6 +256,59 @@ test("authenticated administrator can traverse every released workspace module",
   expect(failures).toEqual([]);
 });
 
+test("authenticated administrator can load every released data workspace", async ({
+  page,
+}) => {
+  const email = process.env.REYON_ADMIN_EMAIL;
+  const password = process.env.REYON_ADMIN_PASSWORD;
+  test.skip(
+    !email || !password,
+    "Administrator browser credentials are required",
+  );
+  await page.goto("/admin/login");
+  await page.getByLabel("Email address").fill(email!);
+  await page.getByLabel("Password").fill(password!);
+  await page.getByRole("button", { name: "Sign in securely" }).click();
+  await expect(page).toHaveURL(/\/admin$/);
+  const routes = [
+    "/admin",
+    "/admin/brands",
+    "/admin/categories",
+    "/admin/products",
+    "/admin/media",
+    "/admin/collections",
+    "/admin/orders",
+    "/admin/orders/reviews",
+    "/admin/orders/changes",
+    "/admin/notifications",
+    "/admin/inventory",
+    "/admin/delivery",
+    "/admin/payments",
+    "/admin/sales",
+    "/admin/returns",
+    "/admin/suppliers",
+    "/admin/purchases",
+    "/admin/purchases/receiving",
+    "/admin/purchases/returns",
+    "/admin/purchases/payments",
+    "/admin/purchases/performance",
+  ] as const;
+  for (const route of routes) {
+    await test.step(route, async () => {
+      await page.goto(route);
+      await expect(page.getByText("Something needs attention")).toHaveCount(0);
+      await expect(page.locator("main h1").first()).toBeVisible();
+    });
+  }
+  await page.goto("/admin/orders");
+  const orderLink = page.locator('a[href^="/admin/orders/"]').first();
+  if (await orderLink.count()) {
+    await orderLink.click();
+    await expect(page.getByText("Something needs attention")).toHaveCount(0);
+    await expect(page.locator("main h1").first()).toBeVisible();
+  }
+});
+
 test("mobile customer navigation and cart controls remain usable", async ({
   page,
 }) => {
