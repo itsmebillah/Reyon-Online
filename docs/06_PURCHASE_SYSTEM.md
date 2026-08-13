@@ -78,6 +78,8 @@ The released Receiving workspace records each supplier delivery as immutable rec
 
 Purchase Returns reference accepted receipt-line quantities and preserve PO, receipt, batch, and expiry facts. Partial and multiple returns are permitted within cumulative eligibility. Admin/Super Admin approval governs the Requested → Approved → Awaiting Return → Returned → Completed lifecycle; Rejected and Cancelled remain auditable exceptions. Physical return evidence is mandatory, and only the Returned transition posts the outward `purchase-return` movement.
 
+Supplier payables are derived from accepted receipt value after proportional PO discounts, less physically returned quantities. Manual BDT payments support partial settlement, credit due dates, and Unpaid, Partially Paid, Paid, Overdue, and Disputed operational states. Immutable payment evidence and allocations are separated from append-only verification decisions; pending and verified allocations prevent overpayment, while rejected evidence never counts as paid.
+
 Receiving should preserve what was expected, what was observed, condition, time, location, actor, and evidence. Discrepancy handling must distinguish inventory acceptance from supplier and financial resolution.
 
 ### TODO — Domain Owners

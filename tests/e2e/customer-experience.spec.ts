@@ -22,6 +22,7 @@ const routes = [
   "/admin/purchases",
   "/admin/purchases/receiving",
   "/admin/purchases/returns",
+  "/admin/purchases/payments",
   "/robots.txt",
   "/sitemap.xml",
 ];

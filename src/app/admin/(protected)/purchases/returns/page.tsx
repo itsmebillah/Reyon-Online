@@ -33,6 +33,12 @@ export default async function PurchaseReturnsPage() {
         >
           Receiving & Inspection
         </Link>
+        <Link
+          className="button button--secondary"
+          href="/admin/purchases/payments"
+        >
+          Supplier Payments
+        </Link>
       </header>
       <article className="admin-module-card">
         <span>New supplier return</span>

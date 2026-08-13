@@ -53,6 +53,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 - Added Purchase Order Operations with database-generated `PO-YYYY-XXXXXX` references, supplier-sourcing validation, BDT unit/pack lines, governed discounts and totals, submission/approval/rejection/ordering, controlled pre-order amendments, cancellation, register filters, and append-only lifecycle evidence. PO operations do not post inventory.
 - Added Purchase Receiving and Inspection with multiple/partial receipts, cumulative quantity protection, explicit short/excess review, accepted/damaged/quarantine dispositions, delivery and batch/expiry evidence, accepted-only idempotent inventory movements, and transactional Partially/Fully Received PO transitions.
 - Added Purchase Returns with receipt-line eligibility, partial/multiple return quantity caps, governed reasons and lifecycle, Admin approval, required physical evidence, batch traceability, append-only history, and negative `purchase-return` inventory movements only at physical return.
+- Added Supplier Payment Operations with receipt-derived payables, purchase-return deductions, manual BDT evidence, partial and credit settlement, overdue/dispute controls, conflict-safe amount caps, role-governed verification, and append-only payment history.
 
 ### Sprint 19 — Returns and Refunds
 

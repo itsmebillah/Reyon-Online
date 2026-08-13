@@ -82,6 +82,8 @@ The private payment-evidence foundation records exact monetary facts and explici
 
 The private purchase foundation records ordered quantities and unit-cost snapshots without creating supplier liabilities, inventory value, tax, landed cost, accruals, payments, or ledger postings. Those snapshots are operational source evidence only; finance-approved mappings, invoice evidence, receiving evidence, and reconciliation rules are required before any accounting effect exists.
 
+Sprint 20 records provider-neutral supplier payment evidence and operational payable status without creating accounting entries. Eligible supplier payable is derived from accepted purchase receipts, PO commercial terms, and completed physical purchase returns. Accounting recognition, ledger posting, reconciliation, and correction treatment remain Sprint 21 responsibilities.
+
 ## Reconciliation and Close
 
 Each financial balance should reconcile to controlled source records. Close procedures must define cutoff, dependencies, responsible roles, review evidence, adjustments, locking, and reopening authority.
