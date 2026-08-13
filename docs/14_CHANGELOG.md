@@ -40,6 +40,10 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+### Sprint 19 — Returns and Refunds
+
+- Opened Product Owner decision review for eligibility, lifecycle, evidence, authority, reverse logistics, inspection, inventory disposition, refund execution, customer documents, notifications, reporting adjustments, and append-only corrections while preserving all Sprint 14–18 boundaries.
+
 ### Sprint 17 — Sales Processing
 
 - Approved Completed as the operational completed-sale event, Shipped inventory conversion, separate product/delivery reporting, invoice and receipt identities, audited discounts, and net-of-returns sales measures.
