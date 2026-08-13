@@ -6,13 +6,13 @@ import {
 import {
   assignShipment,
   completeDelivery,
-  configureDeliveryPartner,
   reconcileCod,
   recordDeliveryAttempt,
   recordDeliveryException,
   transitionDelivery,
   updateDeliveryZone,
 } from "./actions";
+import { DeliveryPartnerForm } from "./delivery-partner-form";
 export const metadata: Metadata = {
   title: "Delivery Configuration",
   robots: { index: false, follow: false },
@@ -85,25 +85,17 @@ export default async function DeliveryPage() {
       <article className="admin-module-card">
         <span>Provider-neutral configuration</span>
         <h2>Delivery partner</h2>
-        <form action={configureDeliveryPartner} className="catalog-admin-form">
-          <label>
-            Partner key
-            <input name="partnerKey" required placeholder="delivery-partner" />
-          </label>
-          <label>
-            Display name
-            <input name="displayName" required />
-          </label>
-          <label className="publish-choice">
-            <input name="isActive" type="checkbox" defaultChecked />
-            <span>
-              <strong>Active delivery partner</strong>
-              <small>Only one can be active initially.</small>
-            </span>
-          </label>
-          <button className="button button--primary">Save partner</button>
-        </form>
+        <DeliveryPartnerForm />
       </article>
+      {operations.partners.map((partner) => (
+        <article className="admin-module-card" key={partner.id}>
+          <span>
+            {partner.isActive ? "Active partner" : "Inactive partner"}
+          </span>
+          <h2>{partner.name}</h2>
+          <DeliveryPartnerForm partner={partner} />
+        </article>
+      ))}
       <article className="admin-module-card order-list-card">
         <span>One order · one shipment</span>
         <h2>Delivery operations</h2>

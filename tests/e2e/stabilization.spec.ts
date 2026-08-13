@@ -309,6 +309,25 @@ test("authenticated administrator can load every released data workspace", async
   }
 });
 
+test("delivery partner validation remains on the form", async ({ page }) => {
+  const email = process.env.REYON_ADMIN_EMAIL;
+  const password = process.env.REYON_ADMIN_PASSWORD;
+  test.skip(
+    !email || !password,
+    "Administrator browser credentials are required",
+  );
+  await page.goto("/admin/login");
+  await page.getByLabel("Email address").fill(email!);
+  await page.getByLabel("Password").fill(password!);
+  await page.getByRole("button", { name: "Sign in securely" }).click();
+  await page.goto("/admin/delivery");
+  await page.getByLabel("Partner key").fill("Invalid Partner Key");
+  await page.getByLabel("Display name").fill("Non-persisting validation probe");
+  await page.getByRole("button", { name: "Save partner" }).click();
+  await expect(page.getByLabel("Partner key")).toBeFocused();
+  await expect(page.getByText("Something needs attention")).toHaveCount(0);
+});
+
 test("mobile customer navigation and cart controls remain usable", async ({
   page,
 }) => {

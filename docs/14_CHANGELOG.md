@@ -40,6 +40,8 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 
 ## Unreleased
 
+- Fixed Delivery Partner validation so URL-safe key errors and backend write errors remain visible on the Admin form instead of triggering the shared page-level load boundary; added explicit create/edit/activation/upsert contract verification with rollback-only production evidence.
+
 ### Sprint 21 — Accounts and Payments
 
 - Added the bounded Product Owner decision packet for legal entity, chart of accounts, posting, valuation, balances, reconciliation, expenses, close, permissions, and reporting; recorded the permanent niche-agnostic core-engine boundary. No application behavior or financial posting was implemented.

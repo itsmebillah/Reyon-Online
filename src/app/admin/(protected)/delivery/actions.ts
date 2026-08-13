@@ -19,15 +19,31 @@ export async function updateDeliveryZone(form: FormData) {
   revalidatePath("/checkout");
 }
 
-export async function configureDeliveryPartner(form: FormData) {
+export type DeliveryPartnerState = Readonly<{
+  error?: string;
+  success?: string;
+}>;
+export async function configureDeliveryPartner(
+  _state: DeliveryPartnerState,
+  form: FormData,
+): Promise<DeliveryPartnerState> {
+  const partnerKey = String(form.get("partnerKey") ?? "").trim();
+  const displayName = String(form.get("displayName") ?? "").trim();
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(partnerKey))
+    return {
+      error:
+        "Partner key must use lowercase letters, numbers, and single hyphens only.",
+    };
+  if (!displayName) return { error: "Display name is required." };
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.rpc("admin_configure_delivery_partner", {
-    p_partner_key: String(form.get("partnerKey") ?? ""),
-    p_display_name: String(form.get("displayName") ?? ""),
+    p_partner_key: partnerKey,
+    p_display_name: displayName,
     p_is_active: form.get("isActive") === "on",
   });
-  if (error) throw new Error(error.message);
+  if (error) return { error: error.message };
   revalidatePath("/admin/delivery");
+  return { success: "Delivery partner saved." };
 }
 
 export async function assignShipment(form: FormData) {
