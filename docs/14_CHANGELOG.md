@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-08-13 — Admin Order lifecycle stabilization
+
+- Restricted the generic Order Management control to transitions it can safely
+  execute; Delivery and Return states now remain owned by their evidence-backed
+  operational workflows.
+- Added server-side guards preventing shipment, delivery, exception, and return
+  transitions from bypassing handoff, proof-of-delivery, COD, or return evidence.
+- Coordinated pre-pickup order cancellation/rejection with the associated
+  shipment cancellation record and blocked unsafe post-pickup shortcuts.
+- Corrected review resolution handling, explicit error feedback, automatic
+  exception queue creation, and auditable 30-minute reservation recovery after
+  a stock exception is resolved.
+- Added live reservation/fulfillment context and authoritative workflow links to
+  Admin Order detail while preserving confirmed-on-checkout behavior.
+
 ## Purpose
 
 This document records meaningful changes to the documentation foundation and, later, approved product and architecture baselines. It complements version-control history with human-readable impact and decision context.

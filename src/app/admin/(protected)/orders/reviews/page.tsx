@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { processExpiredReservations, resolveReview } from "./actions";
+import {
+  ExpiredReservationAction,
+  ReviewResolutionAction,
+} from "./review-actions";
 export default async function ReviewsPage() {
   const supabase = await createSupabaseServerClient();
-  const { data } = await supabase.rpc("admin_order_review_queue");
+  const { data, error } = await supabase.rpc("admin_order_review_queue");
+  if (error) throw new Error("Order review queue could not be loaded.");
   const cases = (data ?? []) as {
     id: string;
     orderId: string;
@@ -23,11 +27,7 @@ export default async function ReviewsPage() {
           Private operational exceptions and customer cancellation requests.
         </p>
       </header>
-      <form action={processExpiredReservations}>
-        <button className="button button--secondary">
-          Process expired reservations
-        </button>
-      </form>
+      <ExpiredReservationAction />
       {cases.length ? (
         cases.map((item) => (
           <article className="admin-module-card" key={item.id}>
@@ -41,23 +41,11 @@ export default async function ReviewsPage() {
               {item.customerName} · {item.orderState}
             </p>
             <p>{item.cancellationReason ?? item.internalNote}</p>
-            <form action={resolveReview} className="admin-auth-form">
-              <input type="hidden" name="caseId" value={item.id} />
-              <label>
-                Resolution
-                <select name="resolution">
-                  <option value="approved">Approve</option>
-                  <option value="declined">Decline</option>
-                  <option value="resolved">Resolve</option>
-                  <option value="dismissed">Dismiss</option>
-                </select>
-              </label>
-              <label>
-                Internal resolution note
-                <textarea name="note" required />
-              </label>
-              <button className="button button--primary">Resolve review</button>
-            </form>
+            <ReviewResolutionAction
+              caseId={item.id}
+              orderId={item.orderId}
+              type={item.type}
+            />
           </article>
         ))
       ) : (

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getOrderDetail } from "@/features/orders/data/order-management";
 import { TransitionForm } from "../transition-form";
@@ -68,6 +69,15 @@ export default async function OrderDetailPage({
           <p>Net items {money(Number(order.subtotal))}</p>
           <p>Delivery {money(Number(order.deliveryAmount))}</p>
         </article>
+        <article className="admin-module-card">
+          <span>Inventory control</span>
+          <h2>{label(order.reservation.status)}</h2>
+          <p>
+            {order.reservation.expiresAt
+              ? `Reservation window: ${date(order.reservation.expiresAt)}`
+              : "No active reservation window."}
+          </p>
+        </article>
       </div>
       <article className="admin-module-card">
         <span>Commercial snapshot</span>
@@ -129,6 +139,19 @@ export default async function OrderDetailPage({
       <article className="admin-module-card">
         <span>Controlled action</span>
         <h2>Advance or resolve</h2>
+        {order.workflow.deliveryRequired ? (
+          <p>
+            Shipment, handoff, delivery, and delivery-exception evidence is
+            controlled in Delivery Operations.{" "}
+            <Link href="/admin/delivery">Open Delivery Operations</Link>
+          </p>
+        ) : null}
+        {order.workflow.returnsRequired ? (
+          <p>
+            Post-delivery corrections use the append-only Returns workflow.{" "}
+            <Link href="/admin/returns">Open Returns &amp; Refunds</Link>
+          </p>
+        ) : null}
         <TransitionForm
           orderId={order.id}
           transitions={order.allowedTransitions}

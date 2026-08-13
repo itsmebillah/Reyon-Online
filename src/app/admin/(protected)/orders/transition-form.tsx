@@ -1,5 +1,5 @@
 "use client";
-import { useActionState } from "react";
+import { useActionState, useMemo, useState } from "react";
 import { transitionOrder, type OrderActionState } from "./actions";
 
 export function TransitionForm({
@@ -18,6 +18,11 @@ export function TransitionForm({
     transitionOrder,
     {},
   );
+  const [target, setTarget] = useState(transitions[0]?.key ?? "");
+  const selected = useMemo(
+    () => transitions.find((item) => item.key === target),
+    [target, transitions],
+  );
   if (!transitions.length)
     return (
       <p className="admin-empty">
@@ -29,7 +34,12 @@ export function TransitionForm({
       <input type="hidden" name="orderId" value={orderId} />
       <label>
         Next status
-        <select name="targetState" required>
+        <select
+          name="targetState"
+          required
+          value={target}
+          onChange={(event) => setTarget(event.target.value)}
+        >
           {transitions.map((item) => (
             <option key={item.key} value={item.key}>
               {item.name}
@@ -37,20 +47,26 @@ export function TransitionForm({
           ))}
         </select>
       </label>
-      <label>
-        Reason
-        <textarea
-          name="reason"
-          placeholder="Required for cancellation, rejection, and exceptions"
-        />
-      </label>
-      <label>
-        Delivery handoff reference
-        <textarea
-          name="handoffReference"
-          placeholder="Required before shipment"
-        />
-      </label>
+      {selected?.requiresReason ? (
+        <label>
+          Reason
+          <textarea
+            name="reason"
+            required
+            placeholder="Required audit reason"
+          />
+        </label>
+      ) : null}
+      {selected?.requiresHandoff ? (
+        <label>
+          Delivery handoff reference
+          <textarea
+            name="handoffReference"
+            required
+            placeholder="Required delivery evidence"
+          />
+        </label>
+      ) : null}
       {state.error && (
         <p className="admin-form-error" role="alert">
           {state.error}

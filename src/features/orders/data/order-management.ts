@@ -79,6 +79,12 @@ export async function getOrderDetail(id: string) {
         evidence_state_key: string;
         transaction_reference: string | null;
       };
+      reservation: {
+        status: "active" | "released-or-expired" | "none";
+        expiresAt: string | null;
+      };
+      fulfillment: { id: string; state: string } | null;
+      workflow: { deliveryRequired: boolean; returnsRequired: boolean };
       lines: {
         id: string;
         product_name_snapshot: string;
