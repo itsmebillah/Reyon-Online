@@ -27,6 +27,10 @@ export type DeliveryOperations = {
     handler: string | null;
     reference: string | null;
     createdAt: string;
+    attemptCount: number;
+    paymentKind: string;
+    expectedAmount: number;
+    codMismatch: boolean;
   }[];
 };
 export async function getDeliveryOperations(): Promise<DeliveryOperations> {

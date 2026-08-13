@@ -55,6 +55,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 - Approved the provider-neutral single-courier/single-shipment model, lifecycle and exceptions, three-attempt maximum, handoff/proof evidence, address-change boundary, COD reconciliation, permissions, customer visibility, and notification rules.
 - Added the first Delivery Operations milestone: Packed orders create exactly one Ready for Dispatch shipment, Admin configures one active provider-neutral partner, authorized staff assign handler/reference evidence, and delivery transitions enqueue customer/Admin notifications.
 - Added guarded pickup/handoff, In Transit, and Out for Delivery operations. Pickup requires append-only evidence and atomically drives the existing Order Shipped/inventory fulfillment path; customers can retrieve status and shipment reference without simulated real-time tracking.
+- Added capped delivery-attempt recording, required receiver/responsible-party proof of delivery, governed Lost/Damaged/Delivery Cancelled exceptions, and append-only COD reconciliation. Delivery attempts and reconciliation outcomes use the existing failure-safe notification outbox; COD mismatches enter review and cannot be treated as collected until an authorized correction matches the expected Grand Total.
 
 ### Sprint 16 — Order Management
 

@@ -5,7 +5,11 @@ import {
 } from "@/features/delivery/data/delivery-management";
 import {
   assignShipment,
+  completeDelivery,
   configureDeliveryPartner,
+  reconcileCod,
+  recordDeliveryAttempt,
+  recordDeliveryException,
   transitionDelivery,
   updateDeliveryZone,
 } from "./actions";
@@ -112,7 +116,8 @@ export default async function DeliveryPage() {
                   <th>Status</th>
                   <th>Partner</th>
                   <th>Reference</th>
-                  <th>Assignment</th>
+                  <th>Attempts</th>
+                  <th>Operations</th>
                 </tr>
               </thead>
               <tbody>
@@ -124,6 +129,7 @@ export default async function DeliveryPage() {
                     <td>{shipment.state}</td>
                     <td>{shipment.partner ?? "Not assigned"}</td>
                     <td>{shipment.reference ?? "Not available"}</td>
+                    <td>{shipment.attemptCount} / 3</td>
                     <td>
                       {shipment.state === "ready-for-dispatch" ? (
                         <form
@@ -196,9 +202,167 @@ export default async function DeliveryPage() {
                               : "Mark out for delivery"}
                           </button>
                         </form>
+                      ) : shipment.state === "out-for-delivery" ? (
+                        <div className="catalog-admin-form">
+                          <form
+                            action={recordDeliveryAttempt}
+                            className="catalog-admin-form"
+                          >
+                            <input
+                              type="hidden"
+                              name="fulfillmentId"
+                              value={shipment.id}
+                            />
+                            <select name="result" required defaultValue="">
+                              <option value="" disabled>
+                                Attempt result
+                              </option>
+                              <option value="successful">Successful</option>
+                              <option value="failed">Failed</option>
+                            </select>
+                            <input
+                              name="reason"
+                              required
+                              placeholder="Attempt result reason"
+                            />
+                            <input
+                              name="note"
+                              required
+                              placeholder="Operational note"
+                            />
+                            <button className="button button--secondary">
+                              Record attempt
+                            </button>
+                          </form>
+                          <form
+                            action={completeDelivery}
+                            className="catalog-admin-form"
+                          >
+                            <input
+                              type="hidden"
+                              name="fulfillmentId"
+                              value={shipment.id}
+                            />
+                            <input
+                              name="receiverName"
+                              required
+                              placeholder="Receiver name"
+                            />
+                            <input
+                              name="responsibleIdentity"
+                              required
+                              placeholder="Courier / responsible staff"
+                            />
+                            <input
+                              name="confirmationNote"
+                              required
+                              placeholder="Delivery confirmation"
+                            />
+                            {shipment.paymentKind === "cod" ? (
+                              <>
+                                <input
+                                  name="collectedAmount"
+                                  type="number"
+                                  min="0"
+                                  step="0.01"
+                                  required
+                                  defaultValue={shipment.expectedAmount}
+                                  aria-label="COD amount collected"
+                                />
+                                <input
+                                  name="codMismatchReason"
+                                  placeholder="Required only if COD amount differs"
+                                />
+                              </>
+                            ) : null}
+                            <button className="button button--primary">
+                              Confirm delivered
+                            </button>
+                          </form>
+                        </div>
+                      ) : shipment.state === "delivered" &&
+                        shipment.codMismatch ? (
+                        <form
+                          action={reconcileCod}
+                          className="catalog-admin-form"
+                        >
+                          <input
+                            type="hidden"
+                            name="fulfillmentId"
+                            value={shipment.id}
+                          />
+                          <input
+                            name="collectedAmount"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            required
+                            defaultValue={shipment.expectedAmount}
+                            aria-label="Corrected COD amount"
+                          />
+                          <input
+                            name="reason"
+                            required
+                            placeholder="COD correction reason"
+                          />
+                          <button className="button button--primary">
+                            Reconcile COD
+                          </button>
+                        </form>
                       ) : (
-                        shipment.handler
+                        (shipment.handler ?? "No action required")
                       )}
+                      {[
+                        "ready-for-dispatch",
+                        "courier-assigned",
+                        "picked-up",
+                        "in-transit",
+                        "out-for-delivery",
+                      ].includes(shipment.state) ? (
+                        <form
+                          action={recordDeliveryException}
+                          className="catalog-admin-form"
+                        >
+                          <input
+                            type="hidden"
+                            name="fulfillmentId"
+                            value={shipment.id}
+                          />
+                          <select
+                            name="exceptionState"
+                            required
+                            defaultValue=""
+                          >
+                            <option value="" disabled>
+                              Record exception
+                            </option>
+                            {shipment.state === "ready-for-dispatch" ||
+                            shipment.state === "courier-assigned" ? (
+                              <option value="delivery-cancelled">
+                                Delivery cancelled
+                              </option>
+                            ) : (
+                              <>
+                                <option value="lost">Lost</option>
+                                <option value="damaged">Damaged</option>
+                              </>
+                            )}
+                          </select>
+                          <input
+                            name="reason"
+                            required
+                            placeholder="Exception reason"
+                          />
+                          <input
+                            name="note"
+                            required
+                            placeholder="Internal audit note"
+                          />
+                          <button className="button button--secondary">
+                            Record exception
+                          </button>
+                        </form>
+                      ) : null}
                     </td>
                   </tr>
                 ))}
