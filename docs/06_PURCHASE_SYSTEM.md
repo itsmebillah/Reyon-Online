@@ -80,6 +80,8 @@ Purchase Returns reference accepted receipt-line quantities and preserve PO, rec
 
 Supplier payables are derived from accepted receipt value after proportional PO discounts, less physically returned quantities. Manual BDT payments support partial settlement, credit due dates, and Unpaid, Partially Paid, Paid, Overdue, and Disputed operational states. Immutable payment evidence and allocations are separated from append-only verification decisions; pending and verified allocations prevent overpayment, while rejected evidence never counts as paid.
 
+Admin/Super Admin may close a Fully Received PO through the governed transition; the original PO, receipt, return, and payment evidence remains immutable. Supplier performance is a factual view of POs, receipts, discrepancies, returns, verified payments, and outstanding value and never changes supplier status automatically. The manual replenishment view combines on-hand stock with preferred-source MOQ, pack, cost, and lead time without generating an automated order recommendation.
+
 Receiving should preserve what was expected, what was observed, condition, time, location, actor, and evidence. Discrepancy handling must distinguish inventory acceptance from supplier and financial resolution.
 
 ### TODO — Domain Owners

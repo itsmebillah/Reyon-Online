@@ -35,6 +35,12 @@ export default async function SupplierPaymentsPage() {
         >
           Purchase Returns
         </Link>
+        <Link
+          className="button button--secondary"
+          href="/admin/purchases/performance"
+        >
+          Closeout & Performance
+        </Link>
       </header>
       <article className="admin-module-card">
         <span>Manual settlement</span>
