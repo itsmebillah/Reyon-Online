@@ -1,7 +1,8 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 export default async function NotificationsPage() {
   const s = await createSupabaseServerClient();
-  const { data } = await s.rpc("admin_notification_outbox");
+  const { data, error } = await s.rpc("admin_notification_outbox");
+  if (error) throw new Error("Notification outbox could not be loaded.");
   const rows = (data ?? []) as {
     id: string;
     event: string;

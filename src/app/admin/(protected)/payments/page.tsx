@@ -3,33 +3,39 @@ import { revalidatePath } from "next/cache";
 async function save(form: FormData) {
   "use server";
   const s = await createSupabaseServerClient();
-  await s.rpc("admin_update_payment_method", {
+  const { error } = await s.rpc("admin_update_payment_method", {
     p_method_id: String(form.get("id")),
     p_is_visible: form.get("visible") === "on",
     p_is_selectable: form.get("selectable") === "on",
     p_instructions: String(form.get("instructions") ?? ""),
     p_account_reference: String(form.get("accountReference") ?? ""),
   });
+  if (error) throw new Error(error.message);
   revalidatePath("/admin/payments");
   revalidatePath("/checkout");
 }
 async function decide(form: FormData) {
   "use server";
   const s = await createSupabaseServerClient();
-  await s.rpc("admin_decide_manual_payment", {
+  const { error } = await s.rpc("admin_decide_manual_payment", {
     p_order_id: String(form.get("orderId")),
     p_decision: String(form.get("decision")),
     p_note: String(form.get("note") ?? "") || null,
   });
+  if (error) throw new Error(error.message);
   revalidatePath("/admin/payments");
   revalidatePath("/admin/orders");
 }
 export default async function Page() {
   const s = await createSupabaseServerClient();
-  const [{ data }, { data: pendingData }] = await Promise.all([
+  const [methodsResult, pendingResult] = await Promise.all([
     s.rpc("admin_payment_methods"),
     s.rpc("admin_pending_manual_payments"),
   ]);
+  if (methodsResult.error || pendingResult.error)
+    throw new Error("Payment operations could not be loaded.");
+  const data = methodsResult.data;
+  const pendingData = pendingResult.data;
   const methods = (data ?? []) as Array<{
     id: string;
     name: string;

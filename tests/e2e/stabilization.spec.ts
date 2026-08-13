@@ -19,6 +19,20 @@ function monitor(page: Page) {
   return failures;
 }
 
+async function signInAsAdmin(page: Page) {
+  const email = process.env.REYON_ADMIN_EMAIL;
+  const password = process.env.REYON_ADMIN_PASSWORD;
+  test.skip(
+    !email || !password,
+    "Administrator browser credentials are required",
+  );
+  await page.goto("/admin/login");
+  await page.getByLabel("Email address").fill(email!);
+  await page.getByLabel("Password").fill(password!);
+  await page.getByRole("button", { name: "Sign in securely" }).click();
+  await expect(page).toHaveURL(/\/admin$/);
+}
+
 async function expectBelowStickyHeader(page: Page, selector: string) {
   if ((page.viewportSize()?.width ?? 1280) > 720) return;
   await page.evaluate((hash) => {
@@ -178,18 +192,8 @@ test("customer can browse, add to cart, preserve address, and reach configured c
 test("authenticated administrator can traverse every released workspace module", async ({
   page,
 }) => {
-  const email = process.env.REYON_ADMIN_EMAIL;
-  const password = process.env.REYON_ADMIN_PASSWORD;
-  test.skip(
-    !email || !password,
-    "Administrator browser credentials are required",
-  );
   const failures = monitor(page);
-  await page.goto("/admin/login");
-  await page.getByLabel("Email address").fill(email!);
-  await page.getByLabel("Password").fill(password!);
-  await page.getByRole("button", { name: "Sign in securely" }).click();
-  await expect(page).toHaveURL(/\/admin$/);
+  await signInAsAdmin(page);
   await expect(
     page.getByRole("heading", { name: "Your business workspace" }),
   ).toBeVisible();
@@ -279,9 +283,13 @@ test("authenticated administrator can traverse every released workspace module",
   ).toBeVisible();
 
   await page.goto("/admin/delivery");
-  for (const card of await page.locator(".admin-module-card").all()) {
-    if (await card.locator('input[name="isEnabled"]').isChecked())
-      await expect(card.locator('input[name="charge"]')).not.toHaveValue("");
+  for (const zone of await page
+    .locator('.catalog-admin-grid input[name="isEnabled"]')
+    .all()) {
+    if (await zone.isChecked())
+      await expect(
+        zone.locator("xpath=ancestor::form").locator('input[name="charge"]'),
+      ).not.toHaveValue("");
   }
 
   await page.goto("/admin/payments");
@@ -307,17 +315,7 @@ test("authenticated administrator can traverse every released workspace module",
 test("authenticated administrator can load every released data workspace", async ({
   page,
 }) => {
-  const email = process.env.REYON_ADMIN_EMAIL;
-  const password = process.env.REYON_ADMIN_PASSWORD;
-  test.skip(
-    !email || !password,
-    "Administrator browser credentials are required",
-  );
-  await page.goto("/admin/login");
-  await page.getByLabel("Email address").fill(email!);
-  await page.getByLabel("Password").fill(password!);
-  await page.getByRole("button", { name: "Sign in securely" }).click();
-  await expect(page).toHaveURL(/\/admin$/);
+  await signInAsAdmin(page);
   const routes = [
     "/admin",
     "/admin/brands",
@@ -359,21 +357,17 @@ test("authenticated administrator can load every released data workspace", async
 });
 
 test("delivery partner validation remains on the form", async ({ page }) => {
-  const email = process.env.REYON_ADMIN_EMAIL;
-  const password = process.env.REYON_ADMIN_PASSWORD;
-  test.skip(
-    !email || !password,
-    "Administrator browser credentials are required",
-  );
-  await page.goto("/admin/login");
-  await page.getByLabel("Email address").fill(email!);
-  await page.getByLabel("Password").fill(password!);
-  await page.getByRole("button", { name: "Sign in securely" }).click();
+  await signInAsAdmin(page);
   await page.goto("/admin/delivery");
-  await page.getByLabel("Partner key").fill("Invalid Partner Key");
-  await page.getByLabel("Display name").fill("Non-persisting validation probe");
-  await page.getByRole("button", { name: "Save partner" }).click();
-  await expect(page.getByLabel("Partner key")).toBeFocused();
+  const createPartner = page
+    .locator(".admin-module-card")
+    .filter({ has: page.getByRole("heading", { name: "Delivery partner" }) });
+  await createPartner.getByLabel("Partner key").fill("Invalid Partner Key");
+  await createPartner
+    .getByLabel("Display name")
+    .fill("Non-persisting validation probe");
+  await createPartner.getByRole("button", { name: "Save partner" }).click();
+  await expect(createPartner.getByLabel("Partner key")).toBeFocused();
   await expect(page.getByText("Something needs attention")).toHaveCount(0);
 });
 

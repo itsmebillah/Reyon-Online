@@ -1800,7 +1800,7 @@ details p {
   .nav-row {
     height: 68px;
     display: grid;
-    grid-template-columns: 42px minmax(0, 1fr) 72px;
+    grid-template-columns: 42px minmax(0, 1fr) 96px;
     gap: 0;
     position: relative;
   }
@@ -1833,9 +1833,6 @@ details p {
     top: 50%;
     transform: translateY(-50%);
     gap: 9px;
-  }
-  .nav-actions > button {
-    display: none;
   }
   .primary-nav__account {
     display: block;

@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-08-13 — Cross-system stabilization audit
+
+- Restored the existing Search action on mobile, where responsive CSS had made
+  the only search entry inaccessible.
+- Corrected authenticated browser-audit synchronization and selector scope so
+  Admin validation checks exercise the application instead of timing out on
+  absent controls or racing the login redirect.
+- Stopped Payment operations, Order change acknowledgements, Notifications, and
+  related queue reads from treating failed database requests as successful or
+  empty results.
+
 ## 2026-08-13 — Admin Order lifecycle stabilization
 
 - Restricted the generic Order Management control to transitions it can safely

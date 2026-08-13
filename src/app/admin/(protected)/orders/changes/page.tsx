@@ -3,15 +3,17 @@ import { revalidatePath } from "next/cache";
 async function acknowledge(form: FormData) {
   "use server";
   const s = await createSupabaseServerClient();
-  await s.rpc("admin_acknowledge_order_change", {
+  const { error } = await s.rpc("admin_acknowledge_order_change", {
     p_request_id: String(form.get("id")),
     p_note: String(form.get("note")),
   });
+  if (error) throw new Error(error.message);
   revalidatePath("/admin/orders/changes");
 }
 export default async function Page() {
   const s = await createSupabaseServerClient();
-  const { data } = await s.rpc("admin_order_change_queue");
+  const { data, error } = await s.rpc("admin_order_change_queue");
+  if (error) throw new Error("Order change queue could not be loaded.");
   const rows = (data ?? []) as {
     id: string;
     orderNumber: string;
