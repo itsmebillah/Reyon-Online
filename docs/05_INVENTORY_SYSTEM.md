@@ -87,6 +87,8 @@ Sprint 19 receipt and inspection keep returned goods outside available stock unt
 
 Sprint 20 purchase receiving supports multiple and partial receipts. Only inspected accepted quantities create an append-only `Purchase / Receive` movement and enter available inventory. Short, excess, damaged/rejected, batch, and expiry observations remain distinct evidence; purchase returns use separately authorized `Return Out` movements. Purchase cost is the initial cost basis while landed-cost allocation remains deferred.
 
+Each accepted purchase receipt movement references its immutable receipt, PO, variant, Main Inventory location, actor, and optional lot/expiry identity. Damaged/rejected and quarantined receipt outcomes never create positive available-stock movements automatically.
+
 ### TODO — Domain Owner
 
 - Define reservation timing, allocation priority, expiry, release, and order integration behavior.

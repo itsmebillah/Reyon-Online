@@ -51,6 +51,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 - Approved the Supplier and Purchase rules covering supplier lifecycle, variant sourcing, preferred suppliers, PO identity/lifecycle/authority, BDT commercial terms, controlled amendments, receiving/inspection, purchase returns, operational payments, immutable history, performance tracking, manual replenishment, and emergency flags.
 - Added Supplier Management with role-aware supplier creation and transitions, append-only lifecycle evidence, variant sourcing terms, one active preferred supplier per variant, and a responsive Admin operations page.
 - Added Purchase Order Operations with database-generated `PO-YYYY-XXXXXX` references, supplier-sourcing validation, BDT unit/pack lines, governed discounts and totals, submission/approval/rejection/ordering, controlled pre-order amendments, cancellation, register filters, and append-only lifecycle evidence. PO operations do not post inventory.
+- Added Purchase Receiving and Inspection with multiple/partial receipts, cumulative quantity protection, explicit short/excess review, accepted/damaged/quarantine dispositions, delivery and batch/expiry evidence, accepted-only idempotent inventory movements, and transactional Partially/Fully Received PO transitions.
 
 ### Sprint 19 — Returns and Refunds
 

@@ -74,6 +74,8 @@ Replenishment may use human judgment, parameters, forecasts, or approved automat
 
 Multiple and partial receipts are supported. Partial, short, and excess observations remain explicit; excess requires review and substitutions are not automatically accepted. Inspection records accepted, damaged/rejected, and applicable batch/expiry facts. Only accepted quantities enter available inventory through the `Purchase / Receive` movement. Supplier returns use an auditable `Return Out` movement.
 
+The released Receiving workspace records each supplier delivery as immutable receipt and line evidence. It rejects duplicate supplier delivery references and cumulative over-receipt unless an Admin/Super Admin explicitly approves the excess with a discrepancy note. Accepted quantities alone create referenced, idempotent Main Inventory movements; damaged/rejected and quarantined quantities remain unavailable. Cumulative observations transition Ordered POs to Partially Received or Fully Received without rewriting PO lines.
+
 Receiving should preserve what was expected, what was observed, condition, time, location, actor, and evidence. Discrepancy handling must distinguish inventory acceptance from supplier and financial resolution.
 
 ### TODO — Domain Owners

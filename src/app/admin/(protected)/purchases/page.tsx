@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getPurchaseOrderRegister } from "@/features/purchasing/data/purchase-order-management";
 import {
   CreatePurchaseOrderForm,
@@ -55,6 +56,12 @@ export default async function PurchasesPage({
           Create, approve, order, amend, and audit BDT supplier commitments.
           Inventory changes only during receiving.
         </p>
+        <Link
+          className="button button--secondary"
+          href="/admin/purchases/receiving"
+        >
+          Open Receiving & Inspection
+        </Link>
       </header>
       <article className="admin-module-card">
         <span>New commitment workflow</span>
