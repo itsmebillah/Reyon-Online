@@ -55,6 +55,8 @@ Purchase orders use globally unique database-generated `PO-YYYY-XXXXXX` referenc
 
 Super Admin has full authority, Admin performs normal purchasing and approvals, and Staff may draft and perform permitted receiving operations but cannot approve their own purchase order. Emergency purchases remain in this workflow and may be flagged.
 
+The released Purchase Order Admin workflow creates database-numbered drafts, validates every line against the selected supplier's active variant relationship, snapshots product/SKU, MOQ, pack size and commercial cost facts, supports bounded fixed/percentage discounts, and calculates non-negative BDT totals. Submit, approve, reject, order, amendment, and cancellation commands append audit transitions. Creation and approval never create Inventory movements.
+
 The lifecycle must define each approved document or commitment, its states, entry and exit criteria, permitted actors, amendments, cancellation, and downstream effects. No assumed request-to-order-to-receipt sequence is authoritative.
 
 ### TODO — Purchasing Owner

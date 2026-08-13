@@ -16,6 +16,7 @@ import {
   BadgeDollarSign,
   RotateCcw,
   Handshake,
+  ShoppingBasket,
 } from "lucide-react";
 
 const groups = [
@@ -45,6 +46,7 @@ const groups = [
       { label: "Notifications", href: "/admin/notifications", icon: Bell },
       { label: "Inventory", href: "/admin/inventory", icon: Boxes },
       { label: "Suppliers", href: "/admin/suppliers", icon: Handshake },
+      { label: "Purchases", href: "/admin/purchases", icon: ShoppingBasket },
       { label: "Delivery", href: "/admin/delivery", icon: Truck },
       { label: "Returns", href: "/admin/returns", icon: RotateCcw },
       { label: "Payments", href: "/admin/payments", icon: CreditCard },

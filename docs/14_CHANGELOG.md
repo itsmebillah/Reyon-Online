@@ -50,6 +50,7 @@ Use **Added** for new capability or documentation, **Changed** for altered behav
 - Opened Product Owner decision review for supplier lifecycle and records, supplier–variant sourcing, PO identity/lifecycle/authority, commercial lines, partial receiving and discrepancies, supplier returns, operational payment/credit status, amendments/cancellation, cost scope, performance history, replenishment, and audit controls while preserving all Sprint 14–19 boundaries.
 - Approved the Supplier and Purchase rules covering supplier lifecycle, variant sourcing, preferred suppliers, PO identity/lifecycle/authority, BDT commercial terms, controlled amendments, receiving/inspection, purchase returns, operational payments, immutable history, performance tracking, manual replenishment, and emergency flags.
 - Added Supplier Management with role-aware supplier creation and transitions, append-only lifecycle evidence, variant sourcing terms, one active preferred supplier per variant, and a responsive Admin operations page.
+- Added Purchase Order Operations with database-generated `PO-YYYY-XXXXXX` references, supplier-sourcing validation, BDT unit/pack lines, governed discounts and totals, submission/approval/rejection/ordering, controlled pre-order amendments, cancellation, register filters, and append-only lifecycle evidence. PO operations do not post inventory.
 
 ### Sprint 19 — Returns and Refunds
 
