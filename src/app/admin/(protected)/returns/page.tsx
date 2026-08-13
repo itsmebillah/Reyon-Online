@@ -18,6 +18,13 @@ type ReturnQueueItem = {
   quantity: number;
   receivedQuantity: number;
   inspectedQuantity: number;
+  refund: {
+    adjustmentNumber: number;
+    totalAmount: number;
+    currency: string;
+    method: string;
+    status: string;
+  } | null;
   evidence: { kind: string; reference: string }[];
 };
 
@@ -62,6 +69,31 @@ async function inspectReturn(form: FormData) {
   revalidatePath("/admin/inventory");
 }
 
+async function prepareRefund(form: FormData) {
+  "use server";
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.rpc("admin_prepare_return_refund", {
+    p_request_id: String(form.get("requestId")),
+    p_refund_delivery: form.get("refundDelivery") === "on",
+    p_delivery_reason: String(form.get("deliveryReason") ?? "").trim() || null,
+  });
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin/returns");
+}
+
+async function executeRefund(form: FormData) {
+  "use server";
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.rpc("admin_execute_return_refund", {
+    p_request_id: String(form.get("requestId")),
+    p_execution_reference: String(form.get("executionReference") ?? ""),
+    p_execution_evidence: String(form.get("executionEvidence") ?? ""),
+  });
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin/returns");
+  revalidatePath("/admin/sales");
+}
+
 export default async function ReturnsPage() {
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.rpc("admin_return_queue");
@@ -99,6 +131,13 @@ export default async function ReturnsPage() {
               Inspected: {row.inspectedQuantity}
             </p>
             <p>{row.note}</p>
+            {row.refund ? (
+              <p>
+                Adjustment #{row.refund.adjustmentNumber} · {row.refund.method}{" "}
+                · {row.refund.currency} {row.refund.totalAmount} ·{" "}
+                {row.refund.status}
+              </p>
+            ) : null}
             {row.evidence.map((item) => (
               <p key={`${item.kind}-${item.reference}`}>
                 {item.kind}: {item.reference}
@@ -192,6 +231,39 @@ export default async function ReturnsPage() {
                 </label>
                 <button className="button button--primary">
                   Record inspection
+                </button>
+              </form>
+            ) : row.state === "inspected" ? (
+              <form action={prepareRefund} className="admin-auth-form">
+                <input type="hidden" name="requestId" value={row.id} />
+                <label className="publish-choice">
+                  <input name="refundDelivery" type="checkbox" />
+                  <span>
+                    <strong>Refund original delivery charge</strong>
+                    <small>Only for genuine REYON-fault cases.</small>
+                  </span>
+                </label>
+                <label>
+                  Delivery refund reason
+                  <textarea name="deliveryReason" />
+                </label>
+                <button className="button button--primary">
+                  Prepare proportional refund
+                </button>
+              </form>
+            ) : row.state === "refund-pending" ? (
+              <form action={executeRefund} className="admin-auth-form">
+                <input type="hidden" name="requestId" value={row.id} />
+                <label>
+                  Manual refund transaction / reference
+                  <input name="executionReference" required />
+                </label>
+                <label>
+                  Refund execution evidence
+                  <textarea name="executionEvidence" required />
+                </label>
+                <button className="button button--primary">
+                  Record refund completed
                 </button>
               </form>
             ) : null}
