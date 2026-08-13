@@ -78,6 +78,10 @@ The Product Owner approved the following rules for Sprint 15 on 2026-08-11:
 
 The Product Owner approved provider-neutral single-courier, single-shipment delivery on 2026-08-13. The governed lifecycle, three-attempt maximum, pickup/handoff evidence, delivery proof, address-change boundary, exceptions, COD reconciliation, permissions, customer visibility, and notification rules are maintained in [Sprint 18 Delivery Operations](30_DELIVERY_OPERATIONS_DECISION_PACKET.md). Courier integrations and credentials are not approved or inferred.
 
+## Approved Sprint 20 Supplier and Purchase Rules
+
+The Product Owner approved governed supplier lifecycle, multi-supplier variant sourcing, preferred suppliers, database-numbered purchase orders, approval authority, BDT commercial terms, amendment/reapproval, partial and discrepancy receiving, inspection, accepted-only inventory entry, purchase returns, credit and evidence-backed supplier payments, immutable closure, performance tracking, manual replenishment, and emergency flags on 2026-08-13. The authoritative rule set is maintained in [Sprint 20 — Supplier and Purchase Operations](32_SUPPLIER_PURCHASE_DECISION_PACKET.md).
+
 ## Conflict and Precedence
 
 No precedence hierarchy is assumed. A future policy must define how legal requirements, contractual commitments, financial controls, organization policy, promotions, and local exceptions interact.

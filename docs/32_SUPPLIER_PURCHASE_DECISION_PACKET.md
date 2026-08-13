@@ -1,91 +1,71 @@
-# Sprint 20 — Supplier and Purchase Operations Decision Packet
+# Sprint 20 — Supplier and Purchase Operations
 
 ## Purpose
 
-This packet requests only the Product Owner decisions still required to implement Supplier and Purchase Operations safely. It preserves the approved Catalog, variant-level Inventory, Main Inventory, immutable audit, role, Sales, Order, Return, and Finance ownership boundaries from Sprints 14–19.
+This document records the authoritative Product Owner decisions for Supplier and Purchase Operations and the bounded Sprint 20 execution sequence. It reuses Catalog variant identity, Main Inventory, append-only audit, Payment evidence, and Notification foundations from Sprints 14–19.
 
 ## Table of Contents
 
-- [Already decided](#already-decided)
-- [Decisions required](#decisions-required)
-- [Implementation boundary](#implementation-boundary)
+- [Approved supplier rules](#approved-supplier-rules)
+- [Approved purchase order rules](#approved-purchase-order-rules)
+- [Receiving and inventory](#receiving-and-inventory)
+- [Supplier payments](#supplier-payments)
+- [Controls and reporting](#controls-and-reporting)
+- [Implementation sequence](#implementation-sequence)
 - [Future expansion](#future-expansion)
 - [Related documents](#related-documents)
 
-## Already Decided
+## Approved Supplier Rules
 
-- Products and sellable variants retain stable Catalog identities; inventory is tracked per variant at Main Inventory initially.
-- Purchasing already has private supplier, purchase-order, commercial line-snapshot, and append-only transition foundations.
-- Physical stock changes only through the Inventory ledger. An accepted purchase receipt uses the approved `Purchase / Receive` movement and cannot silently edit history or create negative stock.
-- Purchase quantity and unit cost are exact snapshots. Purchasing does not own Catalog selling prices.
-- Accounting owns liability, inventory valuation, tax, landed-cost interpretation, journal mappings, and financial statements. Sprint 20 cannot invent those treatments.
-- Existing Super Admin, Admin, and Staff identities are extensible; exact Supplier/Purchase permissions remain to be approved.
+- Supplier lifecycle is **Draft → Active → Suspended → Archived**.
+- Suspended suppliers cannot receive new purchase orders. Existing operations and historical records remain accessible.
+- A product variant may have multiple suppliers, with at most one active preferred supplier.
+- Supplier–variant sourcing records store supplier SKU/code, minimum order quantity, pack size, purchase cost, and lead time.
 
-## Decisions Required
+## Approved Purchase Order Rules
 
-### SP-01 — Supplier Lifecycle
+- Purchase numbers are globally unique, database-generated, and formatted `PO-YYYY-XXXXXX`.
+- Lifecycle is **Draft → Pending Approval → Approved → Ordered → Partially Received → Fully Received → Closed**; exceptional terminal states are **Cancelled** and **Rejected**.
+- Approval is the purchasing commitment point.
+- Super Admin has full authority. Admin performs normal operations and approval. Staff may create drafts and perform permitted receiving tasks but cannot approve their own PO.
+- Initial currency is BDT. Supplier discounts and unit/pack conversion are supported.
+- Material changes after approval require a separately auditable amendment and reapproval.
+- Cancellation and amendment become increasingly restricted by lifecycle stage. Fully Received and Closed history is immutable.
+- Emergency purchases use the governed workflow and may be manually flagged.
 
-Approve supplier states and transitions, including the initial state, active/approved use, inactive or suspended handling, archive/offboarding, reactivation, required reasons, and whether purchase history must remain available for non-active suppliers.
+## Receiving and Inventory
 
-### SP-02 — Supplier Business and Contact Records
+- Multiple receipts and partial receiving are supported. Short, partial, and excess quantities are explicit observed facts; excess requires review.
+- Substitutions are never accepted automatically.
+- Inspection distinguishes accepted, damaged/rejected, batch, and expiry facts where applicable.
+- Only accepted quantities create the approved `Purchase / Receive` movement and enter available inventory.
+- Purchase returns are append-only, auditable, and create the approved `Return Out` movement only through the governed workflow.
+- Initial inventory cost basis is purchase cost. Landed-cost allocation is deferred.
 
-Define required and optional supplier fields: display/legal name, supplier code policy, contact people and roles, phone, email, address, country, website, tax/business-registration identifiers, notes, and authenticity/import/distributor evidence. Identify which fields are sensitive and who may view or edit them.
+## Supplier Payments
 
-### SP-03 — Supplier–Product Relationships
+- Operational states are **Unpaid**, **Partially Paid**, and **Paid**, with **Overdue** and **Disputed** exceptions.
+- Credit purchasing and partial settlement are supported.
+- Purchase payment verification requires evidence. Sprint 20 records operational payment facts; accounting interpretation remains owned by Sprint 21.
 
-Confirm that one variant may have multiple suppliers and define whether a preferred/default supplier is supported. Approve relationship fields such as supplier SKU, quoted cost, minimum order quantity, pack/case quantity, lead time, availability, effective dates, and active status; define duplicate prevention.
+## Controls and Reporting
 
-### SP-04 — Purchase Order Identity and Lifecycle
+- Purchase lifecycle, amendments, receipts, discrepancies, returns, and payments preserve actor, role, timestamps, reasons, evidence references, and append-only history.
+- Supplier performance is tracked from governed operational facts and never automatically suspends a supplier.
+- Initial replenishment is manual. Automated reorder suggestions are deferred.
 
-Approve the globally unique PO number format and lifecycle states/transitions from Draft through approval, issue/order, partial receipt, full receipt, closure, cancellation, and required exception states. Define when a PO becomes a binding supplier commitment.
+## Implementation Sequence
 
-### SP-05 — Drafting, Approval, and Permissions
-
-Define what Super Admin, Admin, and Staff may create, edit, submit, approve, issue, receive, close, cancel, and return. Confirm whether approval thresholds, second approval, creator/approver separation, or spending limits apply initially.
-
-### SP-06 — Commercial Line Rules
-
-Confirm initial purchasing currency or allowed currencies, quantity unit (individual sellable units versus supplier packs with conversion), whether zero-cost lines are allowed, whether supplier discounts are recorded, and whether entered unit cost includes or excludes any tax/charges. Define rounding precision and whether price changes after approval require reapproval.
-
-### SP-07 — Receiving and Quantity Variances
-
-Approve partial receiving; whether multiple receipts per line are allowed; whether excess quantities are rejected, allowed within a tolerance, or require approval; how short deliveries remain open or are closed; whether substitutions are permitted; and what receipt reference/evidence is mandatory.
-
-### SP-08 — Receipt Inspection and Discrepancies
-
-Define receipt outcomes for accepted/sellable, quarantine, damaged, expired/near-expiry, wrong item, batch issue, and rejected quantities. Confirm required lot/batch and expiry capture, evidence, responsible roles, and which accepted outcomes create available stock. Define how shortages, damage, and excess create supplier claims without silently changing ordered or observed facts.
-
-### SP-09 — Purchase Returns to Supplier
-
-Approve the return-to-supplier lifecycle, eligible source quantities and reasons, approval authority, shipment/reference evidence, partial returns, replacement versus refund/credit outcomes, and the exact event that creates the approved `Return Out` inventory movement.
-
-### SP-10 — Supplier Payment and Credit Status
-
-Define operational statuses for unpaid, partially paid, paid, credit purchase, overdue, disputed, cancelled, and supplier credit. Approve credit terms/due-date capture, payment evidence, partial payments, overpayment handling, and who may record/verify payment. These are operational source facts only until Sprint 21 approves accounting mappings.
-
-### SP-11 — PO Amendment and Cancellation
-
-Define which fields may change at Draft, Approved, Issued, Partially Received, and Received stages; when supplier confirmation or reapproval is required; cancellation authority/reason/evidence; and treatment of open quantities after cancellation. Received history and inventory movements remain immutable.
-
-### SP-12 — Cost, Valuation, and Landed Cost Scope
-
-Confirm whether Sprint 20 should capture only PO unit-cost evidence or also operational landed-cost components such as freight, duty, handling, and insurance. If landed cost is in scope, approve allocation basis and correction timing. Select an inventory valuation method only with qualified Finance approval; otherwise valuation/posting remains explicitly deferred to Sprint 21.
-
-### SP-13 — Supplier Performance and History
-
-Approve which initial supplier history/performance facts are required: ordered versus received quantity, lead time, on-time delivery, shortages, excess, damaged/rejected quantity, returns, price history, payment/credit history, or manual rating. Define date basis, owner, visibility, and whether any metric automatically affects supplier status.
-
-### SP-14 — Replenishment and Emergency Buying
-
-Confirm whether Sprint 20 includes only manual PO creation or also reorder suggestions. If suggestions are included, define owner, inputs, safety-stock/reorder rules, approval, and override evidence. Define whether emergency purchases use the normal PO/receipt audit path or an approved exceptional path.
-
-## Implementation Boundary
-
-Sprint 20 implementation begins after SP-01 through SP-14 are approved or explicitly deferred. It will reuse the existing private purchasing records, Catalog variant identities, Main Inventory, append-only movement/correction rules, Admin roles, and audit patterns. It will not create accounting journals, infer supplier liabilities, invent tax treatment, automate supplier payments, or create external supplier integrations.
+1. **Supplier management:** lifecycle, supplier–variant sourcing, preferred source, and role-aware Admin operations.
+2. **Purchase order operations:** numbering, draft lines, submission, approval/rejection, ordering, amendments, and cancellation controls.
+3. **Receiving and inspection:** multiple/partial receipts, discrepancies, excess review, accepted inventory movements, batch/expiry evidence.
+4. **Purchase returns:** auditable approved quantities and `Return Out` movements.
+5. **Supplier payment operations:** credit terms, payment states, evidence, and conflict-safe verification.
+6. **Closeout and performance:** immutable closure, supplier operational history, and manual replenishment insight.
 
 ## Future Expansion
 
-Future approvals may add purchase requests, quotations and competitive sourcing, multiple locations, automated replenishment, EDI/vendor portals, supplier invoices and matching, gateway/bank settlement, compliance scoring, and accounting adapters without replacing stable purchase and receipt evidence.
+Future approvals may add supplier contacts and compliance records, quotations, multiple warehouses, automated replenishment, landed-cost allocation, EDI/vendor portals, invoice matching, and accounting adapters without replacing stable supplier, PO, receipt, or payment evidence.
 
 ## Related Documents
 
@@ -95,5 +75,3 @@ Future approvals may add purchase requests, quotations and competitive sourcing,
 - [Accounting Rules](07_ACCOUNTING_RULES.md)
 - [Roadmap](13_ROADMAP.md)
 - [Product Catalog Architecture](18_PRODUCT_CATALOG_ARCHITECTURE.md)
-- [Sales Processing](29_SALES_PROCESSING.md)
-- [Returns and Refunds](31_RETURNS_REFUNDS_DECISION_PACKET.md)

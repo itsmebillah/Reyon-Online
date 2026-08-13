@@ -85,6 +85,8 @@ Sprint 18 delivery failure, loss, damage, cancellation, and return states never 
 
 Sprint 19 receipt and inspection keep returned goods outside available stock until disposition. Only an inspected Sellable quantity creates an append-only `Return In` movement at Main Inventory. Quarantine, Damaged/Loss, and Expiry/Batch Issue dispositions remain separately traceable and unavailable; they do not inflate sellable on-hand stock.
 
+Sprint 20 purchase receiving supports multiple and partial receipts. Only inspected accepted quantities create an append-only `Purchase / Receive` movement and enter available inventory. Short, excess, damaged/rejected, batch, and expiry observations remain distinct evidence; purchase returns use separately authorized `Return Out` movements. Purchase cost is the initial cost basis while landed-cost allocation remains deferred.
+
 ### TODO — Domain Owner
 
 - Define reservation timing, allocation priority, expiry, release, and order integration behavior.

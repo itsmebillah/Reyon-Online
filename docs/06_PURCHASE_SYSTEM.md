@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document structures the procurement and supplier-management domain for future definition. It establishes control questions and integration boundaries without inventing purchasing policy.
+This document defines the approved procurement and supplier-management operating model and its integration boundaries.
 
 ## Table of Contents
 
@@ -24,6 +24,8 @@ This document structures the procurement and supplier-management domain for futu
 The purchase domain may cover supplier records, sourcing, purchase requests, approvals, purchase orders, receiving, discrepancies, returns to supplier, invoice matching, and performance insight. Actual scope and sequencing are pending.
 
 ## Supplier Foundation
+
+Sprint 20 approves the supplier lifecycle **Draft → Active → Suspended → Archived**. Suspended suppliers cannot receive new purchase orders, while existing operations and history remain accessible. Multiple suppliers may source one variant, with one active preferred supplier; the relationship records supplier SKU/code, MOQ, pack size, BDT purchase cost, lead time, and active/preferred status.
 
 Supplier data may include identity, contacts, commercial terms, tax details, payment details, assortment, lead times, service expectations, compliance evidence, and status. Sensitive data and approval requirements must be classified.
 
@@ -49,6 +51,10 @@ Inventory remains the authority for physical receipt movements. Purchasing must 
 
 ## Purchase Lifecycle
 
+Purchase orders use globally unique database-generated `PO-YYYY-XXXXXX` references. The approved lifecycle is **Draft → Pending Approval → Approved → Ordered → Partially Received → Fully Received → Closed**, with **Cancelled** and **Rejected** exceptions. Approval is the commitment point. Material changes after approval require amendment and reapproval; Fully Received and Closed history is immutable.
+
+Super Admin has full authority, Admin performs normal purchasing and approvals, and Staff may draft and perform permitted receiving operations but cannot approve their own purchase order. Emergency purchases remain in this workflow and may be flagged.
+
 The lifecycle must define each approved document or commitment, its states, entry and exit criteria, permitted actors, amendments, cancellation, and downstream effects. No assumed request-to-order-to-receipt sequence is authoritative.
 
 ### TODO — Purchasing Owner
@@ -58,9 +64,13 @@ The lifecycle must define each approved document or commitment, its states, entr
 
 ## Demand and Replenishment
 
+Initial replenishment is manual. Automated reorder suggestions are deferred.
+
 Replenishment may use human judgment, parameters, forecasts, or approved automation. Inputs, ownership, safety controls, and override policy must be established before automated ordering.
 
 ## Receiving and Discrepancies
+
+Multiple and partial receipts are supported. Partial, short, and excess observations remain explicit; excess requires review and substitutions are not automatically accepted. Inspection records accepted, damaged/rejected, and applicable batch/expiry facts. Only accepted quantities enter available inventory through the `Purchase / Receive` movement. Supplier returns use an auditable `Return Out` movement.
 
 Receiving should preserve what was expected, what was observed, condition, time, location, actor, and evidence. Discrepancy handling must distinguish inventory acceptance from supplier and financial resolution.
 
@@ -71,9 +81,13 @@ Receiving should preserve what was expected, what was observed, condition, time,
 
 ## Cost and Financial Integration
 
+Initial purchasing currency is BDT. Supplier discounts and unit/pack conversion are supported. Purchase cost is the initial inventory cost basis; landed-cost allocation is deferred. Supplier operational payment states are Unpaid, Partially Paid, Paid, Overdue, and Disputed; credit purchases and evidence-backed verification are supported without defining Sprint 21 accounting entries.
+
 Purchasing must exchange controlled facts with inventory and accounts without deciding accounting treatment in the purchasing module. Purchase commitments, receipts, supplier invoices, landed costs, taxes, and payments require owned definitions.
 
 ## Controls and Audit
+
+Supplier performance derives from governed operational history and never automatically suspends a supplier. Lifecycle, approval, amendment, receipt, discrepancy, return, and payment evidence is attributable and append-only.
 
 Potential controls include supplier-change approval, spending authority, competitive sourcing, segregation of duties, duplicate detection, match tolerances, and exception review. None are adopted until approved.
 
