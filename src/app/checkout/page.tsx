@@ -18,8 +18,6 @@ export const dynamic = "force-dynamic";
 
 export default async function CheckoutPage() {
   const cart = await getCartSummary();
-  if (!cart.items.length) redirect("/cart");
-  const valid = cart.items.every((item) => item.isAvailable);
   const supabase = await createSupabaseServerClient();
   const [{ data: paymentData }, { data: zoneData }, address, orderState] =
     await Promise.all([
@@ -30,6 +28,9 @@ export default async function CheckoutPage() {
     ]);
   const paymentMethods = (paymentData ?? []) as PaymentMethod[];
   const deliveryZones = (zoneData ?? []) as DeliveryZone[];
+  if (orderState?.existingOrderId) redirect("/checkout/success");
+  if (!cart.items.length) redirect("/cart");
+  const valid = cart.items.every((item) => item.isAvailable);
   return (
     <Container className="page checkout-page">
       <header className="checkout-header">
@@ -94,14 +95,7 @@ export default async function CheckoutPage() {
               Choose a delivery zone to continue to payment.
             </p>
           ) : null}
-          {orderState?.existingOrderId ? (
-            <p className="admin-form-success" role="status">
-              This checkout has already created order{" "}
-              {orderState.existingOrderId}.
-            </p>
-          ) : orderState?.paymentSelected ? (
-            <ConfirmOrderForm />
-          ) : null}
+          {orderState?.paymentSelected ? <ConfirmOrderForm /> : null}
         </section>
         <aside className="cart-summary checkout-summary">
           <p className="eyebrow">Checkout summary</p>

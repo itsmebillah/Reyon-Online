@@ -116,9 +116,35 @@ test("customer can browse, add to cart, preserve address, and reach configured c
     const confirmOrder = page.getByRole("button", { name: "Confirm order" });
     await expect(confirmOrder).toBeEnabled();
     await confirmOrder.click();
+    await expect(page).toHaveURL(/\/checkout\/success$/);
     await expect(
-      page.getByText(/This checkout has already created order/),
+      page.getByRole("heading", {
+        name: "Your order has been placed successfully.",
+      }),
     ).toBeVisible();
+    await expect(page.locator(".checkout-success-reference")).toHaveText(
+      /^RYN-\d{4}-\d{6}$/,
+    );
+    await expect(page.getByText("Confirmed", { exact: true })).toBeVisible();
+    await expect(
+      page.getByText("Cash on Delivery", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.locator(".checkout-success-details dd").nth(2),
+    ).toContainText(/৳|BDT/);
+    await expect(
+      page.getByRole("link", { name: "View Order / My Orders" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Continue Shopping" }),
+    ).toBeVisible();
+    const reference = await page
+      .locator(".checkout-success-reference")
+      .innerText();
+    await page.reload();
+    await expect(page.locator(".checkout-success-reference")).toHaveText(
+      reference,
+    );
   } else {
     await expect(
       page.getByText("Delivery is not configured yet"),

@@ -11,8 +11,8 @@ export function ConfirmOrderForm() {
   );
   const router = useRouter();
   useEffect(() => {
-    if (state.success) router.refresh();
-  }, [router, state.success]);
+    if (state.orderPlaced) router.replace("/checkout/success");
+  }, [router, state.orderPlaced]);
   return (
     <form
       action={action}
@@ -22,11 +22,6 @@ export function ConfirmOrderForm() {
       {state.error && (
         <p className="admin-form-error" role="alert">
           {state.error}
-        </p>
-      )}
-      {state.success && (
-        <p className="admin-form-success" role="status">
-          {state.success}
         </p>
       )}
       <button className="button button--primary" disabled={pending}>

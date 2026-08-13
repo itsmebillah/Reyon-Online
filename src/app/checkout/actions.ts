@@ -19,7 +19,11 @@ export type AddressState = {
   error?: string;
   fieldErrors?: Partial<Record<keyof CheckoutAddress, string>>;
 };
-export type CheckoutState = { success?: string; error?: string };
+export type CheckoutState = {
+  success?: string;
+  error?: string;
+  orderPlaced?: boolean;
+};
 export type CheckoutOrderState = Readonly<{
   addressSaved: boolean;
   deliverySelected: boolean;
@@ -138,10 +142,14 @@ export async function confirmOrder(
       error:
         "The order could not be confirmed. Review the current checkout details and try again.",
     };
+  if (!(data as { orderId?: string } | null)?.orderId)
+    return {
+      error:
+        "The order could not be confirmed. Review the current checkout details and try again.",
+    };
   revalidatePath("/checkout");
-  return {
-    success: `Order ${String((data as { orderId: string }).orderId)} created.`,
-  };
+  revalidatePath("/checkout/success");
+  return { orderPlaced: true };
 }
 
 export async function savePaymentSelection(
