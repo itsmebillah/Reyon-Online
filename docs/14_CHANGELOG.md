@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-08-14 — Public demo catalog release
+
+- Published a polished, database-backed demonstration catalog of 24 shoppable products: four products in each of REYON's six approved categories.
+- Added six clearly identified demo-assortment brands and 24 original, licensed, reusable product-media assets in the existing Supabase Media Library; every asset includes meaningful ALT text and licensing confirmation.
+- Added opening stock through the auditable Main Inventory movement workflow so every demo variant is available to purchase without bypassing inventory controls.
+- Hid four legacy internal/QA storefront records without deleting their product, inventory, or audit history.
+- Verified the live catalog, category filters, search, product details, imagery, cart update, and checkout entry on desktop and mobile.
+
 ## 2026-08-14 — Sprint 21 Supplier Payable Accounting
 
 - Added immutable accepted-receipt payable events and balanced Debit Inventory / Credit Accounts Payable journals using the valuation layer's authoritative net accepted value.
