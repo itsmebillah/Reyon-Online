@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-14 — Sprint 21 Supplier Payable Accounting
+
+- Added immutable accepted-receipt payable events and balanced Debit Inventory / Credit Accounts Payable journals using the valuation layer's authoritative net accepted value.
+- Added separate current-WAC purchase-return supplier credits without rewriting original receipt, valuation, payable, PO, return, or inventory history.
+- Added source-event idempotency, configuration/mapping exceptions, derived supplier accounting balances, private Admin visibility, and Finance-controlled Accounts Payable mapping.
+- Kept supplier payment settlement accounting, refunds, expenses, reconciliation, period close, reports, and all niche-specific behavior out of scope.
+
 ## 2026-08-14 — Weighted-average inventory valuation and COGS
 
 - Added an immutable valuation event history linked one-to-one with physical inventory movement lines and a rebuildable WAC position projection.

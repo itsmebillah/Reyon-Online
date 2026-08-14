@@ -3,6 +3,7 @@ import {
   getAccountingFoundation,
   getCogsPostingStatus,
   getCompletedSaleJournals,
+  getSupplierPayableAccounting,
 } from "@/features/accounting/data/accounting-foundation";
 import {
   ActivationForm,
@@ -21,10 +22,11 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function AccountsPage() {
-  const [data, journals, cogs] = await Promise.all([
+  const [data, journals, cogs, payables] = await Promise.all([
     getAccountingFoundation(),
     getCompletedSaleJournals(),
     getCogsPostingStatus(),
+    getSupplierPayableAccounting(),
   ]);
   return (
     <section
@@ -154,12 +156,13 @@ export default async function AccountsPage() {
       <details className="brand-editor" open={!data.profile.postingEnabled}>
         <summary>
           <strong>6. Completed-sale posting mappings</strong>
-          <span>{data.postingMappings.length}/5 mapped</span>
+          <span>{data.postingMappings.length}/6 mapped</span>
         </summary>
         <p>
           Product Sales and Delivery Revenue require approved revenue accounts.
           Sales Discounts requires contra-revenue; Inventory requires an asset;
-          Cost of Sales requires a COGS account. Names are never inferred.
+          Cost of Sales requires a COGS account; Accounts Payable requires a
+          liability. Names are never inferred.
         </p>
         {data.postingMappings.map((mapping) => (
           <p key={mapping.purpose}>
@@ -256,6 +259,56 @@ export default async function AccountsPage() {
         {!cogs.postings.length && !cogs.exceptions.length && (
           <p className="admin-empty">No COGS posting activity is available.</p>
         )}
+      </section>
+
+      <section
+        className="brand-management-list"
+        aria-labelledby="supplier-payable-title"
+      >
+        <div className="brand-list-heading">
+          <h2 id="supplier-payable-title">Supplier payable accounting</h2>
+          <span>{payables.events.length} events</span>
+        </div>
+        {payables.balances.map((balance) => (
+          <article className="brand-editor" key={balance.supplierId}>
+            <strong>{balance.supplierName}</strong>
+            <p>
+              Accounting outstanding BDT{" "}
+              {Number(balance.outstandingAmount).toFixed(2)}
+            </p>
+          </article>
+        ))}
+        {payables.events.map((event) => (
+          <article
+            className="brand-editor"
+            key={`${event.eventType}-${event.sourceReference}`}
+          >
+            <strong>
+              {event.journalReference} · {event.supplierName}
+            </strong>
+            <p>
+              {event.eventType} · BDT {Number(event.amount).toFixed(2)} · PO{" "}
+              {event.poReference} · Receipt {event.receiptReference ?? "—"} ·
+              Return {event.returnReference ?? "—"}
+            </p>
+          </article>
+        ))}
+        {payables.exceptions.map((exception) => (
+          <article
+            className="brand-editor"
+            key={`${exception.sourceNamespace}-${exception.sourceReference}-${exception.key}`}
+          >
+            <strong>Blocked · {exception.key}</strong>
+            <p>{exception.detail}</p>
+          </article>
+        ))}
+        {!payables.events.length &&
+          !payables.balances.length &&
+          !payables.exceptions.length && (
+            <p className="admin-empty">
+              No supplier payable accounting activity is available.
+            </p>
+          )}
       </section>
 
       <section

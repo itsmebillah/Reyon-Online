@@ -400,6 +400,17 @@ test("authenticated Finance workspace exposes real posting configuration and jou
   await expect(
     page.getByRole("heading", { name: "COGS posting status" }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Supplier payable accounting" }),
+  ).toBeVisible();
+  await page.goto("/admin/purchases/payments");
+  await expect(page.getByText("Something needs attention")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "Supplier Payments" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Supplier payables" }),
+  ).toBeVisible();
 });
 
 test("delivery partner validation remains on the form", async ({ page }) => {

@@ -109,6 +109,32 @@ export type CogsPostingStatus = Readonly<{
     occurredAt: string;
   }>[];
 }>;
+export type SupplierPayableAccounting = Readonly<{
+  events: readonly Readonly<{
+    eventType: "payable-created" | "supplier-credit";
+    amount: number;
+    signedAmount: number;
+    postedAt: string;
+    supplierName: string;
+    poReference: string;
+    receiptReference: string | null;
+    returnReference: string | null;
+    journalReference: string;
+    sourceReference: string;
+  }>[];
+  balances: readonly Readonly<{
+    supplierId: string;
+    supplierName: string;
+    outstandingAmount: number;
+  }>[];
+  exceptions: readonly Readonly<{
+    sourceNamespace: string;
+    sourceReference: string;
+    key: string;
+    detail: string;
+    occurredAt: string;
+  }>[];
+}>;
 export async function getAccountingFoundation() {
   const db = await createSupabaseServerClient();
   const [{ data, error }, { data: mappings, error: mappingError }] =
@@ -137,4 +163,12 @@ export async function getCogsPostingStatus() {
   const { data, error } = await db.rpc("admin_cogs_postings");
   if (error || !data) throw new Error("Unable to load COGS posting status.");
   return data as CogsPostingStatus;
+}
+
+export async function getSupplierPayableAccounting() {
+  const db = await createSupabaseServerClient();
+  const { data, error } = await db.rpc("admin_supplier_payable_accounting");
+  if (error || !data)
+    throw new Error("Unable to load supplier payable accounting status.");
+  return data as SupplierPayableAccounting;
 }

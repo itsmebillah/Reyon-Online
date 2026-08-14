@@ -415,6 +415,7 @@ export function PostingMappingForm({
           <option value="sales-discounts">Sales Discounts</option>
           <option value="inventory">Inventory</option>
           <option value="cost-of-sales">Cost of Sales</option>
+          <option value="accounts-payable">Accounts Payable</option>
         </select>
       </label>
       <label>
