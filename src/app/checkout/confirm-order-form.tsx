@@ -23,8 +23,8 @@ export function ConfirmOrderForm() {
         {pending ? "Confirming…" : "Confirm order"}
       </button>
       <p>
-        Your customer profile will be created or associated when the order is
-        placed. Contact verification is not required in this release.
+        Please check your address and total. By confirming, you agree to the
+        shopping terms and acknowledge the privacy notice.
       </p>
     </form>
   );

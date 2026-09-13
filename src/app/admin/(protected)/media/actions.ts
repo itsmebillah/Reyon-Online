@@ -2,6 +2,7 @@
 
 import { randomUUID } from "node:crypto";
 import sharp from "sharp";
+import { requireReyonAdmin } from "@/features/access/data/admin-access";
 import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -29,13 +30,14 @@ const refresh = (slug?: string) => {
 };
 
 async function validatedImage(form: FormData) {
+  await requireReyonAdmin();
   if (form.get("licensingConfirmed") !== "on")
     throw new Error("Confirm that REYON is licensed to use this image.");
   const file = form.get("image");
   if (!(file instanceof File) || file.size === 0)
     throw new Error("Choose an image to upload.");
-  if (file.size > 5 * 1024 * 1024)
-    throw new Error("Use an image no larger than 5 MB.");
+  if (file.size > 3 * 1024 * 1024)
+    throw new Error("Use an image no larger than 3 MB.");
   if (!approvedMime.includes(file.type as (typeof approvedMime)[number]))
     throw new Error("Use a JPG, PNG, or WebP image.");
   const buffer = Buffer.from(await file.arrayBuffer());
@@ -87,13 +89,13 @@ export async function uploadMediaAsset(form: FormData) {
 async function removeIfUnreferenced(objectPath: string | null) {
   if (!objectPath) return;
   const supabase = await createSupabaseServerClient();
-  const { data: referenced } = await supabase.rpc(
+  const { data: referenced, error } = await supabase.rpc(
     "admin_media_object_is_referenced",
     {
       p_object_path: objectPath,
     },
   );
-  if (!referenced)
+  if (!error && referenced === false)
     await supabase.storage.from("product-media").remove([objectPath]);
 }
 

@@ -1,4 +1,5 @@
 "use server";
+import { normalizeBangladeshPhone, districts } from "@/lib/bangladesh";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -47,36 +48,29 @@ export async function saveCheckoutAddress(
 ): Promise<AddressState> {
   const token = (await cookies()).get("reyon_cart")?.value;
   if (!token) return { error: "Your active bag could not be found." };
-  const required: readonly (keyof CheckoutAddress)[] = [
-    "fullName",
-    "phone",
-    "houseNo",
-    "road",
-    "villageCity",
-    "thanaUpazila",
-    "district",
-    "division",
-  ];
-  const fieldErrors: Partial<Record<keyof CheckoutAddress, string>> =
-    Object.fromEntries(
-      required
-        .filter((key) => !value(form, key))
-        .map((key) => [key, "This field is required."]),
-    );
-  if (Object.keys(fieldErrors).length)
-    return { error: "Complete the highlighted address fields.", fieldErrors };
+  const phone = normalizeBangladeshPhone(value(form, "phone"));
+  if (!phone)
+    return {
+      error: "Enter a Bangladesh mobile number, e.g. 01712345678.",
+      fieldErrors: { phone: "Use a valid Bangladesh mobile number." },
+    };
+  if (!districts.some((d) => d === value(form, "district")))
+    return { error: "Select your district." };
+  if (
+    !value(form, "fullName") ||
+    !value(form, "houseNo") ||
+    !value(form, "thanaUpazila")
+  )
+    return { error: "Complete your name, area and delivery address." };
   const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.rpc("checkout_save_address", {
+  const { error } = await supabase.rpc("checkout_save_watch_address", {
     p_access_token: token,
-    p_full_name: value(form, "fullName"),
-    p_phone: value(form, "phone"),
-    p_flat_no: value(form, "flatNo") || null,
-    p_house_no: value(form, "houseNo"),
-    p_road: value(form, "road"),
-    p_village_city: value(form, "villageCity"),
-    p_thana_upazila: value(form, "thanaUpazila"),
+    p_name: value(form, "fullName"),
+    p_phone: phone,
     p_district: value(form, "district"),
-    p_division: value(form, "division"),
+    p_area: value(form, "thanaUpazila"),
+    p_address: value(form, "houseNo"),
+    p_notes: value(form, "notes"),
   });
   if (error)
     return {

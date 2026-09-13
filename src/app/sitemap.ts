@@ -1,21 +1,26 @@
 import type { MetadataRoute } from "next";
-import { catalogRepository } from "@/features/catalog";
+import { businessConfig } from "@/config/business";
+import { catalogRpc } from "@/features/catalog/data/in-memory-catalog-repository";
+export const dynamic = "force-dynamic";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const products = await catalogRepository.listProducts();
-  const base = "https://reyon-online.vercel.app";
-  const routes = ["", "/shop", "/categories", "/about", "/contact"];
+  const products =
+    await catalogRpc<{ slug: string; updatedAt: string }[]>("watch_sitemap");
+  const base = businessConfig.productionUrl;
   return [
-    ...routes.map((route) => ({
-      url: `${base}${route}`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: route === "" ? 1 : 0.7,
-    })),
+    ...[
+      "",
+      "/shop",
+      "/categories",
+      "/about",
+      "/contact",
+      "/shipping",
+      "/returns",
+      "/privacy",
+      "/terms",
+    ].map((r) => ({ url: base + r })),
     ...products.map((p) => ({
-      url: `${base}/products/${p.slug}`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.8,
+      url: base + "/products/" + p.slug,
+      lastModified: new Date(p.updatedAt),
     })),
   ];
 }

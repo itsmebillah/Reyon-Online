@@ -1,5 +1,12 @@
 import { expect, test, type Page } from "@playwright/test";
 
+test.beforeEach(() => {
+  test.skip(
+    process.env.REYON_LEGACY_OPERATIONS_E2E !== "true",
+    "Opt-in legacy operational suite requires a dedicated seeded Supabase project.",
+  );
+});
+
 function monitor(page: Page) {
   const failures: string[] = [];
   page.on("console", (message) => {

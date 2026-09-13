@@ -1,4 +1,6 @@
 "use server";
+import { normalizeBangladeshPhone } from "@/lib/bangladesh";
+import { cookies } from "next/headers";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 export type CancellationState = { success?: string; error?: string };
 export type SalesDocumentState = {
@@ -60,8 +62,11 @@ export async function findReturnEligibility(
 ): Promise<ReturnEligibilityState> {
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.rpc("customer_return_eligible_lines", {
+    p_access_token: (await cookies()).get("reyon_last_order")?.value ?? null,
     p_order_reference: String(form.get("orderReference") ?? ""),
-    p_phone: String(form.get("phone") ?? ""),
+    p_phone:
+      normalizeBangladeshPhone(String(form.get("phone") ?? "")) ??
+      String(form.get("phone") ?? ""),
   });
   if (error || !data)
     return { error: "No return-eligible order matched those details." };
@@ -74,8 +79,11 @@ export async function submitReturnRequest(
 ): Promise<CancellationState> {
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.rpc("customer_request_return", {
+    p_access_token: (await cookies()).get("reyon_last_order")?.value ?? null,
     p_order_reference: String(form.get("orderReference") ?? ""),
-    p_phone: String(form.get("phone") ?? ""),
+    p_phone:
+      normalizeBangladeshPhone(String(form.get("phone") ?? "")) ??
+      String(form.get("phone") ?? ""),
     p_order_line_id: String(form.get("orderLineId") ?? ""),
     p_quantity: Number(form.get("quantity")),
     p_reason: String(form.get("reason") ?? ""),
@@ -85,7 +93,10 @@ export async function submitReturnRequest(
     p_video_reference: String(form.get("videoReference") ?? "").trim() || null,
   });
   return error
-    ? { error: error.message }
+    ? {
+        error:
+          "Unable to complete this request. Use the browser where you placed the order, or contact REYON.",
+      }
     : { success: "Return request submitted for REYON review." };
 }
 
@@ -95,8 +106,11 @@ export async function findDeliveryStatus(
 ): Promise<DeliveryStatusState> {
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.rpc("customer_delivery_status", {
+    p_access_token: (await cookies()).get("reyon_last_order")?.value ?? null,
     p_order_reference: String(form.get("orderReference") ?? ""),
-    p_phone: String(form.get("phone") ?? ""),
+    p_phone:
+      normalizeBangladeshPhone(String(form.get("phone") ?? "")) ??
+      String(form.get("phone") ?? ""),
   });
   if (error || !data)
     return { error: "No delivery matched those order details." };
@@ -109,8 +123,11 @@ export async function findSalesDocuments(
 ): Promise<SalesDocumentState> {
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.rpc("customer_sales_documents", {
+    p_access_token: (await cookies()).get("reyon_last_order")?.value ?? null,
     p_order_reference: String(form.get("orderReference") ?? ""),
-    p_phone: String(form.get("phone") ?? ""),
+    p_phone:
+      normalizeBangladeshPhone(String(form.get("phone") ?? "")) ??
+      String(form.get("phone") ?? ""),
   });
   if (error || !data)
     return { error: "No completed-sale invoice matched those details." };
@@ -122,12 +139,18 @@ export async function requestCancellation(
 ): Promise<CancellationState> {
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.rpc("request_order_cancellation", {
+    p_access_token: (await cookies()).get("reyon_last_order")?.value ?? null,
     p_order_reference: String(form.get("orderReference") ?? ""),
-    p_phone: String(form.get("phone") ?? ""),
+    p_phone:
+      normalizeBangladeshPhone(String(form.get("phone") ?? "")) ??
+      String(form.get("phone") ?? ""),
     p_reason: String(form.get("reason") ?? ""),
   });
   return error
-    ? { error: error.message }
+    ? {
+        error:
+          "Unable to complete this request. Use the browser where you placed the order, or contact REYON.",
+      }
     : { success: "Cancellation request received for administrator review." };
 }
 export async function resubmitPayment(
@@ -136,12 +159,18 @@ export async function resubmitPayment(
 ): Promise<CancellationState> {
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.rpc("resubmit_manual_payment_evidence", {
+    p_access_token: (await cookies()).get("reyon_last_order")?.value ?? null,
     p_order_reference: String(form.get("orderReference") ?? ""),
-    p_phone: String(form.get("phone") ?? ""),
+    p_phone:
+      normalizeBangladeshPhone(String(form.get("phone") ?? "")) ??
+      String(form.get("phone") ?? ""),
     p_reference: String(form.get("transactionReference") ?? ""),
   });
   return error
-    ? { error: error.message }
+    ? {
+        error:
+          "Unable to complete this request. Use the browser where you placed the order, or contact REYON.",
+      }
     : { success: "Corrected payment evidence submitted for review." };
 }
 export async function requestOrderChange(
@@ -150,12 +179,18 @@ export async function requestOrderChange(
 ): Promise<CancellationState> {
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.rpc("request_order_change", {
+    p_access_token: (await cookies()).get("reyon_last_order")?.value ?? null,
     p_order_reference: String(form.get("orderReference") ?? ""),
-    p_phone: String(form.get("phone") ?? ""),
+    p_phone:
+      normalizeBangladeshPhone(String(form.get("phone") ?? "")) ??
+      String(form.get("phone") ?? ""),
     p_request: String(form.get("request") ?? ""),
   });
   return error
-    ? { error: error.message }
+    ? {
+        error:
+          "Unable to complete this request. Use the browser where you placed the order, or contact REYON.",
+      }
     : {
         success:
           data === "return-refund"

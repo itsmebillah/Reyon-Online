@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getOrderDetail } from "@/features/orders/data/order-management";
 import { TransitionForm } from "../transition-form";
 import { DiscountForm } from "../discount-form";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 const label = (value: string) =>
   value
@@ -32,6 +33,12 @@ export default async function OrderDetailPage({
   } catch {
     notFound();
   }
+  const supabase = await createSupabaseServerClient();
+  const { data: evidence, error: evidenceError } = await supabase.rpc(
+    "admin_watch_order_evidence",
+    { p_order_id: id },
+  );
+  if (evidenceError) throw new Error("Unable to load watch order details.");
   return (
     <section className="admin-dashboard catalog-admin">
       <header>
@@ -52,6 +59,11 @@ export default async function OrderDetailPage({
             {order.address.division}
           </p>
           <p>{order.delivery.zone_name_snapshot}</p>
+          {evidence?.deliveryNote && (
+            <p>
+              <strong>Delivery note:</strong> {evidence.deliveryNote}
+            </p>
+          )}
         </article>
         <article className="admin-module-card">
           <span>Payment</span>

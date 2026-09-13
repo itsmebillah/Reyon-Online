@@ -21,8 +21,8 @@ export default async function CheckoutSuccessPage() {
   const order = await getCheckoutOrderSuccess();
   if (!order) redirect("/cart");
   const address = [
-    order.address.flatNo ? `Flat ${order.address.flatNo}` : null,
-    `House ${order.address.houseNo}`,
+    order.address.flatNo ? `Note: ${order.address.flatNo}` : null,
+    order.address.houseNo,
     order.address.road,
     order.address.villageCity,
     order.address.thanaUpazila,

@@ -10,24 +10,24 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { PaymentMethods, type PaymentMethod } from "./payment-methods";
 import { getCheckoutAddress } from "./actions";
 import { getCheckoutOrderState } from "./actions";
-import { DeliveryZoneForm, type DeliveryZone } from "./delivery-zone-form";
 import { ConfirmOrderForm } from "./confirm-order-form";
 
-export const metadata: Metadata = { title: "Checkout" };
+export const metadata: Metadata = {
+  title: "Checkout",
+  robots: { index: false, follow: false },
+  alternates: { canonical: "/checkout" },
+};
 export const dynamic = "force-dynamic";
 
 export default async function CheckoutPage() {
   const cart = await getCartSummary();
   const supabase = await createSupabaseServerClient();
-  const [{ data: paymentData }, { data: zoneData }, address, orderState] =
-    await Promise.all([
-      supabase.rpc("checkout_payment_methods"),
-      supabase.rpc("delivery_zones"),
-      getCheckoutAddress(),
-      getCheckoutOrderState(),
-    ]);
+  const [{ data: paymentData }, address, orderState] = await Promise.all([
+    supabase.rpc("checkout_payment_methods"),
+    getCheckoutAddress(),
+    getCheckoutOrderState(),
+  ]);
   const paymentMethods = (paymentData ?? []) as PaymentMethod[];
-  const deliveryZones = (zoneData ?? []) as DeliveryZone[];
   if (orderState?.existingOrderId) redirect("/checkout/success");
   if (!cart.items.length) redirect("/cart");
   const valid = cart.items.every((item) => item.isAvailable);
@@ -50,7 +50,6 @@ export default async function CheckoutPage() {
                 alt={item.imageAlt}
                 width={76}
                 height={92}
-                unoptimized={item.imageUrl.startsWith("http")}
               />
               <div>
                 <strong>{item.name}</strong>
@@ -76,10 +75,22 @@ export default async function CheckoutPage() {
           </Link>
           <AddressForm address={address} />
           {address ? (
-            <DeliveryZoneForm
-              zones={deliveryZones}
-              selectedId={orderState?.deliveryZoneId ?? null}
-            />
+            <section id="delivery-zone">
+              <h2>Delivery</h2>
+              <p>
+                {orderState?.deliveryZoneName
+                  ? orderState.deliveryZoneName +
+                    " — " +
+                    formatMoney({
+                      amount: Number(orderState.deliveryCharge),
+                      currency: "BDT",
+                    })
+                  : "Delivery is not currently configured for this district. Please contact REYON before ordering."}
+              </p>
+              <p className="muted">
+                Delivery options are matched to your saved district.
+              </p>
+            </section>
           ) : (
             <p className="checkout-step-notice">
               Save your delivery address to continue to delivery.

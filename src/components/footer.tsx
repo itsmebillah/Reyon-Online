@@ -2,63 +2,48 @@ import Link from "next/link";
 import { businessConfig } from "@/config/business";
 import { Container } from "./ui";
 import { ReyonLogo } from "./reyon-logo";
-
 export function Footer() {
   return (
     <footer className="footer">
       <Container>
         <div className="footer-grid">
           <div className="footer-brand">
-            <Link
-              className="brand-logo brand-logo--footer"
-              href="/"
-              aria-label="REYON home"
-            >
+            <Link href="/" aria-label="REYON home">
               <ReyonLogo />
             </Link>
-            <p>{businessConfig.positioning}</p>
+            <p>
+              Time, on your terms.
+              <br />
+              Watches for Bangladesh.
+            </p>
           </div>
           <div className="footer-group">
             <h2>Explore</h2>
-            <Link href="/shop">Shop all</Link>
-            <Link href="/categories">Categories</Link>
-            <Link href="/about">Our story</Link>
+            <Link href="/shop">All watches</Link>
+            <Link href="/shop?gender=men">Men’s watches</Link>
+            <Link href="/shop?gender=women">Women’s watches</Link>
+            <Link href="/shop?offers=true">Offers</Link>
           </div>
           <div className="footer-group">
-            <h2>Care</h2>
-            <Link href="/contact">Contact</Link>
+            <h2>Customer care</h2>
+            <Link href="/account">My orders</Link>
             <Link href="/shipping">Delivery</Link>
-            <Link href="/returns">Returns</Link>
-            <Link href="/privacy">Privacy policy</Link>
+            <Link href="/returns">Returns & warranty</Link>
+            <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
           </div>
           <div className="footer-group">
-            <h2>Connect</h2>
-            <a href={businessConfig.contact.facebookUrl}>Facebook</a>
-            <a href={businessConfig.contact.instagramUrl}>Instagram</a>
-            <a href={businessConfig.contact.whatsappUrl}>WhatsApp</a>
-          </div>
-          <div className="footer-group footer-newsletter">
-            <h2>Stay close</h2>
-            <p>New rituals and considered edits, delivered occasionally.</p>
-            <form className="newsletter">
-              <label className="sr-only" htmlFor="footer-email">
-                Email address
-              </label>
-              <input
-                id="footer-email"
-                type="email"
-                placeholder="Email address"
-                required
-              />
-              <button type="submit">Join</button>
-            </form>
+            <h2>Let’s talk watches</h2>
+            <p>Questions about a watch or an order?</p>
+            <a href={businessConfig.contact.whatsappUrl}>WhatsApp ↗</a>
+            <a href={"mailto:" + businessConfig.contact.email}>Email REYON ↗</a>
+            <Link href="/about">About us</Link>
+            <Link href="/contact">Contact</Link>
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© 2026 REYON</span>
-          <span>Dhaka, Bangladesh</span>
-          <span>Reyon Online</span>
+          <span>© {new Date().getFullYear()} REYON · Reyon Online</span>
+          <span>Bangladesh · Prices in BDT / ৳</span>
         </div>
       </Container>
     </footer>

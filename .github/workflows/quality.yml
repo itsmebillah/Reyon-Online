@@ -60,9 +60,6 @@ jobs:
       - name: Install bundled Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Build application
-        run: npm run build
-
       - name: Run isolated browser tests
         run: npm run test:e2e
         env:

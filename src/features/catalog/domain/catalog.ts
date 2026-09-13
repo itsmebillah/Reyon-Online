@@ -19,12 +19,24 @@ export type Money = Readonly<{
 }>;
 
 export type CatalogProduct = Readonly<{
+  specifications?: import("./watch").WatchSpecifications;
+  gallery?: readonly Readonly<{ src: string; alt: string }>[];
+  variants?: readonly Readonly<{
+    id: string;
+    label: string;
+    sku: string;
+    price: number;
+    compareAtPrice?: number;
+    available: number;
+  }>[];
+  publishedAt?: string;
   id: CatalogId;
   slug: string;
   brand: CatalogBrand;
   name: string;
   category: CatalogCategory;
   variant: Readonly<{
+    id?: string;
     label: string;
     sku: string;
   }>;
@@ -47,10 +59,21 @@ export type CatalogProduct = Readonly<{
   }>;
 }>;
 
-export type CatalogSort = "featured" | "newest" | "price-asc";
+export type CatalogSort =
+  "featured" | "newest" | "price-asc" | "price-desc" | "bestsellers";
 
 export type CatalogQuery = Readonly<{
   category?: string;
   search?: string;
   sort?: CatalogSort;
+  brand?: string;
+  gender?: string;
+  movement?: string;
+  strap?: string;
+  min?: number;
+  max?: number;
+  available?: boolean;
+  offers?: boolean;
+  page?: number;
+  limit?: number;
 }>;

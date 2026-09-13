@@ -1,4 +1,5 @@
 "use client";
+import { watchFields } from "@/features/catalog/domain/watch";
 import { useActionState, useState } from "react";
 import Image from "next/image";
 import type { MediaLibraryAsset } from "@/features/catalog/data/product-media-management";
@@ -66,7 +67,7 @@ export function ProductForm({
               name="countryCode"
               maxLength={2}
               pattern="[A-Za-z]{2}"
-              placeholder="KR"
+              placeholder="JP"
             />
           </label>
           <label>
@@ -76,17 +77,13 @@ export function ProductForm({
         </div>
       </fieldset>
       <fieldset>
-        <legend>First sellable variant</legend>
+        <legend>Watch variant / SKU</legend>
         <div className="form-grid">
           <label>
             Variant type
-            <select name="variantType" defaultValue="size">
+            <select name="variantType" defaultValue="color">
               <option value="size">Size</option>
-              <option value="volume">Volume</option>
               <option value="color">Color</option>
-              <option value="shade">Shade</option>
-              <option value="weight">Weight</option>
-              <option value="pack-size">Pack size</option>
             </select>
           </label>
           <label>
@@ -154,7 +151,7 @@ export function ProductForm({
               <label>
                 Image{" "}
                 <span>
-                  JPG, PNG or WebP · 5 MB maximum · at least 800 × 800 px
+                  JPG, PNG or WebP · 3 MB maximum · at least 800 × 800 px
                 </span>
                 <input
                   name="image"
@@ -174,6 +171,37 @@ export function ProductForm({
                   }}
                 />
               </label>
+              <fieldset>
+                <legend>Watch specifications</legend>
+                <div className="form-grid">
+                  {Object.entries(watchFields).map(([key, label]) => (
+                    <label key={key}>
+                      {label}
+                      {key === "gender" ? (
+                        <select name={key} required defaultValue="unisex">
+                          <option value="men">Men</option>
+                          <option value="women">Women</option>
+                          <option value="unisex">Unisex</option>
+                        </select>
+                      ) : (
+                        <input
+                          name={key}
+                          required={key === "model"}
+                          maxLength={key === "warranty" ? 1000 : 200}
+                        />
+                      )}
+                    </label>
+                  ))}
+                </div>
+                <label>
+                  Description
+                  <textarea name="description" maxLength={10000} rows={4} />
+                </label>
+                <p>
+                  Enter verified specifications only. Do not infer warranty or
+                  water resistance.
+                </p>
+              </fieldset>
               <label className="publish-choice">
                 <input name="licensingConfirmed" type="checkbox" required />
                 <span>

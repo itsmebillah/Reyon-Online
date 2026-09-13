@@ -1,11 +1,8 @@
 "use client";
-
-import { Heart, ShoppingBag, X } from "lucide-react";
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { addCartItem } from "@/features/cart/actions";
-import type { CatalogProduct } from "@/features/catalog";
-import { Button } from "./ui";
-
+import { formatMoney, type CatalogProduct } from "@/features/catalog";
 export function ProductActions({
   product,
   compact = false,
@@ -13,105 +10,103 @@ export function ProductActions({
   product: CatalogProduct;
   compact?: boolean;
 }) {
-  const [saved, setSaved] = useState(false);
+  const variants = product.variants ?? [];
+  const [id, setId] = useState(variants[0]?.id ?? product.variant.id ?? "");
+  const selected = variants.find((v) => v.id === id);
   const [message, setMessage] = useState("");
-  const [quickView, setQuickView] = useState(false);
-  const isOutOfStock = product.offer.availabilityLabel === "Out of stock";
-  const [adding, startAdding] = useTransition();
-  const addToCart = () =>
-    startAdding(async () => {
-      const result = await addCartItem(product.id);
-      notify(result.error ?? result.success ?? "");
-      if (!result.error)
-        window.dispatchEvent(
-          new CustomEvent("reyon:cart-updated", { detail: result.count }),
-        );
+  const [pending, start] = useTransition();
+  const router = useRouter();
+  const unavailable = selected
+    ? selected.available < 1
+    : product.offer.availabilityLabel === "Out of stock";
+  const add = (buy = false) =>
+    start(async () => {
+      try {
+        const result = await addCartItem(product.id, id);
+        setMessage(result.error ?? result.success ?? "");
+        if (!result.error) {
+          window.dispatchEvent(
+            new CustomEvent("reyon:cart-updated", { detail: result.count }),
+          );
+          if (buy) router.push("/checkout");
+        }
+      } catch {
+        setMessage("Unable to update your bag. Please try again.");
+      }
     });
-  const notify = (text: string) => {
-    setMessage(text);
-    window.setTimeout(() => setMessage(""), 2200);
-  };
   return (
-    <>
-      <div className="product-actions">
-        <button
-          className={`icon-button ${saved ? "is-active" : ""}`}
-          aria-label={
-            saved
-              ? `Remove ${product.name} from wishlist`
-              : `Save ${product.name} to wishlist`
-          }
-          aria-pressed={saved}
-          onClick={() => {
-            setSaved(!saved);
-            notify(
-              saved ? "Removed from your wishlist" : "Saved to your wishlist",
-            );
-          }}
-        >
-          <Heart size={18} fill={saved ? "currentColor" : "none"} />
-        </button>
-        <button className="quick-view" onClick={() => setQuickView(true)}>
-          Quick view
-        </button>
-        <Button
-          className="add-button"
-          disabled={isOutOfStock || adding}
-          onClick={addToCart}
-        >
-          <ShoppingBag size={17} />
-          {isOutOfStock
-            ? "Out of stock"
-            : adding
-              ? "Adding…"
-              : compact
-                ? "Add"
-                : "Add to bag"}
-        </Button>
-      </div>
-      {message && (
-        <div className="toast" role="status">
-          {message}
-        </div>
+    <div className="watch-purchase">
+      {!compact && (
+        <>
+          <label>
+            Choose your watch
+            <select
+              aria-label="Watch variant"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+            >
+              {variants.map((v) => (
+                <option value={v.id} key={v.id}>
+                  {v.label}
+                  {v.available < 1 ? " — out of stock" : ""}
+                </option>
+              ))}
+            </select>
+          </label>
+          {selected && (
+            <>
+              <p className="price price--large">
+                {formatMoney({ amount: selected.price, currency: "BDT" })}{" "}
+                {selected.compareAtPrice &&
+                selected.compareAtPrice > selected.price ? (
+                  <del>
+                    {formatMoney({
+                      amount: selected.compareAtPrice,
+                      currency: "BDT",
+                    })}
+                  </del>
+                ) : null}
+              </p>
+              <p className="stock-label">
+                {selected.available > 0 ? "In stock" : "Out of stock"} · SKU{" "}
+                {selected.sku}
+              </p>
+            </>
+          )}
+        </>
       )}
-      {quickView && (
-        <div
-          className="modal-backdrop"
-          role="presentation"
-          onMouseDown={() => setQuickView(false)}
+      {compact && variants.length > 1 ? (
+        <a
+          className="button button--secondary"
+          href={"/products/" + product.slug}
         >
-          <div
-            className="quick-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="quick-title"
-            onMouseDown={(event) => event.stopPropagation()}
+          Choose options ↗
+        </a>
+      ) : (
+        <div className="button-row">
+          <button
+            className="button button--primary"
+            disabled={pending || unavailable || !id}
+            onClick={() => add()}
           >
+            {pending ? "Adding…" : unavailable ? "Out of stock" : "Add to cart"}
+          </button>
+          {!compact && (
             <button
-              className="modal-close"
-              aria-label="Close quick view"
-              onClick={() => setQuickView(false)}
+              className="button button--secondary"
+              disabled={pending || unavailable || !id}
+              onClick={() => add(true)}
             >
-              <X />
+              Buy now
             </button>
-            <p className="eyebrow">{product.brand.name}</p>
-            <h2 id="quick-title">{product.name}</h2>
-            <p>{product.content.summary}</p>
-            <p className="muted">
-              {product.variant.label} · {product.offer.availabilityLabel}
-            </p>
-            <Button
-              disabled={isOutOfStock}
-              onClick={() => {
-                addToCart();
-                setQuickView(false);
-              }}
-            >
-              {isOutOfStock ? "Out of stock" : "Add to bag"}
-            </Button>
-          </div>
+          )}
         </div>
       )}
-    </>
+      {message && (
+        <p role="status" className="purchase-feedback">
+          {message}
+        </p>
+      )}
+    </div>
   );
 }

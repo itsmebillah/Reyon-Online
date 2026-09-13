@@ -1,7 +1,6 @@
 "use client";
-import { useActionState, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { savePaymentSelection } from "./actions";
+import { useActionState, useState } from "react";
+import { savePaymentSelection, type AddressState } from "./actions";
 export type PaymentMethod = {
   id: string;
   method_key: string;
@@ -16,134 +15,67 @@ export function PaymentMethods({
   selectedId,
 }: {
   methods: readonly PaymentMethod[];
-  selectedId: string | null;
+  selectedId?: string | null;
 }) {
-  const [selected, setSelected] = useState(selectedId ?? "");
-  const [reviewing, setReviewing] = useState(Boolean(selectedId));
-  const [state, action, pending] = useActionState(savePaymentSelection, {});
-  const router = useRouter();
-  const method = methods.find((item) => item.id === selected);
-  useEffect(() => {
-    if (state.success) router.refresh();
-  }, [router, state.success]);
+  const available = methods
+    .filter((m) => m.is_selectable && m.method_kind !== "card")
+    .toSorted(
+      (a, b) =>
+        Number(b.method_kind === "cod") - Number(a.method_kind === "cod"),
+    );
+  const [id, setId] = useState(selectedId ?? available[0]?.id ?? "");
+  const method = available.find((m) => m.id === id);
+  const [s, a, p] = useActionState<AddressState, FormData>(
+    savePaymentSelection,
+    {},
+  );
   return (
-    <form action={action} className="checkout-payment" id="payment-method">
-      {!reviewing ? (
+    <form action={a} id="payment-method" className="payment-methods">
+      <h2>Payment method</h2>
+      {available.length === 0 ? (
+        <p>No payment method is currently available. Contact REYON.</p>
+      ) : (
         <>
-          <h2>Payment method</h2>
-          <div>
-            {methods.map((item) => (
-              <label
-                className={!item.is_selectable ? "is-disabled" : undefined}
-                key={item.id}
-              >
+          <div className="payment-options">
+            {available.map((m) => (
+              <label key={m.id}>
                 <input
                   type="radio"
-                  name="paymentMethodChoice"
-                  value={item.id}
-                  disabled={!item.is_selectable}
-                  checked={selected === item.id}
-                  onChange={() => setSelected(item.id)}
+                  name="paymentMethod"
+                  value={m.id}
+                  checked={m.id === id}
+                  onChange={() => setId(m.id)}
                 />
-                <span>
-                  <strong>{item.name}</strong>
-                  <small>
-                    {item.method_kind === "card"
-                      ? "Manual follow-up; no card details are collected here"
-                      : item.method_kind === "cod"
-                        ? "Pay when your order is delivered"
-                        : item.is_selectable
-                          ? item.instructions
-                          : "Awaiting payment instructions"}
-                  </small>
-                </span>
+                {m.name}
               </label>
             ))}
           </div>
-          <button
-            type="button"
-            className="button button--secondary"
-            disabled={!selected}
-            onClick={() => {
-              setReviewing(true);
-              requestAnimationFrame(() =>
-                document
-                  .getElementById("payment-confirmation")
-                  ?.scrollIntoView({ behavior: "smooth", block: "start" }),
-              );
-            }}
-          >
-            Continue to payment
-          </button>
-        </>
-      ) : method ? (
-        <section
-          id="payment-confirmation"
-          className="payment-confirmation-step"
-        >
-          <input type="hidden" name="paymentMethod" value={method.id} />
-          <div className="checkout-step-heading">
-            <div>
-              <p className="eyebrow">Payment confirmation</p>
-              <h2>{method.name}</h2>
-            </div>
-            <button
-              type="button"
-              className="checkout-edit"
-              onClick={() => setReviewing(false)}
-            >
-              Change method
-            </button>
-          </div>
-          {method.method_kind === "mobile" ? (
+          {method?.method_kind === "mobile" ? (
             <>
               <p>{method.instructions}</p>
-              {method.account_reference && (
-                <p>
-                  Payment number: <strong>{method.account_reference}</strong>
-                </p>
-              )}
+              <p>Payment account: {method.account_reference}</p>
               <label>
                 Transaction / reference
-                <input name="transactionReference" required />
+                <input name="transactionReference" required maxLength={200} />
               </label>
-              <p className="field-help">
-                REYON will verify this evidence manually. Saving it does not
-                mark payment as verified.
+              <p>
+                Payment is manually reviewed. A submitted reference is not
+                payment confirmation.
               </p>
             </>
-          ) : method.method_kind === "card" ? (
-            <p className="field-help">
-              Card gateway processing is not active. No card number, PIN, CVV,
-              or payment success is collected or recorded here. REYON will
-              follow up manually.
-            </p>
           ) : (
-            <p className="field-help">
-              Cash on Delivery will remain payable until the order is delivered
-              and payment is recorded.
+            <p>
+              Pay the displayed total on delivery. Delivery charges are included
+              in the order total.
             </p>
           )}
-          {state.error && (
-            <p className="admin-form-error" role="alert">
-              {state.error}
-            </p>
-          )}
-          {state.success && (
-            <p className="admin-form-success" role="status">
-              {state.success}
-            </p>
-          )}
-          <button className="button button--secondary" disabled={pending}>
-            {pending ? "Saving…" : "Save and continue"}
+          <button className="button button--secondary" disabled={p || !method}>
+            {p ? "Saving…" : "Save payment method"}
           </button>
-        </section>
-      ) : (
-        <p className="admin-form-error" role="alert">
-          The selected payment method is no longer available. Choose another
-          method.
-        </p>
+        </>
       )}
+      {s.error && <p role="alert">{s.error}</p>}
+      {s.success && <p role="status">{s.success}</p>}
     </form>
   );
 }

@@ -1,12 +1,12 @@
 export const businessConfig = {
   brandName: "REYON",
   businessName: "Reyon Online",
-  industry: "Beauty & Care",
+  industry: "Watches",
   businessModel: "Multi-brand online retailer",
-  primaryPositioning: "Premium Beauty & Personal Care Retailer",
-  specialization: "Specializing in Authentic Korean Beauty",
+  primaryPositioning: "Watches for Bangladesh",
+  specialization: "Time, on your terms.",
   positioning:
-    "REYON is a premium multi-brand beauty and personal care retailer, specializing in authentic Korean beauty.",
+    "Watches for everyday moments and remarkable occasions. Explore REYON, your watch store in Bangladesh.",
   locale: "en-BD",
   productionUrl: "https://reyon-online.vercel.app",
   contact: {
@@ -17,12 +17,5 @@ export const businessConfig = {
     facebookUrl: "https://www.facebook.com/profile.php?id=100083040951242",
     instagramUrl: "https://www.instagram.com/reyononline.bd",
   },
-  categories: [
-    "Skin Care",
-    "Hair Care",
-    "Makeup",
-    "Perfume",
-    "Baby Care",
-    "Personal Care",
-  ],
+  categories: ["Classic & formal", "Everyday watches", "Sport & adventure"],
 } as const;

@@ -12,7 +12,7 @@ import { ReyonLogo } from "./reyon-logo";
 const links = [
   ["Shop", "/shop"],
   ["Categories", "/categories"],
-  ["New arrivals", "/shop?sort=new"],
+  ["New arrivals", "/shop?sort=newest"],
   ["About", "/about"],
   ["Contact", "/contact"],
 ] as const;
@@ -45,7 +45,7 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="announcement">
-        Complimentary delivery on orders over ৳3,500
+        Watches for Bangladesh · Cash on Delivery available
       </div>
       <Container className="nav-row">
         <button
@@ -77,14 +77,14 @@ export function Header() {
             href="/account"
             onClick={() => setOpen(false)}
           >
-            Sign in / Account
+            My orders
           </Link>
         </nav>
         <div className="nav-actions">
           <button aria-label="Search" onClick={() => setSearch(!search)}>
             <Search />
           </button>
-          <Link href="/account" aria-label="Sign in or open your account">
+          <Link href="/account" aria-label="Open your orders">
             <UserRound />
           </Link>
           <Link
@@ -108,7 +108,7 @@ export function Header() {
                 id="header-search"
                 name="q"
                 autoFocus
-                placeholder="Search skincare, fragrance and more"
+                placeholder="Search watches, brands or models"
               />
               <button type="submit">Search</button>
             </div>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { getProductOptions } from "@/features/catalog/data/product-management";
 import { ProductForm } from "./product-form";
@@ -62,7 +63,11 @@ export default async function ProductsPage({
         <h2>Create a product</h2>
         <ProductForm
           brands={data.brands}
-          categories={data.categories}
+          categories={data.categories.filter((c) =>
+            ["classic-watches", "casual-watches", "sports-watches"].includes(
+              c.slug,
+            ),
+          )}
           mediaAssets={mediaAssets}
         />
       </article>
@@ -107,7 +112,7 @@ export default async function ProductsPage({
           </select>
         </label>
         <button className="button button--primary">Apply</button>
-        <a href="/admin/products">Clear</a>
+        <Link href="/admin/products">Clear</Link>
       </form>
       <article className="admin-module-card">
         <span>Catalog</span>
@@ -120,6 +125,9 @@ export default async function ProductsPage({
                 <div key={product.id}>
                   <div>
                     <strong>{product.name}</strong>
+                    <Link href={"/admin/products/" + product.id}>
+                      Watch details & variants
+                    </Link>
                     <small>
                       {product.brand} · {product.category}
                     </small>

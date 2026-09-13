@@ -1,4 +1,6 @@
 "use server";
+import { watchFields } from "@/features/catalog/domain/watch";
+import { requireReyonAdmin } from "@/features/access/data/admin-access";
 import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { uploadMediaAsset } from "../media/actions";
@@ -34,11 +36,12 @@ export async function createProduct(
   _state: ProductActionState,
   form: FormData,
 ): Promise<ProductActionState> {
+  await requireReyonAdmin();
   const name = text(form, "name"),
     selling = money(form, "sellingPrice");
   if (!name || !text(form, "brandId") || !text(form, "categoryId"))
     return { error: "Product name, brand, and category are required." };
-  if (selling === null || selling < 0)
+  if (selling === null || !Number.isFinite(selling) || selling <= 0)
     return { error: "Enter a valid selling price." };
   let assetId = text(form, "assetId");
   try {
@@ -53,24 +56,30 @@ export async function createProduct(
   }
   const supabase = await createSupabaseServerClient();
   const publish = form.get("publish") === "on";
-  const { error } = await supabase.rpc("admin_create_product_with_asset", {
-    p_name: name,
-    p_slug: slugify(name),
-    p_brand_id: text(form, "brandId"),
-    p_category_id: text(form, "categoryId"),
-    p_variant_type: text(form, "variantType"),
-    p_variant_label: text(form, "variantLabel"),
-    p_sku: nullable(form, "sku"),
-    p_barcode: nullable(form, "barcode"),
-    p_purchase_price: money(form, "purchasePrice"),
-    p_selling_price: selling,
-    p_compare_at_price: money(form, "compareAtPrice"),
-    p_discount_price: money(form, "discountPrice"),
-    p_asset_id: assetId,
-    p_image_alt: nullable(form, "imageAlt"),
-    p_country_code: nullable(form, "countryCode"),
-    p_product_code: nullable(form, "productCode"),
-    p_publish: publish,
+  const { error } = await supabase.rpc("admin_create_watch", {
+    p_data: {
+      p_name: name,
+      p_slug: slugify(name),
+      p_brand_id: text(form, "brandId"),
+      p_category_id: text(form, "categoryId"),
+      p_variant_type: text(form, "variantType"),
+      p_variant_label: text(form, "variantLabel"),
+      p_sku: nullable(form, "sku"),
+      p_barcode: nullable(form, "barcode"),
+      p_purchase_price: money(form, "purchasePrice"),
+      p_selling_price: selling,
+      p_compare_at_price: money(form, "compareAtPrice"),
+      p_discount_price: money(form, "discountPrice"),
+      p_asset_id: assetId,
+      p_image_alt: nullable(form, "imageAlt"),
+      p_country_code: nullable(form, "countryCode"),
+      p_product_code: nullable(form, "productCode"),
+      p_publish: publish,
+      specifications: Object.fromEntries(
+        Object.keys(watchFields).map((k) => [k, text(form, k)]),
+      ),
+      description: text(form, "description"),
+    },
   });
   if (error) return { error: friendly(error.message) };
   refresh(slugify(name));

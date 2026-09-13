@@ -1,3 +1,8 @@
+export const metadata = {
+  title: "My orders",
+  robots: { index: false, follow: false },
+  alternates: { canonical: "/account" },
+};
 import { Container, EmptyState, LinkButton } from "@/components/ui";
 import { CancelOrderForm } from "./cancel-order-form";
 import { ResubmitPaymentForm } from "./resubmit-payment-form";
@@ -9,12 +14,12 @@ export default function Account() {
   return (
     <Container className="page">
       <EmptyState
-        title="Your REYON space"
-        body="Your customer profile is created securely when you place an order. OTP verification is deferred and does not prevent checkout in the current release."
+        title="Your orders & aftercare"
+        body="For your privacy, use the same browser where you placed your most recent order. Keep your order number handy. For older orders or another device, contact REYON on WhatsApp."
         action={<LinkButton href="/shop">Continue shopping</LinkButton>}
       />
       <section className="admin-module-card">
-        <span>Provider-neutral delivery status</span>
+        <span>Order tracking</span>
         <h2>Track your delivery</h2>
         <p>
           See REYON&apos;s recorded shipment status and reference. Live courier
@@ -51,7 +56,7 @@ export default function Account() {
         <ResubmitPaymentForm />
       </section>
       <section className="admin-module-card">
-        <span>Append-only request</span>
+        <span>Order support</span>
         <h2>Request a correction or return</h2>
         <p>
           After shipment, requests enter the Return/Refund workflow. Existing

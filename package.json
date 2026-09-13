@@ -8,7 +8,9 @@
   },
   "overrides": {
     "postcss": "^8.5.18",
-    "sharp": "^0.35.3"
+    "sharp": "^0.35.4",
+    "js-yaml": "^4.3.2",
+    "nanoid": "^3.3.18"
   },
   "scripts": {
     "dev": "next dev",
@@ -19,25 +21,27 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test:domain": "node --experimental-strip-types --test tests/domain/*.test.ts",
-    "quality": "npm run format:check && npm run lint && npm run typecheck && npm run test:domain && npm run build",
-    "test:e2e": "node scripts/run-e2e.mjs"
+    "quality": "npm run format:check && npm run lint && npm run typecheck && npm run test:domain && npm run test:database && npm run build",
+    "test:e2e": "node scripts/run-watch-e2e.mjs",
+    "test:database": "node --test tests/database/*.test.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.111.0",
     "lucide-react": "^0.468.0",
-    "next": "^16.1.0",
+    "next": "^16.3.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "sharp": "^0.35.3"
+    "sharp": "^0.35.4"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
     "@playwright/test": "^1.58.0",
     "@types/node": "^24.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.0.0",
-    "eslint-config-next": "^16.1.0",
+    "eslint-config-next": "^16.3.3",
     "prettier": "^3.4.0",
     "typescript": "^5.9.0"
   }

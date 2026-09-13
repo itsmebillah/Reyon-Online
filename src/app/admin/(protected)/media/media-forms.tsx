@@ -37,7 +37,7 @@ function UploadFileField() {
     <>
       <label>
         Image{" "}
-        <span>JPG, PNG or WebP · 5 MB maximum · at least 800 × 800 px</span>
+        <span>JPG, PNG or WebP · 3 MB maximum · at least 800 × 800 px</span>
         <input
           name="image"
           type="file"

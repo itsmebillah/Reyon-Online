@@ -1,195 +1,219 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment } from "react";
+import {
+  ArrowUpRight,
+  Watch,
+  Truck,
+  ShieldCheck,
+  MessageCircle,
+} from "lucide-react";
+import { Container } from "@/components/ui";
 import { ProductCard } from "@/components/product-card";
-import { Container, LinkButton, SectionHeading } from "@/components/ui";
-import { businessConfig } from "@/config/business";
 import { catalogRepository } from "@/features/catalog";
-
+import { watchCategories } from "@/features/catalog/domain/watch";
 export default async function Home() {
-  const [categories, collections] = await Promise.all([
-    catalogRepository.listCategories(),
-    catalogRepository.listHomepageCollections(),
-  ]);
+  const collections = await catalogRepository.listHomepageCollections();
   return (
     <>
-      <section className="hero">
+      <section className="watch-hero">
         <Image
-          src="/images/hero-beauty-v2.png"
-          alt="An unbranded premium beauty assortment arranged on warm travertine"
+          src="/images/watch-hero.webp"
+          alt="Editorial close-up of an unbranded steel watch with a midnight dial"
           fill
           priority
           sizes="100vw"
         />
         <Container>
-          <div className="hero-copy">
-            <p className="eyebrow">Premium beauty &amp; personal care</p>
+          <div className="watch-hero-copy">
+            <p className="eyebrow">REYON / WATCHES / BANGLADESH</p>
             <h1>
-              Beauty,
+              Time, on
               <br />
-              <em>carefully chosen.</em>
+              <em>your terms.</em>
             </h1>
-            <p>{businessConfig.positioning}</p>
-            <div className="button-row">
-              <LinkButton href="/shop">Explore the collection</LinkButton>
-              <LinkButton href="/about" variant="secondary">
-                Our philosophy
-              </LinkButton>
-            </div>
+            <p>
+              For the everyday. For the occasion.
+              <br />
+              Find a watch that feels like you.
+            </p>
+            <Link className="button button--primary" href="/shop">
+              Explore watches <ArrowUpRight size={18} />
+            </Link>
+            <span className="hero-caption">
+              A considered collection. A simpler way to shop.
+            </span>
           </div>
         </Container>
+        <span className="hero-edition">THE WATCH EDIT — 01</span>
       </section>
-      <section className="section home-categories">
-        <Container>
-          <SectionHeading
-            eyebrow="Shop with intention"
-            title="Rituals for every day"
-            body="A carefully structured collection designed to make discovering your next essential feel effortless."
-          />
-          <div className="category-grid">
-            {categories.map((category, index) => (
+      <div className="watch-service-strip">
+        <span>
+          <Truck size={18} /> Bangladesh delivery
+        </span>
+        <span>
+          <Watch size={18} /> Specifications that matter
+        </span>
+        <span>
+          <ShieldCheck size={18} /> COD at checkout
+        </span>
+      </div>
+      <Container>
+        <section className="watch-section">
+          <div className="watch-section-heading">
+            <div>
+              <p className="eyebrow">FIND YOUR EVERYDAY</p>
+              <h2>A style for every chapter.</h2>
+            </div>
+            <Link href="/shop">
+              All watches <ArrowUpRight size={16} />
+            </Link>
+          </div>
+          <div className="watch-category-grid">
+            {watchCategories.map((c, i) => (
               <Link
-                className={`category-card category-card--${index + 1}`}
-                href={`/shop?category=${category.slug}`}
-                key={category.id}
+                key={c.slug}
+                href={"/shop?category=" + c.slug}
+                className={"watch-category watch-category--" + i}
               >
-                <span>0{index + 1}</span>
-                <h3>{category.name}</h3>
-                <p>Discover the edit →</p>
+                <span>0{i + 1} / THE COLLECTION</span>
+                <Watch size={70} strokeWidth={0.7} />
+                <h3>{c.name}</h3>
+                <p>{c.description}</p>
+                <ArrowUpRight className="category-arrow" />
               </Link>
             ))}
           </div>
-        </Container>
-      </section>
-      {collections.map((collection, collectionIndex) => (
-        <Fragment key={collection.key}>
-          <section
-            className={`section${collectionIndex % 2 === 0 ? " section--cream" : ""}`}
-          >
-            <Container>
-              <SectionHeading
-                eyebrow="Live from the REYON catalog"
-                title={collection.name}
-              />
+          <div className="audience-links">
+            <Link href="/shop?gender=men">Men’s watches ↗</Link>
+            <Link href="/shop?gender=women">Women’s watches ↗</Link>
+            <Link href="/shop?gender=unisex">Unisex watches ↗</Link>
+          </div>
+        </section>
+        {collections
+          .filter((c) => c.products.length > 0)
+          .map((c) => (
+            <section className="watch-section" key={c.key}>
+              <div className="watch-section-heading">
+                <div>
+                  <p className="eyebrow">THE REYON SELECTION</p>
+                  <h2>{c.name}</h2>
+                </div>
+                <Link
+                  href={
+                    c.key === "offers"
+                      ? "/shop?offers=true"
+                      : c.key === "best-sellers"
+                        ? "/shop?sort=bestsellers"
+                        : "/shop?sort=newest"
+                  }
+                >
+                  Explore <ArrowUpRight size={16} />
+                </Link>
+              </div>
               <div className="product-grid">
-                {collection.products.map((product, index) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    priority={collectionIndex === 0 && index < 2}
-                  />
+                {c.products.map((p) => (
+                  <ProductCard product={p} key={p.id} />
                 ))}
               </div>
-              <div className="center">
-                <LinkButton href="/shop" variant="secondary">
-                  View all products
-                </LinkButton>
-              </div>
-            </Container>
+            </section>
+          ))}
+        {!collections.some((c) => c.products.length) && (
+          <section className="watch-section collection-notice">
+            <p className="eyebrow">THE NEXT CHAPTER</p>
+            <h2>Our watch collection is taking shape.</h2>
+            <p>
+              We publish watches only when their details, photography and
+              availability are confirmed. Speak to us about the watch you are
+              looking for.
+            </p>
+            <Link className="button button--secondary" href="/contact">
+              Talk to REYON
+            </Link>
           </section>
-        </Fragment>
-      ))}
-      <section className="promise">
-        <Container>
-          <p className="eyebrow">The REYON standard</p>
-          <blockquote>
-            “Authenticity, quality and transparency in every carefully selected
-            collection.”
-          </blockquote>
-          <div className="promise-grid">
-            <div>
-              <span>01</span>
-              <h3>100% authentic products</h3>
-              <p>Genuine beauty products selected from trusted brands.</p>
-            </div>
-            <div>
-              <span>02</span>
-              <h3>Authentic K-Beauty expertise</h3>
-              <p>A strong specialization within our wider beauty selection.</p>
-            </div>
-            <div>
-              <span>03</span>
-              <h3>Customer trust</h3>
-              <p>Clear information and a premium shopping experience.</p>
-            </div>
+        )}
+        <section className="watch-editorial">
+          <div>
+            <p className="eyebrow">DETAILS MAKE THE DIFFERENCE</p>
+            <h2>
+              More than
+              <br />a first impression.
+            </h2>
+            <p>
+              Movement. Materials. Proportions. The right watch starts with the
+              details that suit your day.
+            </p>
+            <Link href="/shop" className="button button--secondary">
+              Find your watch <ArrowUpRight size={17} />
+            </Link>
           </div>
-        </Container>
-      </section>
-      <section className="section">
-        <Container>
-          <div className="editorial">
-            <div>
-              <p className="eyebrow">A quieter approach</p>
-              <h2>
-                Less noise.
-                <br />
-                More intention.
-              </h2>
+          <div className="watch-trust">
+            <article>
+              <Watch />
+              <h3>Know your watch</h3>
               <p>
-                REYON curates premium beauty and personal care from trusted
-                brands, with authentic Korean beauty as one of our strongest
-                specialties.
+                Compare the model, movement, case size and strap before
+                choosing.
               </p>
-              <LinkButton href="/about">Discover REYON</LinkButton>
-            </div>
-            <Image
-              src="/images/product-serum.png"
-              alt="Minimal serum bottle on a natural stone pedestal"
-              width={800}
-              height={800}
-            />
+            </article>
+            <article>
+              <ShieldCheck />
+              <h3>Warranty, clearly explained</h3>
+              <p>
+                Coverage varies by watch. Read the product’s warranty
+                information or ask us before ordering.
+              </p>
+            </article>
+            <article>
+              <Truck />
+              <h3>Checkout made local</h3>
+              <p>
+                Prices in taka, Bangladesh addresses and delivery charges shown
+                before confirmation.
+              </p>
+            </article>
+            <article>
+              <MessageCircle />
+              <h3>A conversation away</h3>
+              <p>
+                Need help choosing? Reach REYON on WhatsApp for product and
+                order questions.
+              </p>
+            </article>
           </div>
-        </Container>
-      </section>
-      <section className="reviews section--cream">
-        <Container>
-          <SectionHeading
-            eyebrow="Built around trust"
-            title="A clearer way to shop beauty"
-          />
-          <div className="review-grid">
-            {[
-              [
-                "Multi-brand selection",
-                "Premium beauty and personal care across six essential categories.",
-              ],
-              [
-                "Clear information",
-                "Genuine products presented clearly to support confident choices.",
-              ],
-              [
-                "Human support",
-                "Direct access to REYON through its approved customer channels.",
-              ],
-            ].map(([title, body]) => (
-              <article key={title}>
-                <h3>{title}</h3>
-                <p>{body}</p>
-              </article>
-            ))}
-          </div>
-        </Container>
-      </section>
-      <section className="instagram">
-        <Container>
-          <p className="eyebrow">Follow the ritual</p>
-          <h2>
-            <a href={businessConfig.contact.instagramUrl}>@reyononline.bd</a>
-          </h2>
-          <div className="instagram-grid">
-            {[1, 2, 3, 4].map((item) => (
-              <div key={item}>
-                <Image
-                  src="/images/product-serum.png"
-                  alt="Minimal beauty editorial study"
-                  fill
-                  sizes="25vw"
-                />
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
+        </section>
+        <section className="watch-section watch-faq">
+          <p className="eyebrow">BEFORE YOU ORDER</p>
+          <h2>A few things to know.</h2>
+          <details>
+            <summary>Can I pay Cash on Delivery?</summary>
+            <p>
+              COD is available when shown at checkout for your delivery
+              selection. The full total is displayed before you place an order.
+            </p>
+          </details>
+          <details>
+            <summary>How much is delivery?</summary>
+            <p>
+              Select your district and delivery area at checkout to see the
+              configured charge. No charge is hidden in the product price.
+            </p>
+          </details>
+          <details>
+            <summary>Does every watch have the same warranty?</summary>
+            <p>
+              No. Review each watch’s stated coverage. If a detail is not
+              listed, please ask us before purchase.
+            </p>
+          </details>
+          <details>
+            <summary>Can I get help choosing a size?</summary>
+            <p>
+              Check the case diameter in the specifications and contact us if
+              you would like more detail.
+            </p>
+          </details>
+        </section>
+      </Container>
     </>
   );
 }

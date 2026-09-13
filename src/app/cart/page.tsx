@@ -7,7 +7,11 @@ import { getCartSummary } from "@/features/cart/actions";
 import { CartQuantityForm } from "./cart-quantity-form";
 import { CheckoutLink } from "./checkout-link";
 
-export const metadata: Metadata = { title: "Shopping Bag" };
+export const metadata: Metadata = {
+  title: "Shopping Bag",
+  robots: { index: false, follow: false },
+  alternates: { canonical: "/cart" },
+};
 export const dynamic = "force-dynamic";
 
 export default async function CartPage() {
@@ -24,7 +28,7 @@ export default async function CartPage() {
       {!cart.items.length ? (
         <EmptyState
           title="Your bag is empty"
-          body="Discover authentic beauty and personal care selected by REYON."
+          body="Find your next watch at REYON."
           action={
             <Link className="button button--primary" href="/shop">
               Continue shopping
@@ -41,7 +45,6 @@ export default async function CartPage() {
                   alt={item.imageAlt}
                   width={140}
                   height={170}
-                  unoptimized={item.imageUrl.startsWith("http")}
                 />
                 <div>
                   <p className="product-brand">{item.brandName}</p>

@@ -65,12 +65,14 @@ export async function getCartSummary(): Promise<CartSummary> {
 
 export async function addCartItem(
   productId: string,
+  variantId?: string,
 ): Promise<{ success?: string; error?: string; count: number }> {
   const accessToken = await token(true);
   const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.rpc("cart_add_item", {
+  const { error } = await supabase.rpc("watch_cart_add_item", {
     p_access_token: accessToken,
     p_product_id: productId,
+    p_variant_id: variantId ?? null,
     p_quantity: 1,
   });
   if (error)

@@ -1,73 +1,50 @@
-"use client";
-import { FormEvent, useState } from "react";
-import { Container, Button } from "@/components/ui";
+import { Container } from "@/components/ui";
 import { businessConfig } from "@/config/business";
-export default function ContactPage() {
-  const [sent, setSent] = useState(false);
-  const submit = (e: FormEvent) => {
-    e.preventDefault();
-    setSent(true);
-  };
+export const metadata = {
+  title: "Contact REYON",
+  description:
+    "Ask REYON about watches, delivery, orders or warranty in Bangladesh.",
+  alternates: { canonical: "/contact" },
+};
+export default function Contact() {
   return (
-    <Container className="page contact">
-      <div>
-        <p className="eyebrow">We’re here</p>
-        <h1>How can we care for you?</h1>
-        <p className="lead">
-          Our customer care foundation is ready for your questions. Backend
-          delivery will be connected when approved.
+    <Container className="page">
+      <article className="policy-copy">
+        <p className="eyebrow">LET’S TALK WATCHES</p>
+        <h1>A conversation away.</h1>
+        <p>
+          Choosing a watch, checking a specification or following up on an
+          order? Get in touch with REYON.
+        </p>
+        <div className="button-row">
+          <a
+            className="button button--primary"
+            href={businessConfig.contact.whatsappUrl}
+          >
+            Chat on WhatsApp ↗
+          </a>
+          <a
+            className="button button--secondary"
+            href={"mailto:" + businessConfig.contact.email}
+          >
+            Email us ↗
+          </a>
+        </div>
+        <h2>For order support</h2>
+        <p>
+          Include your order number and the mobile number used at checkout.
+          Never send payment PINs, passwords or full card details.
         </p>
         <address>
-          <a href={`mailto:${businessConfig.contact.email}`}>
+          <a href={"mailto:" + businessConfig.contact.email}>
             {businessConfig.contact.email}
           </a>
           <br />
-          <a href={businessConfig.contact.whatsappUrl}>
-            WhatsApp: {businessConfig.contact.whatsappDisplay}
-          </a>
-          <br />
-          <a href={businessConfig.contact.facebookUrl}>Facebook</a>
-          {" · "}
-          <a href={businessConfig.contact.instagramUrl}>Instagram</a>
+          {businessConfig.contact.whatsappDisplay}
         </address>
-      </div>
-      {sent ? (
-        <div className="form-success" role="status">
-          <span>✓</span>
-          <h2>Message saved</h2>
-          <p>
-            This interface is ready. Message delivery will be activated with the
-            approved backend.
-          </p>
-          <Button variant="secondary" onClick={() => setSent(false)}>
-            Send another
-          </Button>
-        </div>
-      ) : (
-        <form className="contact-form" onSubmit={submit}>
-          <label>
-            Name
-            <input name="name" autoComplete="name" required />
-          </label>
-          <label>
-            Email
-            <input name="email" type="email" autoComplete="email" required />
-          </label>
-          <label>
-            How can we help?
-            <select name="topic">
-              <option>Product guidance</option>
-              <option>Order support</option>
-              <option>General question</option>
-            </select>
-          </label>
-          <label>
-            Message
-            <textarea name="message" rows={6} required />
-          </label>
-          <Button type="submit">Save message</Button>
-        </form>
-      )}
+        <h2>বাংলায় কথা বলুন</h2>
+        <p>ঘড়ি বা অর্ডার সম্পর্কে জানতে WhatsApp-এ মেসেজ করুন।</p>
+      </article>
     </Container>
   );
 }
