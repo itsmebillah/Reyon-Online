@@ -3,6 +3,7 @@
 do $demo$
 declare b uuid; c1 uuid; c2 uuid; c3 uuid; a uuid; p uuid; v uuid; loc uuid;
 begin
+ if exists(select 1 from access.admin_memberships where user_id='4d52a5d4-1d52-4701-ae81-cfece39493e1') then
  perform set_config('request.jwt.claim.sub','4d52a5d4-1d52-4701-ae81-cfece39493e1',false);
  perform set_config('request.jwt.claim.role','authenticated',false);
  insert into catalog.brands(slug,name,description,is_visible,is_featured,country_code)
@@ -22,5 +23,8 @@ begin
   a:=public.admin_create_media_asset('reyon-public','/images/sports-watches.webp','https://reyon-online.vercel.app/images/sports-watches.webp','image/webp',800,1000);
   p:=public.admin_create_watch(jsonb_build_object('p_name','REYON Summit Chrono — Demo','p_slug','reyon-summit-chrono-demo','p_brand_id',b,'p_category_id',c3,'p_variant_label','Graphite / Black rubber','p_sku','RYN-SUM-CHR-DEMO','p_purchase_price',5200,'p_selling_price',8490,'p_compare_at_price',9490,'p_asset_id',a,'p_image_alt','REYON Summit sports chronograph','p_country_code','BD','p_product_code','DEMO-SUM-CHR','p_publish',true,'specifications',jsonb_build_object('model','Summit Chrono','gender','men','movement','Quartz','display','Chronograph','dialColor','Graphite','caseColor','Graphite','caseMaterial','Stainless steel','strapMaterial','Silicone','strapColor','Black','caseSize','42 mm','waterResistance','10 ATM','warranty','Demo coverage — verify before sale'),'description','Demo catalog item for testing the REYON watch storefront.'));
   select id into v from catalog.variants where product_id=p limit 1; perform public.admin_record_inventory_movement(v,loc,'opening-stock',7,'Demo stock for storefront testing',null);
+ end if;
+ else
+  raise notice 'Skipping demo watch seed: configured admin membership is not present';
  end if;
 end $demo$;
