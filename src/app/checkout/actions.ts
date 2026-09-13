@@ -51,8 +51,8 @@ export async function saveCheckoutAddress(
   const phone = normalizeBangladeshPhone(value(form, "phone"));
   if (!phone)
     return {
-      error: "Enter a Bangladesh mobile number, e.g. 01712345678.",
-      fieldErrors: { phone: "Use a valid Bangladesh mobile number." },
+      error: "Enter a valid mobile number.",
+      fieldErrors: { phone: "Use a valid mobile number." },
     };
   if (!districts.some((d) => d === value(form, "district")))
     return { error: "Select your district." };

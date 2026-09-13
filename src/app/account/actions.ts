@@ -106,7 +106,7 @@ export async function findDeliveryStatus(
 ): Promise<DeliveryStatusState> {
   const supabase = await createSupabaseServerClient();
   const phone = normalizeBangladeshPhone(String(form.get("phone") ?? ""));
-  if (!phone) return { error: "Enter a valid Bangladesh mobile number." };
+  if (!phone) return { error: "Enter a valid mobile number." };
   const { data, error } = await supabase.rpc("customer_orders_by_phone", {
     p_phone: phone,
   });

@@ -17,11 +17,10 @@ export async function generateMetadata({
   const p = await catalogRepository.getProductBySlug(slug);
   return p
     ? {
-        title: p.brand.name + " " + p.name + " | Watch price in Bangladesh",
+        title: p.brand.name + " " + p.name + " | REYON Watches",
         description:
           p.content.summary ||
-          p.name +
-            " specifications, price in Bangladesh and availability at REYON.",
+          p.name + " ï¿½ specifications, materials and availability at REYON.",
         alternates: { canonical: "/products/" + slug },
         openGraph: {
           title: p.name,
@@ -97,7 +96,7 @@ export default async function Product({
                 "Warranty details: contact us before ordering."}
             </p>
           </div>
-          <Link href="/contact">Need a closer look? Ask REYON ↗</Link>
+          <Link href="/contact">Need a closer look? Ask REYON â†—</Link>
         </div>
       </div>
       <section className="watch-section">
@@ -116,7 +115,7 @@ export default async function Product({
         </dl>
         <p className="muted">
           Water resistance is a manufacturer rating, not a guarantee for every
-          activity. Check the model’s instructions before exposure to water.
+          activity. Check the modelâ€™s instructions before exposure to water.
         </p>
       </section>
       {related.length > 0 && (

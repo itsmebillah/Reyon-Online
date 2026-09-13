@@ -29,7 +29,24 @@ const productBySlug = cache(
     )[0],
 );
 const products = (query: CatalogQuery = {}) =>
-  catalogRpc<CatalogProduct[]>("watch_catalog", { p_query: query });
+  catalogRpc<CatalogProduct[]>("watch_catalog", { p_query: query }).then(
+    (items) =>
+      items.map((product) => ({
+        ...product,
+        name: product.name.replace(/\s+[â€”-]\s+Demo$/i, ""),
+        content: {
+          ...product.content,
+          summary: product.content.summary.replace(
+            /^Demo catalog item for testing the REYON watch storefront\.?$/i,
+            "A considered REYON watch with clear specifications and dependable everyday wear.",
+          ),
+        },
+        media: {
+          ...product.media,
+          alt: product.media.alt.replace(/\s+demo$/i, ""),
+        },
+      })),
+  );
 export const catalogRepository: CatalogRepository = {
   listProducts: products,
   getProductBySlug: productBySlug,

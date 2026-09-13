@@ -14,7 +14,7 @@ export function AddressForm({ address }: { address: CheckoutAddress | null }) {
   return (
     <form action={action} className="checkout-address-form">
       <h2>Where should we deliver?</h2>
-      <p className="muted">আপনার ঠিকানা · Bangladesh delivery</p>
+      <p className="muted">Delivery address</p>
       <div className="form-grid">
         <label>
           Full name
@@ -100,7 +100,7 @@ export function AddressForm({ address }: { address: CheckoutAddress | null }) {
         </p>
       )}
       <button className="button button--primary" disabled={pending}>
-        {pending ? "Saving…" : "Save address & see delivery charge"}
+        {pending ? "Savingâ€¦" : "Save address & see delivery charge"}
       </button>
     </form>
   );

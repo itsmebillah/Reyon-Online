@@ -8,14 +8,15 @@ export default function Page() {
   return (
     <Container className="page">
       <article className="policy-copy">
-        <p className="eyebrow">REYON WATCHES · EVERY DAY</p>
+        <p className="eyebrow">REYON WATCHES Â· EVERY DAY</p>
         <h1>About REYON</h1>
         <section>
           <h2>Time, on your terms.</h2>
           <p>
-            REYON is a watch store for customers in Bangladesh. Our focus is
-            straightforward: help you choose through clear specifications,
-            useful photography and transparent prices.
+            REYON is an independent watch retailer built around considered
+            design, dependable details and an easier way to choose your next
+            watch. Our focus is straightforward: help you choose through clear
+            specifications, useful photography and transparent prices.
           </p>
         </section>
         <section>
@@ -29,9 +30,8 @@ export default function Page() {
         <section>
           <h2>A local shopping experience</h2>
           <p>
-            Prices are shown in Bangladeshi taka. Checkout supports Bangladesh
-            delivery addresses and the payment methods currently available for
-            your order.
+            Prices are shown clearly in the store currency. Checkout presents
+            the delivery options and payment methods available for your order.
           </p>
         </section>
         <Link className="button button--secondary" href="/contact">

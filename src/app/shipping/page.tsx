@@ -8,15 +8,15 @@ export default function Page() {
   return (
     <Container className="page">
       <article className="policy-copy">
-        <p className="eyebrow">REYON WATCHES · EVERY DAY</p>
+        <p className="eyebrow">REYON WATCHES Â· EVERY DAY</p>
         <h1>Delivery & payment</h1>
         <section>
           <h2>Delivery charges</h2>
           <p>
             Save your district and full address at checkout to see the
-            configured delivery charge. The current zones distinguish Dhaka
-            district from other Bangladesh districts. An unavailable zone cannot
-            be used to place an order.
+            configured delivery charge. Configured delivery zones determine the
+            available service. An unavailable zone cannot be used to place an
+            order.
           </p>
         </section>
         <section>
