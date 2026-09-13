@@ -48,7 +48,9 @@ button:focus-visible {
   gap: 11px;
   color: inherit;
 }
-.watch-wordmark > span:last-child {
+.watch-wordmark-name {
+  display: inline-flex;
+  align-items: center;
   font-family: var(--serif);
   font-size: 31px;
   line-height: 1;
@@ -59,7 +61,8 @@ button:focus-visible {
   font-family: var(--sans);
   font-size: 7px;
   letter-spacing: 2px;
-  margin-top: 9px;
+  margin-top: 8px;
+  margin-left: 2px;
 }
 .watch-logo-icon {
   width: 36px;
@@ -71,6 +74,16 @@ button:focus-visible {
   width: 30px;
   height: 40px;
   overflow: visible;
+}
+.watch-logo-icon--inline {
+  width: 37px;
+  height: 37px;
+  margin: 0 1px 0 -2px;
+  letter-spacing: 0;
+}
+.watch-logo-icon--inline svg {
+  width: 37px;
+  height: 37px;
 }
 .watch-logo-strap {
   fill: #cda978;
