@@ -2850,3 +2850,80 @@ details p {
     flex: 1 1 150px;
   }
 }
+@media (max-width: 600px) {
+  .admin-sidebar {
+    padding: 12px 14px 10px;
+  }
+  .admin-sidebar__brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px 12px;
+  }
+  .admin-sidebar__brand .watch-wordmark-name {
+    font-size: 22px;
+  }
+  .admin-sidebar__nav {
+    gap: 14px;
+    padding: 10px 0 8px;
+    scrollbar-width: thin;
+  }
+  .admin-nav-group {
+    gap: 4px;
+    flex-wrap: nowrap;
+  }
+  .admin-nav-group a,
+  .admin-nav-group a span {
+    display: inline-flex;
+  }
+  .admin-nav-group a {
+    min-width: max-content;
+    justify-content: flex-start;
+    min-height: 38px;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  .admin-nav-group a svg {
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+  }
+  .admin-topbar .button {
+    min-height: 38px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  .admin-dashboard h1 {
+    font-size: clamp(34px, 11vw, 48px);
+  }
+  .admin-module-card {
+    padding: 18px 14px;
+    overflow: hidden;
+  }
+  .inventory-table-wrap,
+  .admin-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-inline: -14px;
+    padding-inline: 14px;
+  }
+  .inventory-table {
+    min-width: 620px;
+  }
+  .catalog-admin-form .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .catalog-admin-form input,
+  .catalog-admin-form select,
+  .catalog-admin-form textarea {
+    min-height: 44px;
+  }
+  .admin-product-list > div {
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .product-status-actions {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+}
