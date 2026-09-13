@@ -20,15 +20,18 @@ export const watchCategories = [
     slug: "classic-watches",
     name: "Classic & formal",
     description: "Considered details. Timeless proportions.",
+    image: "/images/classic-watches.webp",
   },
   {
     slug: "casual-watches",
     name: "Everyday watches",
     description: "Made for your own pace.",
+    image: "/images/casual-watches.webp",
   },
   {
     slug: "sports-watches",
     name: "Sport & adventure",
     description: "Find a watch for your active days.",
+    image: "/images/sports-watches.webp",
   },
 ] as const;

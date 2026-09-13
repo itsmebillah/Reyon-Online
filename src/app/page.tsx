@@ -76,7 +76,13 @@ export default async function Home() {
                 className={"watch-category watch-category--" + i}
               >
                 <span>0{i + 1} / THE COLLECTION</span>
-                <Watch size={70} strokeWidth={0.7} />
+                <Image
+                  src={c.image}
+                  alt={c.name + " watch collection"}
+                  fill
+                  sizes="(max-width: 700px) 100vw, 33vw"
+                />
+                <span className="watch-category__scrim" aria-hidden="true" />
                 <h3>{c.name}</h3>
                 <p>{c.description}</p>
                 <ArrowUpRight className="category-arrow" />
