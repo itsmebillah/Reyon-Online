@@ -2927,3 +2927,139 @@ details p {
     justify-content: flex-start;
   }
 }
+/* Mobile admin app layout */
+@media (max-width: 600px) {
+  .admin-shell {
+    display: block;
+    min-height: 100dvh;
+  }
+  .admin-sidebar {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    padding: 14px 14px 12px;
+  }
+  .admin-sidebar__brand {
+    display: flex;
+    align-items: center;
+    padding: 0 2px 12px;
+    border-bottom: 1px solid #2b3b46;
+  }
+  .admin-sidebar__brand .watch-wordmark {
+    transform: scale(0.86);
+    transform-origin: left center;
+  }
+  .admin-sidebar__brand > span {
+    margin-left: auto;
+    font-size: 9px;
+  }
+  .admin-sidebar__nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 10px;
+    max-height: none;
+    overflow: visible;
+    padding: 14px 0 4px;
+  }
+  .admin-nav-group {
+    display: grid;
+    gap: 5px;
+    min-width: 0;
+  }
+  .admin-nav-group > p {
+    display: block;
+    margin: 0 2px 2px;
+    color: #b9a27e;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+  }
+  .admin-nav-group a {
+    min-width: 0;
+    min-height: 42px;
+    justify-content: flex-start;
+    padding: 8px 9px;
+    border: 1px solid #2b3b46;
+    border-radius: 7px;
+    color: #dce5e9;
+    font-size: 11px;
+  }
+  .admin-nav-group a span {
+    display: inline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .admin-nav-group a svg {
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+  }
+  .admin-sidebar__account {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 2px 0;
+    margin-top: 8px;
+  }
+  .admin-sidebar__account small {
+    display: none;
+  }
+  .admin-sidebar__account span {
+    flex: 1;
+    min-width: 0;
+  }
+  .admin-sidebar__account button {
+    white-space: nowrap;
+  }
+  .admin-topbar {
+    position: sticky;
+    top: 0;
+    min-height: 58px;
+    padding: 10px 14px;
+    z-index: 20;
+  }
+  .admin-topbar > div {
+    display: grid;
+  }
+  .admin-topbar strong {
+    font-size: 13px;
+  }
+  .admin-topbar span {
+    font-size: 9px;
+  }
+  .admin-topbar .button {
+    font-size: 11px;
+    min-height: 36px;
+  }
+  .admin-workspace > main {
+    padding: 0 14px 34px;
+  }
+  .admin-context-navigation {
+    margin: 14px 0 -10px;
+  }
+  .admin-dashboard {
+    padding: 28px 0 50px;
+  }
+  .admin-dashboard__intro {
+    margin-bottom: 24px;
+  }
+  .admin-dashboard h1 {
+    font-size: clamp(32px, 10vw, 44px);
+  }
+  .admin-module-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .admin-module-card {
+    padding: 16px 13px;
+  }
+  .brand-toolbar,
+  .product-toolbar {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+  .brand-toolbar .button,
+  .product-toolbar .button {
+    width: 100%;
+  }
+}
