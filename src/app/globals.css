@@ -2712,3 +2712,141 @@ details p {
     text-align: left;
   }
 }
+
+/* Admin polish: calm hierarchy, compact controls and responsive workspace. */
+.admin-shell {
+  background: #f4f5f6;
+  color: #17232d;
+}
+.admin-sidebar {
+  background: #111c24;
+  border-right: 1px solid #263640;
+}
+.admin-sidebar__brand {
+  border-color: #2b3b46;
+}
+.admin-sidebar__brand span {
+  color: #b9a27e;
+}
+.admin-nav-group > p {
+  color: #8fa0aa;
+}
+.admin-nav-group a {
+  border: 1px solid transparent;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+.admin-nav-group a:hover {
+  background: #1e303b;
+  transform: translateX(2px);
+}
+.admin-nav-group a.is-active {
+  color: #17232d;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.16);
+}
+.admin-sidebar__account {
+  border-color: #2b3b46;
+}
+.admin-workspace {
+  background: #f4f5f6;
+}
+.admin-topbar {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  border-color: #dce2e5;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.admin-topbar span {
+  color: #9a7446;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+}
+.admin-workspace > main {
+  padding-bottom: 56px;
+}
+.admin-dashboard,
+.catalog-admin-grid,
+.media-editor,
+.brand-editor {
+  animation: admin-enter 0.35s ease both;
+}
+@keyframes admin-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.catalog-admin-form,
+.admin-module-card,
+.admin-state,
+.admin-table-wrap,
+.collection-admin-list {
+  border-color: #dce2e5;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(18, 31, 40, 0.05);
+}
+.catalog-admin-form input,
+.catalog-admin-form select,
+.catalog-admin-form textarea,
+.admin-auth-form input,
+.admin-filter-form input,
+.admin-filter-form select {
+  border-color: #ccd6db;
+  border-radius: 6px;
+  background: #fff;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+.catalog-admin-form input:focus,
+.catalog-admin-form select:focus,
+.catalog-admin-form textarea:focus,
+.admin-filter-form input:focus,
+.admin-filter-form select:focus {
+  border-color: #aa8657;
+  box-shadow: 0 0 0 3px rgba(170, 134, 87, 0.14);
+  outline: 0;
+}
+.button {
+  border-radius: 6px;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+.button--primary {
+  box-shadow: 0 5px 14px rgba(24, 45, 59, 0.14);
+}
+.button--primary:hover {
+  box-shadow: 0 8px 18px rgba(24, 45, 59, 0.2);
+}
+.status-pill {
+  letter-spacing: 0.08em;
+}
+@media (max-width: 680px) {
+  .admin-topbar {
+    min-height: 64px;
+    padding: 12px 16px;
+  }
+  .admin-workspace > main {
+    padding: 0 16px 38px;
+  }
+  .admin-dashboard {
+    padding-top: 34px;
+  }
+  .admin-quick-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .admin-quick-actions .button {
+    flex: 1 1 150px;
+  }
+}
