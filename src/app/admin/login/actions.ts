@@ -4,6 +4,46 @@ import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export type LoginState = Readonly<{ error?: string }>;
+export type ResetState = Readonly<{ error?: string; success?: string }>;
+
+export async function requestPasswordReset(
+  _state: ResetState,
+  formData: FormData,
+): Promise<ResetState> {
+  const email = formData.get("email");
+  if (typeof email !== "string" || !email.includes("@"))
+    return { error: "Enter the email address used for admin access." };
+  const supabase = await createSupabaseServerClient();
+  const origin =
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://reyon-online.vercel.app";
+  const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+    redirectTo: origin + "/auth/callback?next=/admin/reset-password",
+  });
+  if (error)
+    return { error: "Unable to send a reset email. Please try again." };
+  return {
+    success: "If this email has admin access, a reset link is on its way.",
+  };
+}
+
+export async function updateAdminPassword(
+  _state: ResetState,
+  formData: FormData,
+): Promise<ResetState> {
+  const password = formData.get("password");
+  const confirmation = formData.get("confirmation");
+  if (typeof password !== "string" || password.length < 8)
+    return { error: "Use a password with at least 8 characters." };
+  if (password !== confirmation)
+    return { error: "The passwords do not match." };
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.auth.updateUser({ password });
+  if (error)
+    return {
+      error: "Unable to update the password. Request a new reset link.",
+    };
+  redirect("/admin/login?reset=complete");
+}
 
 export async function loginAdmin(
   _state: LoginState,

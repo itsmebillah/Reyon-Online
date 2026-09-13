@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { loginAdmin, type LoginState } from "./actions";
+import Link from "next/link";
 
 const initialState: LoginState = {};
 
@@ -42,6 +43,9 @@ export function LoginForm() {
       >
         {pending ? "Signing in…" : "Sign in securely"}
       </button>
+      <Link className="admin-return-link" href="/admin/forgot-password">
+        Forgot password?
+      </Link>
     </form>
   );
 }
