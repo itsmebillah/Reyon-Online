@@ -22,7 +22,9 @@ export async function updateSupabaseSession(request: NextRequest) {
   const claims = claimsData?.claims;
   const isPublicAdminRoute =
     request.nextUrl.pathname === "/admin/login" ||
-    request.nextUrl.pathname === "/admin/access-denied";
+    request.nextUrl.pathname === "/admin/access-denied" ||
+    request.nextUrl.pathname === "/admin/forgot-password" ||
+    request.nextUrl.pathname === "/admin/reset-password";
 
   if (!claims && !isPublicAdminRoute) {
     const loginUrl = request.nextUrl.clone();
