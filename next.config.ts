@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
         hostname: host,
         pathname: "/storage/v1/object/public/**",
       },
+      {
+        protocol: "https",
+        hostname: "reyon-online.vercel.app",
+        pathname: "/images/**",
+      },
     ],
   },
   experimental: { serverActions: { bodySizeLimit: "4mb" } },
