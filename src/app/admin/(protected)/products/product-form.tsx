@@ -88,7 +88,11 @@ export function ProductForm({
           </label>
           <label>
             Variant label
-            <input name="variantLabel" required placeholder="30 ml" />
+            <input
+              name="variantLabel"
+              required
+              placeholder="Silver / black leather"
+            />
           </label>
           <label>
             SKU <span>(generated if empty)</span>
