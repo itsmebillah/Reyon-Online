@@ -100,7 +100,7 @@ export function AddressForm({ address }: { address: CheckoutAddress | null }) {
         </p>
       )}
       <button className="button button--primary" disabled={pending}>
-        {pending ? "Savingâ€¦" : "Save address & see delivery charge"}
+        {pending ? "Saving…" : "Save address & see delivery charge"}
       </button>
     </form>
   );

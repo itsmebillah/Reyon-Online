@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <Container className="page">
       <article className="policy-copy">
-        <p className="eyebrow">REYON WATCHES Â· EVERY DAY</p>
+        <p className="eyebrow">REYON WATCHES · EVERY DAY</p>
         <h1>Delivery & payment</h1>
         <section>
           <h2>Delivery charges</h2>

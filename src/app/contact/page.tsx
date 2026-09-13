@@ -9,7 +9,7 @@ export default function Contact() {
   return (
     <Container className="page">
       <article className="policy-copy">
-        <p className="eyebrow">LETâ€™S TALK WATCHES</p>
+        <p className="eyebrow">LET’S TALK WATCHES</p>
         <h1>A conversation away.</h1>
         <p>
           Choosing a watch, checking a specification or following up on an
@@ -20,13 +20,13 @@ export default function Contact() {
             className="button button--primary"
             href={businessConfig.contact.whatsappUrl}
           >
-            Chat on WhatsApp â†—
+            Chat on WhatsApp ↗
           </a>
           <a
             className="button button--secondary"
             href={"mailto:" + businessConfig.contact.email}
           >
-            Email us â†—
+            Email us ↗
           </a>
         </div>
         <h2>For order support</h2>
@@ -41,8 +41,6 @@ export default function Contact() {
           <br />
           {businessConfig.contact.whatsappDisplay}
         </address>
-        <h2>à¦¬à¦¾à¦‚à¦²à¦¾à§Ÿ à¦•à¦¥à¦¾ à¦¬à¦²à§à¦¨</h2>
-        <p>à¦˜à§œà¦¿ à¦¬à¦¾ à¦…à¦°à§à¦¡à¦¾à¦° à¦¸à¦®à§à¦ªà¦°à§à¦•à§‡ à¦œà¦¾à¦¨à¦¤à§‡ WhatsApp-à¦ à¦®à§‡à¦¸à§‡à¦œ à¦•à¦°à§à¦¨à¥¤</p>
       </article>
     </Container>
   );

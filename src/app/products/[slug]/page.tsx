@@ -96,7 +96,7 @@ export default async function Product({
                 "Warranty details: contact us before ordering."}
             </p>
           </div>
-          <Link href="/contact">Need a closer look? Ask REYON â†—</Link>
+          <Link href="/contact">Need a closer look? Ask REYON ↗</Link>
         </div>
       </div>
       <section className="watch-section">
@@ -115,7 +115,7 @@ export default async function Product({
         </dl>
         <p className="muted">
           Water resistance is a manufacturer rating, not a guarantee for every
-          activity. Check the modelâ€™s instructions before exposure to water.
+          activity. Check the model’s instructions before exposure to water.
         </p>
       </section>
       {related.length > 0 && (

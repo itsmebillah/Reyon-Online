@@ -44,7 +44,7 @@ export default async function Home() {
             </span>
           </div>
         </Container>
-        <span className="hero-edition">THE WATCH EDIT â€” 01</span>
+        <span className="hero-edition">THE WATCH EDIT — 01</span>
       </section>
       <div className="watch-service-strip">
         <span>
@@ -90,9 +90,9 @@ export default async function Home() {
             ))}
           </div>
           <div className="audience-links">
-            <Link href="/shop?gender=men">Menâ€™s watches â†—</Link>
-            <Link href="/shop?gender=women">Womenâ€™s watches â†—</Link>
-            <Link href="/shop?gender=unisex">Unisex watches â†—</Link>
+            <Link href="/shop?gender=men">Men’s watches ↗</Link>
+            <Link href="/shop?gender=women">Women’s watches ↗</Link>
+            <Link href="/shop?gender=unisex">Unisex watches ↗</Link>
           </div>
         </section>
         {collections
@@ -165,7 +165,7 @@ export default async function Home() {
               <ShieldCheck />
               <h3>Warranty, clearly explained</h3>
               <p>
-                Coverage varies by watch. Read the productâ€™s warranty
+                Coverage varies by watch. Read the product’s warranty
                 information or ask us before ordering.
               </p>
             </article>
@@ -207,7 +207,7 @@ export default async function Home() {
           <details>
             <summary>Does every watch have the same warranty?</summary>
             <p>
-              No. Review each watchâ€™s stated coverage. If a detail is not
+              No. Review each watch’s stated coverage. If a detail is not
               listed, please ask us before purchase.
             </p>
           </details>
