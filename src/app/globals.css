@@ -3063,3 +3063,26 @@ details p {
     width: 100%;
   }
 }
+@media (max-width: 600px) {
+  .admin-sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .admin-nav-group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+    width: 100%;
+  }
+  .admin-nav-group > p {
+    grid-column: 1 / -1;
+  }
+  .admin-nav-group:first-child {
+    grid-template-columns: 1fr;
+  }
+  .admin-nav-group a {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
