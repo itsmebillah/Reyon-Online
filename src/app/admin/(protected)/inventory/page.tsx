@@ -24,6 +24,14 @@ const date = (value: string) =>
 
 export default async function InventoryPage() {
   const data = await getInventoryDashboard();
+  // Legacy beauty records remain in historical storage; the active admin
+  // inventory surface is intentionally limited to watch SKUs.
+  const watchVariants = data.variants.filter((variant) =>
+    variant.sku.startsWith("RYN-"),
+  );
+  const watchMovements = data.movements.filter((movement) =>
+    movement.sku.startsWith("RYN-"),
+  );
   return (
     <section
       className="admin-dashboard catalog-admin"
@@ -41,14 +49,14 @@ export default async function InventoryPage() {
         <span>New movement</span>
         <h2>Record inventory</h2>
         <InventoryEntryForm
-          variants={data.variants}
+          variants={watchVariants}
           locations={data.locations}
         />
       </article>
       <article className="admin-module-card inventory-position-card">
         <span>Live position</span>
         <h2>Variant stock</h2>
-        {data.variants.length ? (
+        {watchVariants.length ? (
           <div className="inventory-table-wrap">
             <table className="inventory-table">
               <thead>
@@ -62,7 +70,7 @@ export default async function InventoryPage() {
                 </tr>
               </thead>
               <tbody>
-                {data.variants.map((variant) => (
+                {watchVariants.map((variant) => (
                   <tr key={variant.id}>
                     <td>
                       <strong>{variant.productName}</strong>
@@ -93,9 +101,9 @@ export default async function InventoryPage() {
       <article className="admin-module-card inventory-history-card">
         <span>Audit ledger</span>
         <h2>Recent movements</h2>
-        {data.movements.length ? (
+        {watchMovements.length ? (
           <div className="inventory-history">
-            {data.movements.map((movement) => (
+            {watchMovements.map((movement) => (
               <details key={movement.id} className="inventory-movement">
                 <summary>
                   <span>

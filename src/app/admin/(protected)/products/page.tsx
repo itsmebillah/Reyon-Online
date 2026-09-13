@@ -37,6 +37,7 @@ export default async function ProductsPage({
   const products = data.products
     .filter(
       (product) =>
+        /classic|everyday|sport|adventure/i.test(product.category) &&
         (!term ||
           `${product.name} ${product.brand} ${product.category}`
             .toLocaleLowerCase()
