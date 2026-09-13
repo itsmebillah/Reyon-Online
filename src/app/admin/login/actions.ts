@@ -16,8 +16,10 @@ export async function requestPasswordReset(
   const supabase = await createSupabaseServerClient();
   const origin =
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://reyon-online.vercel.app";
+  const redirectTo = new URL("/auth/callback", origin);
+  redirectTo.searchParams.set("next", "/admin/reset-password");
   const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-    redirectTo: origin + "/auth/callback?next=/admin/reset-password",
+    redirectTo: redirectTo.toString(),
   });
   if (error)
     return { error: "Unable to send a reset email. Please try again." };
