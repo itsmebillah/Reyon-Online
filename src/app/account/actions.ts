@@ -31,12 +31,12 @@ export type SalesDocumentState = {
 };
 export type DeliveryStatusState = {
   error?: string;
-  delivery?: {
+  deliveries?: {
     orderNumber: string;
     status: string;
     shipmentReference: string | null;
     updatedAt: string | null;
-  };
+  }[];
 };
 export type ReturnEligibilityState = {
   error?: string;
@@ -105,16 +105,14 @@ export async function findDeliveryStatus(
   form: FormData,
 ): Promise<DeliveryStatusState> {
   const supabase = await createSupabaseServerClient();
-  const { data, error } = await supabase.rpc("customer_delivery_status", {
-    p_access_token: (await cookies()).get("reyon_last_order")?.value ?? null,
-    p_order_reference: String(form.get("orderReference") ?? ""),
-    p_phone:
-      normalizeBangladeshPhone(String(form.get("phone") ?? "")) ??
-      String(form.get("phone") ?? ""),
+  const phone = normalizeBangladeshPhone(String(form.get("phone") ?? ""));
+  if (!phone) return { error: "Enter a valid Bangladesh mobile number." };
+  const { data, error } = await supabase.rpc("customer_orders_by_phone", {
+    p_phone: phone,
   });
-  if (error || !data)
-    return { error: "No delivery matched those order details." };
-  return { delivery: data as DeliveryStatusState["delivery"] };
+  if (error || !Array.isArray(data) || data.length === 0)
+    return { error: "No orders matched that phone number." };
+  return { deliveries: data as DeliveryStatusState["deliveries"] };
 }
 
 export async function findSalesDocuments(

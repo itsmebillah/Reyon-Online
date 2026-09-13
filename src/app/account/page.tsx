@@ -22,8 +22,8 @@ export default function Account() {
         <span>Order tracking</span>
         <h2>Track your delivery</h2>
         <p>
-          See REYON&apos;s recorded shipment status and reference. Live courier
-          location tracking is not currently provided.
+          Enter the phone number used at checkout to see your recent order
+          statuses. Live courier location tracking is not currently provided.
         </p>
         <DeliveryStatusForm />
       </section>

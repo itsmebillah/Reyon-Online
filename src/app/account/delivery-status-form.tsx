@@ -9,34 +9,40 @@ export function DeliveryStatusForm() {
     <>
       <form action={action} className="admin-form">
         <label>
-          <span>Order reference</span>
-          <input name="orderReference" required placeholder="RYN-2026-000001" />
-        </label>
-        <label>
-          <span>Checkout phone</span>
-          <input name="phone" type="tel" required autoComplete="tel" />
+          <span>Phone used for the order</span>
+          <input
+            name="phone"
+            type="tel"
+            required
+            autoComplete="tel"
+            placeholder="01712345678"
+          />
         </label>
         <button className="button button--primary" disabled={pending}>
-          {pending ? "Checking delivery…" : "Check delivery status"}
+          {pending ? "Checking orders…" : "Check my orders"}
         </button>
         {state.error && <p className="form-error">{state.error}</p>}
       </form>
-      {state.delivery && (
-        <article className="admin-module-card" aria-live="polite">
-          <span>{state.delivery.orderNumber}</span>
-          <h3>{state.delivery.status}</h3>
+      {state.deliveries?.map((delivery) => (
+        <article
+          className="admin-module-card"
+          aria-live="polite"
+          key={delivery.orderNumber}
+        >
+          <span>{delivery.orderNumber}</span>
+          <h3>{delivery.status}</h3>
           <p>
             Shipment reference:{" "}
-            {state.delivery.shipmentReference ?? "Not available yet"}
+            {delivery.shipmentReference ?? "Not available yet"}
           </p>
           <p>
             Last updated:{" "}
-            {state.delivery.updatedAt
-              ? new Date(state.delivery.updatedAt).toLocaleString("en-BD")
+            {delivery.updatedAt
+              ? new Date(delivery.updatedAt).toLocaleString("en-BD")
               : "Not available"}
           </p>
         </article>
-      )}
+      ))}
     </>
   );
 }
