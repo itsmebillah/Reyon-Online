@@ -61,13 +61,35 @@ button:focus-visible {
   margin-top: 9px;
 }
 .watch-logo-icon {
-  border: 1px solid currentColor;
   width: 36px;
   height: 45px;
   display: grid;
   place-items: center;
-  font-family: var(--serif);
-  font-size: 25px;
+}
+.watch-logo-icon svg {
+  width: 30px;
+  height: 40px;
+  overflow: visible;
+}
+.watch-logo-strap {
+  fill: #cda978;
+}
+.watch-logo-case {
+  fill: #fafbf9;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+.watch-logo-face {
+  fill: #182d3b;
+  stroke: #cda978;
+  stroke-width: 1.25;
+}
+.watch-logo-hands,
+.watch-logo-crown {
+  fill: none;
+  stroke: #cda978;
+  stroke-width: 1.5;
+  stroke-linecap: round;
 }
 .brand-logo--header {
   width: auto;
