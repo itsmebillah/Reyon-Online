@@ -25,7 +25,7 @@ export default async function Home() {
         />
         <Container>
           <div className="watch-hero-copy">
-            <p className="eyebrow">REYON / WATCHES / BANGLADESH</p>
+            <p className="eyebrow">REYON / WATCHES / EVERY DAY</p>
             <h1>
               Time, on
               <br />

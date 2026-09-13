@@ -22,7 +22,7 @@ export function ReyonLogo({ priority = false }: { priority?: boolean }) {
         </svg>
       </span>
       <span>
-        REYON<small>WATCHES / BANGLADESH</small>
+        REYON<small>WATCHES / EVERY DAY</small>
       </span>
     </span>
   );

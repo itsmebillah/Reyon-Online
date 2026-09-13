@@ -45,7 +45,7 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="announcement">
-        Watches for Bangladesh · Cash on Delivery available
+        Watches for every day · Cash on Delivery available
       </div>
       <Container className="nav-row">
         <button

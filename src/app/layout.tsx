@@ -7,12 +7,12 @@ import "./watch.css";
 export const metadata: Metadata = {
   metadataBase: new URL(businessConfig.productionUrl),
   title: {
-    default: "REYON — Watches in Bangladesh",
+    default: "REYON — Watches for every day",
     template: "%s | REYON",
   },
   description: businessConfig.positioning,
   openGraph: {
-    title: "REYON — Watches in Bangladesh",
+    title: "REYON — Watches for every day",
     description: businessConfig.positioning,
     type: "website",
     siteName: "REYON",

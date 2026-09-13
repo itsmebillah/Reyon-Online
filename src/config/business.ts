@@ -3,10 +3,10 @@ export const businessConfig = {
   businessName: "Reyon Online",
   industry: "Watches",
   businessModel: "Multi-brand online retailer",
-  primaryPositioning: "Watches for Bangladesh",
+  primaryPositioning: "Watches for every day",
   specialization: "Time, on your terms.",
   positioning:
-    "Watches for everyday moments and remarkable occasions. Explore REYON, your watch store in Bangladesh.",
+    "Watches for everyday moments and remarkable occasions. Explore the REYON collection.",
   locale: "en-BD",
   productionUrl: "https://reyon-online.vercel.app",
   contact: {

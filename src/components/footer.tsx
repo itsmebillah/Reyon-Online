@@ -14,7 +14,7 @@ export function Footer() {
             <p>
               Time, on your terms.
               <br />
-              Watches for Bangladesh.
+              Watches for every day.
             </p>
           </div>
           <div className="footer-group">

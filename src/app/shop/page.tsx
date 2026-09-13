@@ -8,7 +8,7 @@ import {
   type CatalogSort,
 } from "@/features/catalog";
 export const metadata: Metadata = {
-  title: "Shop watches in Bangladesh",
+  title: "Shop watches | REYON",
   description:
     "Explore watches by brand, movement, strap, price and style. Shop REYON in BDT with Cash on Delivery.",
   alternates: { canonical: "/shop" },
