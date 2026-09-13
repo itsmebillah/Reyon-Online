@@ -738,8 +738,20 @@ button:focus-visible {
     font-size: 24px;
     letter-spacing: 4px;
   }
-  .watch-logo-icon {
-    display: none;
+  .watch-wordmark-name {
+    font-size: 24px;
+    letter-spacing: 3px;
+  }
+  .watch-logo-icon--inline {
+    display: inline-grid;
+    width: 28px;
+    height: 28px;
+    margin-left: -2px;
+    margin-right: -2px;
+  }
+  .watch-logo-icon--inline svg {
+    width: 28px;
+    height: 28px;
   }
   .watch-wordmark small {
     font-size: 6px;
