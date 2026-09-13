@@ -21,8 +21,14 @@ export async function requestPasswordReset(
   const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
     redirectTo: redirectTo.toString(),
   });
-  if (error)
+  if (error) {
+    if (error.status === 429)
+      return {
+        error:
+          "Reset emails are temporarily rate limited. Please wait a few minutes before requesting another link, then check your inbox and spam folder.",
+      };
     return { error: "Unable to send a reset email. Please try again." };
+  }
   return {
     success: "If this email has admin access, a reset link is on its way.",
   };
