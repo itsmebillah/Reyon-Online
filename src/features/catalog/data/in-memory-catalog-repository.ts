@@ -2,6 +2,7 @@ import { cache } from "react";
 import { getSupabasePublicConfig } from "@/config/supabase";
 import type { CatalogRepository } from "../domain/catalog-repository";
 import type { CatalogProduct, CatalogQuery } from "../domain/catalog";
+
 export async function catalogRpc<T>(
   name: string,
   body: object = {},
@@ -20,33 +21,35 @@ export async function catalogRpc<T>(
     );
   return response.json() as Promise<T>;
 }
-const productBySlug = cache(
-  async (slug: string) =>
-    (
-      await catalogRpc<CatalogProduct[]>("watch_catalog", {
-        p_query: { slug, limit: 1 },
-      })
-    )[0],
-);
+
+const cleanProduct = (product: CatalogProduct): CatalogProduct => ({
+  ...product,
+  name: product.name.replace(/\s+Demo$/i, "").replace(/\s+[—-]\s*$/i, ""),
+  brand: {
+    ...product.brand,
+    name: product.brand.name.replace(/\s+Demo(?:\s+Collection)?$/i, ""),
+  },
+  content: {
+    ...product.content,
+    summary: product.content.summary.replace(
+      /^Demo catalog item for testing the REYON watch storefront\.?$/i,
+      "A considered REYON watch with clear specifications and dependable everyday wear.",
+    ),
+  },
+  media: { ...product.media, alt: product.media.alt.replace(/\s+demo$/i, "") },
+});
+
 const products = (query: CatalogQuery = {}) =>
   catalogRpc<CatalogProduct[]>("watch_catalog", { p_query: query }).then(
-    (items) =>
-      items.map((product) => ({
-        ...product,
-        name: product.name.replace(/\s+[â€”-]\s+Demo$/i, ""),
-        content: {
-          ...product.content,
-          summary: product.content.summary.replace(
-            /^Demo catalog item for testing the REYON watch storefront\.?$/i,
-            "A considered REYON watch with clear specifications and dependable everyday wear.",
-          ),
-        },
-        media: {
-          ...product.media,
-          alt: product.media.alt.replace(/\s+demo$/i, ""),
-        },
-      })),
+    (items) => items.map(cleanProduct),
   );
+const productBySlug = cache(async (slug: string) => {
+  const items = await catalogRpc<CatalogProduct[]>("watch_catalog", {
+    p_query: { slug, limit: 1 },
+  });
+  return items[0] ? cleanProduct(items[0]) : undefined;
+});
+
 export const catalogRepository: CatalogRepository = {
   listProducts: products,
   getProductBySlug: productBySlug,
