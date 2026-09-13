@@ -2,6 +2,7 @@ import { cache } from "react";
 import { getSupabasePublicConfig } from "@/config/supabase";
 import type { CatalogRepository } from "../domain/catalog-repository";
 import type { CatalogProduct, CatalogQuery } from "../domain/catalog";
+import { watchCategories } from "../domain/watch";
 
 export async function catalogRpc<T>(
   name: string,
@@ -53,7 +54,19 @@ const productBySlug = cache(async (slug: string) => {
 export const catalogRepository: CatalogRepository = {
   listProducts: products,
   getProductBySlug: productBySlug,
-  listCategories: () => catalogRpc("watch_categories"),
+  listCategories: async () => {
+    try {
+      return await catalogRpc("watch_categories");
+    } catch {
+      return watchCategories.map((category, index) => ({
+        id: category.slug,
+        slug: category.slug,
+        name: category.name,
+        description: category.description,
+        displayOrder: index,
+      }));
+    }
+  },
   listBrands: () => catalogRpc("watch_brands"),
   listCollection: (key) =>
     products(
