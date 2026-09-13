@@ -42,7 +42,9 @@ export async function listManagedProductMedia(): Promise<
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.rpc("admin_product_media");
   if (error || !data) throw new Error("Unable to load Product Media.");
-  return data as ManagedProductMedia[];
+  return (data as ManagedProductMedia[]).filter(
+    (product) => product.status !== "archived",
+  );
 }
 export async function listMediaLibrary(): Promise<
   readonly MediaLibraryAsset[]
