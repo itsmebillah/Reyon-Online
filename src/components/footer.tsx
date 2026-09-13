@@ -43,7 +43,7 @@ export function Footer() {
         </div>
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} REYON · Reyon Online</span>
-          <span>Prices in BDT / ? · Cash on Delivery available</span>
+          <span>Prices in BDT / &#2547; · Cash on Delivery available</span>
         </div>
       </Container>
     </footer>
