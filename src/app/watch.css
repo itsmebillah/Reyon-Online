@@ -6,6 +6,7 @@
 body {
   background: #fafbf9;
   color: #14212b;
+  text-rendering: optimizeLegibility;
 }
 .button {
   border-radius: 2px;

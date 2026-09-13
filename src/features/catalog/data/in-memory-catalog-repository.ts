@@ -11,7 +11,7 @@ export async function catalogRpc<T>(
     method: "POST",
     headers: { apikey: publishableKey, "Content-Type": "application/json" },
     body: JSON.stringify(body),
-    cache: "no-store",
+    next: { revalidate: 60, tags: ["watch-catalog", "watch-categories"] },
     signal: AbortSignal.timeout(10000),
   });
   if (!response.ok)
