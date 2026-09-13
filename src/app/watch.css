@@ -84,6 +84,12 @@ button:focus-visible {
   stroke: #cda978;
   stroke-width: 1.25;
 }
+.watch-logo-arc {
+  fill: none;
+  stroke: #cda978;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
 .watch-logo-ticks,
 .watch-logo-pin {
   fill: none;

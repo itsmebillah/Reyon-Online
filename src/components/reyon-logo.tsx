@@ -3,27 +3,16 @@ export function ReyonLogo({ priority = false }: { priority?: boolean }) {
   return (
     <span className="watch-wordmark" aria-label="REYON watches">
       <span className="watch-logo-icon" aria-hidden="true">
-        <svg viewBox="0 0 40 52" role="presentation">
-          <path
-            className="watch-logo-strap"
-            d="M14 0h12v12H14zM14 40h12v12H14z"
-          />
-          <rect
-            className="watch-logo-case"
-            x="5"
-            y="9"
-            width="30"
-            height="34"
-            rx="15"
-          />
-          <circle className="watch-logo-face" cx="20" cy="26" r="10" />
+        <svg viewBox="0 0 52 52" role="presentation">
+          <circle className="watch-logo-face" cx="25" cy="27" r="15" />
+          <path className="watch-logo-arc" d="M10 27a15 15 0 0 1 27-9" />
+          <path className="watch-logo-crown" d="M40 22h6v9h-6" />
+          <path className="watch-logo-hands" d="M25 27v-9M25 27l8 5" />
+          <circle className="watch-logo-pin" cx="25" cy="27" r="2.2" />
           <path
             className="watch-logo-ticks"
-            d="M20 18v2M20 32v2M12 26h2M26 26h2"
+            d="M25 14v3M25 37v3M12 27h3M35 27h3"
           />
-          <path className="watch-logo-hands" d="M20 26v-6M20 26l5 3" />
-          <circle className="watch-logo-pin" cx="20" cy="26" r="1.5" />
-          <path className="watch-logo-crown" d="M35 22h3v8h-3" />
         </svg>
       </span>
       <span>
