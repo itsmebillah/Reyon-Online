@@ -10,7 +10,12 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default function AdminLoginPage() {
+export default async function AdminLoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ next?: string }>;
+}) {
+  const { next } = await searchParams;
   return (
     <main className="admin-auth-page" id="main">
       <section className="admin-auth-card" aria-labelledby="admin-login-title">
@@ -21,7 +26,7 @@ export default function AdminLoginPage() {
           Sign in to manage REYON operations. Access is limited to explicitly
           authorized administrators.
         </p>
-        <LoginForm />
+        <LoginForm next={next} />
         <Link className="admin-return-link" href="/">
           Return to the REYON website
         </Link>

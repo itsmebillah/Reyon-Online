@@ -59,6 +59,7 @@ export async function loginAdmin(
 ): Promise<LoginState> {
   const email = formData.get("email");
   const password = formData.get("password");
+  const requestedNext = formData.get("next");
   if (typeof email !== "string" || typeof password !== "string")
     return { error: "Enter your email address and password." };
 
@@ -76,7 +77,15 @@ export async function loginAdmin(
     redirect("/admin/access-denied");
   }
 
-  redirect("/admin");
+  const destination =
+    typeof requestedNext === "string" &&
+    (requestedNext === "/pos" ||
+      requestedNext.startsWith("/pos/") ||
+      requestedNext === "/admin" ||
+      requestedNext.startsWith("/admin/"))
+      ? requestedNext
+      : "/admin";
+  redirect(destination);
 }
 
 export async function logoutAdmin() {

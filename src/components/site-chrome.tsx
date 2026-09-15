@@ -8,7 +8,8 @@ import { Header } from "@/components/header";
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/admin")) return <>{children}</>;
+  if (pathname.startsWith("/admin") || pathname.startsWith("/pos"))
+    return <>{children}</>;
 
   return (
     <>

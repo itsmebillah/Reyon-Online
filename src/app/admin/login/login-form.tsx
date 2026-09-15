@@ -6,11 +6,12 @@ import Link from "next/link";
 
 const initialState: LoginState = {};
 
-export function LoginForm() {
+export function LoginForm({ next = "/admin" }: { next?: string }) {
   const [state, action, pending] = useActionState(loginAdmin, initialState);
 
   return (
     <form action={action} className="admin-auth-form">
+      <input type="hidden" name="next" value={next} />
       <div>
         <label htmlFor="admin-email">Email address</label>
         <input
