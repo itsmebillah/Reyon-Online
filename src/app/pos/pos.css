@@ -130,13 +130,24 @@
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
 }
-.pos-sidebar__footer > strong {
+.pos-sidebar__identity {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+}
+.pos-sidebar__identity > strong {
   font-size: 11px;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.pos-sidebar__footer > small {
-  display: none;
+.pos-sidebar__identity > small {
+  color: #94a3b8;
+  font-size: 9px;
+}
+.pos-sidebar__footer form {
+  flex: 0 0 auto;
+  margin: 0;
 }
 .pos-sidebar__footer button,
 .pos-brand button {
@@ -150,6 +161,30 @@
   display: grid;
   place-items: center;
   cursor: pointer;
+}
+.pos-sidebar__footer .pos-sidebar-logout {
+  width: auto;
+  min-width: 34px;
+  padding: 0 9px;
+  display: flex;
+  gap: 6px;
+  color: #fecaca;
+  background: rgba(239, 68, 68, 0.13);
+}
+.pos-sidebar__footer .pos-sidebar-logout:hover {
+  color: #fff;
+  background: #b91c1c;
+}
+.pos-app--collapsed .pos-sidebar__footer {
+  flex-direction: column;
+  padding-inline: 10px;
+}
+.pos-app--collapsed .pos-sidebar-logout {
+  width: 34px;
+  padding: 0;
+}
+.pos-app--collapsed .pos-sidebar-logout span {
+  display: none;
 }
 .pos-sidebar-close,
 .pos-mobile-menu,
@@ -1047,6 +1082,17 @@
   }
   .pos-sidebar__footer > button {
     display: none;
+  }
+  .pos-app--collapsed .pos-sidebar__footer {
+    flex-direction: row;
+    padding: 13px;
+  }
+  .pos-app--collapsed .pos-sidebar-logout {
+    width: auto;
+    padding: 0 9px;
+  }
+  .pos-app--collapsed .pos-sidebar-logout span {
+    display: inline;
   }
   .pos-main,
   .pos-app--collapsed .pos-main {

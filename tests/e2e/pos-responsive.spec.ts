@@ -66,6 +66,7 @@ for (const width of viewports) {
           <div class="pos-brand"><strong>REYON</strong></div>
           <div class="pos-location"><span>Extremely Long Store Location Name That Must Fit</span></div>
           <nav class="pos-nav"><a class="active">Sales POS</a><a>Suppliers & purchasing</a></nav>
+          <div class="pos-sidebar__footer"><div class="pos-sidebar__identity"><strong>employee-with-a-long-email-address@example.com</strong><small>Secure Reyon session</small></div><form><button class="pos-sidebar-logout" aria-label="Logout"><span>Logout</span></button></form><button aria-label="Collapse sidebar">Collapse</button></div>
         </aside>
         <main class="pos-main">
           <div class="pos-page">
@@ -145,6 +146,7 @@ for (const width of viewports) {
       await expect(page.locator(".pos-sidebar")).not.toBeInViewport();
       await toggleClass(page, ".pos-sidebar", "pos-sidebar--open", true);
       await expectInsideViewport(page, ".pos-sidebar");
+      await expect(page.getByRole("button", { name: "Logout" })).toBeVisible();
       await toggleClass(page, ".pos-sidebar", "pos-sidebar--open", false);
       await toggleClass(
         page,
@@ -163,6 +165,7 @@ for (const width of viewports) {
     } else {
       await expect(page.locator(".pos-mobile-menu")).toBeHidden();
       await expect(page.locator(".pos-sidebar")).toBeInViewport();
+      await expect(page.getByRole("button", { name: "Logout" })).toBeVisible();
     }
 
     for (const modal of [

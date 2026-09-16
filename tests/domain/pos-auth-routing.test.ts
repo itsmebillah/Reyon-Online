@@ -79,3 +79,18 @@ test("every authenticated workspace exposes current-password verification", () =
   assert.match(action, /signInWithPassword/);
   assert.match(action, /updateUser\(\{ password \}\)/);
 });
+
+test("POS logout reuses the cookie-aware server sign-out action", () => {
+  const shell = source("src/features/pos/components/pos-shell.tsx");
+  const loginActions = source("src/app/admin/login/actions.ts");
+  const access = source("src/features/pos/data/pos-access.ts");
+  const proxy = source("src/lib/supabase/proxy.ts");
+  assert.match(shell, /import \{ logoutAdmin \}/);
+  assert.match(shell, /form action=\{logoutAdmin\}/);
+  assert.match(shell, /aria-label="Logout"/);
+  assert.match(loginActions, /export async function logoutAdmin/);
+  assert.match(loginActions, /await supabase\.auth\.signOut\(\)/);
+  assert.match(loginActions, /redirect\("\/admin\/login"\)/);
+  assert.match(access, /redirect\("\/admin\/login\?next=\/pos"\)/);
+  assert.match(proxy, /if \(!claims && !isPublicAdminRoute\)/);
+});

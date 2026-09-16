@@ -10,6 +10,7 @@ import {
   ChevronRight,
   LayoutDashboard,
   KeyRound,
+  LogOut,
   Menu,
   Package,
   ReceiptText,
@@ -24,6 +25,7 @@ import {
 } from "lucide-react";
 import type { PosContext } from "@/features/pos/types";
 import { selectPosLocation } from "@/features/pos/actions";
+import { logoutAdmin } from "@/app/admin/login/actions";
 
 const links = [
   ["/pos/dashboard", "Dashboard", LayoutDashboard, ["pos.access"]],
@@ -141,11 +143,22 @@ export function PosShell({
         </nav>
         <div className="pos-sidebar__footer">
           {!collapsed && (
-            <>
+            <div className="pos-sidebar__identity">
               <strong>{context.email}</strong>
               <small>Secure Reyon session</small>
-            </>
+            </div>
           )}
+          <form action={logoutAdmin}>
+            <button
+              className="pos-sidebar-logout"
+              type="submit"
+              title="Logout"
+              aria-label="Logout"
+            >
+              <LogOut size={17} />
+              <span>Logout</span>
+            </button>
+          </form>
           <button
             onClick={() => setCollapsed((value) => !value)}
             aria-label="Collapse sidebar"
