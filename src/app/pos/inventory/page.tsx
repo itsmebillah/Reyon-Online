@@ -1,11 +1,11 @@
 import {
   getSelectedPosLocation,
-  requirePosAccess,
+  requirePosCapability,
 } from "@/features/pos/data/pos-access";
 import { getPosCatalog } from "@/features/pos/data/pos-data";
 import { InventoryAdjustment } from "@/features/pos/components/inventory-adjustment";
 export default async function PosInventoryPage() {
-  const context = await requirePosAccess();
+  const context = await requirePosCapability("inventory.view");
   const location = await getSelectedPosLocation(context);
   const products = location ? await getPosCatalog(location.id) : [];
   return (

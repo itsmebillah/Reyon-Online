@@ -77,14 +77,40 @@ export async function loginAdmin(
     redirect("/admin/access-denied");
   }
 
-  const destination =
+  const { data: contextData, error: contextError } =
+    await supabase.rpc("pos_context");
+  const context = contextData as {
+    role: string;
+    capabilities: string[];
+  } | null;
+  if (contextError || !context) {
+    await supabase.auth.signOut();
+    redirect("/admin/access-denied");
+  }
+
+  const requestedPos =
     typeof requestedNext === "string" &&
-    (requestedNext === "/pos" ||
-      requestedNext.startsWith("/pos/") ||
-      requestedNext === "/admin" ||
-      requestedNext.startsWith("/admin/"))
+    (requestedNext === "/pos" || requestedNext.startsWith("/pos/"));
+  const requestedAdmin =
+    typeof requestedNext === "string" &&
+    (requestedNext === "/admin" || requestedNext.startsWith("/admin/"));
+  const hasPos = context.capabilities.includes("pos.access");
+  const hasAdminWorkspace = ["admin", "super-admin"].includes(context.role);
+  const destination = requestedPos
+    ? hasPos
       ? requestedNext
-      : "/admin";
+      : "/admin/access-denied"
+    : requestedAdmin
+      ? hasAdminWorkspace
+        ? requestedNext
+        : hasPos
+          ? "/pos/dashboard"
+          : "/admin/access-denied"
+      : hasAdminWorkspace
+        ? "/admin"
+        : hasPos
+          ? "/pos/dashboard"
+          : "/admin/access-denied";
   redirect(destination);
 }
 

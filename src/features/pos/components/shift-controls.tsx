@@ -9,9 +9,15 @@ import type { PosRegister, PosShift } from "@/features/pos/types";
 export function ShiftControls({
   register,
   openShift,
+  canOpen,
+  canClose,
+  canRecordCash,
 }: {
   register: PosRegister;
   openShift?: PosShift;
+  canOpen: boolean;
+  canClose: boolean;
+  canRecordCash: boolean;
 }) {
   const [cash, setCash] = useState(openShift ? "" : "0");
   const [note, setNote] = useState("");
@@ -29,27 +35,29 @@ export function ShiftControls({
           {Number(openShift.openingCash).toLocaleString()}.
         </p>
       )}
-      <div className="pos-fields">
-        <div className="pos-field">
-          <label>{openShift ? "Counted closing cash" : "Opening cash"}</label>
-          <input
-            type="number"
-            min="0"
-            value={cash}
-            onChange={(e) => setCash(e.target.value)}
-          />
-        </div>
-        {openShift && (
+      {(openShift ? canClose : canOpen) && (
+        <div className="pos-fields">
           <div className="pos-field">
-            <label>Closing note</label>
+            <label>{openShift ? "Counted closing cash" : "Opening cash"}</label>
             <input
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              placeholder="Optional variance note"
+              type="number"
+              min="0"
+              value={cash}
+              onChange={(e) => setCash(e.target.value)}
             />
           </div>
-        )}
-      </div>
+          {openShift && (
+            <div className="pos-field">
+              <label>Closing note</label>
+              <input
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                placeholder="Optional variance note"
+              />
+            </div>
+          )}
+        </div>
+      )}
       {status && (
         <p
           className={`pos-form-message ${status.startsWith("Saved") ? "success" : ""}`}
@@ -57,28 +65,35 @@ export function ShiftControls({
           {status}
         </p>
       )}
-      <button
-        className="pos-button"
-        disabled={busy}
-        onClick={async () => {
-          setBusy(true);
-          const result = openShift
-            ? await closePosShift({
-                shiftId: openShift.id,
-                closingCash: Number(cash),
-                note,
-              })
-            : await openPosShift({
-                registerId: register.id,
-                openingCash: Number(cash),
-              });
-          setBusy(false);
-          setStatus(result.error ?? "Saved. Refreshing shift state…");
-        }}
-      >
-        {busy ? "Saving…" : openShift ? "Close shift" : "Open shift"}
-      </button>
-      {openShift && (
+      {(openShift ? canClose : canOpen) ? (
+        <button
+          className="pos-button"
+          disabled={busy}
+          onClick={async () => {
+            setBusy(true);
+            const result = openShift
+              ? await closePosShift({
+                  shiftId: openShift.id,
+                  closingCash: Number(cash),
+                  note,
+                })
+              : await openPosShift({
+                  registerId: register.id,
+                  openingCash: Number(cash),
+                });
+            setBusy(false);
+            setStatus(result.error ?? "Saved. Refreshing shift state…");
+          }}
+        >
+          {busy ? "Saving…" : openShift ? "Close shift" : "Open shift"}
+        </button>
+      ) : (
+        <p className="pos-form-message">
+          Your account does not have permission to{" "}
+          {openShift ? "close" : "open"} this register.
+        </p>
+      )}
+      {openShift && canRecordCash && (
         <section className="pos-section" style={{ marginTop: 16 }}>
           <h3>Cash in / cash out</h3>
           <div className="pos-fields">

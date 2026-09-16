@@ -1,11 +1,11 @@
 import { SettingsForm } from "@/features/pos/components/settings-form";
 import {
   getSelectedPosLocation,
-  requirePosAccess,
+  requirePosCapability,
 } from "@/features/pos/data/pos-access";
 import { getPosSettings } from "@/features/pos/data/pos-data";
 export default async function PosSettingsPage() {
-  const context = await requirePosAccess();
+  const context = await requirePosCapability("settings.manage");
   const location = await getSelectedPosLocation(context);
   const settings = location ? await getPosSettings(location.id) : {};
   return (

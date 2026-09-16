@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requirePosAccess } from "@/features/pos/data/pos-access";
+import { requirePosCapability } from "@/features/pos/data/pos-access";
 
 const workflows = [
   {
@@ -32,8 +32,7 @@ const workflows = [
 ] as const;
 
 export default async function PosPurchasingPage() {
-  const context = await requirePosAccess();
-  const allowed = context.capabilities.includes("purchasing.manage");
+  await requirePosCapability("purchasing.manage");
 
   return (
     <div className="pos-page">
@@ -46,26 +45,17 @@ export default async function PosPurchasingPage() {
           </p>
         </div>
       </header>
-      {allowed ? (
-        <section className="pos-dashboard-grid">
-          {workflows.map((workflow) => (
-            <article className="pos-panel" key={workflow.href}>
-              <h2>{workflow.title}</h2>
-              <p>{workflow.description}</p>
-              <Link
-                className="pos-button pos-button--ghost"
-                href={workflow.href}
-              >
-                Open {workflow.title.toLowerCase()}
-              </Link>
-            </article>
-          ))}
-        </section>
-      ) : (
-        <section className="pos-panel pos-empty">
-          Purchasing operations require an administrator role.
-        </section>
-      )}
+      <section className="pos-dashboard-grid">
+        {workflows.map((workflow) => (
+          <article className="pos-panel" key={workflow.href}>
+            <h2>{workflow.title}</h2>
+            <p>{workflow.description}</p>
+            <Link className="pos-button pos-button--ghost" href={workflow.href}>
+              Open {workflow.title.toLowerCase()}
+            </Link>
+          </article>
+        ))}
+      </section>
     </div>
   );
 }

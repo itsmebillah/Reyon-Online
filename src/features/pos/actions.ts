@@ -191,10 +191,15 @@ export async function updatePosStaff(input: {
   return {};
 }
 
-export async function invitePosEmployee(input: {
+export async function createPosEmployee(input: {
+  name: string;
   email: string;
+  phone?: string;
+  password: string;
+  passwordConfirmation: string;
   locationId: string;
-  role: "admin" | "staff";
+  role: "staff";
+  active: boolean;
   capabilities: readonly string[];
 }): Promise<PosActionResult> {
   const context = await requirePosAccess();
@@ -205,36 +210,69 @@ export async function invitePosEmployee(input: {
     return { error: "Staff management permission required." };
   if (!input.email.includes("@"))
     return { error: "Enter a valid email address." };
+  if (!input.name.trim()) return { error: "Enter the employee name." };
+  if (input.password.length < 6)
+    return {
+      error: "The initial password must contain at least 6 characters.",
+    };
+  if (input.password !== input.passwordConfirmation)
+    return { error: "The passwords do not match." };
+  if (
+    input.capabilities.some(
+      (capability) => !context.capabilities.includes(capability),
+    )
+  )
+    return { error: "You cannot grant access that you do not hold." };
   try {
     const admin = createSupabaseAdminClient();
-    const origin =
-      process.env.NEXT_PUBLIC_SITE_URL ?? "https://reyon-online.vercel.app";
-    const redirectTo = new URL("/auth/callback", origin);
-    redirectTo.searchParams.set("next", "/admin/reset-password");
-    const { data, error } = await admin.auth.admin.inviteUserByEmail(
-      input.email.trim(),
-      { redirectTo: redirectTo.toString() },
-    );
+    const { data, error } = await admin.auth.admin.createUser({
+      email: input.email.trim().toLowerCase(),
+      password: input.password,
+      email_confirm: true,
+      user_metadata: {
+        full_name: input.name.trim(),
+        phone: input.phone?.trim() || null,
+      },
+    });
     if (error || !data.user)
-      return { error: error?.message ?? "Employee invitation failed." };
+      return {
+        error: /already|registered|exists/i.test(error?.message ?? "")
+          ? "An account already exists for this email address."
+          : (error?.message ?? "Employee account creation failed."),
+      };
     const supabase = await createSupabaseServerClient();
     const { error: accessError } = await supabase.rpc("pos_set_staff_access", {
       p_user_id: data.user.id,
       p_location_id: input.locationId,
       p_role: input.role,
-      p_active: true,
+      p_active: input.active,
       p_capabilities: input.capabilities,
     });
     if (accessError) {
       await admin.auth.admin.deleteUser(data.user.id);
       return { error: accessError.message };
     }
+    const { error: profileError } = await supabase.rpc(
+      "pos_set_staff_profile",
+      {
+        p_user_id: data.user.id,
+        p_location_id: input.locationId,
+        p_full_name: input.name.trim(),
+        p_phone: input.phone?.trim() || null,
+      },
+    );
+    if (profileError) {
+      await admin.auth.admin.deleteUser(data.user.id);
+      return { error: profileError.message };
+    }
     revalidatePath("/pos/employees");
     return {};
   } catch (error) {
     return {
       error:
-        error instanceof Error ? error.message : "Employee invitation failed.",
+        error instanceof Error
+          ? error.message
+          : "Employee account creation failed.",
     };
   }
 }

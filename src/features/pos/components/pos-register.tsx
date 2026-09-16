@@ -58,6 +58,7 @@ export function PosRegister({
   const [error, setError] = useState("");
   const [receipt, setReceipt] = useState<PosReceipt | null>(null);
   const [openingCash, setOpeningCash] = useState("0");
+  const canOpenShift = context.capabilities.includes("pos.open_shift");
   const storageKey = `reyon_pos_cart_${context.userId}_${location?.id ?? "none"}`;
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -260,35 +261,43 @@ export function PosRegister({
       </header>
       {!shiftId && (
         <section className="pos-panel" style={{ marginBottom: 18 }}>
-          <h2>Open {register.name}</h2>
-          <p>Count the starting cash drawer before the first sale.</p>
-          <div className="pos-toolbar">
-            <div className="pos-field">
-              <label>Opening cash</label>
-              <input
-                type="number"
-                min="0"
-                value={openingCash}
-                onChange={(event) => setOpeningCash(event.target.value)}
-              />
-            </div>
-            <button
-              className="pos-button"
-              disabled={busy}
-              onClick={async () => {
-                setBusy(true);
-                const result = await openPosShift({
-                  registerId: register.id,
-                  openingCash: Number(openingCash) || 0,
-                });
-                setBusy(false);
-                if (result.error) setError(result.error);
-                else if (result.data) setShiftId(result.data);
-              }}
-            >
-              Open shift
-            </button>
-          </div>
+          <h2>Register Closed</h2>
+          {canOpenShift ? (
+            <>
+              <p>Count the starting cash drawer before the first sale.</p>
+              <div className="pos-toolbar">
+                <div className="pos-field">
+                  <label>Opening cash</label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={openingCash}
+                    onChange={(event) => setOpeningCash(event.target.value)}
+                  />
+                </div>
+                <button
+                  className="pos-button"
+                  disabled={busy}
+                  onClick={async () => {
+                    setBusy(true);
+                    const result = await openPosShift({
+                      registerId: register.id,
+                      openingCash: Number(openingCash) || 0,
+                    });
+                    setBusy(false);
+                    if (result.error) setError(result.error);
+                    else if (result.data) setShiftId(result.data);
+                  }}
+                >
+                  Open Register / Start Shift
+                </button>
+              </div>
+            </>
+          ) : (
+            <p className="pos-form-message">
+              Your account does not have permission to open this register.
+            </p>
+          )}
           {error && <p className="pos-form-message">{error}</p>}
         </section>
       )}

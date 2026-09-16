@@ -20,7 +20,7 @@ export default async function ProtectedAdminLayout({
           <ReyonLogo />
           <span>Business OS</span>
         </Link>
-        <AdminNavigation />
+        <AdminNavigation capabilities={admin.capabilities} />
         <div className="admin-sidebar__account">
           <small>Signed in as</small>
           <span>

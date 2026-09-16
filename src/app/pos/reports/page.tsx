@@ -1,6 +1,6 @@
 import {
   getSelectedPosLocation,
-  requirePosAccess,
+  requirePosCapability,
 } from "@/features/pos/data/pos-access";
 import { getPosDashboard } from "@/features/pos/data/pos-data";
 type Tender = { method: string; amount: number };
@@ -17,7 +17,7 @@ export default async function PosReportsPage({
 }: {
   searchParams: Promise<{ from?: string; to?: string }>;
 }) {
-  const context = await requirePosAccess();
+  const context = await requirePosCapability("reports.financial");
   const location = await getSelectedPosLocation(context);
   const query = await searchParams;
   const from = query.from ? `${query.from}T00:00:00+06:00` : undefined;

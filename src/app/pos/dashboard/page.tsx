@@ -29,9 +29,11 @@ export default async function PosDashboardPage() {
           <h1>Dashboard</h1>
           <p>Today at {location?.name ?? "your POS location"}</p>
         </div>
-        <Link className="pos-button" href="/pos">
-          <ShoppingCart size={17} /> New sale
-        </Link>
+        {context.capabilities.includes("pos.checkout") && (
+          <Link className="pos-button" href="/pos">
+            <ShoppingCart size={17} /> New sale
+          </Link>
+        )}
       </header>
       <section className="pos-stats">
         <article className="pos-stat">
@@ -52,26 +54,34 @@ export default async function PosDashboardPage() {
         </article>
       </section>
       <section className="pos-action-grid">
-        <Link className="pos-action-card" href="/pos/sales">
-          <ReceiptText />
-          <h2>Sales history</h2>
-          <p>Find, inspect, reprint and return physical-POS sales.</p>
-        </Link>
-        <Link className="pos-action-card" href="/pos/inventory">
-          <Boxes />
-          <h2>Inventory</h2>
-          <p>Shared live stock from Reyon’s canonical ledger.</p>
-        </Link>
-        <Link className="pos-action-card" href="/pos/reports">
-          <BarChart3 />
-          <h2>Reports</h2>
-          <p>Revenue, tenders, products, cashiers and channels.</p>
-        </Link>
-        <Link className="pos-action-card" href="/pos/customers">
-          <Users />
-          <h2>Customers</h2>
-          <p>Customer search and POS sales associations.</p>
-        </Link>
+        {context.capabilities.includes("pos.access") && (
+          <Link className="pos-action-card" href="/pos/sales">
+            <ReceiptText />
+            <h2>Sales history</h2>
+            <p>Find, inspect and reprint physical-POS sales.</p>
+          </Link>
+        )}
+        {context.capabilities.includes("inventory.view") && (
+          <Link className="pos-action-card" href="/pos/inventory">
+            <Boxes />
+            <h2>Inventory</h2>
+            <p>Shared live stock from Reyon’s canonical ledger.</p>
+          </Link>
+        )}
+        {context.capabilities.includes("reports.financial") && (
+          <Link className="pos-action-card" href="/pos/reports">
+            <BarChart3 />
+            <h2>Reports</h2>
+            <p>Revenue, tenders, products, cashiers and channels.</p>
+          </Link>
+        )}
+        {context.capabilities.includes("customers.manage") && (
+          <Link className="pos-action-card" href="/pos/customers">
+            <Users />
+            <h2>Customers</h2>
+            <p>Customer search and POS sales associations.</p>
+          </Link>
+        )}
       </section>
     </div>
   );

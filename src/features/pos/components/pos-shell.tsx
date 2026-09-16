@@ -10,6 +10,7 @@ import {
   ChevronRight,
   ClipboardList,
   LayoutDashboard,
+  KeyRound,
   Menu,
   Package,
   ReceiptText,
@@ -26,18 +27,24 @@ import type { PosContext } from "@/features/pos/types";
 import { selectPosLocation } from "@/features/pos/actions";
 
 const links = [
-  ["/pos/dashboard", "Dashboard", LayoutDashboard],
-  ["/pos", "Sales POS", ShoppingCart],
-  ["/pos/sales", "Sales & invoices", ReceiptText],
-  ["/pos/returns", "Returns", RotateCcw],
-  ["/pos/products", "Products", Package],
-  ["/pos/inventory", "Inventory", Boxes],
-  ["/pos/purchasing", "Suppliers & purchasing", Truck],
-  ["/pos/customers", "Customers", Users],
-  ["/pos/shifts", "Register & shifts", ClipboardList],
-  ["/pos/reports", "Reports", BarChart3],
-  ["/pos/employees", "Employees", UserRoundCog],
-  ["/pos/settings", "Store settings", Settings],
+  ["/pos/dashboard", "Dashboard", LayoutDashboard, ["pos.access"]],
+  ["/pos", "Sales POS", ShoppingCart, ["pos.checkout"]],
+  ["/pos/sales", "Sales & invoices", ReceiptText, ["pos.access"]],
+  ["/pos/returns", "Returns", RotateCcw, ["pos.refund"]],
+  ["/pos/products", "Products", Package, ["inventory.view"]],
+  ["/pos/inventory", "Inventory", Boxes, ["inventory.view"]],
+  ["/pos/purchasing", "Suppliers & purchasing", Truck, ["purchasing.manage"]],
+  ["/pos/customers", "Customers", Users, ["customers.manage"]],
+  [
+    "/pos/shifts",
+    "Register & shifts",
+    ClipboardList,
+    ["pos.open_shift", "pos.close_shift", "pos.cash_event"],
+  ],
+  ["/pos/reports", "Reports", BarChart3, ["reports.financial"]],
+  ["/pos/employees", "Employees", UserRoundCog, ["staff.manage"]],
+  ["/pos/settings", "Store settings", Settings, ["settings.manage"]],
+  ["/pos/account", "Account & password", KeyRound, ["pos.access"]],
 ] as const;
 
 export function PosShell({
@@ -114,24 +121,30 @@ export function PosShell({
           </div>
         )}
         <nav className="pos-nav" aria-label="POS navigation">
-          {links.map(([href, label, Icon]) => {
-            const active =
-              href === "/pos"
-                ? pathname === href || pathname === "/pos/register"
-                : pathname.startsWith(href);
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={active ? "active" : ""}
-                title={label}
-                onClick={() => setOpen(false)}
-              >
-                <Icon size={19} />
-                {!collapsed && <span>{label}</span>}
-              </Link>
-            );
-          })}
+          {links
+            .filter(([, , , required]) =>
+              required.some((capability) =>
+                context.capabilities.includes(capability),
+              ),
+            )
+            .map(([href, label, Icon]) => {
+              const active =
+                href === "/pos"
+                  ? pathname === href || pathname === "/pos/register"
+                  : pathname.startsWith(href);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={active ? "active" : ""}
+                  title={label}
+                  onClick={() => setOpen(false)}
+                >
+                  <Icon size={19} />
+                  {!collapsed && <span>{label}</span>}
+                </Link>
+              );
+            })}
         </nav>
         <div className="pos-sidebar__footer">
           {!collapsed && (

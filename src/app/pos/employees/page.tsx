@@ -1,21 +1,23 @@
 import { StaffTable } from "@/features/pos/components/staff-table";
 import {
   getSelectedPosLocation,
-  requirePosAccess,
+  requirePosCapability,
 } from "@/features/pos/data/pos-access";
 import { getPosStaff } from "@/features/pos/data/pos-data";
 type Staff = {
   userId: string;
+  name: string;
   email: string;
+  phone: string | null;
   role: string;
   active: boolean;
   assigned: boolean;
   capabilities: string[];
 };
 export default async function PosEmployeesPage() {
-  const context = await requirePosAccess();
+  const context = await requirePosCapability("staff.manage");
   const location = await getSelectedPosLocation(context);
-  const staff = (location && context.capabilities.includes("staff.manage")
+  const staff = (location
     ? await getPosStaff(location.id)
     : []) as unknown as Staff[];
   return (
@@ -28,11 +30,13 @@ export default async function PosEmployeesPage() {
           </p>
         </div>
       </header>
-      {location && context.capabilities.includes("staff.manage") ? (
+      {location ? (
         <StaffTable
           locationId={location.id}
+          locations={context.locations}
           staff={staff}
           allCapabilities={context.capabilities}
+          canManageAdministrators={context.role === "super-admin"}
         />
       ) : (
         <section className="pos-panel pos-empty">

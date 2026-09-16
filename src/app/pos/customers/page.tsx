@@ -1,7 +1,7 @@
 import { Search } from "lucide-react";
 import {
   getSelectedPosLocation,
-  requirePosAccess,
+  requirePosCapability,
 } from "@/features/pos/data/pos-access";
 import { getPosCustomers } from "@/features/pos/data/pos-data";
 type Customer = {
@@ -17,7 +17,7 @@ export default async function PosCustomersPage({
 }: {
   searchParams: Promise<{ q?: string }>;
 }) {
-  const context = await requirePosAccess();
+  const context = await requirePosCapability("customers.manage");
   const location = await getSelectedPosLocation(context);
   const { q = "" } = await searchParams;
   const customers = (location

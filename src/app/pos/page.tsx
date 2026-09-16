@@ -1,7 +1,7 @@
 import { PosRegister } from "@/features/pos/components/pos-register";
 import {
   getSelectedPosLocation,
-  requirePosAccess,
+  requirePosCapability,
 } from "@/features/pos/data/pos-access";
 import {
   getPosCatalog,
@@ -10,7 +10,7 @@ import {
 } from "@/features/pos/data/pos-data";
 
 export default async function PosPage() {
-  const context = await requirePosAccess();
+  const context = await requirePosCapability("pos.checkout");
   const location = await getSelectedPosLocation(context);
   const [products, shifts, settings] = location
     ? await Promise.all([

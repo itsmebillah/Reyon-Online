@@ -141,6 +141,157 @@ test("staff capabilities default safely and support explicit denial", async () =
   }
 });
 
+test("POS reads and commands reject an unassigned location", async () => {
+  const db = await database();
+  try {
+    const admin = "33333333-3333-4333-8333-333333333333";
+    await db.query(
+      "insert into auth.users(id,email) values($1,'location-staff@example.invalid')",
+      [admin],
+    );
+    await db.query(
+      "insert into access.admin_memberships(user_id,role_key) values($1,'staff')",
+      [admin],
+    );
+    const organizationId = (
+      await db.query(
+        "select id from organization.organizations where code='reyon-online'",
+      )
+    ).rows[0].id;
+    const secondLocation = (
+      await db.query(
+        `insert into organization.locations(organization_id,code,display_name,kind_key)
+         values($1,'second-store','Second Store','store') returning id`,
+        [organizationId],
+      )
+    ).rows[0].id;
+    const secondRegister = (
+      await db.query(
+        `insert into pos.registers(organization_id,location_id,code,display_name)
+         values($1,$2,'second-register','Second Register') returning id`,
+        [organizationId, secondLocation],
+      )
+    ).rows[0].id;
+    await authenticate(db, admin);
+    assert.equal(
+      (
+        await db.query("select public.pos_catalog($1,null) value", [
+          secondLocation,
+        ])
+      ).rows[0].value,
+      null,
+    );
+    await assert.rejects(
+      db.query("select public.pos_open_shift($1,0)", [secondRegister]),
+      /permission required/,
+    );
+  } finally {
+    await db.close();
+  }
+});
+
+test("staff administration is location scoped and cannot escalate privileges", async () => {
+  const db = await database();
+  try {
+    const manager = "44444444-4444-4444-8444-444444444441";
+    const employee = "44444444-4444-4444-8444-444444444442";
+    const remoteEmployee = "44444444-4444-4444-8444-444444444443";
+    const administrator = "44444444-4444-4444-8444-444444444444";
+    await db.query(
+      `insert into auth.users(id,email) values
+       ($1,'manager@example.invalid'),($2,'employee@example.invalid'),
+       ($3,'remote@example.invalid'),($4,'administrator@example.invalid')`,
+      [manager, employee, remoteEmployee, administrator],
+    );
+    await db.query(
+      `insert into access.admin_memberships(user_id,role_key) values
+       ($1,'staff'),($2,'staff'),($3,'staff'),($4,'admin')`,
+      [manager, employee, remoteEmployee, administrator],
+    );
+    const organizationId = (
+      await db.query(
+        "select id from organization.organizations where code='reyon-online'",
+      )
+    ).rows[0].id;
+    const mainLocation = (
+      await db.query(
+        "select id from organization.locations where organization_id=$1 and code='main-inventory'",
+        [organizationId],
+      )
+    ).rows[0].id;
+    const secondLocation = (
+      await db.query(
+        `insert into organization.locations(organization_id,code,display_name,kind_key)
+         values($1,'remote-store','Remote Store','store') returning id`,
+        [organizationId],
+      )
+    ).rows[0].id;
+    await db.query(
+      "delete from access.member_location_assignments where user_id=$1",
+      [remoteEmployee],
+    );
+    await db.query(
+      `insert into access.member_location_assignments(user_id,location_id)
+       values($1,$2)`,
+      [remoteEmployee, secondLocation],
+    );
+    await db.query(
+      `insert into access.member_capability_overrides(user_id,capability_key,is_granted)
+       values($1,'staff.manage',true)`,
+      [manager],
+    );
+
+    await authenticate(db, manager);
+    await db.query(
+      "select public.pos_set_staff_profile($1,$2,'Example Employee','01700000000')",
+      [employee, mainLocation],
+    );
+    const staff = (
+      await db.query("select public.pos_staff($1) value", [mainLocation])
+    ).rows[0].value;
+    const employeeRecord = staff.find((member) => member.userId === employee);
+    assert.equal(employeeRecord.name, "Example Employee");
+    assert.equal(employeeRecord.phone, "01700000000");
+    assert.ok(!staff.some((member) => member.userId === remoteEmployee));
+    assert.ok(!staff.some((member) => member.userId === administrator));
+    assert.equal(
+      Number(
+        (
+          await db.query(
+            `select count(*) count from information_schema.columns
+             where table_schema='access' and table_name='employee_profiles'
+               and column_name ilike '%password%'`,
+          )
+        ).rows[0].count,
+      ),
+      0,
+    );
+    await assert.rejects(
+      db.query(
+        "select public.pos_set_staff_access($1,$2,'staff',true,$3::jsonb)",
+        [employee, mainLocation, JSON.stringify(["settings.manage"])],
+      ),
+      /cannot grant a capability/,
+    );
+    await assert.rejects(
+      db.query(
+        "select public.pos_set_staff_access($1,$2,'admin',true,'[]'::jsonb)",
+        [employee, mainLocation],
+      ),
+      /Only a Super Admin can assign administrator roles/,
+    );
+    await assert.rejects(
+      db.query(
+        "select public.pos_set_staff_access($1,$2,'staff',true,'[]'::jsonb)",
+        [administrator, mainLocation],
+      ),
+      /Only a Super Admin can manage administrator accounts/,
+    );
+  } finally {
+    await db.close();
+  }
+});
+
 test("POS CSV import is atomic, canonical and idempotent", async () => {
   const db = await database();
   try {

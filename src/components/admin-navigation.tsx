@@ -18,6 +18,8 @@ import {
   Handshake,
   ShoppingBasket,
   Landmark,
+  Store,
+  KeyRound,
 } from "lucide-react";
 
 const groups = [
@@ -54,12 +56,31 @@ const groups = [
       { label: "Accounts", href: "/admin/accounts", icon: Landmark },
     ],
   },
+  {
+    label: "Account",
+    items: [
+      { label: "Change password", href: "/admin/account", icon: KeyRound },
+    ],
+  },
 ] as const;
-export function AdminNavigation() {
+export function AdminNavigation({
+  capabilities,
+}: {
+  capabilities: readonly string[];
+}) {
   const pathname = usePathname();
+  const visibleGroups = capabilities.includes("pos.access")
+    ? [
+        {
+          label: "Point of sale",
+          items: [{ label: "Open POS", href: "/pos/dashboard", icon: Store }],
+        },
+        ...groups,
+      ]
+    : groups;
   return (
     <nav className="admin-sidebar__nav" aria-label="Business OS modules">
-      {groups.map((group) => (
+      {visibleGroups.map((group) => (
         <div className="admin-nav-group" key={group.label}>
           <p>{group.label}</p>
           {group.items.map((item) => {

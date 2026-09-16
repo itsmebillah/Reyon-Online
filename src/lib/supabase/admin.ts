@@ -6,7 +6,7 @@ export function createSupabaseAdminClient() {
   const secret = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!secret)
     throw new Error(
-      "SUPABASE_SERVICE_ROLE_KEY is required on the server for employee invitations.",
+      "SUPABASE_SERVICE_ROLE_KEY is required on the server for employee account administration.",
     );
   return createClient(getSupabasePublicConfig().url, secret, {
     auth: { autoRefreshToken: false, persistSession: false },

@@ -1,6 +1,7 @@
 import "server-only";
-import { redirect } from "next/navigation";
+import { forbidden, redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import type { PosContext } from "@/features/pos/types";
 
 export async function requireReyonAdmin() {
   const supabase = await createSupabaseServerClient();
@@ -14,5 +15,17 @@ export async function requireReyonAdmin() {
     await supabase.rpc("is_reyon_admin");
   if (authorizationError || !isAdmin) redirect("/admin/access-denied");
 
-  return { userId: claims.sub, email: claims.email } as const;
+  const { data: contextData, error: contextError } =
+    await supabase.rpc("pos_context");
+  const context = contextData as PosContext | null;
+  if (contextError || !context) forbidden();
+  if (context.role === "staff") forbidden();
+
+  return {
+    userId: claims.sub,
+    email: claims.email,
+    role: context.role,
+    capabilities: context.capabilities,
+    locations: context.locations,
+  } as const;
 }

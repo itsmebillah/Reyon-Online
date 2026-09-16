@@ -1,5 +1,5 @@
 import "server-only";
-import { redirect } from "next/navigation";
+import { forbidden, redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { PosContext } from "@/features/pos/types";
@@ -14,6 +14,19 @@ export async function requirePosAccess(): Promise<PosContext> {
   const context = data as PosContext | null;
   if (error || !context || !context.capabilities.includes("pos.access"))
     redirect("/admin/access-denied");
+  return context;
+}
+
+export async function requirePosCapability(
+  ...capabilities: readonly string[]
+): Promise<PosContext> {
+  const context = await requirePosAccess();
+  if (
+    !capabilities.some((capability) =>
+      context.capabilities.includes(capability),
+    )
+  )
+    forbidden();
   return context;
 }
 

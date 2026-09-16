@@ -1,11 +1,15 @@
 import { ShiftControls } from "@/features/pos/components/shift-controls";
 import {
   getSelectedPosLocation,
-  requirePosAccess,
+  requirePosCapability,
 } from "@/features/pos/data/pos-access";
 import { getPosShifts } from "@/features/pos/data/pos-data";
 export default async function PosShiftsPage() {
-  const context = await requirePosAccess();
+  const context = await requirePosCapability(
+    "pos.open_shift",
+    "pos.close_shift",
+    "pos.cash_event",
+  );
   const location = await getSelectedPosLocation(context);
   const register = location?.registers[0];
   const shifts = location ? await getPosShifts(location.id) : [];
@@ -23,7 +27,15 @@ export default async function PosShiftsPage() {
           <span className="pos-badge pos-badge--danger">Closed</span>
         )}
       </header>
-      {register && <ShiftControls register={register} openShift={open} />}
+      {register && (
+        <ShiftControls
+          register={register}
+          openShift={open}
+          canOpen={context.capabilities.includes("pos.open_shift")}
+          canClose={context.capabilities.includes("pos.close_shift")}
+          canRecordCash={context.capabilities.includes("pos.cash_event")}
+        />
+      )}
       <section className="pos-panel pos-table-wrap" style={{ marginTop: 16 }}>
         <table className="pos-table">
           <thead>

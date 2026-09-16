@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {
   getSelectedPosLocation,
-  requirePosAccess,
+  requirePosCapability,
 } from "@/features/pos/data/pos-access";
 import { getPosCatalog } from "@/features/pos/data/pos-data";
 import { BarcodeLabels } from "@/features/pos/components/barcode-labels";
@@ -9,7 +9,7 @@ import { ProductCsvImport } from "@/features/pos/components/product-csv-import";
 import { getProductOptions } from "@/features/catalog/data/product-management";
 import { listMediaLibrary } from "@/features/catalog/data/product-media-management";
 export default async function PosProductsPage() {
-  const context = await requirePosAccess();
+  const context = await requirePosCapability("inventory.view");
   const location = await getSelectedPosLocation(context);
   const canManage = context.capabilities.includes("catalog.manage");
   const [products, options, assets] = await Promise.all([
