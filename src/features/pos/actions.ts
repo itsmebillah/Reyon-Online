@@ -91,7 +91,6 @@ export async function completePosSale(input: {
   idempotencyKey: string;
   locationId: string;
   registerId: string;
-  shiftId: string;
   items: readonly { variantId: string; quantity: number }[];
   discountType: "FIXED" | "PERCENT";
   discountValue: number;

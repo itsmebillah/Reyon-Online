@@ -66,10 +66,7 @@ async function posSession(db, admin) {
     .value;
   const location = context.locations[0];
   const register = location.registers[0];
-  const shiftId = (
-    await db.query("select public.pos_open_shift($1,1000) value", [register.id])
-  ).rows[0].value;
-  return { context, location, register, shiftId };
+  return { context, location, register };
 }
 
 function saleRequest(session, variantId, key, quantity = 1) {
@@ -77,7 +74,6 @@ function saleRequest(session, variantId, key, quantity = 1) {
     idempotencyKey: key,
     locationId: session.location.id,
     registerId: session.register.id,
-    shiftId: session.shiftId,
     items: [{ variantId, quantity }],
     discountType: "FIXED",
     discountValue: 100,
@@ -136,6 +132,23 @@ test("staff capabilities default safely and support explicit denial", async () =
     const denied = (await db.query("select public.pos_context() value")).rows[0]
       .value;
     assert.ok(!denied.capabilities.includes("pos.checkout"));
+    await assert.rejects(
+      db.query("select public.pos_checkout($1::jsonb)", [
+        JSON.stringify({
+          idempotencyKey: "checkout-capability-denied",
+          locationId: context.locations[0].id,
+          registerId: context.locations[0].registers[0].id,
+          items: [
+            {
+              variantId: "99999999-9999-4999-8999-999999999999",
+              quantity: 1,
+            },
+          ],
+          tenders: [],
+        }),
+      ]),
+      /POS checkout permission required/,
+    );
   } finally {
     await db.close();
   }
@@ -363,7 +376,7 @@ test("POS CSV import is atomic, canonical and idempotent", async () => {
   }
 });
 
-test("POS checkout is canonical, transactional, receipted and idempotent", async () => {
+test("POS checkout needs no shift and remains canonical, transactional and idempotent", async () => {
   const db = await database();
   try {
     const { vid, admin } = await seedWatch(db);
@@ -386,6 +399,15 @@ test("POS checkout is canonical, transactional, receipted and idempotent", async
     assert.equal(first.total, 2400);
     assert.equal(first.change, 100);
     await db.exec("reset role");
+    assert.equal(
+      (
+        await db.query(
+          "select shift_id from pos.sale_details where order_id=$1",
+          [first.orderId],
+        )
+      ).rows[0].shift_id,
+      null,
+    );
     assert.equal(
       Number(
         (
@@ -412,6 +434,26 @@ test("POS checkout is canonical, transactional, receipted and idempotent", async
         (
           await db.query(
             "select count(*) count from accounting.journal_entries where source_namespace='completed-sale'",
+          )
+        ).rows[0].count,
+      ),
+      1,
+    );
+    assert.equal(
+      Number(
+        (
+          await db.query(
+            "select count(*) count from payments.payment_records where source_namespace='physical-pos'",
+          )
+        ).rows[0].count,
+      ),
+      1,
+    );
+    assert.equal(
+      Number(
+        (
+          await db.query(
+            "select count(*) count from inventory.movements where idempotency_key='pos-stock:pos-idempotency-test'",
           )
         ).rows[0].count,
       ),

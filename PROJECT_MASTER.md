@@ -23,7 +23,7 @@
 | Payments                       | Implemented as evidence        | Cash, card, mobile, bank-transfer, split tender, change, and due evidence are represented. No new automatic external gateway was added.                                                   |
 | Barcode                        | Implemented and locally tested | Code 128 generation, search, keyboard-wedge scanning, browser camera scanning, labels, and printing. Hardware live testing is pending.                                                    |
 | Employees                      | Implemented                    | Direct Supabase Auth account creation plus profile, capability, location, activation, and deactivation management. Live account-creation testing is pending.                              |
-| Registers and shifts           | Implemented                    | Register, opening cash, cash in/out, closing cash, expected cash, variance, and history.                                                                                                  |
+| Registers and shifts           | Implemented but frozen         | Schema, functions, capabilities, components, and history are preserved; active shifts are temporarily not required for selling.                                                           |
 | Reports                        | Partially implemented          | Sales, revenue, discounts, tax, due, tender, product, cashier, channel, and date-range views. Profit, inventory, customer, and export reports are not implemented in the POS report page. |
 | Database                       | Migrated in production         | `20260915100000_pos_operating_foundation.sql` is present in local and remote migration history.                                                                                           |
 | Automated tests                | Passing                        | Formatting, lint, types, 44 domain tests, 9 database tests, 3 responsive POS browser tests, and production build passed at implementation handoff.                                        |
@@ -112,7 +112,7 @@ The correct description is: **a native Reyon implementation of the Autopilot-ins
 
 | Route             | Current purpose                                                     | Important limitation/boundary                                                                            |
 | ----------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `/pos`            | Main sales register                                                 | Requires authenticated POS access and an open shift for checkout.                                        |
+| `/pos`            | Main sales register                                                 | Requires authenticated `pos.access` and `pos.checkout`; no active shift is currently required.           |
 | `/pos/register`   | Alias that redirects to `/pos`                                      | No independent register implementation.                                                                  |
 | `/pos/dashboard`  | Today's location POS summary and navigation                         | Financial values require `reports.financial`.                                                            |
 | `/pos/sales`      | Searchable POS sales and invoice history                            | POS-originated sales only.                                                                               |
@@ -122,7 +122,7 @@ The correct description is: **a native Reyon implementation of the Autopilot-ins
 | `/pos/inventory`  | Location stock position and authorized manual movements             | Purchasing receipts also remain available through canonical purchasing workflows.                        |
 | `/pos/purchasing` | POS-styled hub for suppliers, POs, receiving, returns, and payments | Links to existing protected admin modules rather than duplicating them.                                  |
 | `/pos/customers`  | Search and POS sales/spend summary                                  | New customer creation occurs during checkout when a phone is supplied; no standalone POS profile editor. |
-| `/pos/shifts`     | Register opening, cash events, closing, variance, history           | One open shift per register is enforced in the database.                                                 |
+| `/pos/shifts`     | Preserved shift history and frozen-feature notice                   | Opening, cash events, and closing controls are hidden until a future phase.                              |
 | `/pos/reports`    | Date-range sales and tender reporting                               | No export, profit, inventory, or customer report UI yet.                                                 |
 | `/pos/employees`  | Create employee accounts and manage access                          | Account creation needs the server-only Supabase service-role environment variable.                       |
 | `/pos/account`    | Change the authenticated employee's password                        | Current-password verification is required; the user signs in again after a successful change.            |
@@ -281,6 +281,8 @@ Implemented:
 
 Register creation/editing and multi-register administration UI are not implemented in the POS settings page.
 
+**Register/Shift functionality is implemented architecturally but temporarily frozen. Current POS operation does not require an active shift. Shift/cash-session functionality is reserved for a future phase.** Existing shift tables, functions, capability keys, components, and historical records remain intact. New sales retain their register association while `shift_id` is null during the freeze.
+
 ### 5.10 Reports
 
 Implemented in `/pos/reports`:
@@ -395,7 +397,7 @@ Public authenticated RPC surface:
 1. Requires an authenticated caller and idempotency key.
 2. Returns the existing receipt for a successful retry.
 3. Checks `pos.checkout` for the selected location.
-4. Validates register ownership and an open shift.
+4. Validates register ownership. Active-shift validation is temporarily frozen.
 5. Aggregates requested variants in deterministic UUID order.
 6. Locks canonical `inventory.stock_items` rows with `FOR UPDATE`.
 7. Reloads published products, location stock position, and `physical-pos` price with `website` fallback.
@@ -634,15 +636,13 @@ Use controlled test products, a dedicated test employee, approved financial conf
 - [ ] Exercise password reset/change.
 - [ ] Confirm a non-super-admin cannot improperly grant super-admin access.
 
-### Registers and Shifts
+### Registers and Shifts — Future/Pending
 
-- [ ] Open register with opening cash.
-- [ ] Confirm a second open shift on the same register is rejected.
-- [ ] Complete cash and non-cash sales.
-- [ ] Record cash-in and cash-out with reasons.
-- [ ] Close with counted cash.
-- [ ] Verify expected cash and variance.
-- [ ] Verify shift operator, sales, and history.
+- [ ] Re-enable shift enforcement through an additive migration and explicit feature decision.
+- [ ] Restore the hidden shift navigation and operating controls.
+- [ ] Open register with opening cash and confirm duplicate-open rejection.
+- [ ] Record cash-in/cash-out, close with counted cash, and verify variance/history.
+- [ ] Confirm future shift-linked sales while retaining compatibility with unshifted sales from this frozen phase.
 
 ### Reports
 
@@ -680,7 +680,7 @@ At each size verify navigation, product grid, cart access, checkout modal, tende
 ### P0 — Required Before Production Confidence
 
 1. Authenticate GitHub and push the current `main`, then verify remote commit identity and CI.
-2. Execute and record the authenticated live test plan above, including a controlled sale, rollback-safe correction plan, shift, receipt, and stock evidence.
+2. Execute and record the authenticated live test plan above, including a controlled shift-free sale, rollback-safe correction plan, receipt, and stock evidence.
 3. Perform full role/capability/location tests against production-safe test users, including privilege-escalation and cross-location denial.
 4. Perform a focused production security review of every POS security-definer RPC, employee creation flow, service-role usage, and report scope.
 5. Validate live POS-versus-website concurrency using controlled final-unit stock.
@@ -690,7 +690,7 @@ At each size verify navigation, product grid, cart access, checkout modal, tende
 
 ### P1 — Important Hardening
 
-1. Add authenticated end-to-end tests for register, checkout, shifts, staff, reports, returns, and settings.
+1. Add authenticated end-to-end tests for register, shift-free checkout, staff, reports, returns, and settings.
 2. Add production observability for RPC failures, idempotency conflicts, stock rejection, accounting exceptions, and account-creation failures without logging secrets or customer-sensitive data.
 3. Review channel-comparison report scope for multi-organization and multi-location safety.
 4. Add explicit report timezone/date-boundary contract tests.
@@ -707,6 +707,7 @@ At each size verify navigation, product grid, cart access, checkout modal, tende
 5. Add approved payment configuration and reconciliation views.
 6. Improve accessibility and keyboard workflow coverage beyond scanner input.
 7. Add camera-scanner fallback support if approved browser coverage requires it.
+8. Re-enable register/shift and cash-session operation when the future phase is approved.
 
 ### P3 — Future / Optional
 

@@ -34,15 +34,18 @@ test("POS navigation and direct pages use effective capabilities", () => {
   assert.match(staffTable, /canManageAdministrators/);
 });
 
-test("closed register presents only authorized shift-open action", () => {
+test("selling flow is not blocked by register shifts while the feature is frozen", () => {
   const register = source("src/features/pos/components/pos-register.tsx");
-  assert.match(register, /canOpenShift/);
-  assert.match(register, />Register Closed</);
-  assert.match(register, /Open Register \/ Start Shift/);
-  assert.match(
-    register,
-    /Your account does not have permission to open this register/,
+  const action = source("src/features/pos/actions.ts");
+  const page = source("src/app/pos/shifts/page.tsx");
+  assert.doesNotMatch(register, /shiftId/);
+  assert.doesNotMatch(register, /Register Closed/);
+  assert.doesNotMatch(register, /Open Register \/ Start Shift/);
+  assert.doesNotMatch(
+    action,
+    /registerId: string;\s+shiftId: string;\s+items:/,
   );
+  assert.match(page, /temporarily disabled/i);
 });
 
 test("employee creation uses direct Supabase Auth accounts without invitations", () => {

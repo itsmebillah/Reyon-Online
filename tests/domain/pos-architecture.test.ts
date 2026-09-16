@@ -9,6 +9,13 @@ const migration = readFileSync(
   ),
   "utf8",
 ).toLowerCase();
+const shiftFreeze = readFileSync(
+  new URL(
+    "../../supabase/migrations/20260916210000_pos_shift_requirement_freeze.sql",
+    import.meta.url,
+  ),
+  "utf8",
+).toLowerCase();
 
 test("POS uses Reyon canonical orders, inventory, payments and channel", () => {
   assert.match(migration, /'physical-pos'/);
@@ -43,4 +50,15 @@ test("catalog CSV import is canonical, atomic and retry-safe", () => {
   assert.match(migration, /public\.admin_create_watch\(row_data\)/);
   assert.match(migration, /idempotency_key text not null unique/);
   assert.match(migration, /existing\.request_rows<>p_rows/);
+});
+
+test("shift enforcement is frozen without creating an alternate checkout", () => {
+  assert.match(shiftFreeze, /alter column shift_id drop not null/);
+  assert.match(shiftFreeze, /create or replace function public\.pos_checkout/);
+  assert.match(shiftFreeze, /access\.has_capability\('pos\.checkout'/);
+  assert.match(shiftFreeze, /insert into sales\.orders/);
+  assert.match(shiftFreeze, /insert into inventory\.movements/);
+  assert.match(shiftFreeze, /insert into payments\.payment_records/);
+  assert.doesNotMatch(shiftFreeze, /an open shift is required/);
+  assert.doesNotMatch(shiftFreeze, /drop table pos\.shifts/);
 });
