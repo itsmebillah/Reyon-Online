@@ -16,6 +16,13 @@ const hardening = readFileSync(
   ),
   "utf8",
 ).toLowerCase();
+const optionalPosPosting = readFileSync(
+  new URL(
+    "../../supabase/migrations/20260916220000_pos_optional_accounting_posting.sql",
+    import.meta.url,
+  ),
+  "utf8",
+).toLowerCase();
 
 test("posting is activation-gated and uses configured accounts", () => {
   assert.match(migration, /posting_enabled and activated_at is not null/);
@@ -75,4 +82,21 @@ test("journal captures the required source, posting, and separated revenue struc
   assert.match(hardening, /o\.gross_product_amount/);
   assert.match(hardening, /cs\.delivery_charge_amount/);
   assert.match(hardening, /o\.discount_amount/);
+});
+
+test("inactive accounting records pending POS posting evidence without inventing accounts", () => {
+  assert.match(optionalPosPosting, /accounting\.posting_exceptions/);
+  assert.match(optionalPosPosting, /v_channel_code = 'physical-pos'/);
+  assert.match(optionalPosPosting, /'completed-sale'/);
+  assert.match(optionalPosPosting, /'configuration-inactive'/);
+  assert.match(optionalPosPosting, /return new/);
+  assert.match(
+    optionalPosPosting,
+    /perform accounting\.post_completed_sale\(new\.id\)/,
+  );
+  assert.doesNotMatch(
+    optionalPosPosting,
+    /insert into accounting\.ledger_accounts/,
+  );
+  assert.doesNotMatch(optionalPosPosting, /update sales\.|delete from sales\./);
 });

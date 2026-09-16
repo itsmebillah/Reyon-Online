@@ -499,7 +499,7 @@ Inventory is partitioned by physical/operating location. Channel attribution bel
 - Tender detail is retained in immutable `pos.tenders`; canonical payment evidence remains under `payments`.
 - Invoice and completed-sale evidence remains under `sales`.
 - Existing completed-sale accounting and weighted-average COGS behavior remains authoritative.
-- Checkout is activation-gated by existing accounting configuration; posting failure rolls back the sale rather than leaving partial stock/order/payment evidence.
+- Accounting configuration is currently optional for completing POS sales. POS commerce, payment and inventory transactions remain authoritative. Accounting configuration/posting functionality remains available for future activation. While accounting is inactive, immutable posting-exception evidence is recorded instead of creating fake journals or blocking checkout.
 - Returns/refunds must use the existing canonical return and refund evidence instead of editing prior sale/payment rows.
 
 Finance must review production account mappings, tender clearing/reconciliation policy, due/receivable treatment, tax treatment, and close procedures before financial reports are treated as fully approved operational statements.

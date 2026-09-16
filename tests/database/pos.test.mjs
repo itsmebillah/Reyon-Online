@@ -464,28 +464,54 @@ test("POS checkout needs no shift and remains canonical, transactional and idemp
   }
 });
 
-test("an accounting failure rolls back the complete POS transaction", async () => {
+test("POS checkout completes canonically while accounting remains inactive", async () => {
   const db = await database();
   try {
     const { vid, admin } = await seedWatch(db);
     const session = await posSession(db, admin);
-    await assert.rejects(
-      db.query("select public.pos_checkout($1::jsonb)", [
-        JSON.stringify(saleRequest(session, vid, "pos-accounting-rollback")),
-      ]),
-      /Accounting configuration/,
-    );
     await db.exec("reset role");
-    assert.equal(
-      Number(
-        (
-          await db.query(
-            "select count(*) count from sales.orders where source_namespace='physical-pos'",
-          )
-        ).rows[0].count,
-      ),
-      0,
+    const ledgerAccountsBefore = Number(
+      (await db.query("select count(*) count from accounting.ledger_accounts"))
+        .rows[0].count,
     );
+    await authenticate(db, admin);
+    const request = saleRequest(session, vid, "pos-accounting-inactive");
+    const first = (
+      await db.query("select public.pos_checkout($1::jsonb) value", [
+        JSON.stringify(request),
+      ])
+    ).rows[0].value;
+    const retry = (
+      await db.query("select public.pos_checkout($1::jsonb) value", [
+        JSON.stringify(request),
+      ])
+    ).rows[0].value;
+    assert.equal(retry.orderId, first.orderId);
+    assert.ok(first.invoiceNumber);
+    assert.ok(first.receiptNumber);
+    assert.equal(first.paymentStatus, "paid");
+    assert.equal(first.total, 2400);
+    assert.equal(first.change, 100);
+    await db.exec("reset role");
+    const evidence = (
+      await db.query(
+        `select
+          o.current_state_key,
+          (select count(*) from sales.completed_sales cs where cs.order_id=o.id) completed_sales,
+          (select count(*) from sales.invoices i where i.order_id=o.id) invoices,
+          (select count(*) from payments.payment_records p where p.source_namespace='physical-pos' and p.source_reference=o.external_reference) payments,
+          (select count(*) from payments.receipts r where r.order_id=o.id) receipts,
+          (select count(*) from inventory.movements m where m.source_namespace='sales-order' and m.source_reference=o.external_reference) movements
+        from sales.orders o where o.id=$1`,
+        [first.orderId],
+      )
+    ).rows[0];
+    assert.equal(evidence.current_state_key, "completed");
+    assert.equal(Number(evidence.completed_sales), 1);
+    assert.equal(Number(evidence.invoices), 1);
+    assert.equal(Number(evidence.payments), 1);
+    assert.equal(Number(evidence.receipts), 1);
+    assert.equal(Number(evidence.movements), 1);
     assert.equal(
       Number(
         (
@@ -495,7 +521,62 @@ test("an accounting failure rolls back the complete POS transaction", async () =
           )
         ).rows[0].available,
       ),
-      8,
+      7,
+    );
+    assert.equal(
+      Number(
+        (
+          await db.query(
+            "select count(*) count from accounting.journal_entries where source_namespace in ('completed-sale','completed-sale-cogs')",
+          )
+        ).rows[0].count,
+      ),
+      0,
+    );
+    assert.equal(
+      Number(
+        (
+          await db.query(
+            "select count(*) count from accounting.posting_exceptions where source_reference=(select id::text from sales.completed_sales where order_id=$1) and exception_key='configuration-inactive'",
+            [first.orderId],
+          )
+        ).rows[0].count,
+      ),
+      2,
+    );
+    assert.equal(
+      Number(
+        (
+          await db.query(
+            "select count(*) count from accounting.ledger_accounts",
+          )
+        ).rows[0].count,
+      ),
+      ledgerAccountsBefore,
+    );
+    const accountingProfile = (
+      await db.query(
+        "select posting_enabled,activated_at from accounting.organization_profiles where organization_id=(select id from organization.organizations where code='reyon-online')",
+      )
+    ).rows[0];
+    assert.equal(accountingProfile.posting_enabled, false);
+    assert.equal(accountingProfile.activated_at, null);
+    await assert.rejects(
+      db.query(
+        "select accounting.post_completed_sale((select id from sales.completed_sales where order_id=$1))",
+        [first.orderId],
+      ),
+      /Accounting configuration is inactive or incomplete/,
+    );
+    assert.equal(
+      Number(
+        (
+          await db.query(
+            "select count(*) count from pos.sale_details where idempotency_key='pos-accounting-inactive'",
+          )
+        ).rows[0].count,
+      ),
+      1,
     );
   } finally {
     await db.close();

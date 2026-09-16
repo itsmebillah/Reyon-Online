@@ -30,8 +30,6 @@ export async function selectPosLocation(locationId: string) {
 
 function message(error: { message: string } | null) {
   if (!error) return null;
-  if (/accounting configuration/i.test(error.message))
-    return "Accounting must be configured and activated before a sale can be completed.";
   return error.message;
 }
 
