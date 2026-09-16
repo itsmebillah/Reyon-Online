@@ -33,6 +33,26 @@ function message(error: { message: string } | null) {
   return error.message;
 }
 
+function employeeAuthError(error: unknown) {
+  const detail =
+    error && typeof error === "object" && "message" in error
+      ? String(error.message)
+      : "";
+  const code =
+    error && typeof error === "object" && "code" in error
+      ? String(error.code)
+      : "";
+  if (/already|registered|exists/i.test(`${code} ${detail}`))
+    return "An account already exists for this email address.";
+  if (
+    /api key|jwt|credential|configuration|service.role|fetch|network/i.test(
+      `${code} ${detail}`,
+    )
+  )
+    return "Employee account could not be created. Please check the server configuration.";
+  return "Employee account could not be created. Check the employee details and password requirements.";
+}
+
 export async function openPosShift(input: {
   registerId: string;
   openingCash: number;
@@ -231,12 +251,7 @@ export async function createPosEmployee(input: {
         phone: input.phone?.trim() || null,
       },
     });
-    if (error || !data.user)
-      return {
-        error: /already|registered|exists/i.test(error?.message ?? "")
-          ? "An account already exists for this email address."
-          : (error?.message ?? "Employee account creation failed."),
-      };
+    if (error || !data.user) return { error: employeeAuthError(error) };
     const supabase = await createSupabaseServerClient();
     const { error: accessError } = await supabase.rpc("pos_set_staff_access", {
       p_user_id: data.user.id,
@@ -265,11 +280,6 @@ export async function createPosEmployee(input: {
     revalidatePath("/pos/employees");
     return {};
   } catch (error) {
-    return {
-      error:
-        error instanceof Error
-          ? error.message
-          : "Employee account creation failed.",
-    };
+    return { error: employeeAuthError(error) };
   }
 }

@@ -50,13 +50,21 @@ test("selling flow is not blocked by register shifts while the feature is frozen
 
 test("employee creation uses direct Supabase Auth accounts without invitations", () => {
   const actions = source("src/features/pos/actions.ts");
+  const adminClient = source("src/lib/supabase/admin.ts");
   const table = source("src/features/pos/components/staff-table.tsx");
   assert.match(actions, /admin\.auth\.admin\.createUser/);
   assert.match(actions, /email_confirm: true/);
   assert.match(actions, /user_metadata/);
   assert.match(actions, /pos_set_staff_access/);
   assert.match(actions, /pos_set_staff_profile/);
+  assert.match(actions, /admin\.auth\.admin\.deleteUser/);
+  assert.match(actions, /Please check the server configuration/);
+  assert.doesNotMatch(actions, /error\?\.message \?\?/);
   assert.doesNotMatch(actions, /inviteUserByEmail/);
+  assert.match(adminClient, /SUPABASE_SERVICE_ROLE_KEY/);
+  assert.match(adminClient, /secret === publishableKey/);
+  assert.match(adminClient, /secret\.startsWith\("sb_publishable_"\)/);
+  assert.match(adminClient, /detectSessionInUrl: false/);
   assert.match(table, /useState\("123456"\)/);
   assert.match(table, /Create Employee/);
 });
